@@ -1,10 +1,11 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import Navigation from './Navigation/Navigation';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Navigation></Navigation>
         <p>
           Indigenous Interpreters
         </p>
