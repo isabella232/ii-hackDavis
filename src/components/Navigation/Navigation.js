@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
+import { Button } from '@material-ui/core';
 
 import LandingPage from '../../containers/LandingPage/LandingPage';
 import SearchPage from '../../containers/SearchPage/SearchPage';
@@ -7,6 +8,8 @@ import ContactUsPage from '../../containers/ContactUsPage/ContactUsPage';
 import WebinarPage from '../../containers/WebinarPage/WebinarPage';
 
 import LogInModal from '../modals/LogInModal/LogInModal';
+
+import classes from './Navigation.module.css'
 
 class Navigation extends Component {
 
@@ -21,6 +24,10 @@ class Navigation extends Component {
         this.setState({showLogInModal: !doesShow});
     }
 
+    turnOffLogInModalHandler = () => {
+        this.setState({showLogInModal: false});
+    }
+
     render() {
         let lim = null;
 
@@ -32,23 +39,28 @@ class Navigation extends Component {
             <div className="">
                 <Router>
                     <nav className = "navBar">
-                        <a>
+                        <a onClick={this.turnOffLogInModalHandler}>
                             <img src=""/>
                         </a>
-                        <Link to="/">Indigenous Interpreters</Link>
+                        <Link to="/" onClick={this.turnOffLogInModalHandler}>Indigenous Interpreters</Link>
                         <ul>
-                            <li>
+                            <li onClick={this.turnOffLogInModalHandler}>
                                 <Link to="/search"> Search </Link>
                             </li>
-                            <li>
+                            <li onClick={this.turnOffLogInModalHandler}>
                                 <Link to="/webinar"> Webinar </Link>
                             </li>
-                            <li>
+                            <li onClick={this.turnOffLogInModalHandler}>
                                 <Link to="/contactus"> Contact Us </Link>
-                            </li>
+                            </li >
                             {/* TODO: insert logic for switching between profile
                             and log in button */}
-                            <button onClick={this.toggleLogInModalHandler}>Log In</button>
+                            <Button 
+                                variant="contained" 
+                                onClick={this.toggleLogInModalHandler}
+                                color="primary">
+                                    Log In
+                            </Button>
                             {lim}
                         </ul>
                     </nav>

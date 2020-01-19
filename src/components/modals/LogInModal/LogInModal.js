@@ -7,8 +7,16 @@ class LogInModal extends Component{
         return(
             <div>
                 <p>Log in to view your profile</p>
-                <TextField id="outlined-basic" label="Email" variant="outlined" />
-                <TextField id="outlined-basic" label="Password" variant="outlined" />
+                <TextField 
+                    id="outlined-basic" 
+                    label="Email" 
+                    variant="outlined"
+                    color="primary" />
+                <TextField 
+                    id="outlined-basic" 
+                    label="Password" 
+                    variant="outlined"
+                    color="primary" />
             </div>
         )
     }
