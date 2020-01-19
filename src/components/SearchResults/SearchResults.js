@@ -14,7 +14,7 @@ import Modal from '@material-ui/core/Modal';
 
 import './SearchResults.css'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     borderRadius: 50,
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
   },
   cardActionArea: {
-    maxWidth: 700,
+    maxWidth: 600,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 
   },
   box: {
-    maxWidth: 700,
+    maxWidth: 600,
     spacing: 10,
     borderRadius: 10,
 
@@ -40,21 +40,31 @@ const useStyles = makeStyles({
   profileImage: {
     maxWidth: 250,
     objectFit: 'cover',
-  }
+    borderRadius: 10,
 
-});
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+  },
+  paper: {
+    // position: 'absolute',
+    // width: 400,
+    backgroundColor: 'white',
+    // border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    // padding: theme.spacing(2, 4, 3),
+  },
+
+}));
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 10;
+  const left = 1000;
 
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    transform: `translate(${top}%, ${left}%)`,
+    borderRadius: 10,
+    outline: 'none',
+    maxWidth: 750,
   };
 }
 function SearchResults(props) {
@@ -79,15 +89,14 @@ function SearchResults(props) {
                                   <Box className={classes.box} boxShadow={3}>
                                     <Card className={classes.card} >
                                     <CardActionArea className={classes.cardActionArea} onClick={handleOpen}>
-                                      <div className="profileImage" className={classes.profileImage}>
                                       <CardMedia
+                                        className={classes.profileImage}
                                         component="img"
                                         alt="Interpreter Profile Photo"
                                         // height="150"
                                         image={ProfilePic}
                                         title="Interpreter"
                                       />
-                                      </div>
                                       <div>
                                       <CardContent>
                                         <Typography gutterBottom variant="h5" component="h2">
@@ -108,19 +117,21 @@ function SearchResults(props) {
 
                                   </li>)}
       </ul>
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Text in a modal</h2>
-          <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </p>
-        </div>
-      </Modal>
+      <Box className={classes.box} boxShadow={3}>
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={open}
+          onClose={handleClose}
+        >
+          <div style={modalStyle} className={classes.paper}>
+            <h2 id="simple-modal-title">Text in a modal</h2>
+            <p id="simple-modal-description">
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </p>
+          </div>
+        </Modal>
+      </Box>
     </div>
   );
 }
