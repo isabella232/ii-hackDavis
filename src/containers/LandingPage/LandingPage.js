@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class ProfilePage extends Component{
+class LandingPage extends Component{
     render() {
         return (
             <p>this is the landing page</p>
@@ -8,4 +8,4 @@ class ProfilePage extends Component{
     }
 }
 
-export default ProfilePage;
+export default LandingPage;
