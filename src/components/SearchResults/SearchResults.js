@@ -79,7 +79,7 @@ function SearchResults(props) {
                                   <Box className={classes.box} boxShadow={3}>
                                     <Card className={classes.card} >
                                     <CardActionArea className={classes.cardActionArea} onClick={handleOpen}>
-                                      <div className="profileImage" className={classes.profileImage}>
+                                      <div className={classes.profileImage}>
                                       <CardMedia
                                         component="img"
                                         alt="Interpreter Profile Photo"
