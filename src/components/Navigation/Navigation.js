@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 import { Button } from '@material-ui/core';
@@ -76,3 +77,16 @@ class Navigation extends Component {
 }
 
 export default Navigation;
+=======
+import React from 'react';
+
+function Navigation() {
+  return (
+    <div className="Navigation">
+
+    </div>
+  );
+}
+
+export default Navigation;
+>>>>>>> 08841050a1cbe25d5d5af9bc94a828b64d145634
