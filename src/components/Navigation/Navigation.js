@@ -9,7 +9,7 @@ import WebinarPage from '../../containers/WebinarPage/WebinarPage';
 
 import LogInModal from '../modals/LogInModal/LogInModal';
 
-import classes from './Navigation.module.css'
+import classes from './Navigation.css'
 
 class Navigation extends Component {
 
@@ -38,31 +38,33 @@ class Navigation extends Component {
         return (
             <div className="">
                 <Router>
-                    <nav className = "navBar">
+                    <nav className="navBar">
+                      <div className="left-side-nav">
                         <a onClick={this.turnOffLogInModalHandler}>
                             <img src=""/>
                         </a>
                         <Link to="/" onClick={this.turnOffLogInModalHandler}>Indigenous Interpreters</Link>
-                        <ul>
-                            <li onClick={this.turnOffLogInModalHandler}>
-                                <Link to="/search"> Search </Link>
-                            </li>
-                            <li onClick={this.turnOffLogInModalHandler}>
-                                <Link to="/webinar"> Webinar </Link>
-                            </li>
-                            <li onClick={this.turnOffLogInModalHandler}>
-                                <Link to="/contactus"> Contact Us </Link>
-                            </li >
+                      </div>
+                      <div className="right-side-nav">
+                            <Button onClick={this.turnOffLogInModalHandler}>
+                              <Link to="/search"> Search </Link>
+                            </Button>
+                            <Button onClick={this.turnOffLogInModalHandler}>
+                                  <Link to="/webinar"> Webinar </Link>
+                            </Button>
+                            <Button onClick={this.turnOffLogInModalHandler}>
+                                  <Link to="/contactus"> Contact Us </Link>
+                            </Button>
                             {/* TODO: insert logic for switching between profile
                             and log in button */}
-                            <Button 
-                                variant="contained" 
+                            <Button
+                                variant="contained"
                                 onClick={this.toggleLogInModalHandler}
                                 color="primary">
                                     Log In
                             </Button>
                             {lim}
-                        </ul>
+                      </div>
                     </nav>
                     <br/>
                     <Route path="/" exact component={LandingPage} />
