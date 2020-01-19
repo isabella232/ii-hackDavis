@@ -1,6 +1,8 @@
 import React from 'react';
-import Navigation from './components/Navigation/Navigation';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+import Navigation from './components/Navigation/Navigation';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const theme = createMuiTheme({
@@ -23,10 +25,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <header className="App-header">
           <Navigation></Navigation>
-          <p>
-            Content Here!
-          </p>
         </header>
+        <Footer/>
       </ThemeProvider>
     </div>
   );

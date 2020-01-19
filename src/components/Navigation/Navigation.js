@@ -66,7 +66,7 @@ class Navigation extends Component {
                     </nav>
                     <br/>
                     <Route path="/" exact component={LandingPage} />
-                    <Route path="/search"  exact component={SearchPage} />
+                    <Route path="/search"  component={SearchPage} />
                     <Route path="/webinar"  exact component={WebinarPage} />
                     <Route path="/contactus" component={ContactUsPage} />
                 </Router>
