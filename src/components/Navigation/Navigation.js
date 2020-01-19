@@ -6,8 +6,28 @@ import SearchPage from '../../containers/SearchPage/SearchPage';
 import ContactUsPage from '../../containers/ContactUsPage/ContactUsPage';
 import WebinarPage from '../../containers/WebinarPage/WebinarPage';
 
+import LogInModal from '../modals/LogInModal/LogInModal';
+
 class Navigation extends Component {
+
+    state = {
+        showLogInModal: false
+    }
+
+    toggleLogInModalHandler = () => {
+        console.log('Was clicked!');
+
+        const doesShow = this.state.showLogInModal;
+        this.setState({showLogInModal: !doesShow});
+    }
+
     render() {
+        let lim = null;
+
+        if (this.state.showLogInModal) {
+            lim = <LogInModal />
+        }
+
         return (
             <div className="">
                 <Router>
@@ -28,7 +48,8 @@ class Navigation extends Component {
                             </li>
                             {/* TODO: insert logic for switching between profile
                             and log in button */}
-                            <button>Log In</button>
+                            <button onClick={this.toggleLogInModalHandler}>Log In</button>
+                            {lim}
                         </ul>
                     </nav>
                     <br/>
@@ -38,7 +59,7 @@ class Navigation extends Component {
                     <Route path="/contactus" component={ContactUsPage} />
                 </Router>
             </div>
-        )
+        );
     }
 }
 
