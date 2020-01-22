@@ -9,7 +9,7 @@ import WebinarPage from '../../containers/WebinarPage/WebinarPage';
 
 import LogInModal from '../modals/LogInModal/LogInModal';
 
-import classes from './Navigation.css'
+import classes from './Navigation.module.css'
 
 class Navigation extends Component {
 
@@ -36,25 +36,24 @@ class Navigation extends Component {
         }
 
         return (
-            <div className="">
+            <div className={classes.Navigation}>
                 <Router>
-                    <nav className="navBar">
-                      <div className="left-side-nav">
+                    <nav>
+                      <div className="">
                         <a onClick={this.turnOffLogInModalHandler}>
                             <img src=""/>
                         </a>
-                        <Link to="/" onClick={this.turnOffLogInModalHandler}>Indigenous Interpreters</Link>
                       </div>
-                      <div className="right-side-nav">
-                            <Button onClick={this.turnOffLogInModalHandler}>
+                      <div className={classes.leftSideNav}>
+                            <ul onClick={this.turnOffLogInModalHandler}>
                               <Link to="/search"> Search </Link>
-                            </Button>
-                            <Button onClick={this.turnOffLogInModalHandler}>
+                            </ul>
+                            <ul onClick={this.turnOffLogInModalHandler}>
                                   <Link to="/webinar"> Webinar </Link>
-                            </Button>
-                            <Button onClick={this.turnOffLogInModalHandler}>
+                            </ul>
+                            <ul onClick={this.turnOffLogInModalHandler}>
                                   <Link to="/contactus"> Contact Us </Link>
-                            </Button>
+                            </ul>
                             {/* TODO: insert logic for switching between profile
                             and log in button */}
                             <Button
@@ -63,9 +62,9 @@ class Navigation extends Component {
                                 color="primary">
                                     Log In
                             </Button>
-                            {lim}
                       </div>
                     </nav>
+                    {lim}
                     <br/>
                     <Route path="/" exact component={LandingPage} />
                     <Route path="/search"  component={SearchPage} />
