@@ -1,0 +1,48 @@
+.Navigation {
+  display: block;
+  color: black;
+}
+
+.Navigation ul {
+  margin: 0 0.5em;
+  padding: 0 0.5em;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 37px;
+  border-bottom: 2px solid transparent;
+
+  transition: border-bottom ease 0.2s;
+}
+
+.Navigation .active {
+  color: #03a0b5;
+}
+
+.Navigation a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.Navigation ul:hover:not(.active) {
+  color: black;
+  border-bottom: 2px solid #03a0b5;
+}
+
+.Navigation nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em 2em;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+}
+
+.Navigation .leftSideNav {
+  display: flex;
+  align-items: center;
+}
+
+.Navigation button {
+  margin-left: 1em;
+  text-transform: none;
+  font-size: 18px;
+}
