@@ -2,16 +2,27 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.5.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "mongoose": "^5.8.10"
+    "install": "^0.13.0",
+    "jquery": "^3.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.10",
+    "multer": "^1.4.2",
+    "path": "^0.12.7",
+    "request": "^2.88.0",
+    "sharp": "^0.24.0",
+    "validator": "^12.2.0"
   }
 }

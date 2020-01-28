@@ -1,5 +1,6 @@
 const express = require('express')
 const ContactForm = require('../models/contactForm')
+
 const router = new express.Router()
 
 // creates a new contact form submission
