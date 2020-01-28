@@ -6,6 +6,7 @@ const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
 const { sendWelcomeEmail } = require('../emails/account')
 const geocode = require('../../public/js/geocode')
+
 const router = new express.Router()
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
