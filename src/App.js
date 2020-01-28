@@ -1,32 +1,31 @@
-import React from 'react';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-import Navigation from './components/Navigation/Navigation';
-import Footer from './components/Footer/Footer';
+import Page from "./layout/Page/Page";
 
 function App() {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#03A0B5',
-        dark: '#027888'
+        main: "#03A0B5",
+        dark: "#027888"
       },
       secondary: {
-        main: '#cc0a57'
-      },
+        main: "#cc0a57"
+      }
     },
     status: {
-      danger: 'orange',
-    },
+      danger: "orange"
+    }
   });
 
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <header className="App-header">
-          <Navigation></Navigation>
-        </header>
-        <Footer/>
+        <Router>
+          <Page />
+        </Router>
       </ThemeProvider>
     </div>
   );
