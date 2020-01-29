@@ -12,51 +12,51 @@ const router = new express.Router()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // creating a user
-router.post('/signup', urlencodedParser, async (req, res)=>{
+router.post('/signup', urlencodedParser, async (req, res) => {
     //console.log('signup post is used')
     const user = new User(req.body)
 
-    try{
+    try {
         await user.save()
         // sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
-    } catch(e){
+    } catch (e) {
         res.status(400).send()
     }
 })
 
 // getting users by their credentials
-router.post('/login', urlencodedParser, async (req, res) =>{
-    try{
+router.post('/login', urlencodedParser, async (req, res) => {
+    try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
         //res.send({ user, token })
         res.render('profile', {
             title: 'Make a Profile'
         })
-    } catch (e){
+    } catch (e) {
         res.status(400).send()
     }
 })
 
 //logout of current session (deletes only current token)
-router.post('/logout', auth, async( req, res) => {
-    try{
+router.post('/logout', auth, async (req, res) => {
+    try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
         })
         await req.user.save()
 
         res.send()
-    } catch (e){
+    } catch (e) {
         res.send(500).send()
     }
 })
 
 //logout of all sessions (deletes all tokens)
-router.post('/users/logoutAll', auth, async( req, res) => {
-    try{
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try {
         req.user.tokens = []
         await req.user.save()
 
@@ -67,22 +67,22 @@ router.post('/users/logoutAll', auth, async( req, res) => {
 })
 
 //only allowed to see profile if logged in
-router.get('/users/me', auth, async (req, res) => {      
+router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
 
 // gets multiple users (this is for the search page), no auth
-router.get('/users', auth, async (req, res) => {    
+router.get('/users', auth, async (req, res) => {
 
     // this is undefined
-    console.log("I think this should not be undefined: " + req.user)    
+    console.log("I think this should not be undefined: " + req.user)
 
     // this is not in the right location
-    try {                 
-        console.log("this works")   
+    try {
+        console.log("this works")
         //await req.user.populate('interpreters').execPopulate()  
-        await req.populate('users').execPopulate() 
-        console.log("this wasn't working before my push")                    
+        await req.populate('users').execPopulate()
+        console.log("this wasn't working before my push")
 
         //  await req.user.populate({
         //      path: 'users',
@@ -92,14 +92,14 @@ router.get('/users', auth, async (req, res) => {
         // //          skip: parseInt(req.query.skip)                
         // //      }
         //  }).execPopulate()
-    
+
         // correct error        
-         //res.send(req.user.interpreters)
-         res.send(req.users)
-         console.log(req.users)
-         console.log(req.user.interpreters)
-         
-    } catch(e){
+        //res.send(req.user.interpreters)
+        res.send(req.users)
+        console.log(req.users)
+        console.log(req.user.interpreters)
+
+    } catch (e) {
         res.status(500).send()
     }
 
@@ -116,68 +116,68 @@ router.get('/users', auth, async (req, res) => {
     if (req.query.language)
         match.language = req.query.language.trim().toLowerCase()
     if (req.query.certification)
-        match.certification = req.query.certification.trim().toLowerCase()  
+        match.certification = req.query.certification.trim().toLowerCase()
     if (req.query.service)
         match.service = req.query.service.trim().toLowerCase()
     if (req.query.rating)
-        match.rating = req.query.rating        
+        match.rating = req.query.rating
 
-    let locationPromise = new Promise(function(resolve, reject) {
-        if(req.query.location) {
-            geocode(req.query.location, (error, { latitude, longitude, location } ) => {            
+    let locationPromise = new Promise(function (resolve, reject) {
+        if (req.query.location) {
+            geocode(req.query.location, (error, { latitude, longitude, location }) => {
                 // errors need to be done 
                 if (error) {
                     return console.log(error)
-                }                
-                resolve({latitude, longitude})
+                }
+                resolve({ latitude, longitude })
             })
-        } else {            
+        } else {
             // more correct way?
             resolve(0, 0)
-        }           
+        }
     });
 
-    locationPromise.then(function(value) {       
+    locationPromise.then(function (value) {
         if (value.latitude && value.longitude) {
             match.latitude = value.latitude
-            match.longitude = value.longitude        
-        }        
-        console.log(match)    
+            match.longitude = value.longitude
+        }
+        console.log(match)
 
         // TODO 2: populate
-        
+
         // TODO 3: query string must contain ?limit=VALUE&skip=VALUE (limit how many results per page)
         // TODO 4: distance formula between schema coors and match.lat match.long
         // TODO 5: sort results
-    });    
+    });
 
-    
+
 
     // This does not work...
-    
+
     // res.render('search', {
     //     title: 'Find Interpreters'
     // })
 })
 
 // user can update their own profiles
-router.patch('/users/me',  auth, async (req, res) =>{
+router.patch('/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'username', 'password', 'gender']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
-    if(!isValidOperation){
-        return res.status(400).send({ error: 'Invalid updates!'})
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' })
     }
 
-    try{
+    try {
 
         updates.forEach((update) => req.user[update] = req.body[update])
 
         await req.user.save() // where middleware gets executed
 
         res.send(req.user)
-    }catch(e){
+    } catch (e) {
         res.status(400).send(e)
     }
 })
@@ -215,7 +215,7 @@ router.get('/users/:id/avatar', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
 
-        if (!user || !user.avatar){
+        if (!user || !user.avatar) {
             throw new Error()
         }
 

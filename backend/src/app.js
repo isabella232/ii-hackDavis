@@ -31,7 +31,7 @@ app.use(express.static(publicDirectoryPath))
 
 
 app.listen(PORT, () => {
-    
+
 })
 
 // Note for lab:
