@@ -103,12 +103,6 @@ router.get('/users', auth, async (req, res) => {
         res.status(500).send()
     }
 
-
-
-
-
-
-
     const match = {
         kind: "Interpreter"
     }
