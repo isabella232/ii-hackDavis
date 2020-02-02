@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const chalk = require('chalk')
 
 // Not sure if this is set up correctly...
 mongoose.connect(process.env.MONGODB_URL, {
@@ -6,7 +7,7 @@ mongoose.connect(process.env.MONGODB_URL, {
     useCreateIndex: true,
     useUnifiedTopology: true
 }).then(result => {
-    console.log('duojc roi')
+    console.log(chalk.greenBright.inverse('Database connected'))
 }).catch(error => {
-    console.log('dell xong roi')
+    console.log(chalk.redBright.inverse('Failed to connect to database'))
 })
