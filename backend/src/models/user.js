@@ -19,19 +19,23 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Email is invalid')
             }
         }
-    }, password: {
+    },
+    password: {
         type: String,
         required: true,
         trim: true,
         minLength: 8
         //add validation
-    }, username: {
+    },
+    username: {
         type: String,
         trim: true
-    }, gender: {
+    },
+    gender: {
         type: String,
         trim: true
-    }, isAdmin: {
+    },
+    isAdmin: {
         type: Boolean,
         required: true
     },
@@ -44,9 +48,7 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: Buffer
     }
-}, {
-    discriminatorKey: 'kind'
-})
+}, { discriminatorKey: 'kind' })
 
 // checks that the user exists in database
 userSchema.statics.findByCredentials = async (email, password) => {

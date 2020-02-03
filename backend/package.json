@@ -23,7 +23,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.10",
     "multer": "^1.4.2",
-    "nodemon": "^2.0.2",
     "path": "^0.12.7",
     "request": "^2.88.0",
     "sharp": "^0.24.0",
@@ -31,6 +30,7 @@
   },
   "devDependencies": {
     "chalk": "^3.0.0",
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.2"
   }
 }
