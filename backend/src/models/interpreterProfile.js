@@ -48,19 +48,20 @@ const interpreterSchema = new mongoose.Schema({
     },
     // certification
     certifications: [{
-        certification: {
+        title: {
             type: String,
             trim: true,
             lowercase: true,
             required: true,
-            file: {
-                type: Buffer,
-                required: true
-            },
-            isValidated: {
-                type: Boolean,
-                default: false
-            }
+        },
+        file: {
+            type: Buffer,
+            required: true
+        },
+        isValidated: {
+            type: Boolean,
+            // required: true,
+            default: false
         }
     }],
     // type of interpreting: simultaneous, etc

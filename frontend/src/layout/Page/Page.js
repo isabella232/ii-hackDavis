@@ -8,6 +8,7 @@ import LandingPage from "../../containers/LandingPage/LandingPage";
 import SearchPage from "../../containers/SearchPage/SearchPage";
 import ContactUsPage from "../../containers/ContactUsPage/ContactUsPage";
 import WebinarPage from "../../containers/WebinarPage/WebinarPage";
+import AdminPage from "../../containers/AdminPage/AdminPage";
 
 const Page = props => {
   return (
@@ -20,9 +21,10 @@ const Page = props => {
           <Route path="/search" exact component={SearchPage} />
           <Route path="/webinar" exact component={WebinarPage} />
           <Route path="/contactus" exact component={ContactUsPage} />
+          <Route path="/admin" exact component={AdminPage} />
         </Switch>
       </main>
-      
+
       <Footer />
     </>
   );
