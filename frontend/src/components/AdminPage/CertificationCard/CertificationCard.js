@@ -8,15 +8,34 @@ import { verifyCertificate, rejectCertificate } from '../../../services/AdminSer
 
 const CertificationCard = (props) => {
     const [expand, setExpand] = useState(false);
+    const [verified, setVerified] = useState(false);
+    const [rejected, setRejected] = useState(false);
     const certificateClass = expand ? classes.expand : classes.collapse;
     const id = props.id;
 
     const verifyClicked = () => {
         verifyCertificate(id)
+            .then(response => {
+                setVerified(true)
+            }).catch(error => {
+                console.log(error)
+                alert("Error: Can't verify certificate")
+            })
     }
 
+    const rejectClicked = () => {
+        rejectCertificate(id)
+            .then(response => {
+                setRejected(true)
+            }).catch(error => {
+                console.log(error)
+                alert("Error: Can't reject certificate")
+            })
+    }
+
+
     return (
-        <div className={classes.CertificationCard}>
+        (!verified && !rejected) ? <div className={classes.CertificationCard}>
             <div className={classes.header}>
                 <div className={classes.userInfo}>
                     <Avatar name={props.name} avatar={props.avatar} size={7} />
@@ -38,14 +57,14 @@ const CertificationCard = (props) => {
             </div>
 
             <div className={certificateClass}>
-                <img src='https://www.westonearthimages.com/images/slide/ea0063-1400-x-600.jpg' width='100%' />
+                <img alt={`${props.name}Avatar`} src='https://www.westonearthimages.com/images/slide/ea0063-1400-x-600.jpg' width='100%' />
 
                 <div className={classes.footer}>
-                    <Button content='Reject' inverted />
+                    <Button content='Reject' inverted click={rejectClicked} />
                     <Button content='Verify' click={verifyClicked} />
                 </div>
             </div>
-        </div>
+        </div> : null
     )
 }
 

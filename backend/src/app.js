@@ -3,6 +3,7 @@ const path = require('path')
 const express = require('express')
 // const hbs = require('hbs')
 const chalk = require('chalk')
+const cors = require('cors')
 
 require('./db/mongoose')
 const User = require('./models/user')
@@ -16,6 +17,14 @@ const adminRouter = require('./routers/admin')
 const app = express()
 const PORT = process.env.PORT || 3000
 
+var corsOptions = {
+    origin: 'localhost:3000', // change to actual url later
+    credentials: true,
+    origin: true,
+}
+
+app.use(cors(corsOptions))
+app.options('*', cors())
 app.use(express.json())
 app.use(userRouter)
 app.use(contactRouter)

@@ -4,7 +4,7 @@ const sharp = require('sharp')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
-const { sendWelcomeEmail } = require('../emails/account')
+const { sendWelcomeEmail } = require('../services/emailService')
 const geocode = require('../../public/js/geocode')
 
 const router = new express.Router()

@@ -16,9 +16,8 @@ class AdminPage extends Component {
     }
 
     componentDidMount() {
-        fetchCertificates(12345) // adminID for authentication here?
+        fetchCertificates(1234) // adminID for authentication here?
             .then(response => {
-                console.log(response)
                 this.setState({ users: response })
             }).catch(error => {
                 console.log(error);
@@ -28,7 +27,8 @@ class AdminPage extends Component {
     render() {
         const toValidateCertificates = this.state.users.map(user => (
             user.unvalidatedCertificates.map(certificate => (
-                <CertificationCard id={certificate._id}
+                <CertificationCard key={`${certificate._id}`}
+                    id={certificate._id}
                     avatar='https://littlebeebooks.com/wp-content/uploads/2017/04/Moomin1.png'
                     name={user.name}
                     title={certificate.title}

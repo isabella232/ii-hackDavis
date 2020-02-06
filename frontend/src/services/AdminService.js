@@ -10,7 +10,7 @@ export const verifyCertificate = async (certificateID) => {
     return backend.patch(endpoint);
 }
 
-export const rejectCertificate = async (userID, certificateID) => {
-    const endpoint = `/${userID}/${certificateID}/reject`;
-    return backend.get(endpoint);
+export const rejectCertificate = async (certificateID) => {
+    const endpoint = `certificate/${certificateID}/reject`;
+    return backend.patch(endpoint);
 }
