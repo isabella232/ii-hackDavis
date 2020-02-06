@@ -11,22 +11,33 @@ class AdminPage extends Component {
     constructor() {
         super();
         this.state = {
-            certificates: []
+            users: []
         }
     }
 
     componentDidMount() {
-        fetchCertificates(12345)
+        fetchCertificates(12345) // adminID for authentication here?
             .then(response => {
                 console.log(response)
+                this.setState({ users: response })
             }).catch(error => {
                 console.log(error);
             })
     }
 
     render() {
+        const toValidateCertificates = this.state.users.map(user => (
+            user.unvalidatedCertificates.map(certificate => (
+                <CertificationCard id={certificate._id}
+                    avatar='https://littlebeebooks.com/wp-content/uploads/2017/04/Moomin1.png'
+                    name={user.name}
+                    title={certificate.title}
+                    location={user.location} />
+            ))
+        ))
+
         return (
-            <div className={classes.Container}>
+            <div className={classes.Container} >
                 <div className={classes.title}>Upcoming Events</div>
                 <EventCard title='BitCard' date='2/4/2020' time='9:00 PM' />
                 <EventCard title='BitCard' date='2/4/2020' time='9:00 PM' />
@@ -38,9 +49,8 @@ class AdminPage extends Component {
                 <div className={classes.horzLine} />
 
                 <div className={classes.title}>New Certification Uploads</div>
-                <CertificationCard avatar='https://littlebeebooks.com/wp-content/uploads/2017/04/Moomin1.png'
-                    name='Moomin Azkaban'
-                    location='Davis, CA' />
+
+                {toValidateCertificates}
             </div>
         )
     }

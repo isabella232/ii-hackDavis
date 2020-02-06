@@ -4,9 +4,16 @@ import classes from './CertificationCard.module.css';
 import Avatar from '../../shared/Avatar/Avatar';
 import Button from '../../shared/Button/Button';
 
+import { verifyCertificate, rejectCertificate } from '../../../services/AdminService';
+
 const CertificationCard = (props) => {
     const [expand, setExpand] = useState(false);
     const certificateClass = expand ? classes.expand : classes.collapse;
+    const id = props.id;
+
+    const verifyClicked = () => {
+        verifyCertificate(id)
+    }
 
     return (
         <div className={classes.CertificationCard}>
@@ -24,6 +31,8 @@ const CertificationCard = (props) => {
                     </div>
                 </div>
 
+                <strong>{props.title}</strong>
+
                 {expand ? <Button content='Collapse Document' inverted click={() => setExpand(false)} />
                     : <Button content='Expand Document' inverted click={() => setExpand(true)} />}
             </div>
@@ -33,7 +42,7 @@ const CertificationCard = (props) => {
 
                 <div className={classes.footer}>
                     <Button content='Reject' inverted />
-                    <Button content='Verify' />
+                    <Button content='Verify' click={verifyClicked} />
                 </div>
             </div>
         </div>
