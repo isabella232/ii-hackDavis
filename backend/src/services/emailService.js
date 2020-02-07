@@ -21,16 +21,12 @@ const sendVerifyEmail = (email, name) => {
 }
 
 const sendRejectEmail = async (email, name) => {
-    try {
-        sgMail.send({
-            to: email,
-            from: 'test@example.com',
-            subject: 'Reject, biatch',
-            text: `Sad ${name}.`
-        })
-    } catch (error) {
-        console.log('sendRejectEmail Error', error)
-    }
+    sgMail.send({
+        to: email,
+        from: 'test@example.com',
+        subject: 'Reject, biatch',
+        text: `Sad ${name}.`
+    })
 }
 
 module.exports = {
