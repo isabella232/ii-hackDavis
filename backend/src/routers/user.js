@@ -4,8 +4,8 @@ const sharp = require('sharp')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
-const { sendWelcomeEmail } = require('../emails/account')
-const geocode = require('../../public/js/geocode')
+const { sendWelcomeEmail } = require('../utils/email')
+const geocode = require('../utils/geocode')
 
 const router = new express.Router()
 
@@ -40,7 +40,7 @@ router.post('/login', urlencodedParser, async (req, res) => {
     }
 })
 
-//logout of current session (deletes only current token)
+// logout of current session (deletes only current token)
 router.post('/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
@@ -54,7 +54,7 @@ router.post('/logout', auth, async (req, res) => {
     }
 })
 
-//logout of all sessions (deletes all tokens)
+// logout of all sessions (deletes all tokens)
 router.post('/users/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []
@@ -66,7 +66,7 @@ router.post('/users/logoutAll', auth, async (req, res) => {
     }
 })
 
-//only allowed to see profile if logged in
+// only allowed to see profile if logged in
 router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
@@ -102,12 +102,6 @@ router.get('/users', auth, async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-
-
-
-
-
-
 
     const match = {
         kind: "Interpreter"

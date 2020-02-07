@@ -1,0 +1,28 @@
+.Button {
+    display: inline-block;
+    padding: 8px;
+    background: #03A0B5;
+    border: 2px solid #03A0B5;
+    box-sizing: border-box;
+    border-radius: 9px;
+    color: white;
+    -webkit-transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+.Button:hover {
+    background: rgb(39, 194, 214);
+    border: 2px solid rgb(39, 194, 214);
+}
+
+.inverted {
+    display: inline-block;
+    padding: 8px;
+    color: #03A0B5;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.inverted:hover {
+    color: rgb(39, 194, 214);
+}

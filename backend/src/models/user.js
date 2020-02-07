@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
         required: true,
         trim: true
@@ -19,24 +19,28 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Email is invalid')
             }
         }
-    }, password: {
+    },
+    password: {
         type: String,
         required: true,
         trim: true,
         minLength: 8
         //add validation
-    }, username: {
+    },
+    username: {
         type: String,
         trim: true
-    }, gender: {
+    },
+    gender: {
         type: String,
         trim: true
-    },  isAdmin: {
+    },
+    isAdmin: {
         type: Boolean,
         required: true
-    }, 
-    tokens:[{
-        token:{
+    },
+    tokens: [{
+        token: {
             type: String,
             required: true
         }
@@ -44,21 +48,19 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: Buffer
     }
-}, {
-    discriminatorKey: 'kind'
-})
+}, { discriminatorKey: 'kind' })
 
 // checks that the user exists in database
-userSchema.statics.findByCredentials = async(email, password) =>{
+userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
 
-    if (!user){
+    if (!user) {
         throw new Error('Unable to login')
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
 
-    if(!isMatch){
+    if (!isMatch) {
         throw new Error('Unable to login')
     }
 
@@ -66,9 +68,9 @@ userSchema.statics.findByCredentials = async(email, password) =>{
 }
 
 // generates the auth token
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({_id: user.id.toString() }, 'thisismynewcourse')
+    const token = jwt.sign({ _id: user.id.toString() }, 'thisismynewcourse')
 
     user.tokens = user.tokens.concat({ token })
     await user.save()
@@ -77,7 +79,7 @@ userSchema.methods.generateAuthToken = async function() {
 }
 
 // doesn't print password or tokens
-userSchema.methods.toJSON = function(){
+userSchema.methods.toJSON = function () {
     const user = this
     const userObject = user.toObject()
 
@@ -91,7 +93,7 @@ userSchema.methods.toJSON = function(){
 userSchema.pre('save', async function (next) {
     const user = this
 
-    if (user.isModified('password')){
+    if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8)
     }
 

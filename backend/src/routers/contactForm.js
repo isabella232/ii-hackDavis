@@ -4,13 +4,13 @@ const ContactForm = require('../models/contactForm')
 const router = new express.Router()
 
 // creates a new contact form submission
-router.post('/contactUs', async(req, res) => {
+router.post('/contactUs', async (req, res) => {
     const contactForm = new ContactForm(req.body)
 
     try {
         await contactForm.save()
         res.status(201).send(contactForm)
-    } catch(e) {
+    } catch (e) {
         res.status(400).send(e)
     }
 })
