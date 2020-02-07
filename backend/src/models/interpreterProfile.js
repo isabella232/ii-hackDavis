@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const User = require('./user')
-const geocode = require('../../public/js/geocode')
+const geocode = require('../utils/geocode')
 
 // returns a model with overlapping schema with the user
 const interpreterSchema = new mongoose.Schema({

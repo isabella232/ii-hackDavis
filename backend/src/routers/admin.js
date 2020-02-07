@@ -2,7 +2,7 @@ const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const ObjectID = require('mongodb').ObjectID;
-const { sendVerifyEmail, sendRejectEmail } = require('../services/emailService');
+const { sendVerifyEmail, sendRejectEmail } = require('../utils/email');
 
 const router = new express.Router()
 
