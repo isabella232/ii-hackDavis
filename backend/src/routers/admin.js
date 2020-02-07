@@ -26,7 +26,6 @@ router.get('/admin/:id/homepage', async (req, res) => {
         })
         res.status(200).send(toValidate)
     } catch (error) {
-        console.log(error)
         res.status(400).send(error)
     }
 })
@@ -35,15 +34,13 @@ router.patch('/certificate/:id/verify', async (req, res) => {
     const id = req.params.id
     try {
         const user = await User.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
-        // const certifications = [...user.certifications]
-        // const index = certifications.findIndex(certificate => certificate._id.toString() === id)
-        // certifications[index].isValidated = true
-        // user.certifications = certifications
+        // const index = user.certifications.findIndex(certificate => certificate._id.toString() === id)
+        // user.certifications[index].isValidated = true
         // await user.save()
+        sendVerifyEmail(user.email, user.name)
         res.status(200).send(user)
 
     } catch (error) {
-        console.log(error)
         res.status(400).send(error)
     }
 })
@@ -52,10 +49,12 @@ router.patch('/certificate/:id/reject', async (req, res) => {
     const id = req.params.id
     try {
         const user = await User.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
+        const index = user.certifications.findIndex(certificate => certificate._id.toString() === id)
+        user.certifications[index].isRejected = true
+        await user.save()
         sendRejectEmail(user.email, user.name)
         res.status(200).send(user)
     } catch (error) {
-        console.log(error)
         res.status(400).send(error)
     }
 })

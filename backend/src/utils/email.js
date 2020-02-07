@@ -15,8 +15,8 @@ const sendVerifyEmail = (email, name) => {
     sgMail.send({
         to: email,
         from: 'test@example.com',
-        subject: 'Verify',
-        text: `Welcome to the app, ${name}. Let me know how you get along`
+        subject: 'Your Certificate Has Been Verified!',
+        text: `Dear, ${name}.\n Your uploaded certificate has been verified. Thank you.`
     })
 }
 
@@ -24,8 +24,8 @@ const sendRejectEmail = async (email, name) => {
     sgMail.send({
         to: email,
         from: 'test@example.com',
-        subject: 'Reject, biatch',
-        text: `Sad ${name}.`
+        subject: 'Your Certificate Has Been Rejected.',
+        text: `Dear, ${name}.\n Your uploaded certificate has been rejected. Please reupload it.`
     })
 }
 

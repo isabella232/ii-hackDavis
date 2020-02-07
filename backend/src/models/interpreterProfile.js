@@ -60,9 +60,12 @@ const interpreterSchema = new mongoose.Schema({
         },
         isValidated: {
             type: Boolean,
-            // required: true,
             default: false
-        }
+        },
+        isRejected: {
+            type: Boolean,
+            default: false
+        },
     }],
     // type of interpreting: simultaneous, etc
     service: {

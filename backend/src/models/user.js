@@ -70,7 +70,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 // generates the auth token
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user.id.toString() }, 'thisismynewcourse')
+    const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY)
 
     user.tokens = user.tokens.concat({ token })
     await user.save()
@@ -89,7 +89,7 @@ userSchema.methods.toJSON = function () {
     return userObject
 }
 
-// has the plain text pw before saving
+// hash the plain text pw before saving
 userSchema.pre('save', async function (next) {
     const user = this
 
