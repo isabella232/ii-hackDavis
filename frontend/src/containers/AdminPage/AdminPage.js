@@ -32,7 +32,8 @@ class AdminPage extends Component {
                     avatar='https://littlebeebooks.com/wp-content/uploads/2017/04/Moomin1.png'
                     name={user.name}
                     title={certificate.title}
-                    location={user.location} />
+                    location={user.location}
+                    file={certificate.file.data} />
             ))
         ))
 

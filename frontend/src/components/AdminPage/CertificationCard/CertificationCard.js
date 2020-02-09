@@ -5,17 +5,19 @@ import Avatar from '../../shared/Avatar/Avatar';
 import Button from '../../shared/Button/Button';
 
 import { verifyCertificate, rejectCertificate } from '../../../services/AdminService';
+import { bufferToImg } from '../../../services/ImageService';
 
 const CertificationCard = (props) => {
     const [expand, setExpand] = useState(false);
     const [verified, setVerified] = useState(false);
     const [rejected, setRejected] = useState(false);
+    const [imgsrc, setImgsrc] = useState(bufferToImg(props.file));
     const certificateClass = expand ? classes.expand : classes.collapse;
     const id = props.id;
 
     const verifyClicked = () => {
         verifyCertificate(id)
-            .then(response => {
+            .then(() => {
                 setVerified(true)
             }).catch(error => {
                 console.log(error)
@@ -25,14 +27,13 @@ const CertificationCard = (props) => {
 
     const rejectClicked = () => {
         rejectCertificate(id)
-            .then(response => {
+            .then(() => {
                 setRejected(true)
             }).catch(error => {
                 console.log(error)
                 alert("Error: Can't reject certificate")
             })
     }
-
 
     return (
         (!verified && !rejected) ? <div className={classes.CertificationCard}>
@@ -58,6 +59,9 @@ const CertificationCard = (props) => {
 
             <div className={certificateClass}>
                 <img alt={`${props.name}Avatar`} src='https://www.westonearthimages.com/images/slide/ea0063-1400-x-600.jpg' width='100%' />
+
+                {/* change later */}
+                <img src={imgsrc} alt={`${props.name}Avatar`} width='100%' />
 
                 <div className={classes.footer}>
                     <Button content='Reject' inverted click={rejectClicked} />
