@@ -2,6 +2,7 @@ const express = require('express')
 const multer = require('multer')
 const InterpreterProfile = require('../models/interpreterProfile')
 const auth = require('../middleware/auth')
+const { saveiProfile } = require('../utils/algolia')
 
 const router = new express.Router()
 
@@ -11,12 +12,12 @@ const router = new express.Router()
 // idk on what screen this will live
 router.post('/iProfile', async (req, res) => {
     var iProfile = new InterpreterProfile(req.body)
-
     try {
         // interpreter coordinates are generated from location string
         await iProfile.generateCoordinates(req)
         await iProfile.save()
         const token = await iProfile.generateAuthToken()
+        saveiProfile(iProfile)
         res.status(201).send(iProfile)
     } catch (e) {
         console.log(e)
@@ -46,7 +47,8 @@ router.patch('/iProfile/me', auth, async (req, res) => {
             return res.status(404).send()
         }
 
-        res.send(profile)
+        saveiProfile(iProfile)
+        res.status(201).send(profile)
     } catch (e) {
         res.status(400).send(e)
     }
@@ -69,7 +71,6 @@ const upload = multer({
 
 // Adds a Certification to the user
 router.post('/users/me/certificates', auth, upload.single('certificate'), async (req, res) => {
-
     //creates new certificate from req
     const newCertificate = {
         certification: req.body.certificateName,
@@ -122,6 +123,5 @@ router.get('/users/:id/certificates', async (req, res) => {
         res.status(404).send()
     }
 })
-
 
 module.exports = router
