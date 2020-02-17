@@ -1,0 +1,47 @@
+.Hit {
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    display: flex;
+    min-width: 400px;
+    margin-left: -35px;
+}
+
+.Hit .avatar {
+    border-radius: 10px;
+    min-width: 150px;
+    max-width: 200px;
+}
+
+.Hit .content {
+    padding: 1rem;
+}
+
+.Hit .name {
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 35px;
+}
+
+.Hit .languages {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 30px;
+    color: #027888;
+}
+
+.Hit .location, .email {
+    line-height: 30px;
+}
+
+.Hit .moreInfo {
+    margin-top: 2rem;
+    color: #027888;
+    font-weight: 500;
+    transition: color .2s ease-in-out;
+}
+
+.Hit .moreInfo:hover {
+    color: rgb(39, 194, 214);
+}
