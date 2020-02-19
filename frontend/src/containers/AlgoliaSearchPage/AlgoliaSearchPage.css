@@ -9,10 +9,11 @@
 .ais-Snippet-highlighted {
     font-style: normal;
     font-weight: bold;
-    text-decoration: underline;
+    color: salmon;
 }
 
 .ais-SearchBox {
+    margin-top: 1rem;
     position: relative;
 }
 
