@@ -40,14 +40,18 @@ router.patch('/iProfile/me', auth, async (req, res) => {
         const profile = await InterpreterProfile.findOne({ owner: req.user._id })
 
         updates.forEach((update) => profile[update] = req.body[update])
-
         await profile.save() // where middleware gets executed
 
         if (!profile) {
             return res.status(404).send()
         }
 
-        saveiProfile(iProfile)
+        // necessary?
+        // const verifiedCertificate = profile.certifications.find(certification => certification.isValidated === true);
+        // if (verifiedCertificate) {
+        //     saveiProfile(profile)
+        // }
+
         res.status(201).send(profile)
     } catch (e) {
         res.status(400).send(e)

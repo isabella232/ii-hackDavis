@@ -1,15 +1,16 @@
 const express = require('express')
-const User = require('../models/user')
+const Interpreter = require('../models/interpreterProfile')
 const auth = require('../middleware/auth')
-const ObjectID = require('mongodb').ObjectID;
-const { sendVerifyEmail, sendRejectEmail } = require('../utils/email');
+const ObjectID = require('mongodb').ObjectID
+const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
+const { saveiProfile } = require('../utils/algolia')
 
 const router = new express.Router()
 
 router.get('/admin/:id/homepage', async (req, res) => {
     try {
-        const users = await User.find().elemMatch('certifications', { isValidated: false }).limit(10)
-        const toValidate = users.map(interpreter => {
+        const interpreters = await Interpreter.find().elemMatch('certifications', { isValidated: false }).limit(10)
+        const toValidate = interpreters.map(interpreter => {
             const unvalidatedCertificates = []
             interpreter.certifications.forEach(certificate => {
                 if (!certificate.isValidated) {
@@ -33,13 +34,13 @@ router.get('/admin/:id/homepage', async (req, res) => {
 router.patch('/certificate/:id/verify', async (req, res) => {
     const id = req.params.id
     try {
-        const user = await User.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
+        const interperter = await User.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
         // const index = user.certifications.findIndex(certificate => certificate._id.toString() === id)
         // user.certifications[index].isValidated = true
         // await user.save()
-        sendVerifyEmail(user.email, user.name)
-        res.status(200).send(user)
-
+        saveiProfile(iProfile)
+        sendVerifyEmail(interperter.email, interperter.name)
+        res.status(200).send(interperter)
     } catch (error) {
         res.status(400).send(error)
     }

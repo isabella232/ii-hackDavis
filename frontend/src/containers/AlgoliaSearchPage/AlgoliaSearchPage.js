@@ -15,7 +15,7 @@ class AlgoliaSearchPage extends Component {
         return (
             <div className={classes.SearchPage}>
                 <InstantSearch indexName={process.env.REACT_APP_ALGOLIA_INDEX_NAME} searchClient={searchClient}>
-                    <Configure hitsPerPage={5} attributesToSnippet={["description:24"]} snippetEllipsisText=" [...]" />
+                    <Configure hitsPerPage={5} />
 
                     <Grid container spacing={2} justify='center'>
                         <Grid item xs={12} sm={6}>
@@ -25,7 +25,6 @@ class AlgoliaSearchPage extends Component {
 
                             <Stats />
 
-                            <h1>Map</h1>
                             <Map />
                         </Grid>
 
@@ -42,24 +41,3 @@ class AlgoliaSearchPage extends Component {
 }
 
 export default AlgoliaSearchPage;
-
-/* <div id="categories">
-    <Panel header="Categories">
-        <Facet attribute="categories" />
-    </Panel>
-</div>
-<div id="brands">
-    <Panel header="Brands">
-        <Facet
-            attribute="brand"
-            searchable={true}
-            translations={{ placeholder: "Search for other..." }}
-        />
-    </Panel>
-</div>
-<div id="price">
-    <Panel header="Price">
-        <RangeSlider attribute="price" />
-    </Panel>
-</div> */
-
