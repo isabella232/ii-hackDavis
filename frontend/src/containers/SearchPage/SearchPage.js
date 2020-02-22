@@ -1,35 +1,40 @@
-import React, { Component } from 'react';
-import SearchBar from '../../components/SearchBar/SearchBar';
-import SearchResults from '../../components/SearchResults/SearchResults';
+import React, { Component } from "react";
+import { InstantSearch, SearchBox, Pagination, Configure, Panel } from "react-instantsearch-dom";
+import './SearchPage.css'
+import classes from './SearchPage.module.css';
+import Grid from '@material-ui/core/Grid';
+
+import Stats from "../../components/SearchPage/Stats/Stats";
+import Content from "../../components/SearchPage/Content/Content";
+import Map from '../../components/SearchPage/Map/Map';
+
+import { searchClient } from '../../services/SearchService';
 
 class SearchPage extends Component {
-    state = {
-        resultsData: [
-            {
-                name: "Penny",
-                language: "Spanish",
-                credentials: "B.S. Communications",
-                city: "Davis,CA",
-                rating: 4
-            },
-            {
-                name: "Yeet",
-                language: "Tagalog",
-                credentials: "B.S. Communications",
-                city: "San Jose,CA",
-                rating: 1
-            }
-        ],
-    }
-
     render() {
         return (
-            <div className="SearchPage">
-                <h1>Search for an interpreter</h1>
-                <SearchBar />
-                <ul>
-                    <SearchResults resultsData={this.state.resultsData} />
-                </ul>
+            <div className={classes.SearchPage}>
+                <InstantSearch indexName={process.env.REACT_APP_ALGOLIA_INDEX_NAME} searchClient={searchClient}>
+                    <Configure hitsPerPage={5} />
+
+                    <Grid container spacing={2} justify='center'>
+                        <Grid item xs={12} sm={6}>
+                            <div className={classes.searchBox}>
+                                <SearchBox translations={{ placeholder: "Search for translators" }} />
+                            </div>
+
+                            <Stats />
+
+                            <Map />
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <Content />
+                        </Grid>
+                    </Grid>
+
+                    <Pagination />
+                </InstantSearch>
             </div>
         );
     }

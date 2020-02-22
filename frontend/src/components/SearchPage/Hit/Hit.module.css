@@ -41,14 +41,3 @@
 .Hit .location, .email {
     line-height: 30px;
 }
-
-.Hit .moreInfo {
-    margin-top: 2rem;
-    color: #027888;
-    font-weight: 500;
-    transition: color .2s ease-in-out;
-}
-
-.Hit .moreInfo:hover {
-    color: rgb(39, 194, 214);
-}

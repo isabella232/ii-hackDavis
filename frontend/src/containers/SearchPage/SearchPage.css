@@ -5,12 +5,12 @@
     width: 100%;
 }
 
-/* .ais-GeoSearch-map {
+.ais-GeoSearch-map {
     position: relative;
     overflow: hidden;
     height: 500px;
     width: 100%;
-} */
+}
   
 .ais-Highlight-highlighted,
 .ais-Snippet-highlighted {

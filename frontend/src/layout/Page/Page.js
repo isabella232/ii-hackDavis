@@ -18,10 +18,10 @@ const Page = props => {
       <main>
         <Switch>
           <Route path="/" exact component={LandingPage} />
-          <Route path="/search" exact component={SearchPage} />
-          <Route path="/webinar" exact component={WebinarPage} />
-          <Route path="/contactus" exact component={ContactUsPage} />
-          <Route path="/admin" exact component={AdminPage} />
+          <Route path="/webinar" component={WebinarPage} />
+          <Route path="/contactus" component={ContactUsPage} />
+          <Route path="/admin" component={AdminPage} />
+          <Route path="/search" component={SearchPage} />
         </Switch>
       </main>
 

@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Highlight, Snippet } from "react-instantsearch-dom";
 
+import InfoModal from '../../modals/InterpreterInfoModal/InterpreterInfoModal';
+
 import classes from './Hit.module.css';
 
 const Hit = ({ hit }) => {
@@ -26,7 +28,13 @@ const Hit = ({ hit }) => {
                 <div className={classes.email}>{hit.email}</div>
                 <div className={classes.location}>{hit.location}</div>
 
-                <div className={classes.moreInfo}>more info</div>
+                <InfoModal name={hit.name}
+                    avatar={hit.avatar}
+                    email={hit.email}
+                    location={hit.location}
+                    // gender={hit.gender}
+                    // phoneNumber={hit.phoneNumber}
+                    languages={hit.languages} />
             </div>
         </div>
     );
