@@ -50,6 +50,17 @@
     border: 1px solid #03A0B5;
 }
 
+.Modal .reviewOptions {
+    margin: .5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Modal .reviewArea {
+    height: 200px;
+    overflow-y: scroll;
+}
+
 .moreInfo {
     margin-top: 2rem;
     color: #027888;

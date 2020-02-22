@@ -61,7 +61,7 @@ const CertificationCard = (props) => {
                 <img alt={`${props.name}Avatar`} src='https://www.westonearthimages.com/images/slide/ea0063-1400-x-600.jpg' width='100%' />
 
                 {/* change later */}
-                <img src={imgsrc} alt={`${props.name}Avatar`} width='100%' />
+                {/* <img src={imgsrc} alt={`${props.name}Avatar`} width='100%' /> */}
 
                 <div className={classes.footer}>
                     <Button content='Reject' inverted click={rejectClicked} />

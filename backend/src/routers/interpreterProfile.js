@@ -3,6 +3,7 @@ const multer = require('multer')
 const InterpreterProfile = require('../models/interpreterProfile')
 const auth = require('../middleware/auth')
 const { saveiProfile } = require('../utils/algolia')
+const { accumulateRatings } = require('../utils/interpreterProfile')
 
 const router = new express.Router()
 
@@ -45,13 +46,6 @@ router.patch('/iProfile/me', auth, async (req, res) => {
         if (!profile) {
             return res.status(404).send()
         }
-
-        // necessary?
-        // const verifiedCertificate = profile.certifications.find(certification => certification.isValidated === true);
-        // if (verifiedCertificate) {
-        //     saveiProfile(profile)
-        // }
-
         res.status(201).send(profile)
     } catch (e) {
         res.status(400).send(e)
@@ -100,18 +94,6 @@ router.delete('/users/me/certificates', auth, async (req, res) => {
     }
 })
 
-// TODO: verify a certificate
-router.patch('/users/me/certificates', auth, async (req, res) => {
-    try {
-        // deletes all for now
-        // req.user.certificates = []
-        await req.user.save()
-        res.send()
-    } catch (e) {
-        res.send(500).send()
-    }
-})
-
 // TODO: fix the context type thing
 router.get('/users/:id/certificates', async (req, res) => {
     try {
@@ -124,6 +106,50 @@ router.get('/users/:id/certificates', async (req, res) => {
         // res.set('Content-Type', 'application/pdf')
         res.send(user.certificates)
     } catch (e) {
+        res.status(404).send()
+    }
+})
+
+// fetch all reviews for user
+router.get('/iProfile/:id/details', async (req, res) => {
+    try {
+        const interpreter = await InterpreterProfile.findById(req.params.id)
+        const reviews = interpreter.reviews.map(review => {
+            const rev = review.toObject()
+            delete rev._id
+            return rev
+        })
+        const details = {
+            rating: interpreter.rating,
+            reviews: reviews
+        }
+        res.status(200).send(details)
+    } catch (e) {
+        console.log('error', e)
+        res.status(404).send()
+    }
+})
+
+// add review by user to db
+router.post('/iProfile/:id/review', async (req, res) => {
+    try {
+        const interpreter = await InterpreterProfile.findById(req.params.id)
+        if (!interpreter.rating) {
+            interpreter.rating = req.body.rating
+        } else {
+            interpreter.rating = accumulateRatings(req.body.rating, interpreter.rating, interpreter.reviews.length)
+        }
+        const review = {
+            rating: req.body.rating,
+            userName: req.body.name,
+            comment: req.body.comment,
+            date: new Date()
+        }
+        interpreter.reviews.push(review)
+        interpreter.save()
+        res.status(200).send()
+    } catch (e) {
+        console.log('error', e)
         res.status(404).send()
     }
 })

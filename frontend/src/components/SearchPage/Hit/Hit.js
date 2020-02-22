@@ -11,7 +11,7 @@ const Hit = ({ hit }) => {
         (index !== hit.languages.length - 1) ? <span>{lang.language}, </span> : <span>{lang.language}</span>
     )
     return (
-        <div className={classes.Hit}>
+        <div key={`hit-${hit.objectID}`} className={classes.Hit}>
             <div className={classes.avatar}>
                 <img src={hit.avatar} width='100%' />
             </div>
@@ -28,7 +28,8 @@ const Hit = ({ hit }) => {
                 <div className={classes.email}>{hit.email}</div>
                 <div className={classes.location}>{hit.location}</div>
 
-                <InfoModal name={hit.name}
+                <InfoModal key={`moreInfo-${hit.objectID}`} interpreterID={hit.objectID}
+                    name={hit.name}
                     avatar={hit.avatar}
                     email={hit.email}
                     location={hit.location}

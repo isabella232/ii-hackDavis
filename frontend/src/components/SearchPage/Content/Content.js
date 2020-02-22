@@ -4,6 +4,7 @@ import { connectStateResults } from "react-instantsearch/connectors";
 import './Content.css';
 
 import Hit from "../Hit/Hit";
+
 export default connectStateResults(
     ({ searchState, searchResults }) =>
         (searchResults && searchResults.nbHits !== 0) ?

@@ -78,7 +78,30 @@ const interpreterSchema = new mongoose.Schema({
         type: Number,
         min: 1,
         max: 5
-    }
+    },
+    // reviews
+    reviews: [{
+        userName: {
+            type: String,
+            trim: true,
+            required: true,
+        },
+        rating: {
+            type: Number,
+            min: 1,
+            max: 5,
+            required: true,
+        },
+        comment: {
+            type: String,
+            trim: true,
+            required: true,
+        },
+        date: {
+            type: Date,
+            required: true
+        }
+    }]
 }
 )
 

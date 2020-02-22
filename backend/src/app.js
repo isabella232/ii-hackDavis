@@ -13,13 +13,12 @@ const userRouter = require('./routers/user')
 const contactRouter = require('./routers/contactForm')
 const iProfileRouter = require('./routers/interpreterProfile')
 const adminRouter = require('./routers/admin')
-const searchRouter = require('./routers/search')
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
 var corsOptions = {
-    origin: 'localhost:3000', // change to actual url later
+    origin: 'localhost:8000', // change to actual url later
     credentials: true,
     origin: true,
 }
@@ -31,7 +30,6 @@ app.use(userRouter)
 app.use(contactRouter)
 app.use(iProfileRouter)
 app.use(adminRouter)
-app.use(searchRouter)
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
