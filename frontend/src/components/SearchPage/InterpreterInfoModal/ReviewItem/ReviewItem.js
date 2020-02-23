@@ -1,6 +1,6 @@
 import React from 'react';
 import Rating from '@material-ui/lab/Rating/Rating';
-import classes from './Review.module.css';
+import classes from './ReviewItem.module.css';
 
 const Review = (props) => {
     return (

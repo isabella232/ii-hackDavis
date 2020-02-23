@@ -119,8 +119,15 @@ router.get('/iProfile/:id/details', async (req, res) => {
             delete rev._id
             return rev
         })
+        const certifications = interpreter.certifications.map(certificate => {
+            return {
+                title: certificate.title,
+                image: certificate.file
+            }
+        })
         const details = {
             rating: interpreter.rating,
+            certifications: certifications,
             reviews: reviews
         }
         res.status(200).send(details)

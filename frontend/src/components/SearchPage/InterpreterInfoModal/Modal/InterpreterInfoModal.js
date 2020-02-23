@@ -6,19 +6,22 @@ import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import classes from './InterpreterInfoModal.module.css';
 
-import Button from '../../shared/Button/Button';
-import Review from '../../Review/Review';
+import CertificationItem from '../CertificateItem/CertificateItem';
+import ReviewItem from '../ReviewItem/ReviewItem';
+import ReviewModal from '../../ReviewModal/ReviewModal';
 
-import { fetchRatingAndReviews } from '../../../services/InterpreterService';
+import { fetchRatingAndReviews } from '../../../../services/InterpreterService';
 
 class InterpreterInfoModal extends Component {
     constructor(props) {
         super();
         this.state = {
-            interpreterID: props.interpreterID,
             open: false,
+            id: props.id,
+            name: props.name,
             rating: 0,
-            reviews: []
+            reviews: [],
+            certifications: []
         };
     }
 
@@ -32,30 +35,28 @@ class InterpreterInfoModal extends Component {
 
     expandDetails = () => {
         this.openModal();
-        fetchRatingAndReviews(this.state.interpreterID)
-            .then(data => {
-                console.log(data)
-                this.setState({
-                    rating: data.rating,
-                    reviews: data.reviews
+        if (!this.state.rating) {
+            fetchRatingAndReviews(this.state.id)
+                .then(data => {
+                    this.setState({
+                        rating: data.rating,
+                        certifications: data.certifications,
+                        reviews: data.reviews
+                    })
                 })
-            })
-            .catch(e => {
-                console.log(e)
-            })
-    }
+                .catch(e => {
+                    console.log(e)
+                })
+        }
 
-    submitRating = rating => {
-        console.log('rate', rating)
     }
 
     render() {
         const languages = this.props.languages.map(lang => <div className={classes.language}>{lang.language}: {lang.fluency} </div>)
-        const first = this.state.reviews[0] ? this.state.reviews[0] : null;
-        const firstReview = first ?
-            <Review userName={first.userName} rating={first.rating} comment={first.comment} />
+        const reviews = (this.state.reviews) ?
+            this.state.reviews.map(review => <ReviewItem userName={review.userName} rating={review.rating} comment={review.comment} />)
             : `${this.props.name} Has No Reviews.`;
-        const reviews = this.state.reviews.map(review => <Review userName={review.userName} rating={review.rating} comment={review.comment} />)
+        const certifications = this.state.certifications.map(cert => <CertificationItem title={cert.title} image={cert.image} />)
 
         return (
             <div>
@@ -80,7 +81,6 @@ class InterpreterInfoModal extends Component {
                                     <div className={classes.name}>{this.props.name}</div>
                                     <div className={classes.infoItem}>
                                         <Rating value={this.state.rating} readOnly />
-                                        {/* onChange={(e, newValue) => this.submitRating(newValue)} */}
                                     </div>
                                     <div className={classes.infoItem}>
                                         <div>Email:</div>
@@ -102,18 +102,19 @@ class InterpreterInfoModal extends Component {
 
                             <Grid container spacing={2} justify='center'>
                                 <Grid item xs={6}>
-                                    <div className={classes.title}>Certifications:</div>
+                                    <div className={classes.title}>Certifications:
+                                        <div className={classes.halfArea}>{certifications}</div>
+                                    </div>
                                 </Grid>
 
                                 <Grid item xs={6}>
                                     <div className={classes.title}>Reviews:
-                                        <div className={classes.reviewArea}>{reviews}</div>
-
+                                        <div className={classes.halfArea}>{reviews}</div>
                                     </div>
 
                                     <div className={classes.reviewOptions}>
-                                        {/* <Button inverted content={'View More'} /> */}
-                                        <Button content={'Leave a Review'} />
+                                        {/* change to user's name here */}
+                                        <ReviewModal id={this.state.id} name={this.state.name} userName={'Spicy Spice'} />
                                     </div>
                                 </Grid>
                             </Grid>

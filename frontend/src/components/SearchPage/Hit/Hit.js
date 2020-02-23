@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Highlight, Snippet } from "react-instantsearch-dom";
 
-import InfoModal from '../../modals/InterpreterInfoModal/InterpreterInfoModal';
+import InfoModal from '../InterpreterInfoModal/Modal/InterpreterInfoModal';
 
 import classes from './Hit.module.css';
 
@@ -28,7 +28,7 @@ const Hit = ({ hit }) => {
                 <div className={classes.email}>{hit.email}</div>
                 <div className={classes.location}>{hit.location}</div>
 
-                <InfoModal key={`moreInfo-${hit.objectID}`} interpreterID={hit.objectID}
+                <InfoModal key={`moreInfo-${hit.objectID}`} id={hit.objectID}
                     name={hit.name}
                     avatar={hit.avatar}
                     email={hit.email}

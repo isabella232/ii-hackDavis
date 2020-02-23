@@ -1,0 +1,11 @@
+.CertificateItem {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.CertificateItem .title {
+    color: #5A4F5A;
+    font-size: 20px;
+    font-weight: 500;
+}
