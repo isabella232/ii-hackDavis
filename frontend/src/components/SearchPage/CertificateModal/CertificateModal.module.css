@@ -1,0 +1,17 @@
+.CertificateModal .viewDocument {
+    font-size: 14px;
+    color: black;
+    color: #03A0B5;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.CertificateModal .viewDocument:hover {
+    color: rgb(39, 194, 214);
+}
+
+.CertificateModal .modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
