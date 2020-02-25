@@ -49,7 +49,7 @@ class ReviewModal extends Component {
             }
             submitReview(this.state.id, data)
                 .then(data => {
-                    alert('Successfully posted a review!');
+                    this.props.reloadDetails();
                     this.closeModal();
                 })
                 .catch(e => {

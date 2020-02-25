@@ -23,6 +23,8 @@ class InterpreterInfoModal extends Component {
             reviews: [],
             certifications: []
         };
+
+        this.reloadDetails = this.reloadDetails.bind(this);
     }
 
     openModal = () => {
@@ -33,21 +35,29 @@ class InterpreterInfoModal extends Component {
         this.setState({ open: false });
     }
 
+    fetchDetails = () => {
+        fetchRatingAndReviews(this.state.id)
+            .then(data => {
+                this.setState({
+                    rating: data.rating,
+                    certifications: data.certifications,
+                    reviews: data.reviews
+                })
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    }
+
     expandDetails = () => {
         this.openModal();
         if (!this.state.rating) {
-            fetchRatingAndReviews(this.state.id)
-                .then(data => {
-                    this.setState({
-                        rating: data.rating,
-                        certifications: data.certifications,
-                        reviews: data.reviews
-                    })
-                })
-                .catch(e => {
-                    console.log(e)
-                })
+            this.fetchDetails();
         }
+    }
+
+    reloadDetails = () => {
+        this.fetchDetails();
     }
 
     render() {
@@ -113,7 +123,7 @@ class InterpreterInfoModal extends Component {
 
                                     <div className={classes.reviewOptions}>
                                         {/* change to user's name here */}
-                                        <ReviewModal id={this.state.id} name={this.state.name} userName={'Spicy Spice'} />
+                                        <ReviewModal id={this.state.id} name={this.state.name} userName={'Spicy Spice'} reloadDetails={this.reloadDetails} />
                                     </div>
                                 </Grid>
                             </Grid>

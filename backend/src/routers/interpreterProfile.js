@@ -2,7 +2,6 @@ const express = require('express')
 const multer = require('multer')
 const InterpreterProfile = require('../models/interpreterProfile')
 const auth = require('../middleware/auth')
-const { saveiProfile } = require('../utils/algolia')
 const { accumulateRatings } = require('../utils/interpreterProfile')
 
 const router = new express.Router()
@@ -14,11 +13,10 @@ const router = new express.Router()
 router.post('/iProfile', async (req, res) => {
     var iProfile = new InterpreterProfile(req.body)
     try {
-        // interpreter coordinates are generated from location string
-        await iProfile.generateCoordinates(req)
+        // await iProfile.generateCoordinates(req)
+        await iProfile.generateCoordinates(req.body.location.locationString)
         await iProfile.save()
         const token = await iProfile.generateAuthToken()
-        // saveiProfile(iProfile)
         res.status(201).send(iProfile)
     } catch (e) {
         console.log(e)
@@ -140,7 +138,6 @@ router.get('/iProfile/:id/details', async (req, res) => {
         }
         res.status(200).send(details)
     } catch (e) {
-        console.log('error', e)
         res.status(404).send()
     }
 })
@@ -164,7 +161,6 @@ router.post('/iProfile/:id/review', async (req, res) => {
         interpreter.save()
         res.status(200).send()
     } catch (e) {
-        console.log('error', e)
         res.status(404).send()
     }
 })

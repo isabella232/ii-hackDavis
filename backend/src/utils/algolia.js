@@ -10,8 +10,8 @@ const parseiProfile = (iProfile) => {
     }))
 
     const coordinates = {
-        lat: 34.0536909,
-        lng: -118.2427666
+        lat: iProfile.location.coordinates.latitude,
+        lng: iProfile.location.coordinates.longitude
     }
 
     return {

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const User = require('./user')
-const geocode = require('../utils/geocode')
+// const geocode = require('../utils/geocode')
+const { getCoordinates } = require('../utils/geocoder')
 
 // returns a model with overlapping schema with the user
 const interpreterSchema = new mongoose.Schema({
@@ -51,7 +52,6 @@ const interpreterSchema = new mongoose.Schema({
         title: {
             type: String,
             trim: true,
-            lowercase: true,
             required: true,
         },
         file: {
@@ -107,32 +107,40 @@ const interpreterSchema = new mongoose.Schema({
 
 // generates the coordinates
 // have to return a promise in order for await keyword to work
-interpreterSchema.methods.generateCoordinates = async function (req) {
+// interpreterSchema.methods.generateCoordinates = async function (req) {
 
-    let locationPromise = new Promise(function (resolve, reject) {
-        if (req.body.location.locationString) {
-            geocode(req.body.location.locationString, (error, { latitude, longitude, location }) => {
-                // errors need to be done 
-                if (error) {
-                    return console.log(error)
-                }
-                resolve({ latitude, longitude })
-            })
-        } else {
-            // more correct way?
-            resolve(0, 0)
-        }
-    })
+//     let locationPromise = new Promise(function (resolve, reject) {
+//         if (req.body.location.locationString) {
+//             geocode(req.body.location.locationString, (error, { latitude, longitude, location }) => {
+//                 // errors need to be done 
+//                 if (error) {
+//                     return console.log(error)
+//                 }
+//                 resolve({ latitude, longitude })
+//             })
+//         } else {
+//             // more correct way?
+//             resolve(0, 0)
+//         }
+//     })
 
-    // need to use arrow functionin order to use the this keyword
-    locationPromise.then((value) => {
-        if (value.latitude && value.longitude) {
-            this.location.coordinates.latitude = value.longitude
-            this.location.coordinates.longitude = value.latitude
-        }
-    })
+//     // need to use arrow functionin order to use the this keyword
+//     locationPromise.then((value) => {
+//         if (value.latitude && value.longitude) {
+//             this.location.coordinates.latitude = value.longitude
+//             this.location.coordinates.longitude = value.latitude
+//         }
+//     })
 
-    return locationPromise
+//     return locationPromise
+// }
+
+interpreterSchema.methods.generateCoordinates = async function (location) {
+    const interpreter = this
+    const coordinates = await getCoordinates(location)
+        .then(coordinates => {
+            interpreter.location.coordinates = coordinates
+        })
 }
 
 module.exports = User.discriminator('Interpreter', interpreterSchema)

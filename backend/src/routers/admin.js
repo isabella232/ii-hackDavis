@@ -7,13 +7,13 @@ const { saveiProfile } = require('../utils/algolia')
 
 const router = new express.Router()
 
-router.get('/admin/:id/homepage', async (req, res) => {
+router.get('/admin', async (req, res) => {
     try {
         const interpreters = await Interpreter.find().elemMatch('certifications', { isValidated: false, isRejected: false }).limit(10)
         const toValidate = interpreters.map(interpreter => {
             const unvalidatedCertificates = []
             interpreter.certifications.forEach(certificate => {
-                if (!certificate.isValidated) {
+                if (!certificate.isValidated && !certificate.isRejected) {
                     unvalidatedCertificates.push(certificate)
                 }
             })

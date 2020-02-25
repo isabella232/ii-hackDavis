@@ -1,7 +1,7 @@
 import { backend } from './AxiosInstances';
 
-export const fetchCertificates = async (adminID) => {
-    const endpoint = `admin/${adminID}/homepage`;
+export const fetchCertificates = async () => {
+    const endpoint = `admin`;
     return backend.get(endpoint);
 }
 

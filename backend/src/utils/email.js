@@ -11,7 +11,7 @@ const sendWelcomeEmail = (email, name) => {
     })
 }
 
-const sendVerifyEmail = (email, name) => {
+const sendVerifyEmail = async (email, name) => {
     sgMail.send({
         to: email,
         from: 'test@example.com',
