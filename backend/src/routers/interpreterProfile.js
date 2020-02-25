@@ -18,7 +18,7 @@ router.post('/iProfile', async (req, res) => {
         await iProfile.generateCoordinates(req)
         await iProfile.save()
         const token = await iProfile.generateAuthToken()
-        saveiProfile(iProfile)
+        // saveiProfile(iProfile)
         res.status(201).send(iProfile)
     } catch (e) {
         console.log(e)
@@ -110,7 +110,7 @@ router.get('/users/:id/certificates', async (req, res) => {
     }
 })
 
-// fetch all reviews for user
+// fetch all details for interpreter
 router.get('/iProfile/:id/details', async (req, res) => {
     try {
         const interpreter = await InterpreterProfile.findById(req.params.id)
@@ -119,14 +119,22 @@ router.get('/iProfile/:id/details', async (req, res) => {
             delete rev._id
             return rev
         })
-        const certifications = interpreter.certifications.map(certificate => {
-            return {
-                title: certificate.title,
-                image: certificate.file
+        reviews.sort(function (a, b) {
+            return b.date - a.date;
+        });
+        const certifications = []
+        interpreter.certifications.forEach(certificate => {
+            if (!certificate.isRejected) {
+                const cert = {
+                    title: certificate.title,
+                    image: certificate.file,
+                    isValidated: certificate.isValidated
+                }
+                certifications.push(cert)
             }
         })
         const details = {
-            rating: interpreter.rating,
+            rating: interpreter.rating ? interpreter.rating : null,
             certifications: certifications,
             reviews: reviews
         }

@@ -19,14 +19,16 @@ const Hit = ({ hit }) => {
                 <div className={classes.name}>
                     <Highlight attribute="name" hit={hit} tagName="em" />
                 </div>
-                <div className={classes.languages}>
-                    <Snippet attribute="languages" hit={hit} />
-                </div>
+
                 <div className={classes.languages}>
                     {languages}
                 </div>
-                <div className={classes.email}>{hit.email}</div>
-                <div className={classes.location}>{hit.location}</div>
+                <div className={classes.email}>
+                    <Highlight attribute="email" hit={hit} tagName="em" />
+                </div>
+                <div className={classes.location}>
+                    <Highlight attribute="location" hit={hit} tagName="em" />
+                </div>
 
                 <InfoModal key={`moreInfo-${hit.objectID}`} id={hit.objectID}
                     name={hit.name}

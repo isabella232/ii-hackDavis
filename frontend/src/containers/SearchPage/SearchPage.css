@@ -16,7 +16,7 @@
 .ais-Snippet-highlighted {
     font-style: normal;
     font-weight: bold;
-    color: salmon;
+    color: #03A0B5;
 }
 
 .ais-SearchBox {
@@ -86,6 +86,10 @@
 .ais-SearchBox-input::-webkit-search-results-button,
 .ais-SearchBox-input::-webkit-search-results-decoration { 
     display: none; 
+}
+
+.ais-MapControl {
+    margin: 1rem 0;
 }
 
 #pagination {

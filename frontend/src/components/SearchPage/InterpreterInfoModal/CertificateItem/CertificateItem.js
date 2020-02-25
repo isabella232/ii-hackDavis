@@ -6,7 +6,8 @@ const CertificateItem = props => {
     return (
         <div className={classes.CertificateItem}>
             <div className={classes.title}>{props.title}</div>
-            <CheckCircleIcon />
+            {props.isValidated}
+            {props.isValidated ? <CheckCircleIcon /> : null}
         </div>
     )
 }

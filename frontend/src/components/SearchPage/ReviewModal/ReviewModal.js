@@ -37,8 +37,10 @@ class ReviewModal extends Component {
     }
 
     postReview = () => {
-        if (!this.state.rating || this.state.comment === '') {
-            alert(`Please fill out your rating and comment for ${this.props.name} before posting.`)
+        if (!this.state.rating) {
+            alert(`Please rate ${this.props.name} before posting.`);
+        } else if (this.state.comment === '') {
+            alert(`Please fill out your comment for ${this.props.name} before posting.`);
         } else {
             const data = {
                 name: this.state.userName,

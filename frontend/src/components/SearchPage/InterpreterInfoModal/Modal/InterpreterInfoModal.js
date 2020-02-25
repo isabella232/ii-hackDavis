@@ -48,15 +48,14 @@ class InterpreterInfoModal extends Component {
                     console.log(e)
                 })
         }
-
     }
 
     render() {
         const languages = this.props.languages.map(lang => <div className={classes.language}>{lang.language}: {lang.fluency} </div>)
-        const reviews = (this.state.reviews) ?
-            this.state.reviews.map(review => <ReviewItem userName={review.userName} rating={review.rating} comment={review.comment} />)
-            : `${this.props.name} Has No Reviews.`;
-        const certifications = this.state.certifications.map(cert => <CertificationItem title={cert.title} image={cert.image} />)
+        const reviews = (this.state.reviews.length) ?
+            this.state.reviews.map(review => <ReviewItem userName={review.userName} rating={review.rating} comment={review.comment} date={review.date} />)
+            : <div className={classes.noReviews}>{this.props.name} Has No Reviews Yet.</div>;
+        const certifications = this.state.certifications.map(cert => <CertificationItem title={cert.title} image={cert.image} isValidated={cert.isValidated} />)
 
         return (
             <div>

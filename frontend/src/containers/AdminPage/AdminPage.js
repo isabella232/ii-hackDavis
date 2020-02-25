@@ -17,8 +17,8 @@ class AdminPage extends Component {
 
     componentDidMount() {
         fetchCertificates(1234) // adminID for authentication here?
-            .then(response => {
-                this.setState({ users: response })
+            .then(data => {
+                this.setState({ users: data })
             }).catch(error => {
                 console.log(error);
             })

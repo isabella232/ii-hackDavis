@@ -18,6 +18,7 @@ const CertificationCard = (props) => {
     const verifyClicked = () => {
         verifyCertificate(id)
             .then(() => {
+                alert("Successfully Verified Certificate!");
                 setVerified(true)
             }).catch(error => {
                 console.log(error)
@@ -28,6 +29,7 @@ const CertificationCard = (props) => {
     const rejectClicked = () => {
         rejectCertificate(id)
             .then(() => {
+                alert("Successfully Rejected Certificate!");
                 setRejected(true)
             }).catch(error => {
                 console.log(error)

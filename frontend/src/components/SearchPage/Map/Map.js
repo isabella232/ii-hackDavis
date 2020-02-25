@@ -8,15 +8,16 @@ class Map extends Component {
                 {google => (
                     <GeoSearch google={google}
                         zoom={10}
-                        // enableRefine={true}
-                        initialPosition={{
-                            lat: 40.781314849853516,
-                            lng: -73.97395324707031,
-                        }}>
+                        enableRefine={true}
+                        enableRefineOnMapMove={false}>
                         {({ hits }) => {
                             return (
                                 <>
-                                    <Control />
+                                    <div className='ais-MapControl'>
+                                        <Control translations={{
+                                            control: 'Search As I Move The Map',
+                                        }} />
+                                    </div>
                                     {hits.map(hit => (
                                         <Marker key={hit.objectID} hit={hit} />
                                     ))}

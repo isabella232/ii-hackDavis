@@ -18,6 +18,12 @@
     box-shadow: 0px 8px 25px rgba(3, 160, 181, 0.25);
 }
 
+.Modal .noReviews {
+    font-size: 16px;
+    color: black;
+    margin: 1rem 2rem;
+}
+
 .Modal .language {
     margin-left: 2rem;
 }
