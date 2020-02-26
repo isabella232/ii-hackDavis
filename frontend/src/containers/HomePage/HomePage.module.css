@@ -2,7 +2,7 @@
     padding: 10px 5%;
 }
 
-.HomePage .section {
+.HomePage .section, .previewSection {
     margin: 2rem auto;
     max-width: 900px;
 }
@@ -12,6 +12,10 @@
     padding: 5% 10%;
     background: #03A0B5;
     color: white;
+}
+
+.HomePage .previewSection {
+    text-align: center;
 }
 
 .HomePage .title {

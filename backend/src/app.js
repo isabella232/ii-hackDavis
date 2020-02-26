@@ -1,14 +1,17 @@
 require('dotenv').config()
+require('./db/mongoose')
+
 const path = require('path')
 const express = require('express')
 // const hbs = require('hbs')
 const chalk = require('chalk')
 const cors = require('cors')
 
-require('./db/mongoose')
 const User = require('./models/user')
 const ContactForm = require('./models/contactForm')
 const iProfile = require('./models/interpreterProfile')
+
+const homeRouter = require('./routers/home')
 const userRouter = require('./routers/user')
 const contactRouter = require('./routers/contactForm')
 const iProfileRouter = require('./routers/interpreterProfile')
@@ -26,6 +29,7 @@ var corsOptions = {
 app.use(cors(corsOptions))
 app.options('*', cors())
 app.use(express.json())
+app.use(homeRouter)
 app.use(userRouter)
 app.use(contactRouter)
 app.use(iProfileRouter)

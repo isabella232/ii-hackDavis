@@ -17,16 +17,17 @@ class SearchPage extends Component {
                 <InstantSearch indexName={process.env.REACT_APP_ALGOLIA_INDEX_NAME} searchClient={searchClient}>
                     <Configure hitsPerPage={5} />
 
+                    <div className={classes.searchBox}>
+                        <SearchBox translations={{ placeholder: "e.g. Anna Smith Spanish San Francisco" }} />
+                        <Stats />
+                    </div>
+
                     <Grid container spacing={2} justify='center'>
-                        <Grid item xs={12} sm={6}>
-                            <div className={classes.searchBox}>
-                                <SearchBox translations={{ placeholder: "e.g. Anna Smith Spanish San Francisco" }} />
-                            </div>
-                            <Stats />
+                        <Grid item xs={12} sm={6} md={7} lg={8}>
                             <Map />
                         </Grid>
 
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={6} md={5} lg={4}>
                             <Content />
                         </Grid>
                     </Grid>

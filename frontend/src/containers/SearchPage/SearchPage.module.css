@@ -1,3 +1,7 @@
 .SearchPage {
   margin: 0 5%;
 }
+
+.SearchPage .searchBox {
+  margin-bottom: 1rem;
+}

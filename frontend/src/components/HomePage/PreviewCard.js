@@ -1,4 +1,5 @@
 import React from 'react';
+import Rating from '@material-ui/lab/Rating';
 import classes from './PreviewCard.module.css';
 
 const PreviewCard = props => {
@@ -15,7 +16,6 @@ const PreviewCard = props => {
                 <div className={classes.name}>
                     {props.name}
                 </div>
-
                 <div className={classes.languages}>
                     {languages}
                 </div>
@@ -25,8 +25,9 @@ const PreviewCard = props => {
                 <div className={classes.location}>
                     {props.location}
                 </div>
-
-                more info
+                <div className={classes.rating}>
+                    <Rating value={props.rating} readOnly />
+                </div>
             </div>
         </div>
     )

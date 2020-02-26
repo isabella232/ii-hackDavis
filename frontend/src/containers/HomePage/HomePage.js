@@ -5,28 +5,42 @@ import classes from './HomePage.module.css';
 import Avatar from '../../components/shared/Avatar/Avatar';
 import PreviewCard from '../../components/HomePage/PreviewCard';
 
+import { fetchHome } from '../../services/HomeService';
+
 class HomePage extends Component {
     constructor() {
         super();
         this.state = {
-            avatar: 'https://cdn.dribbble.com/users/862175/screenshots/5818050/4_illustrations_january_marta.jpg',
-            name: 'Moomin Azkaban',
-            location: 'Davis, CA',
-            interpreters: [
-                {
-                    name: 'Moomin Azkaban',
-                    avatar: 'https://cdn.dribbble.com/users/862175/screenshots/5818050/4_illustrations_january_marta.jpg',
-                    languages: ['Spanish', 'English'],
-                    email: 'mooaz@gmail.com',
-                    degree: 'B.S. in Communication',
-                    location: 'Davis, CA'
-                }
-            ]
+            quote: {},
+            interpreters: []
         }
     }
 
+    componentDidMount() {
+        fetchHome()
+            .then(data => {
+                this.setState({
+                    quote: data.quote,
+                    interpreters: data.interpreters
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     render() {
-        const interpreter = this.state.interpreters[0];
+        const previews = this.state.interpreters.map(interpreter =>
+            <div className={classes.previewCard}>
+                <PreviewCard name={interpreter.name}
+                    avatar={interpreter.avatar}
+                    languages={interpreter.languages}
+                    email={interpreter.email}
+                    location={interpreter.location}
+                    rating={interpreter.rating} />
+            </div>
+        );
+
         return (
             <div className={classes.HomePage}>
                 <div className={classes.section}>
@@ -42,23 +56,25 @@ class HomePage extends Component {
                     </Grid>
                 </div>
 
-                <div className={classes.invertedSection}>
-                    <div className={classes.quote}>
-                        "Thanks to Indigenous Interpreters, I found just the help that I needed."
+                {this.state.quote ?
+                    <div className={classes.invertedSection}>
+                        <div className={classes.quote}>
+                            "{this.state.quote.quote}"
                     </div>
-                    <div className={classes.author}>
-                        <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
+                        <div className={classes.author}>
+                            <Avatar name={this.state.quote.authorName} avatar={this.state.quote.avatar} size={7} />
 
-                        <div>
-                            <div className={classes.infoItem}>
-                                <strong>{this.state.name}</strong>
-                            </div>
-                            <div className={classes.infoItem}>
-                                {this.state.location}
+                            <div>
+                                <div className={classes.infoItem}>
+                                    <strong>{this.state.quote.authorName}</strong>
+                                </div>
+                                <div className={classes.infoItem}>
+                                    {this.state.quote.location}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div> : null
+                }
 
                 <div className={classes.section}>
                     <Grid container spacing={2} justify='center' alignItems='center'>
@@ -72,17 +88,11 @@ class HomePage extends Component {
                     </Grid>
                 </div>
 
-                <div className={classes.section}>
+                <div className={classes.previewSection}>
                     <div className={classes.title}>Find An Interpreter</div>
                     <div>You can look up interpreters by name, languages, location...</div>
                     <div className={classes.previewArea}>
-                        <div className={classes.previewCard}>
-                            <PreviewCard name={interpreter.name}
-                                avatar={interpreter.avatar}
-                                languages={interpreter.languages}
-                                email={interpreter.email}
-                                location={interpreter.location} />
-                        </div>
+                        {previews}
                     </div>
                 </div>
 
