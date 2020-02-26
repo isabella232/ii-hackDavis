@@ -2,7 +2,7 @@ const express = require('express')
 const multer = require('multer')
 const InterpreterProfile = require('../models/interpreterProfile')
 const auth = require('../middleware/auth')
-const { accumulateRatings } = require('../utils/interpreterProfile')
+const { accumulateRatings, processReviews } = require('../utils/interpreterProfile')
 
 const router = new express.Router()
 
@@ -112,14 +112,7 @@ router.get('/users/:id/certificates', async (req, res) => {
 router.get('/iProfile/:id/details', async (req, res) => {
     try {
         const interpreter = await InterpreterProfile.findById(req.params.id)
-        const reviews = interpreter.reviews.map(review => {
-            const rev = review.toObject()
-            delete rev._id
-            return rev
-        })
-        reviews.sort(function (a, b) {
-            return b.date - a.date;
-        });
+        const reviews = processReviews([...interpreter.reviews])
         const certifications = []
         interpreter.certifications.forEach(certificate => {
             if (!certificate.isRejected) {

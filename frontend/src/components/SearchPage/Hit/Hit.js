@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Highlight, Snippet } from "react-instantsearch-dom";
+import { Highlight } from "react-instantsearch-dom";
 
 import InfoModal from '../InterpreterInfoModal/Modal/InterpreterInfoModal';
 

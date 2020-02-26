@@ -25,7 +25,7 @@
 }
 
 .Navigation ul:hover:not(.active) {
-  color: black;
+  color: #03a0b5;
   border-bottom: 2px solid #03a0b5;
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { InstantSearch, SearchBox, Pagination, Configure, Panel } from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, Pagination, Configure } from "react-instantsearch-dom";
 import './SearchPage.css'
 import classes from './SearchPage.module.css';
 import Grid from '@material-ui/core/Grid';

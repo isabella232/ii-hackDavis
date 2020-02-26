@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import classes from './AdminPage.module.css'
 
-import Button from '../../components/shared/Button/Button';
 import CertificationCard from '../../components/AdminPage/CertificationCard/CertificationCard';
 import EventCard from '../../components/AdminPage/EventCard/EventCard';
 
@@ -45,7 +44,6 @@ class AdminPage extends Component {
 
                 <div className={classes.title}>Past Events</div>
                 <EventCard title='BitCard' date='2/4/2020' time='9:00 PM' past />
-                <Button content="hwlloe" />
 
                 <div className={classes.horzLine} />
 

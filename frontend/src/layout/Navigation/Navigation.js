@@ -66,12 +66,6 @@ class Navigation extends Component {
               clicked={this.navButtonClickedHandler}
             />
             <NavElement
-              name="Webinar"
-              to="/webinar"
-              activeNav={this.state.activeNav}
-              clicked={this.navButtonClickedHandler}
-            />
-            <NavElement
               name="Contact Us"
               to="/contactus"
               activeNav={this.state.activeNav}

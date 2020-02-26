@@ -37,7 +37,6 @@ const CertificationModal = props => {
                 <Fade in={open}>
                     <img src='https://www.westonearthimages.com/images/slide/ea0063-1400-x-600.jpg' width='80%' />
                     {/* <img src={props.image} width='100%' /> */}
-
                 </Fade>
             </Modal>
         </div>

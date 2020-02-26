@@ -1,43 +1,43 @@
-.Hit {
+.PreviewCard {
     display: flex;
     align-items: center;
-    width: 100%;
     background: #FFFFFF;
-    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    min-width: 400px;
-    margin: -15px 0 30px -35px;
+    width: 400px;
+    margin: 0 3rem;
     -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.Hit:hover {
-    box-shadow: 0px 8px 25px lightgrey;
+.PreviewCard:hover {
+    box-shadow: 0px 8px 10px lightgrey;
     transform: translateY(-5px);
 }
 
-.Hit .avatar {
+.PreviewCard .avatar {
     border-radius: 10px;
     min-width: 150px;
     max-width: 200px;
 }
 
-.Hit .content {
+.PreviewCard .content {
     padding: 1rem;
 }
 
-.Hit .name {
+.PreviewCard .name {
     font-weight: bold;
     font-size: 28px;
     line-height: 35px;
 }
 
-.Hit .languages {
+.PreviewCard .languages {
     font-size: 20px;
     line-height: 30px;
     color: #027888;
 }
 
-.Hit .location, .email {
+.PreviewCard .location, .email {
     line-height: 30px;
 }
