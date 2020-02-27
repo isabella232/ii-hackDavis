@@ -28,7 +28,7 @@ class AdminPage extends Component {
             user.unvalidatedCertificates.map(certificate => (
                 <CertificationCard key={`${certificate._id}`}
                     id={certificate._id}
-                    avatar='https://littlebeebooks.com/wp-content/uploads/2017/04/Moomin1.png'
+                    avatar={user.avatar}
                     name={user.name}
                     title={certificate.title}
                     location={user.location}

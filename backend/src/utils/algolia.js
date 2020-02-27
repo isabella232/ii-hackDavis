@@ -4,8 +4,8 @@ const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADM
 const index = client.initIndex(process.env.ALGOLIA_INDEX_NAME)
 
 const parseiProfile = (iProfile) => {
-    const languagues = iProfile.iLangFluencies.map(lang => ({
-        language: lang.iLangFluency,
+    const languagues = iProfile.languages.map(lang => ({
+        language: lang.language,
         fluency: lang.fluency
     }))
 
@@ -28,14 +28,10 @@ const parseiProfile = (iProfile) => {
 const saveiProfile = async (iProfile) => {
     const data = parseiProfile(iProfile)
     index.saveObject(data)
-    // .catch(error => {
-    //     throw error
-    // })
 }
 
 const getiProfile = async (objectID) => {
     index.getObject(objectID)
-        // .then(o => console.log(o))
         .catch(error => {
             throw error
         })

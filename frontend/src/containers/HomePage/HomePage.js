@@ -89,8 +89,10 @@ class HomePage extends Component {
                 </div>
 
                 <div className={classes.previewSection}>
-                    <div className={classes.title}>Find An Interpreter</div>
-                    <div>You can look up interpreters by name, languages, location...</div>
+                    <div className={classes.previewHeader}>
+                        <div className={classes.title}>Find An Interpreter</div>
+                        <div>You can look up interpreters by name, languages, location...</div>
+                    </div>
                     <div className={classes.previewArea}>
                         {previews}
                     </div>
@@ -107,7 +109,7 @@ class HomePage extends Component {
                             <p>Bacon ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet.</p>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <div className={classes.title}>How To Get Involved?</div>
+                            <div className={classes.title}>Join Us!</div>
                             <p>Bacon ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet.</p>
                         </Grid>
                     </Grid>

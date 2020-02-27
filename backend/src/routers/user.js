@@ -1,11 +1,10 @@
 const express = require('express')
-const multer = require('multer')
 const sharp = require('sharp')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
+const { avatarUpload } = require('../utils/multer')
 const { sendWelcomeEmail } = require('../utils/email')
-const geocode = require('../utils/geocode')
 
 const router = new express.Router()
 
@@ -71,89 +70,6 @@ router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
 
-// gets multiple users (this is for the search page), no auth
-router.get('/users', auth, async (req, res) => {
-
-    // this is undefined
-    console.log("I think this should not be undefined: " + req.user)
-
-    // this is not in the right location
-    try {
-        console.log("this works")
-        //await req.user.populate('interpreters').execPopulate()  
-        await req.populate('users').execPopulate()
-        console.log("this wasn't working before my push")
-
-        //  await req.user.populate({
-        //      path: 'users',
-        // //      match,
-        // //      options: {                            
-        // //          limit: parseInt(req.query.limit),
-        // //          skip: parseInt(req.query.skip)                
-        // //      }
-        //  }).execPopulate()
-
-        // correct error        
-        //res.send(req.user.interpreters)
-        res.send(req.users)
-        console.log(req.users)
-        console.log(req.user.interpreters)
-
-    } catch (e) {
-        res.status(500).send()
-    }
-
-    const match = {
-        kind: "Interpreter"
-    }
-
-    if (req.query.language)
-        match.language = req.query.language.trim().toLowerCase()
-    if (req.query.certification)
-        match.certification = req.query.certification.trim().toLowerCase()
-    if (req.query.service)
-        match.service = req.query.service.trim().toLowerCase()
-    if (req.query.rating)
-        match.rating = req.query.rating
-
-    let locationPromise = new Promise(function (resolve, reject) {
-        if (req.query.location) {
-            geocode(req.query.location, (error, { latitude, longitude, location }) => {
-                // errors need to be done 
-                if (error) {
-                    return console.log(error)
-                }
-                resolve({ latitude, longitude })
-            })
-        } else {
-            // more correct way?
-            resolve(0, 0)
-        }
-    });
-
-    locationPromise.then(function (value) {
-        if (value.latitude && value.longitude) {
-            match.latitude = value.latitude
-            match.longitude = value.longitude
-        }
-        console.log(match)
-
-        // TODO 2: populate
-
-        // TODO 3: query string must contain ?limit=VALUE&skip=VALUE (limit how many results per page)
-        // TODO 4: distance formula between schema coors and match.lat match.long
-        // TODO 5: sort results
-    });
-
-
-
-    // This does not work...
-
-    // res.render('search', {
-    //     title: 'Find Interpreters'
-    // })
-})
-
 // user can update their own profiles
 router.patch('/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
@@ -176,48 +92,43 @@ router.patch('/users/me', auth, async (req, res) => {
     }
 })
 
-// upload profile pic
-const upload = multer({
-    limits: {
-        fileSize: 1000000
-    },
-    fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(png|jpg|jpeg)$/)) {
-            return cb(new Error('Please upload an image file'))
-        }
+// router.post('/users/me/avatar', auth, avatarUpload.single('avatar'), async (req, res) => {
+//     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+//     req.user.avatar = buffer
+//     await req.user.save()
+//     res.send()
+// }, (error, req, res, next) => {
+//     res.status(400).send({ error: error.message })
+// })
 
-        cb(undefined, true)
-    }
-})
-
-router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
-    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
-    req.user.avatar = buffer
-    await req.user.save()
-    res.send()
-}, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
-})
-
-router.delete('/users/me/avatar', auth, async (req, res) => {
-    req.user.avatar = undefined
-    await req.user.save()
-    res.send()
-})
+// router.delete('/users/me/avatar', auth, async (req, res) => {
+//     req.user.avatar = undefined
+//     await req.user.save()
+//     res.send()
+// })
 
 router.get('/users/:id/avatar', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
-
         if (!user || !user.avatar) {
             throw new Error()
         }
-
-        res.set('Content-Type', 'image/jpg')
+        res.set('Content-Type', 'image/png')
         res.send(user.avatar)
     } catch (e) {
         res.status(404).send()
     }
+})
+
+// testing route for above uploading avatar route
+router.post('/users/:id/avatar', avatarUpload.single('avatar'), async (req, res) => {
+    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+    const user = await User.findById(req.params.id)
+    user.avatar = buffer
+    await user.save()
+    res.send()
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 module.exports = router

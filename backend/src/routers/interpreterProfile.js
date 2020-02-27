@@ -1,7 +1,7 @@
 const express = require('express')
-const multer = require('multer')
 const InterpreterProfile = require('../models/interpreterProfile')
 const auth = require('../middleware/auth')
+const { certUpload } = require('../utils/multer')
 const { accumulateRatings, processReviews } = require('../utils/interpreterProfile')
 
 const router = new express.Router()
@@ -13,7 +13,6 @@ const router = new express.Router()
 router.post('/iProfile', async (req, res) => {
     var iProfile = new InterpreterProfile(req.body)
     try {
-        // await iProfile.generateCoordinates(req)
         await iProfile.generateCoordinates(req.body.location.locationString)
         await iProfile.save()
         const token = await iProfile.generateAuthToken()
@@ -27,7 +26,7 @@ router.post('/iProfile', async (req, res) => {
 // interpreters can update their own profiles
 router.patch('/iProfile/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['location', 'iLangFluency', 'eLangFluency', 'certification']
+    const allowedUpdates = ['location', 'languagues', 'englishFluency', 'certification']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
@@ -50,23 +49,8 @@ router.patch('/iProfile/me', auth, async (req, res) => {
     }
 })
 
-// upload certification
-// test this part
-const upload = multer({
-    limits: {
-        fileSize: 100000000
-    },
-    fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(doc|docx|pdf)$/)) {
-            return cb(new Error('Please upload a doc, docx, or pdf file'))
-        }
-
-        cb(undefined, true)
-    }
-})
-
 // Adds a Certification to the user
-router.post('/users/me/certificates', auth, upload.single('certificate'), async (req, res) => {
+router.post('/iProfile/me/certificates', auth, certUpload.single('certificate'), async (req, res) => {
     //creates new certificate from req
     const newCertificate = {
         certification: req.body.certificateName,
@@ -81,7 +65,7 @@ router.post('/users/me/certificates', auth, upload.single('certificate'), async 
 })
 
 // TODO: delete only one certificate
-router.delete('/users/me/certificates', auth, async (req, res) => {
+router.delete('/iProfile/me/certificates', auth, async (req, res) => {
     try {
         // deletes all for now
         req.user.certificates = []
@@ -93,7 +77,7 @@ router.delete('/users/me/certificates', auth, async (req, res) => {
 })
 
 // TODO: fix the context type thing
-router.get('/users/:id/certificates', async (req, res) => {
+router.get('/iProfile/:id/certificates', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
 
@@ -129,7 +113,7 @@ router.get('/iProfile/:id/details', async (req, res) => {
             certifications: certifications,
             reviews: reviews
         }
-        res.status(200).send(details)
+        res.send(details)
     } catch (e) {
         res.status(404).send()
     }
@@ -148,11 +132,11 @@ router.post('/iProfile/:id/review', async (req, res) => {
             rating: req.body.rating,
             userName: req.body.name,
             comment: req.body.comment,
-            date: new Date()
+            // date: new Date() // not necessary anymore?
         }
         interpreter.reviews.push(review)
         interpreter.save()
-        res.status(200).send()
+        res.send()
     } catch (e) {
         res.status(404).send()
     }

@@ -4,6 +4,7 @@ const auth = require('../middleware/auth')
 const ObjectID = require('mongodb').ObjectID
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveiProfile } = require('../utils/algolia')
+const { getImageURL } = require('../utils/image')
 
 const router = new express.Router()
 
@@ -12,6 +13,8 @@ router.get('/admin', async (req, res) => {
         const interpreters = await Interpreter.find().elemMatch('certifications', { isValidated: false, isRejected: false }).limit(10)
         const toValidate = interpreters.map(interpreter => {
             const unvalidatedCertificates = []
+            const avatarURL = getImageURL(interpreter._id)
+
             interpreter.certifications.forEach(certificate => {
                 if (!certificate.isValidated && !certificate.isRejected) {
                     unvalidatedCertificates.push(certificate)
@@ -20,12 +23,12 @@ router.get('/admin', async (req, res) => {
 
             return {
                 name: interpreter.name,
-                avatar: interpreter.avatar,
+                avatar: avatarURL,
                 location: interpreter.location.locationString,
                 unvalidatedCertificates: unvalidatedCertificates
             }
         })
-        res.status(200).send(toValidate)
+        res.send(toValidate)
     } catch (error) {
         res.status(400).send(error)
     }
@@ -40,7 +43,7 @@ router.patch('/certificate/:id/verify', async (req, res) => {
         await interpreter.save()
         saveiProfile(interpreter)
         sendVerifyEmail(interpreter.email, interpreter.name)
-        res.status(200).send(interpreter)
+        res.send(interpreter)
     } catch (error) {
         res.status(400).send(error)
     }
@@ -54,7 +57,7 @@ router.patch('/certificate/:id/reject', async (req, res) => {
         interpreter.certifications[index].isRejected = true
         await interpreter.save()
         sendRejectEmail(interpreter.email, interpreter.name)
-        res.status(200).send(interpreter)
+        res.send(interpreter)
     } catch (error) {
         res.status(400).send(error)
     }

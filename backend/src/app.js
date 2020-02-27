@@ -3,13 +3,8 @@ require('./db/mongoose')
 
 const path = require('path')
 const express = require('express')
-// const hbs = require('hbs')
 const chalk = require('chalk')
 const cors = require('cors')
-
-const User = require('./models/user')
-const ContactForm = require('./models/contactForm')
-const iProfile = require('./models/interpreterProfile')
 
 const homeRouter = require('./routers/home')
 const userRouter = require('./routers/user')
@@ -40,17 +35,8 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 const partialsDirectoryPath = path.join(__dirname, '../templates/partials')
 const viewsDirectoryPath = path.join(__dirname, '../templates/views')
 
-// Setup handlebars engine and views locations
-// app.set('view engine', 'hbs')
-// app.set('views', viewsDirectoryPath)
-// hbs.registerPartials(partialsDirectoryPath)
-
 app.use(express.static(publicDirectoryPath))
 
 app.listen(PORT, () => {
-    // console.log(chalk.cyanBright.inverse('Server is up on PORT', PORT))
+    console.log(chalk.cyanBright('Server is up on PORT', PORT))
 })
-
-// Note for lab:
-// Run npm i express@4.17.1
-// Run npm i hbs

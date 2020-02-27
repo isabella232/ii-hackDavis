@@ -2,6 +2,8 @@ import React from 'react';
 import Rating from '@material-ui/lab/Rating';
 import classes from './PreviewCard.module.css';
 
+import Avatar from '../shared/Avatar/Avatar';
+
 const PreviewCard = props => {
     const languages = props.languages.map((lang, index) =>
         (index !== props.languages.length - 1) ? <span>{lang}, </span> : <span>{lang}</span>
@@ -10,7 +12,7 @@ const PreviewCard = props => {
     return (
         <div className={classes.PreviewCard}>
             <div className={classes.avatar}>
-                <img src={props.avatar} width='100%' />
+                <Avatar name={props.name} avatar={props.avatar} size={18} />
             </div>
             <div className={classes.content}>
                 <div className={classes.name}>

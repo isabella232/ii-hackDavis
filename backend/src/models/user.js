@@ -39,16 +39,16 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    avatar: {
+        type: Buffer
+    },
     tokens: [{
         token: {
             type: String,
             required: true
         }
     }],
-    avatar: {
-        type: Buffer
-    }
-}, { discriminatorKey: 'kind' })
+}, { discriminatorKey: 'kind', timestamps: true })
 
 // checks that the user exists in database
 userSchema.statics.findByCredentials = async (email, password) => {
@@ -85,6 +85,7 @@ userSchema.methods.toJSON = function () {
 
     delete userObject.password
     delete userObject.tokens
+    delete userObject.avatar
 
     return userObject
 }
