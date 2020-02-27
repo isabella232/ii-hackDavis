@@ -40,7 +40,13 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     avatar: {
-        type: Buffer
+        url: {
+            type: String,
+            // default: something
+        },
+        image: {
+            type: Buffer
+        }
     },
     tokens: [{
         token: {

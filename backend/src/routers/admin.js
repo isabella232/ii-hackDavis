@@ -4,7 +4,6 @@ const auth = require('../middleware/auth')
 const ObjectID = require('mongodb').ObjectID
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveiProfile } = require('../utils/algolia')
-const { getImageURL } = require('../utils/image')
 
 const router = new express.Router()
 
@@ -13,7 +12,6 @@ router.get('/admin', async (req, res) => {
         const interpreters = await Interpreter.find().elemMatch('certifications', { isValidated: false, isRejected: false }).limit(10)
         const toValidate = interpreters.map(interpreter => {
             const unvalidatedCertificates = []
-            const avatarURL = getImageURL(interpreter._id)
 
             interpreter.certifications.forEach(certificate => {
                 if (!certificate.isValidated && !certificate.isRejected) {
@@ -23,7 +21,7 @@ router.get('/admin', async (req, res) => {
 
             return {
                 name: interpreter.name,
-                avatar: avatarURL,
+                avatar: interpreter.avatar.url,
                 location: interpreter.location.locationString,
                 unvalidatedCertificates: unvalidatedCertificates
             }

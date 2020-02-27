@@ -1,6 +1,5 @@
 const express = require('express')
 const Interpreter = require('../models/interpreterProfile')
-const { getImageURL } = require('../utils/image')
 
 const router = new express.Router()
 
@@ -18,11 +17,10 @@ router.get('/home', async (req, res) => {
         ])
         const parsedInterpreters = interpreters.map(interpreter => {
             const languages = interpreter.languages.map(lang => lang.language)
-            const avatarURL = getImageURL(interpreter._id)
 
             return {
                 name: interpreter.name,
-                avatar: avatarURL,
+                avatar: interpreter.avatar.url,
                 languages: languages,
                 email: interpreter.email,
                 location: interpreter.location.locationString,

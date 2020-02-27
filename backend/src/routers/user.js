@@ -5,6 +5,7 @@ const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
 const { avatarUpload } = require('../utils/multer')
 const { sendWelcomeEmail } = require('../utils/email')
+const { getImageURL } = require('../utils/image')
 
 const router = new express.Router()
 
@@ -114,7 +115,7 @@ router.get('/users/:id/avatar', async (req, res) => {
             throw new Error()
         }
         res.set('Content-Type', 'image/png')
-        res.send(user.avatar)
+        res.send(user.avatar.image)
     } catch (e) {
         res.status(404).send()
     }
@@ -124,7 +125,8 @@ router.get('/users/:id/avatar', async (req, res) => {
 router.post('/users/:id/avatar', avatarUpload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     const user = await User.findById(req.params.id)
-    user.avatar = buffer
+    user.avatar.image = buffer
+    user.avatar.url = getImageURL(req.params.id)
     await user.save()
     res.send()
 }, (error, req, res, next) => {
