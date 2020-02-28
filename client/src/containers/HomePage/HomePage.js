@@ -19,6 +19,7 @@ class HomePage extends Component {
     componentDidMount() {
         fetchHome()
             .then(data => {
+                console.log('data', data)
                 this.setState({
                     quote: data.quote,
                     interpreters: data.interpreters

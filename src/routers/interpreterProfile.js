@@ -24,7 +24,7 @@ router.post('/api/iProfile', async (req, res) => {
 })
 
 // interpreters can update their own profiles
-router.patch('/api//iProfile/me', auth, async (req, res) => {
+router.patch('/api/iProfile/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['location', 'languagues', 'englishFluency', 'certification']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -50,7 +50,7 @@ router.patch('/api//iProfile/me', auth, async (req, res) => {
 })
 
 // Adds a Certification to the user
-router.post('/api//iProfile/me/certificates', auth, certUpload.single('certificate'), async (req, res) => {
+router.post('/api/iProfile/me/certificates', auth, certUpload.single('certificate'), async (req, res) => {
     //creates new certificate from req
     const newCertificate = {
         certification: req.body.certificateName,
@@ -65,7 +65,7 @@ router.post('/api//iProfile/me/certificates', auth, certUpload.single('certifica
 })
 
 // TODO: delete only one certificate
-router.delete('/api//iProfile/me/certificates', auth, async (req, res) => {
+router.delete('/api/iProfile/me/certificates', auth, async (req, res) => {
     try {
         // deletes all for now
         req.user.certificates = []
@@ -77,7 +77,7 @@ router.delete('/api//iProfile/me/certificates', auth, async (req, res) => {
 })
 
 // TODO: fix the context type thing
-router.get('/api//iProfile/:id/certificates', async (req, res) => {
+router.get('/api/iProfile/:id/certificates', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
 
@@ -93,7 +93,7 @@ router.get('/api//iProfile/:id/certificates', async (req, res) => {
 })
 
 // fetch all details for interpreter
-router.get('/api//iProfile/:id/details', async (req, res) => {
+router.get('/api/iProfile/:id/details', async (req, res) => {
     try {
         const interpreter = await InterpreterProfile.findById(req.params.id)
         const reviews = processReviews([...interpreter.reviews])
@@ -120,7 +120,7 @@ router.get('/api//iProfile/:id/details', async (req, res) => {
 })
 
 // add review by user to db
-router.post('/api//iProfile/:id/review', async (req, res) => {
+router.post('/api/iProfile/:id/review', async (req, res) => {
     try {
         const interpreter = await InterpreterProfile.findById(req.params.id)
         if (!interpreter.rating) {

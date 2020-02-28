@@ -15,6 +15,7 @@ class AdminPage extends Component {
     }
 
     componentDidMount() {
+        console.log('duma')
         fetchCertificates()
             .then(data => {
                 this.setState({ users: data })
