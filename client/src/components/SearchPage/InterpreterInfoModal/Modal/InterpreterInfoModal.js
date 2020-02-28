@@ -65,7 +65,7 @@ class InterpreterInfoModal extends Component {
         const reviews = (this.state.reviews.length) ?
             this.state.reviews.map(review => <ReviewItem userName={review.userName} rating={review.rating} comment={review.comment} date={review.date} />)
             : <div className={classes.noReviews}>{this.props.name} Has No Reviews Yet.</div>;
-        const certifications = this.state.certifications.map(cert => <CertificationItem title={cert.title} image={cert.image} isValidated={cert.isValidated} />)
+        const certifications = this.state.certifications.map(cert => <CertificationItem title={cert.title} /*image={cert.image}*/ image='https://www.diplomaframe.com/images/Entities/document/v2/NbcmHVCertificate_H_original.png' isValidated={cert.isValidated} />)
 
         return (
             <div>

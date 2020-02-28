@@ -15,7 +15,6 @@ class AdminPage extends Component {
     }
 
     componentDidMount() {
-        console.log('duma')
         fetchCertificates()
             .then(data => {
                 this.setState({ users: data })
@@ -33,15 +32,14 @@ class AdminPage extends Component {
                     name={user.name}
                     title={certificate.title}
                     location={user.location}
-                    file={certificate.file.data} />
+                    certificateImage='https://www.diplomaframe.com/images/Entities/document/v2/NbcmHVCertificate_H_original.png' />
             ))
         ))
 
         return (
             <div className={classes.Container} >
                 <div className={classes.title}>Upcoming Events</div>
-                <EventCard title='BitCard' date='2/4/2020' time='9:00 PM' />
-                <EventCard title='BitCard' date='2/4/2020' time='9:00 PM' />
+                <EventCard title='BitQuest' date='2/28/2020' time='9:00 PM' />
 
                 <div className={classes.title}>Past Events</div>
                 <EventCard title='BitCard' date='2/4/2020' time='9:00 PM' past />

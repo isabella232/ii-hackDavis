@@ -1,5 +1,5 @@
 const getImageURL = (id) => {
-    return `${process.env.BACKEND_URL}/users/${id}/avatar`
+    return `${process.env.BACKEND_URL}/api/users/${id}/avatar`
 }
 
 module.exports = {
