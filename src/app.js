@@ -3,7 +3,7 @@ require('./db/mongoose')
 
 const path = require('path')
 const express = require('express')
-const chalk = require('chalk')
+// const chalk = require('chalk')
 const cors = require('cors')
 
 const homeRouter = require('./routers/home')
@@ -38,5 +38,6 @@ const viewsDirectoryPath = path.join(__dirname, '../templates/views')
 app.use(express.static(publicDirectoryPath))
 
 app.listen(PORT, () => {
-    console.log(chalk.cyanBright('Server is up on PORT', PORT))
+    // console.log(chalk.cyanBright('Server is up on PORT', PORT))
+    console.log('Server is up on PORT', PORT)
 })
