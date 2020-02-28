@@ -1,4 +1,4 @@
-const algoliasearch = require('algoliasearch');
+const algoliasearch = require('algoliasearch')
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_KEY)
 const index = client.initIndex(process.env.ALGOLIA_INDEX_NAME)
@@ -8,7 +8,6 @@ const parseiProfile = (iProfile) => {
         language: lang.language,
         fluency: lang.fluency
     }))
-
     const coordinates = {
         lat: iProfile.location.coordinates.latitude,
         lng: iProfile.location.coordinates.longitude
@@ -16,7 +15,7 @@ const parseiProfile = (iProfile) => {
 
     return {
         name: iProfile.name,
-        avatar: 'https://littlebeebooks.com/wp-content/uploads/2017/04/Moomin1.png',
+        avatar: iProfile.avatar.url,
         email: iProfile.email,
         languages: languagues,
         location: iProfile.location.locationString,
