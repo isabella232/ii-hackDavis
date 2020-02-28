@@ -7,7 +7,7 @@ const { saveiProfile } = require('../utils/algolia')
 
 const router = new express.Router()
 
-router.get('/admin', async (req, res) => {
+router.get('/api/admin', async (req, res) => {
     try {
         const interpreters = await Interpreter.find().elemMatch('certifications', { isValidated: false, isRejected: false }).limit(10)
         const toValidate = interpreters.map(interpreter => {
@@ -32,7 +32,7 @@ router.get('/admin', async (req, res) => {
     }
 })
 
-router.patch('/certificate/:id/verify', async (req, res) => {
+router.patch('/api/certificate/:id/verify', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
@@ -50,7 +50,7 @@ router.patch('/certificate/:id/verify', async (req, res) => {
     }
 })
 
-router.patch('/certificate/:id/reject', async (req, res) => {
+router.patch('/api/certificate/:id/reject', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })

@@ -1,6 +1,6 @@
 import { backend } from './AxiosInstances';
 
 export const fetchHome = async () => {
-    const endpoint = `home`;
+    const endpoint = `api/home`;
     return backend.get(endpoint);
 }

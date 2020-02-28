@@ -1,16 +1,16 @@
 import { backend } from './AxiosInstances';
 
 export const fetchCertificates = async () => {
-    const endpoint = `admin`;
+    const endpoint = `api/admin`;
     return backend.get(endpoint);
 }
 
 export const verifyCertificate = async (certificateID) => {
-    const endpoint = `certificate/${certificateID}/verify`;
+    const endpoint = `api/certificate/${certificateID}/verify`;
     return backend.patch(endpoint);
 }
 
 export const rejectCertificate = async (certificateID) => {
-    const endpoint = `certificate/${certificateID}/reject`;
+    const endpoint = `api/certificate/${certificateID}/reject`;
     return backend.patch(endpoint);
 }

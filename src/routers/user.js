@@ -12,7 +12,7 @@ const router = new express.Router()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // creating a user
-router.post('/signup', urlencodedParser, async (req, res) => {
+router.post('/api/signup', urlencodedParser, async (req, res) => {
     //console.log('signup post is used')
     const user = new User(req.body)
 
@@ -27,7 +27,7 @@ router.post('/signup', urlencodedParser, async (req, res) => {
 })
 
 // getting users by their credentials
-router.post('/login', urlencodedParser, async (req, res) => {
+router.post('/api/login', urlencodedParser, async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
@@ -41,7 +41,7 @@ router.post('/login', urlencodedParser, async (req, res) => {
 })
 
 // logout of current session (deletes only current token)
-router.post('/logout', auth, async (req, res) => {
+router.post('/api/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
@@ -55,7 +55,7 @@ router.post('/logout', auth, async (req, res) => {
 })
 
 // logout of all sessions (deletes all tokens)
-router.post('/users/logoutAll', auth, async (req, res) => {
+router.post('/api/users/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []
         await req.user.save()
@@ -67,12 +67,12 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 })
 
 // only allowed to see profile if logged in
-router.get('/users/me', auth, async (req, res) => {
+router.get('/api/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
 
 // user can update their own profiles
-router.patch('/users/me', auth, async (req, res) => {
+router.patch('/api/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'username', 'password', 'gender']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -108,7 +108,7 @@ router.patch('/users/me', auth, async (req, res) => {
 //     res.send()
 // })
 
-router.get('/users/:id/avatar', async (req, res) => {
+router.get('/api/users/:id/avatar', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         if (!user || !user.avatar) {
@@ -122,7 +122,7 @@ router.get('/users/:id/avatar', async (req, res) => {
 })
 
 // testing route for above uploading avatar route
-router.post('/users/:id/avatar', avatarUpload.single('avatar'), async (req, res) => {
+router.post('/api/users/:id/avatar', avatarUpload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     const user = await User.findById(req.params.id)
     user.avatar.image = buffer

@@ -4,7 +4,7 @@ const ContactForm = require('../models/contactForm')
 const router = new express.Router()
 
 // creates a new contact form submission
-router.post('/contactUs', async (req, res) => {
+router.post('/api/contactUs', async (req, res) => {
     const contactForm = new ContactForm(req.body)
 
     try {

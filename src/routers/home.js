@@ -3,7 +3,7 @@ const Interpreter = require('../models/interpreterProfile')
 
 const router = new express.Router()
 
-router.get('/home', async (req, res) => {
+router.get('/api/home', async (req, res) => {
     try {
         const quote = {
             authorName: 'Moomin Azkaban',

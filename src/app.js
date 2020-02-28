@@ -13,10 +13,10 @@ const iProfileRouter = require('./routers/interpreterProfile')
 const adminRouter = require('./routers/admin')
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 
 var corsOptions = {
-    origin: 'localhost:8000', // change to actual url later
+    origin: 'localhost:5000', // change to actual url later
     credentials: true,
     origin: true,
 }
@@ -36,6 +36,13 @@ const partialsDirectoryPath = path.join(__dirname, '../templates/partials')
 const viewsDirectoryPath = path.join(__dirname, '../templates/views')
 
 app.use(express.static(publicDirectoryPath))
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../client/build')));
+// If no API routes are hit, send the React app
+app.use(function (req, res) {
+    res.sendFile(path.join(__dirname, '../client/public/index.html'));
+});
 
 app.listen(PORT, () => {
     // console.log(chalk.cyanBright('Server is up on PORT', PORT))
