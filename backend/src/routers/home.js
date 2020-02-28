@@ -12,7 +12,7 @@ router.get('/home', async (req, res) => {
             location: 'Davis, CA'
         }
         const interpreters = await Interpreter.aggregate([
-            // { $match: { 'certifications.isValidated': true, 'certifications.isRejected': false, rating: { $gt: 2 } } },
+            { $match: { 'certifications.isValidated': true, 'certifications.isRejected': false, rating: { $gt: 2 } } },
             { $sample: { size: 10 } }
         ])
         const parsedInterpreters = interpreters.map(interpreter => {

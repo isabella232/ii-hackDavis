@@ -37,10 +37,13 @@ router.patch('/certificate/:id/verify', async (req, res) => {
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
         const index = interpreter.certifications.findIndex(certificate => certificate._id.toString() === id)
+
         interpreter.certifications[index].isValidated = true
         await interpreter.save()
+
         saveiProfile(interpreter)
         sendVerifyEmail(interpreter.email, interpreter.name)
+
         res.send(interpreter)
     } catch (error) {
         res.status(400).send(error)
@@ -52,9 +55,12 @@ router.patch('/certificate/:id/reject', async (req, res) => {
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
         const index = interpreter.certifications.findIndex(certificate => certificate._id.toString() === id)
+
         interpreter.certifications[index].isRejected = true
         await interpreter.save()
+
         sendRejectEmail(interpreter.email, interpreter.name)
+
         res.send(interpreter)
     } catch (error) {
         res.status(400).send(error)
