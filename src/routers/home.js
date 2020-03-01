@@ -1,5 +1,5 @@
 const express = require('express')
-const Interpreter = require('../models/interpreterProfile')
+const Interpreter = require('../models/interpreter')
 
 const router = new express.Router()
 

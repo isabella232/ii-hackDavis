@@ -3,40 +3,36 @@ const algoliasearch = require('algoliasearch')
 const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_KEY)
 const index = client.initIndex(process.env.ALGOLIA_INDEX_NAME)
 
-const parseiProfile = (iProfile) => {
-    const languagues = iProfile.languages.map(lang => ({
+const parseInterpreter = (interpreter) => {
+    const languagues = interpreter.languages.map(lang => ({
         language: lang.language,
         fluency: lang.fluency
     }))
     const coordinates = {
-        lat: iProfile.location.coordinates.latitude,
-        lng: iProfile.location.coordinates.longitude
+        lat: interpreter.location.coordinates.latitude,
+        lng: interpreter.location.coordinates.longitude
     }
 
     return {
-        name: iProfile.name,
-        avatar: iProfile.avatar.url,
-        email: iProfile.email,
+        name: interpreter.name,
+        avatar: interpreter.avatar.url,
+        email: interpreter.email,
         languages: languagues,
-        location: iProfile.location.locationString,
-        objectID: iProfile._id,
+        location: interpreter.location.locationString,
+        objectID: interpreter._id,
         _geoloc: coordinates
     }
 }
 
-const saveiProfile = async (iProfile) => {
-    const data = parseiProfile(iProfile)
-    index.saveObject(data)
-}
-
-const getiProfile = async (objectID) => {
-    index.getObject(objectID)
-        .catch(error => {
-            throw error
-        })
+const saveInterpreter = async (interpreter) => {
+    const data = parseInterpreter(interpreter)
+    try {
+        await index.saveObject(data)
+    } catch (error) {
+        throw error
+    }
 }
 
 module.exports = {
-    saveiProfile,
-    getiProfile
+    saveInterpreter,
 }

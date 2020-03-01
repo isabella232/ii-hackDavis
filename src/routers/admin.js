@@ -1,9 +1,9 @@
 const express = require('express')
-const Interpreter = require('../models/interpreterProfile')
+const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
 const ObjectID = require('mongodb').ObjectID
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
-const { saveiProfile } = require('../utils/algolia')
+const { saveInterpreter } = require('../utils/algolia')
 
 const router = new express.Router()
 
@@ -32,7 +32,7 @@ router.get('/api/admin', async (req, res) => {
     }
 })
 
-router.patch('/api/certificate/:id/verify', async (req, res) => {
+router.patch('/api/certificates/:id/verify', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
@@ -41,7 +41,7 @@ router.patch('/api/certificate/:id/verify', async (req, res) => {
         interpreter.certifications[index].isValidated = true
         await interpreter.save()
 
-        saveiProfile(interpreter)
+        saveInterpreter(interpreter)
         sendVerifyEmail(interpreter.email, interpreter.name)
 
         res.send(interpreter)
@@ -50,7 +50,7 @@ router.patch('/api/certificate/:id/verify', async (req, res) => {
     }
 })
 
-router.patch('/api/certificate/:id/reject', async (req, res) => {
+router.patch('/api/certificates/:id/reject', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })

@@ -6,11 +6,11 @@ export const fetchCertificates = async () => {
 }
 
 export const verifyCertificate = async (certificateID) => {
-    const endpoint = `api/certificate/${certificateID}/verify`;
+    const endpoint = `api/certificates/${certificateID}/verify`;
     return backend.patch(endpoint);
 }
 
 export const rejectCertificate = async (certificateID) => {
-    const endpoint = `api/certificate/${certificateID}/reject`;
+    const endpoint = `api/certificates/${certificateID}/reject`;
     return backend.patch(endpoint);
 }

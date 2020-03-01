@@ -1,8 +1,8 @@
 const express = require('express')
-const InterpreterProfile = require('../models/interpreterProfile')
+const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
 const { certUpload } = require('../utils/multer')
-const { accumulateRatings, processReviews } = require('../utils/interpreterProfile')
+const { accumulateRatings, processReviews } = require('../utils/interpreter')
 
 const router = new express.Router()
 
@@ -10,13 +10,13 @@ const router = new express.Router()
 
 // creating a profile
 // idk on what screen this will live
-router.post('/api/iProfile', async (req, res) => {
-    var iProfile = new InterpreterProfile(req.body)
+router.post('/api/interpreters', async (req, res) => {
+    var interpreter = new Interpreter(req.body)
     try {
-        await iProfile.generateCoordinates(req.body.location.locationString)
-        await iProfile.save()
-        const token = await iProfile.generateAuthToken()
-        res.status(201).send(iProfile)
+        await interpreter.generateCoordinates(req.body.location.locationString)
+        await interpreter.save()
+        const token = await interpreter.generateAuthToken()
+        res.status(201).send(interpreter)
     } catch (e) {
         console.log(e)
         res.status(400).send(e)
@@ -24,7 +24,7 @@ router.post('/api/iProfile', async (req, res) => {
 })
 
 // interpreters can update their own profiles
-router.patch('/api/iProfile/me', auth, async (req, res) => {
+router.patch('/api/interpreters/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['location', 'languagues', 'englishFluency', 'certification']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -35,7 +35,7 @@ router.patch('/api/iProfile/me', auth, async (req, res) => {
 
     try {
         // from being logged in
-        const profile = await InterpreterProfile.findOne({ owner: req.user._id })
+        const profile = await Interpreter.findOne({ owner: req.user._id })
 
         updates.forEach((update) => profile[update] = req.body[update])
         await profile.save() // where middleware gets executed
@@ -50,7 +50,7 @@ router.patch('/api/iProfile/me', auth, async (req, res) => {
 })
 
 // Adds a Certification to the user
-router.post('/api/iProfile/me/certificates', auth, certUpload.single('certificate'), async (req, res) => {
+router.post('/api/interpreters/me/certificates', auth, certUpload.single('certificate'), async (req, res) => {
     //creates new certificate from req
     const newCertificate = {
         certification: req.body.certificateName,
@@ -65,7 +65,7 @@ router.post('/api/iProfile/me/certificates', auth, certUpload.single('certificat
 })
 
 // TODO: delete only one certificate
-router.delete('/api/iProfile/me/certificates', auth, async (req, res) => {
+router.delete('/api/interpreters/me/certificates', auth, async (req, res) => {
     try {
         // deletes all for now
         req.user.certificates = []
@@ -77,7 +77,7 @@ router.delete('/api/iProfile/me/certificates', auth, async (req, res) => {
 })
 
 // TODO: fix the context type thing
-router.get('/api/iProfile/:id/certificates', async (req, res) => {
+router.get('/api/interpreters/:id/certificates', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
 
@@ -93,9 +93,9 @@ router.get('/api/iProfile/:id/certificates', async (req, res) => {
 })
 
 // fetch all details for interpreter
-router.get('/api/iProfile/:id/details', async (req, res) => {
+router.get('/api/interpreters/:id/details', async (req, res) => {
     try {
-        const interpreter = await InterpreterProfile.findById(req.params.id)
+        const interpreter = await Interpreter.findById(req.params.id)
         const reviews = processReviews([...interpreter.reviews])
         const certifications = []
         interpreter.certifications.forEach(certificate => {
@@ -120,9 +120,9 @@ router.get('/api/iProfile/:id/details', async (req, res) => {
 })
 
 // add review by user to db
-router.post('/api/iProfile/:id/review', async (req, res) => {
+router.post('/api/interpreters/:id/review', async (req, res) => {
     try {
-        const interpreter = await InterpreterProfile.findById(req.params.id)
+        const interpreter = await Interpreter.findById(req.params.id)
         if (!interpreter.rating) {
             interpreter.rating = req.body.rating
         } else {
@@ -132,7 +132,6 @@ router.post('/api/iProfile/:id/review', async (req, res) => {
             rating: req.body.rating,
             userName: req.body.name,
             comment: req.body.comment,
-            // date: new Date() // not necessary anymore?
         }
         interpreter.reviews.push(review)
         interpreter.save()
