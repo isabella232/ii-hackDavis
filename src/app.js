@@ -10,6 +10,7 @@ const userRouter = require('./routers/user')
 const contactRouter = require('./routers/contactForm')
 const interpreterRouter = require('./routers/interpreter')
 const adminRouter = require('./routers/admin')
+const eventRouter = require('./routers/event')
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -28,6 +29,7 @@ app.use(userRouter)
 app.use(contactRouter)
 app.use(interpreterRouter)
 app.use(adminRouter)
+app.use(eventRouter)
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')

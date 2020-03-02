@@ -67,4 +67,14 @@ router.patch('/api/certificates/:id/reject', async (req, res) => {
     }
 })
 
+router.patch('/api/interpreters/:id/verify', async (req, res) => {
+    const id = req.params.id
+    try {
+        const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: true })
+        res.send()
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
 module.exports = router

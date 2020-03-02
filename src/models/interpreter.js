@@ -100,7 +100,16 @@ const interpreterSchema = new mongoose.Schema({
             required: true,
             default: new Date()
         }
-    }]
+    }],
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    summary: {
+        type: String,
+        trim: true,
+        maxlength: 2000
+    }
 })
 
 interpreterSchema.methods.generateCoordinates = async function (location) {
