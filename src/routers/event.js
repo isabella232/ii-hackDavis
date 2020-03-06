@@ -1,17 +1,47 @@
 const express = require('express')
 const Event = require('../models/event')
-const auth = require('../middleware/auth')
 const ObjectID = require('mongodb').ObjectID
+const auth = require('../middleware/auth')
+const { imgUpload } = require('../utils/multer')
+const { getEventImageURL } = require('../utils/image')
 
 const router = new express.Router()
 
-router.post('/api/events/create', async (req, res) => {
+router.post('/api/events/create', imgUpload.single('image'), async (req, res) => {
     try {
-        const event = await new Event(req.body)
-        event.save()
+        const id = ObjectID()
+        const parsedEvent = {
+            _id: id,
+            title: req.body.title,
+            date: new Date(),
+            summary: req.body.summary,
+            image: {
+                image: req.file.buffer,
+                url: getEventImageURL(id)
+            }
+        }
+        const event = await new Event(parsedEvent)
+        await event.save()
         res.send()
     } catch (error) {
+        console.log(error)
         res.status(400).send(error)
+    }
+})
+
+router.get('/api/events/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const event = await Event.findById(req.params.id)
+
+        if (!event) {
+            throw new Error('No event found.')
+        }
+
+        res.set('Content-Type', 'image/png')
+        res.send(event.image.image)
+    } catch (e) {
+        res.status(404).send()
     }
 })
 
@@ -21,7 +51,7 @@ router.get('/api/events/:id/details', async (req, res) => {
         if (!event) {
             throw new Error()
         }
-        event.save()
+        await event.save()
         res.send()
     } catch (error) {
         res.status(400).send(error)
