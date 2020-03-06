@@ -19,6 +19,7 @@ const parseInterpreter = (interpreter) => {
         email: interpreter.email,
         languages: languagues,
         location: interpreter.location.locationString,
+        summary: interpreter.summary,
         objectID: interpreter._id,
         _geoloc: coordinates
     }

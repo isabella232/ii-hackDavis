@@ -9,7 +9,12 @@ const router = new express.Router()
 
 router.get('/api/admin', async (req, res) => {
     try {
-        const interpreters = await Interpreter.find().elemMatch('certifications', { isValidated: false, isRejected: false }).limit(10)
+        const interpreters = await Interpreter.find({
+            $or: [
+                { 'isVerified': false },
+                { 'certifications': { '$elemMatch': { isValidated: false, isRejected: false } } }
+            ]
+        }).limit(10)
         const toValidate = interpreters.map(interpreter => {
             const unvalidatedCertificates = []
 
@@ -32,13 +37,16 @@ router.get('/api/admin', async (req, res) => {
     }
 })
 
-router.patch('/api/certificates/:id/verify', async (req, res) => {
+router.patch('/api/certificates/:id/validate', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
         const index = interpreter.certifications.findIndex(certificate => certificate._id.toString() === id)
 
         interpreter.certifications[index].isValidated = true
+        if (interpreter.isValidated === false) {
+            interpreter.isValidated = true
+        }
         await interpreter.save()
 
         saveInterpreter(interpreter)
@@ -71,6 +79,7 @@ router.patch('/api/interpreters/:id/verify', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: true })
+        saveInterpreter(interpreter)
         res.send()
     } catch (error) {
         res.status(400).send(error)

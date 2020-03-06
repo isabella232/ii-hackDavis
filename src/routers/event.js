@@ -15,7 +15,7 @@ router.post('/api/events/create', async (req, res) => {
     }
 })
 
-router.fetch('/api/events/:id/details', async (req, res) => {
+router.get('/api/events/:id/details', async (req, res) => {
     try {
         const event = await Event.findById(req.params.id)
         if (!event) {

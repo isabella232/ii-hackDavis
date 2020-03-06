@@ -1,7 +1,10 @@
 const express = require('express')
+const sharp = require('sharp')
+const ObjectID = require('mongodb').ObjectID
 const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
-const { certUpload } = require('../utils/multer')
+const { imgUpload } = require('../utils/multer')
+const { getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
 
 const router = new express.Router()
@@ -35,7 +38,7 @@ router.patch('/api/interpreters/me', auth, async (req, res) => {
 
     try {
         // from being logged in
-        const profile = await Interpreter.findOne({ owner: req.user._id })
+        const profile = await Interpreter.findOne({ owner: req.interpreter._id })
 
         updates.forEach((update) => profile[update] = req.body[update])
         await profile.save() // where middleware gets executed
@@ -49,46 +52,15 @@ router.patch('/api/interpreters/me', auth, async (req, res) => {
     }
 })
 
-// Adds a Certification to the user
-router.post('/api/interpreters/me/certificates', auth, certUpload.single('certificate'), async (req, res) => {
-    //creates new certificate from req
-    const newCertificate = {
-        certification: req.body.certificateName,
-        file: req.file.buffer
-    }
-    req.user.certifications = req.user.certifications.concat(newCertificate)
-
-    await req.user.save()
-    res.status(200).send(req.user)
-}, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
-})
-
 // TODO: delete only one certificate
 router.delete('/api/interpreters/me/certificates', auth, async (req, res) => {
     try {
         // deletes all for now
-        req.user.certificates = []
-        await req.user.save()
+        req.interpreter.certificates = []
+        await req.interpreter.save()
         res.send()
     } catch (e) {
         res.send(500).send()
-    }
-})
-
-// TODO: fix the context type thing
-router.get('/api/interpreters/:id/certificates', async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id)
-
-        if (!user || user.certificates.length === 0) {
-            throw new Error()
-        }
-
-        // res.set('Content-Type', 'application/pdf')
-        res.send(user.certificates)
-    } catch (e) {
-        res.status(404).send()
     }
 })
 
@@ -119,7 +91,7 @@ router.get('/api/interpreters/:id/details', async (req, res) => {
     }
 })
 
-// add review by user to db
+// add review by interpreter to db
 router.post('/api/interpreters/:id/review', async (req, res) => {
     try {
         const interpreter = await Interpreter.findById(req.params.id)
@@ -136,6 +108,43 @@ router.post('/api/interpreters/:id/review', async (req, res) => {
         interpreter.reviews.push(review)
         interpreter.save()
         res.send()
+    } catch (e) {
+        res.status(404).send()
+    }
+})
+
+// upload a certificate separately
+router.post('/api/interpreters/:id/certificate/upload', imgUpload.single('avatar'), async (req, res) => {
+    const id = req.params.id
+    const interpreter = await Interpreter.findById(id)
+    const certificate = {
+        title: req.body.title,
+        file: {
+            image: req.file.buffer,
+            url: getCertificateURL(req.params.id)
+        }
+    }
+
+    interpreter.certifications.push(certificate)
+    await interpreter.save()
+    res.send()
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
+})
+
+// fetch a certificate image
+router.get('/api/interpreters/certificates/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
+        const certificate = interpreter.certifications.find(certificate => certificate._id.toString() === id)
+
+        if (!interpreter || !certificate) {
+            throw new Error()
+        }
+
+        res.set('Content-Type', 'image/png')
+        res.send(certificate.file.image)
     } catch (e) {
         res.status(404).send()
     }

@@ -1,18 +1,21 @@
 const express = require('express')
 const Interpreter = require('../models/interpreter')
+const { fetchQuote } = require('../utils/homeData')
 
 const router = new express.Router()
 
 router.get('/api/home', async (req, res) => {
     try {
-        const quote = {
-            authorName: 'Moomin Azkaban',
-            avatar: 'https://cdn.dribbble.com/users/862175/screenshots/5818050/4_illustrations_january_marta.jpg',
-            quote: 'Thanks to Indigenous Interpreters, I found just the help that I needed.',
-            location: 'Davis, CA'
-        }
+        const quote = fetchQuote()
         const interpreters = await Interpreter.aggregate([
-            { $match: { 'certifications.isValidated': true, 'certifications.isRejected': false, rating: { $gt: 2 } } },
+            {
+                $match: {
+                    'isVerified': true,
+                    'certifications.isValidated': true,
+                    'certifications.isRejected': false,
+                    rating: { $gt: 2 }
+                }
+            },
             { $sample: { size: 10 } }
         ])
         const parsedInterpreters = interpreters.map(interpreter => {

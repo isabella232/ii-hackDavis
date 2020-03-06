@@ -53,8 +53,13 @@ const interpreterSchema = new mongoose.Schema({
             required: true,
         },
         file: {
-            type: Buffer,
-            required: true
+            url: {
+                type: String,
+            },
+            image: {
+                type: Buffer,
+                required: true
+            }
         },
         isValidated: {
             type: Boolean,
@@ -109,6 +114,9 @@ const interpreterSchema = new mongoose.Schema({
         type: String,
         trim: true,
         maxlength: 2000
+    },
+    resume: {
+        type: Buffer,
     }
 })
 

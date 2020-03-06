@@ -3,9 +3,9 @@ const sharp = require('sharp')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
-const { avatarUpload } = require('../utils/multer')
+const { imgUpload } = require('../utils/multer')
 const { sendWelcomeEmail } = require('../utils/email')
-const { getImageURL } = require('../utils/image')
+const { getAvatarURL } = require('../utils/image')
 
 const router = new express.Router()
 
@@ -90,7 +90,7 @@ router.patch('/api/users/me', auth, async (req, res) => {
     }
 })
 
-// router.post('/users/me/avatar', auth, avatarUpload.single('avatar'), async (req, res) => {
+// router.post('/users/me/avatar', auth, imgUpload.single('avatar'), async (req, res) => {
 //     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
 //     req.user.avatar = buffer
 //     await req.user.save()
@@ -105,7 +105,7 @@ router.patch('/api/users/me', auth, async (req, res) => {
 //     res.send()
 // })
 
-router.get('/api/users/:id/avatar', async (req, res) => {
+router.get('/api/users/avatars/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         if (!user || !user.avatar) {
@@ -119,11 +119,11 @@ router.get('/api/users/:id/avatar', async (req, res) => {
 })
 
 // testing route for above uploading avatar route
-router.post('/api/users/:id/avatar', avatarUpload.single('avatar'), async (req, res) => {
+router.post('/api/users/avatars/:id', imgUpload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     const user = await User.findById(req.params.id)
     user.avatar.image = buffer
-    user.avatar.url = getImageURL(req.params.id)
+    user.avatar.url = getAvatarURL(req.params.id)
     await user.save()
     res.send()
 }, (error, req, res, next) => {

@@ -4,7 +4,7 @@ import classes from './CertificationCard.module.css';
 import Avatar from '../../shared/Avatar/Avatar';
 import Button from '../../shared/Button/Button';
 
-import { verifyCertificate, rejectCertificate } from '../../../services/AdminService';
+import { validateCertificate, rejectCertificate } from '../../../services/AdminService';
 
 const CertificationCard = (props) => {
     const [expand, setExpand] = useState(false);
@@ -14,12 +14,12 @@ const CertificationCard = (props) => {
     const id = props.id;
 
     const verifyClicked = () => {
-        verifyCertificate(id)
+        validateCertificate(id)
             .then(() => {
                 setVerified(true)
             }).catch(error => {
                 console.log(error)
-                alert("Error: Can't verify certificate")
+                alert("Error: Can't validate certificate")
             })
     }
 

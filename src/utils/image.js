@@ -1,7 +1,15 @@
-const getImageURL = (id) => {
-    return `${process.env.BACKEND_URL}/api/users/${id}/avatar`
+const getAvatarURL = (id) => {
+    // return `${process.env.BACKEND_URL}/api/users/${id}/image`
+    return `${process.env.PROD_BACKEND_URL}/api/users/avatars/${id}`
 }
 
+const getCertificateURL = (id) => {
+    // return `${process.env.BACKEND_URL}/api/users/${id}/image`
+    return `${process.env.PROD_BACKEND_URL}/api/interpreters/certificates/${id}`
+}
+
+
 module.exports = {
-    getImageURL
+    getAvatarURL,
+    getCertificateURL
 }

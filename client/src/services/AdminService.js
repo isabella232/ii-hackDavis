@@ -5,8 +5,8 @@ export const fetchCertificates = async () => {
     return backend.get(endpoint);
 }
 
-export const verifyCertificate = async (certificateID) => {
-    const endpoint = `api/certificates/${certificateID}/verify`;
+export const validateCertificate = async (certificateID) => {
+    const endpoint = `api/certificates/${certificateID}/validate`;
     return backend.patch(endpoint);
 }
 
