@@ -28,14 +28,13 @@ const CertificationModal = props => {
     return (
         <div className={classes.CertificateModal}>
             <div className={classes.viewDocument} onClick={openModal}>View Document</div>
-
             <Modal className={modalClasses.modal}
                 open={open}
                 onClose={closeModal}
                 BackdropComponent={Backdrop}
                 BackdropProps={{ timeout: 200 }}>
                 <Fade in={open}>
-                    <img src={props.image} heigth='80%' />
+                    <img src={props.image} height='60%' />
                 </Fade>
             </Modal>
         </div>

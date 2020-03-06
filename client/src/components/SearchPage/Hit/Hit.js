@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Highlight } from "react-instantsearch-dom";
 
+import Avatar from '../../shared/Avatar/Avatar';
 import InfoModal from '../InterpreterInfoModal/Modal/InterpreterInfoModal';
 
 import classes from './Hit.module.css';
@@ -13,7 +14,7 @@ const Hit = ({ hit }) => {
     return (
         <div key={`hit-${hit.objectID}`} className={classes.Hit}>
             <div className={classes.avatar}>
-                <img src={hit.avatar} width='100%' />
+                <Avatar name={hit.name} avatar={hit.avatar} size={16} />
             </div>
             <div className={classes.content}>
                 <div className={classes.name}>
@@ -35,8 +36,8 @@ const Hit = ({ hit }) => {
                     avatar={hit.avatar}
                     email={hit.email}
                     location={hit.location}
-                    // gender={hit.gender}
                     // phoneNumber={hit.phoneNumber}
+                    summary={hit.summary}
                     languages={hit.languages} />
             </div>
         </div>

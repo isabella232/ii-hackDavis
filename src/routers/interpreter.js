@@ -74,7 +74,7 @@ router.get('/api/interpreters/:id/details', async (req, res) => {
             if (!certificate.isRejected) {
                 const cert = {
                     title: certificate.title,
-                    image: certificate.file,
+                    image: certificate.file.url,
                     isValidated: certificate.isValidated
                 }
                 certifications.push(cert)
@@ -114,14 +114,16 @@ router.post('/api/interpreters/:id/review', async (req, res) => {
 })
 
 // upload a certificate separately
-router.post('/api/interpreters/:id/certificate/upload', imgUpload.single('avatar'), async (req, res) => {
+router.post('/api/interpreters/:id/certificate/upload', imgUpload.single('certificate'), async (req, res) => {
     const id = req.params.id
     const interpreter = await Interpreter.findById(id)
+    const certificateID = ObjectID()
     const certificate = {
+        _id: certificateID,
         title: req.body.title,
         file: {
             image: req.file.buffer,
-            url: getCertificateURL(req.params.id)
+            url: getCertificateURL(certificateID)
         }
     }
 

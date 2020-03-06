@@ -56,8 +56,8 @@ const CertificationCard = (props) => {
             </div>
 
             <div className={certificateClass}>
-                <img alt={`${props.name} Certificate`} src={props.certificateImage} width='100%' />
-
+                <img alt={`${props.title} Certificate`} src={props.certificateImage} width='100%' />
+                {props.certificateImage}
                 <div className={classes.footer}>
                     <Button content='Reject' inverted click={rejectClicked} />
                     <Button content='Verify' click={verifyClicked} />

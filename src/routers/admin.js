@@ -20,7 +20,11 @@ router.get('/api/admin', async (req, res) => {
 
             interpreter.certifications.forEach(certificate => {
                 if (!certificate.isValidated && !certificate.isRejected) {
-                    unvalidatedCertificates.push(certificate)
+                    unvalidatedCertificates.push({
+                        id: certificate.id,
+                        title: certificate.title,
+                        image: certificate.file.url
+                    })
                 }
             })
 
@@ -52,7 +56,7 @@ router.patch('/api/certificates/:id/validate', async (req, res) => {
         saveInterpreter(interpreter)
         sendVerifyEmail(interpreter.email, interpreter.name)
 
-        res.send(interpreter)
+        res.send()
     } catch (error) {
         res.status(400).send(error)
     }
@@ -69,7 +73,7 @@ router.patch('/api/certificates/:id/reject', async (req, res) => {
 
         sendRejectEmail(interpreter.email, interpreter.name)
 
-        res.send(interpreter)
+        res.send()
     } catch (error) {
         res.status(400).send(error)
     }

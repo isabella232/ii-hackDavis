@@ -12,7 +12,7 @@ const PreviewCard = props => {
     return (
         <div className={classes.PreviewCard}>
             <div className={classes.avatar}>
-                <Avatar name={props.name} avatar={props.avatar} size={18} />
+                <Avatar name={props.name} avatar={props.avatar} size={19} />
             </div>
             <div className={classes.content}>
                 <div className={classes.name}>

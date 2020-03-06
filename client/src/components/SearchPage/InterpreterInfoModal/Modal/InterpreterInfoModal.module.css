@@ -7,6 +7,7 @@
 .Modal .infoCard {
     padding: 1rem;
     width: 700px;
+    margin: 1rem;
     background: #FFFFFF;
     box-shadow: 0px 4px 15px #027888;
     border-radius: 10px;

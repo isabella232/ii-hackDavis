@@ -5,7 +5,7 @@
     border: 1px solid rgba(0, 0, 0, 0.03);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    width: 400px;
+    min-width: 400px;
     margin: 0 3rem;
     -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
@@ -17,7 +17,7 @@
 }
 
 .PreviewCard .avatar {
-    margin: 1rem;
+    margin: 1rem 0 1rem 1rem;
 }
 
 .PreviewCard .content {
@@ -26,13 +26,14 @@
 
 .PreviewCard .name {
     font-weight: bold;
-    font-size: 28px;
-    line-height: 35px;
+    font-size: 26px;
+    line-height: 30px;
+    margin-bottom: .5rem;
 }
 
 .PreviewCard .languages {
-    font-size: 20px;
-    line-height: 30px;
+    font-size: 18px;
+    line-height: 20px;
     color: #027888;
 }
 

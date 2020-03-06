@@ -26,13 +26,13 @@ class AdminPage extends Component {
     render() {
         const toValidateCertificates = this.state.users.map(user => (
             user.unvalidatedCertificates.map(certificate => (
-                <CertificationCard key={`${certificate._id}`}
-                    id={certificate._id}
+                <CertificationCard key={`${certificate.id}`}
+                    id={certificate.id}
                     avatar={user.avatar}
                     name={user.name}
                     title={certificate.title}
                     location={user.location}
-                    certificateImage='https://www.diplomaframe.com/images/Entities/document/v2/NbcmHVCertificate_H_original.png' />
+                    certificateImage={certificate.image} />
             ))
         ))
 
