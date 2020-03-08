@@ -3,9 +3,10 @@ import classes from './AdminPage.module.css'
 
 import CertificationCard from '../../components/AdminPage/CertificationCard/CertificationCard';
 import EventCard from '../../components/AdminPage/EventCard/EventCard';
+import Button from '../../components/shared/Button/Button';
+import EventModal from '../../components/AdminPage/EventModal/EventModal';
 
 import { fetchCertificates } from '../../services/AdminService';
-import Button from '../../components/shared/Button/Button';
 
 class AdminPage extends Component {
     constructor() {
@@ -67,7 +68,7 @@ class AdminPage extends Component {
 
                 <div className={classes.buttons}>
                     <Button content='Manage All Events' inverted />
-                    <Button content='New Event' />
+                    <EventModal />
                 </div>
 
                 <div className={classes.horzLine} />

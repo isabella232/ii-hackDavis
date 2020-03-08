@@ -14,3 +14,8 @@ export const rejectCertificate = async (certificateID) => {
     const endpoint = `api/admin/certificates/${certificateID}/reject`;
     return backend.patch(endpoint);
 }
+
+export const createEvent = async (data) => {
+    const endpoint = `api/events/create`;
+    return backend.patch(endpoint, data);
+}
