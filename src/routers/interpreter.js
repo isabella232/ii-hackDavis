@@ -92,7 +92,7 @@ router.get('/api/interpreters/:id/details', async (req, res) => {
 })
 
 // add review by interpreter to db
-router.post('/api/interpreters/:id/review', async (req, res) => {
+router.post('/api/interpreters/:id/reviews/add', async (req, res) => {
     try {
         const interpreter = await Interpreter.findById(req.params.id)
         if (!interpreter.rating) {
@@ -102,7 +102,7 @@ router.post('/api/interpreters/:id/review', async (req, res) => {
         }
         const review = {
             rating: req.body.rating,
-            userName: req.body.name,
+            reviewerName: req.body.name,
             comment: req.body.comment,
         }
         interpreter.reviews.push(review)
@@ -122,7 +122,7 @@ router.post('/api/interpreters/:id/certificate/upload', imgUpload.single('certif
         _id: certificateID,
         title: req.body.title,
         file: {
-            image: req.file.buffer,
+            buffer: req.file.buffer,
             url: getCertificateURL(certificateID)
         }
     }
@@ -146,7 +146,7 @@ router.get('/api/interpreters/certificates/:id', async (req, res) => {
         }
 
         res.set('Content-Type', 'image/png')
-        res.send(certificate.file.image)
+        res.send(certificate.file.buffer)
     } catch (e) {
         res.status(404).send()
     }

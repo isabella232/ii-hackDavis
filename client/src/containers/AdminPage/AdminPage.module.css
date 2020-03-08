@@ -4,14 +4,24 @@
     max-width: 800px;
 }
 
-
 .Container .title {
     font-size: 30px;
     color: #027888;
 }
 
 .Container .horzLine {
-    margin: 3rem 15%;
+    margin: 2rem 15%;
     border: 2px solid #03A0B5;
     border-radius: 20px;
+}
+
+.Container .noEvents {
+    margin: 1rem;
+    text-align: center;
+}
+
+.Container .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
 }

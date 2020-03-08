@@ -6,6 +6,6 @@ export const fetchRatingAndReviews = async (interpreterID) => {
 }
 
 export const submitReview = async (interpreterID, data) => {
-    const endpoint = `api/interpreters/${interpreterID}/review`;
+    const endpoint = `api/interpreters/${interpreterID}/reviews/add`;
     return backend.post(endpoint, data);
 }

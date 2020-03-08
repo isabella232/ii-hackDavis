@@ -1,47 +1,39 @@
 const express = require('express')
 const Interpreter = require('../models/interpreter')
+const Event = require('../models/event')
 const auth = require('../middleware/auth')
 const ObjectID = require('mongodb').ObjectID
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveInterpreter } = require('../utils/algolia')
+const { getToValidate } = require('../utils/admin')
 
 const router = new express.Router()
 
-router.get('/api/admin', async (req, res) => {
+router.get('/api/admin/adminpage', async (req, res) => {
     try {
+        const now = new Date()
+        const pastEvents = await Event.find().where('date').lt(now).limit(2)
+        const upcomingEvents = await Event.find().where('date').gte(now).limit(3)
         const interpreters = await Interpreter.find({
             $or: [
                 { 'isVerified': false },
                 { 'certifications': { '$elemMatch': { isValidated: false, isRejected: false } } }
             ]
         }).limit(10)
-        const toValidate = interpreters.map(interpreter => {
-            const unvalidatedCertificates = []
+        const toValidate = getToValidate(interpreters)
 
-            interpreter.certifications.forEach(certificate => {
-                if (!certificate.isValidated && !certificate.isRejected) {
-                    unvalidatedCertificates.push({
-                        id: certificate.id,
-                        title: certificate.title,
-                        image: certificate.file.url
-                    })
-                }
-            })
-
-            return {
-                name: interpreter.name,
-                avatar: interpreter.avatar.url,
-                location: interpreter.location.locationString,
-                unvalidatedCertificates: unvalidatedCertificates
-            }
-        })
-        res.send(toValidate)
+        const data = {
+            pastEvents: pastEvents,
+            upcomingEvents: upcomingEvents,
+            toValidate: toValidate
+        }
+        res.send(data)
     } catch (error) {
         res.status(400).send(error)
     }
 })
 
-router.patch('/api/certificates/:id/validate', async (req, res) => {
+router.patch('/api/admin/certificates/:id/validate', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
@@ -62,7 +54,7 @@ router.patch('/api/certificates/:id/validate', async (req, res) => {
     }
 })
 
-router.patch('/api/certificates/:id/reject', async (req, res) => {
+router.patch('/api/admin/certificates/:id/reject', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
@@ -79,7 +71,7 @@ router.patch('/api/certificates/:id/reject', async (req, res) => {
     }
 })
 
-router.patch('/api/interpreters/:id/verify', async (req, res) => {
+router.patch('/api/admin/interpreters/:id/verify', async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: true })

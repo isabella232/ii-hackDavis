@@ -112,7 +112,7 @@ router.get('/api/users/avatars/:id', async (req, res) => {
             throw new Error()
         }
         res.set('Content-Type', 'image/png')
-        res.send(user.avatar.image)
+        res.send(user.avatar.buffer)
     } catch (e) {
         res.status(404).send()
     }
@@ -122,7 +122,7 @@ router.get('/api/users/avatars/:id', async (req, res) => {
 router.post('/api/users/avatars/:id', imgUpload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     const user = await User.findById(req.params.id)
-    user.avatar.image = buffer
+    user.avatar.buffer = buffer
     user.avatar.url = getAvatarURL(req.params.id)
     await user.save()
     res.send()

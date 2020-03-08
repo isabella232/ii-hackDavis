@@ -56,7 +56,7 @@ const interpreterSchema = new mongoose.Schema({
             url: {
                 type: String,
             },
-            image: {
+            buffer: {
                 type: Buffer,
                 required: true
             }
@@ -84,7 +84,7 @@ const interpreterSchema = new mongoose.Schema({
     },
     // reviews
     reviews: [{
-        userName: {
+        reviewerName: {
             type: String,
             trim: true,
             required: true,

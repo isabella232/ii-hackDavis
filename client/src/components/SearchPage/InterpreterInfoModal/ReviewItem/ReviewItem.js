@@ -16,7 +16,7 @@ const Review = (props) => {
                 <em>"{props.comment}"</em>
             </div>
             <div className={classes.userName}>
-                <strong>- {props.userName}</strong>
+                <strong>- {props.reviewerName}</strong>
             </div>
         </div>
     )

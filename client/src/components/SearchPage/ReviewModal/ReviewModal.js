@@ -15,7 +15,7 @@ class ReviewModal extends Component {
         this.state = {
             open: false,
             id: props.id,
-            userName: props.userName,
+            userName: props.reviewerName,
             rating: 0,
             comment: ''
         }
@@ -42,7 +42,7 @@ class ReviewModal extends Component {
             alert(`Please fill out your comment for ${this.props.name} before posting.`);
         } else {
             const data = {
-                name: this.state.userName,
+                name: this.state.reviewerName,
                 rating: this.state.rating,
                 comment: this.state.comment
             }

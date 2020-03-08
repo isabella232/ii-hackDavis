@@ -16,7 +16,7 @@ router.post('/api/events/create', imgUpload.single('image'), async (req, res) =>
             date: new Date(),
             summary: req.body.summary,
             image: {
-                image: req.file.buffer,
+                buffer: req.file.buffer,
                 url: getEventImageURL(id)
             }
         }
@@ -25,7 +25,7 @@ router.post('/api/events/create', imgUpload.single('image'), async (req, res) =>
         res.send()
     } catch (error) {
         console.log(error)
-        res.status(400).send(error)
+        res.status(404).send(error)
     }
 })
 
@@ -39,7 +39,7 @@ router.get('/api/events/:id', async (req, res) => {
         }
 
         res.set('Content-Type', 'image/png')
-        res.send(event.image.image)
+        res.send(event.image.buffer)
     } catch (e) {
         res.status(404).send()
     }

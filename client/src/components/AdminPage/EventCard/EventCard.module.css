@@ -8,8 +8,12 @@
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
+.EventCard .past {
+    opacity: 0.8;
+}
+
 .EventCard:hover {
-    box-shadow: 0px 8px 25px rgba(3, 160, 181, 0.25);
+    box-shadow: 0px 8px 25px lightgray;
     transform: translateY(-5px);
 }
 
