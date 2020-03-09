@@ -14,6 +14,7 @@ router.post('/api/events/create', imgUpload.single('image'), async (req, res) =>
             _id: id,
             title: req.body.title,
             date: new Date(req.body.date),
+            location: req.body.location,
             summary: req.body.summary,
             image: {
                 buffer: req.file.buffer,
@@ -21,6 +22,29 @@ router.post('/api/events/create', imgUpload.single('image'), async (req, res) =>
             }
         }
         const event = await new Event(parsedEvent)
+        await event.save()
+        res.send()
+    } catch (error) {
+        console.log(error)
+        res.status(404).send(error)
+    }
+})
+
+router.patch('/api/events/:id/edit', imgUpload.single('image'), async (req, res) => {
+    try {
+        const id = req.params.id
+        const event = await Event.findById(id)
+        event.title = req.body.title
+        event.date = new Date(req.body.date)
+        event.location = req.body.location
+        event.summary = req.body.summary
+        if (req.file) {
+            const image = {
+                buffer: req.file.buffer,
+                url: getEventImageURL(id)
+            }
+            event.image = image
+        }
         await event.save()
         res.send()
     } catch (error) {
@@ -45,38 +69,13 @@ router.get('/api/events/:id', async (req, res) => {
     }
 })
 
-router.get('/api/events/:id/details', async (req, res) => {
+router.delete('/api/events/:id/delete', async (req, res) => {
     try {
         const event = await Event.findById(req.params.id)
-        if (!event) {
-            throw new Error()
-        }
-        await event.save()
+        await event.delete()
         res.send()
-    } catch (error) {
-        res.status(400).send(error)
-    }
-})
-
-router.patch('/api/events/:id/edit', async (req, res) => {
-    const updates = Object.keys(req.body)
-    const allowedUpdates = ['title', 'summary', 'image', 'date']
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-
-    if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' })
-    }
-
-    try {
-        const event = await Event.findById(req.params.id)
-        if (!event) {
-            throw new Error()
-        }
-        updates.forEach((update) => event[update] = req.body[update])
-        await event.save()
-        res.send(req.event)
     } catch (e) {
-        res.status(400).send(e)
+        res.status(404).send()
     }
 })
 

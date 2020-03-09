@@ -27,6 +27,10 @@
     transition: background-color 0.2s ease-in-out, border-radius .2s ease-in-out;
 }
 
+.delete {
+    color: red;
+}
+
 .inverted:hover {
     border-radius: 9px;
     background: rgb(235, 247, 249);

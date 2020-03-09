@@ -2,10 +2,16 @@ import React from 'react';
 import classes from './Button.module.css';
 
 const Button = (props) => {
+    let buttonClass = classes.Button;
+    if (props.delete) {
+        buttonClass = classes.delete;
+    }
+    if (props.inverted) {
+        buttonClass = classes.inverted;
+    }
+
     return (
-        (props.inverted) ?
-            <div className={classes.inverted} onClick={props.click}>{props.content}</div>
-            : <div className={classes.Button} onClick={props.click}>{props.content}</div>
+        <div className={buttonClass} onClick={props.click}>{props.content}</div>
     )
 }
 

@@ -6,7 +6,7 @@ import EventCard from '../../components/AdminPage/EventCard/EventCard';
 import Button from '../../components/shared/Button/Button';
 import EventModal from '../../components/AdminPage/EventModal/EventModal';
 
-import { fetchCertificates } from '../../services/AdminService';
+import { fetchData } from '../../services/AdminService';
 
 class AdminPage extends Component {
     constructor() {
@@ -16,10 +16,12 @@ class AdminPage extends Component {
             upcomingEvents: [],
             interpreters: []
         }
+
+        this.loadData = this.loadData.bind(this);
     }
 
-    componentDidMount() {
-        fetchCertificates()
+    loadData = () => {
+        fetchData()
             .then(data => {
                 this.setState({
                     pastEvents: data.pastEvents,
@@ -29,6 +31,10 @@ class AdminPage extends Component {
             }).catch(error => {
                 console.log(error);
             })
+    }
+
+    componentDidMount() {
+        this.loadData();
     }
 
     render() {
@@ -44,18 +50,23 @@ class AdminPage extends Component {
             ))
         ))
         const pastEvents = this.state.pastEvents.map(event => {
-            const date = new Date(event.date);
-            const parsedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-            const parsedTime = `${date.getHours()}:${date.getMinutes()}`
-
-            return <EventCard title={event.title} date={parsedDate} time={parsedTime} summary={event.summary} image={event.image} past />
+            return <EventCard id={event.id}
+                title={event.title}
+                date={event.date}
+                location={event.location}
+                summary={event.summary}
+                image={event.image}
+                past
+                reloadData={this.loadData} />
         })
         const upcomingEvents = this.state.upcomingEvents.map(event => {
-            const date = new Date(event.date);
-            const parsedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-            const parsedTime = `${date.getHours()}:${date.getMinutes()}`
-
-            return <EventCard title={event.title} date={parsedDate} time={parsedTime} summary={event.summary} image={event.image} />
+            return <EventCard id={event.id}
+                title={event.title}
+                date={event.date}
+                location={event.location}
+                summary={event.summary}
+                image={event.image}
+                reloadData={this.loadData} />
         })
 
         return (
@@ -68,7 +79,7 @@ class AdminPage extends Component {
 
                 <div className={classes.buttons}>
                     <Button content='Manage All Events' inverted />
-                    <EventModal />
+                    <EventModal reloadData={this.loadData} />
                 </div>
 
                 <div className={classes.horzLine} />

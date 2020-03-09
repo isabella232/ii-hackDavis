@@ -1,6 +1,6 @@
 .EventCard {
-    margin: 1.5rem 0;
-    padding: 2rem;
+    margin: 1rem 0;
+    padding: 1rem;
     background: #FFFFFF;
     box-shadow: 0px 4px 15px lightgrey;
     border-radius: 10px;
@@ -21,17 +21,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: -.5rem -.5rem 0 -.5rem;
 }
 
 .EventCard .eventTitle {
-    font-weight: bold;
-    font-size: large;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.EventCard .dateLocation {
+    text-align: right;
+}
+
+.EventCard .date {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.EventCard .location {
+    font-size: 15px;
 }
 
 .EventCard .footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: -.5rem -.5rem 0 -.5rem;
+    margin-top: .5rem;
 }

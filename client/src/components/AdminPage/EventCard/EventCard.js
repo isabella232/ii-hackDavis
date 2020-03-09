@@ -1,30 +1,64 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './EventCard.module.css';
 
 import Button from '../../shared/Button/Button';
+import EventModal from '../EventModal/EventModal';
 
-const EventCard = (props) => {
-    return (
-        <div className={classes.EventCard}>
-            <div className={props.past ? classes.past : null}>
-                <div className={classes.header}>
-                    <div className={classes.eventTitle}>{props.title}</div>
-                    {props.date} {props.time}
-                </div>
-                <p>{props.summary}</p>
-                <img src={props.image} alt={`${props.title} on ${props.date}`} height={'100%'} />
-                <div className={classes.footer}>
-                    {!props.past ? (
-                        <>
-                            <Button content='Delete' inverted />
-                            <Button content='Edit' />
-                        </>
-                    ) : null}
+import { deleteEvent } from '../../../services/AdminService';
 
+class EventCard extends Component {
+    constructor(props) {
+        super();
+
+        this.clickDelete = this.clickDelete.bind(this);
+    }
+
+    clickDelete = () => {
+        deleteEvent(this.props.id)
+            .then(data => {
+                this.props.reloadData();
+            })
+            .catch(e => console.log(e))
+    }
+
+
+    render() {
+        const date = new Date(this.props.date);
+        const parsedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        const parsedTime = `${date.getHours()}:${date.getMinutes()}`
+
+        return (
+            <div className={classes.EventCard}>
+                <div className={this.props.past ? classes.past : null}>
+                    <div className={classes.header}>
+                        <div className={classes.eventTitle}>{this.props.title}</div>
+                        <div className={classes.dateLocation}>
+                            <div className={classes.date}>{parsedDate} at {parsedTime}</div>
+                            <div className={classes.location}>{this.props.location}</div>
+                        </div>
+                    </div>
+                    <p>{this.props.summary}</p>
+                    <img src={this.props.image} alt={`${this.props.title} on ${parsedDate} at ${parsedTime}`} width={'100%'} />
+                    <div className={classes.footer}>
+                        {!this.props.past ? (
+                            <>
+                                <Button content='Delete' inverted click={this.clickDelete} />
+                                <EventModal edit
+                                    id={this.props.id}
+                                    title={this.props.title}
+                                    date={this.props.date}
+                                    summary={this.props.summary}
+                                    location={this.props.location}
+                                    image={this.props.image}
+                                    reloadData={this.props.reloadData} />
+                            </>
+                        ) : null}
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
+
 }
 
 export default EventCard;

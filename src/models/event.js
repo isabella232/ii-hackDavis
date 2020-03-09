@@ -11,6 +11,16 @@ const eventSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    location: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true,
+        default: new Date()
+    },
     image: {
         url: {
             type: String,
@@ -18,11 +28,6 @@ const eventSchema = new mongoose.Schema({
         buffer: {
             type: Buffer
         }
-    },
-    date: {
-        type: Date,
-        required: true,
-        default: new Date()
     }
 })
 
