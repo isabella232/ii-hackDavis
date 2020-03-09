@@ -1,4 +1,5 @@
 import { backend } from './AxiosInstances';
+import axios from 'axios';
 
 export const fetchCertificates = async () => {
     const endpoint = `api/admin/adminpage`;
@@ -15,7 +16,13 @@ export const rejectCertificate = async (certificateID) => {
     return backend.patch(endpoint);
 }
 
+
 export const createEvent = async (data) => {
     const endpoint = `api/events/create`;
-    return backend.patch(endpoint, data);
+    let formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('summary', data.summary);
+    formData.append('date', data.date);
+    formData.append('image', data.image)
+    return backend.post(endpoint, formData);
 }

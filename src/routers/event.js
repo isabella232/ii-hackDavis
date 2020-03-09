@@ -13,7 +13,7 @@ router.post('/api/events/create', imgUpload.single('image'), async (req, res) =>
         const parsedEvent = {
             _id: id,
             title: req.body.title,
-            date: new Date(),
+            date: new Date(req.body.date),
             summary: req.body.summary,
             image: {
                 buffer: req.file.buffer,

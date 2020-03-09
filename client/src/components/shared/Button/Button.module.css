@@ -10,6 +10,10 @@
     transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
+.Button:not(:last-child) {
+    margin-right: .5rem;
+}
+
 .Button:hover {
     background: rgb(39, 194, 214);
     border: 2px solid rgb(39, 194, 214);
@@ -20,9 +24,14 @@
     padding: 8px;
     color: #03A0B5;
     -webkit-transition: color 0.2s ease-in-out;
-    transition: color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, border-radius .2s ease-in-out;
 }
 
 .inverted:hover {
-    color: rgb(39, 194, 214);
+    border-radius: 9px;
+    background: rgb(235, 247, 249);
+}
+
+.inverted:not(:last-child) {
+    margin-right: .5rem;
 }
