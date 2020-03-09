@@ -3,6 +3,7 @@ import classes from './EventCard.module.css';
 
 import Button from '../../shared/Button/Button';
 import EventModal from '../EventModal/EventModal';
+import DeleteModal from '../../shared/DeleteModal/DeleteModal';
 
 import { deleteEvent } from '../../../services/AdminService';
 
@@ -42,7 +43,7 @@ class EventCard extends Component {
                     <div className={classes.footer}>
                         {!this.props.past ? (
                             <>
-                                <Button content='Delete' inverted click={this.clickDelete} />
+                                <DeleteModal clickDelete={this.clickDelete} />
                                 <EventModal edit
                                     id={this.props.id}
                                     title={this.props.title}

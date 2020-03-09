@@ -1,0 +1,25 @@
+.Modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Modal .Box {
+    padding: 1rem;
+    width: 400px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.Modal .Box .question {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.Modal .Box .choices {
+    display: flex;
+    justify-content: flex-end;
+}

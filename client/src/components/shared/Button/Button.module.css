@@ -27,15 +27,27 @@
     transition: background-color 0.2s ease-in-out, border-radius .2s ease-in-out;
 }
 
-.delete {
-    color: red;
-}
-
 .inverted:hover {
     border-radius: 9px;
     background: rgb(235, 247, 249);
 }
 
 .inverted:not(:last-child) {
+    margin-right: .5rem;
+}
+
+.delete {
+    color: red;
+    padding: 8px;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, border-radius .2s ease-in-out;
+}
+
+.delete:hover {
+    border-radius: 9px;
+    background: rgb(247, 209, 209);
+}
+
+.delete:not(:last-child) {
     margin-right: .5rem;
 }

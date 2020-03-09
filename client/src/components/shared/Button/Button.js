@@ -3,11 +3,11 @@ import classes from './Button.module.css';
 
 const Button = (props) => {
     let buttonClass = classes.Button;
-    if (props.delete) {
-        buttonClass = classes.delete;
-    }
     if (props.inverted) {
         buttonClass = classes.inverted;
+    }
+    if (props.delete) {
+        buttonClass = classes.delete;
     }
 
     return (
