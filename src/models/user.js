@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         validate(value) {
             if (!validator.isEmail(value)) {
-                throw new Error('Email is invalid')
+                throw new Error('Invalid Email.')
             }
         }
     },
@@ -26,18 +26,6 @@ const userSchema = new mongoose.Schema({
         trim: true,
         minLength: 8
         //add validation
-    },
-    username: {
-        type: String,
-        trim: true
-    },
-    gender: {
-        type: String,
-        trim: true
-    },
-    isAdmin: {
-        type: Boolean,
-        required: true
     },
     avatar: {
         url: {

@@ -23,11 +23,11 @@ class SearchPage extends Component {
                     </div>
 
                     <Grid container spacing={2} justify='center'>
-                        <Grid item xs={12} sm={6} md={7} lg={8}>
+                        <Grid item xs={12} sm={4} md={6}>
                             <Map />
                         </Grid>
 
-                        <Grid item xs={12} sm={6} md={5} lg={4}>
+                        <Grid item xs={12} sm={8} md={6}>
                             <Content />
                         </Grid>
                     </Grid>

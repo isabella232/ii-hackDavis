@@ -51,8 +51,8 @@ const CertificationCard = (props) => {
 
                 <strong>{props.title}</strong>
 
-                {expand ? <Button content='Collapse Document' inverted click={() => setExpand(false)} />
-                    : <Button content='Expand Document' inverted click={() => setExpand(true)} />}
+                {expand ? <Button content='Close' inverted click={() => setExpand(false)} />
+                    : <Button content='Expand' inverted click={() => setExpand(true)} />}
             </div>
 
             <div className={certificateClass}>

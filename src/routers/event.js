@@ -1,13 +1,13 @@
 const express = require('express')
 const Event = require('../models/event')
 const ObjectID = require('mongodb').ObjectID
-const auth = require('../middleware/auth')
+const { adminAuth } = require('../middleware/auth')
 const { imgUpload } = require('../utils/multer')
 const { getEventImageURL } = require('../utils/image')
 
 const router = new express.Router()
 
-router.post('/api/events/create', imgUpload.single('image'), async (req, res) => {
+router.post('/api/event/create', imgUpload.single('image'), async (req, res) => {
     try {
         const id = ObjectID()
         const parsedEvent = {

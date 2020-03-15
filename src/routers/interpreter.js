@@ -2,21 +2,16 @@ const express = require('express')
 const sharp = require('sharp')
 const ObjectID = require('mongodb').ObjectID
 const Interpreter = require('../models/interpreter')
-const auth = require('../middleware/auth')
+const { userAuth } = require('../middleware/auth')
 const { imgUpload } = require('../utils/multer')
 const { getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
 
 const router = new express.Router()
 
-// UPDATE THESE ROUTES
-
-// creating a profile
-// idk on what screen this will live
-router.post('/api/interpreters', async (req, res) => {
+router.post('/api/interpreter/create', async (req, res) => {
     var interpreter = new Interpreter(req.body)
     try {
-        await interpreter.generateCoordinates(req.body.location.locationString)
         await interpreter.save()
         const token = await interpreter.generateAuthToken()
         res.status(201).send(interpreter)
@@ -26,8 +21,31 @@ router.post('/api/interpreters', async (req, res) => {
     }
 })
 
+// how to accept both JSON and form data?
+// router.post('/api/interpreter/create', imgUpload.single('avatar'), async (req, res) => {
+//     try {
+//         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+//         const interpreter = new Interpreter({
+//             name: req.body.name,
+//             email: req.body.email,
+//             password: req.body.password,
+//             avatar: {
+//                 buffer: buffer,
+//                 url: getAvatarURL(req.params.id)
+//             }
+//         })
+//         sendWelcomeEmail(interpreter.email, interpreter.name)
+//         const token = await interpreter.generateAuthToken()
+//         await interpreter.generateCoordinates(req.body.location.locationString)
+//         await interpreter.save()
+//         res.status(201).send(token)
+//     } catch (e) {
+//         res.status(400).send({ error: e.message })
+//     }
+// })
+
 // interpreters can update their own profiles
-router.patch('/api/interpreters/me', auth, async (req, res) => {
+router.patch('/api/interpreter/me', userAuth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['location', 'languagues', 'englishFluency', 'certification']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -53,7 +71,7 @@ router.patch('/api/interpreters/me', auth, async (req, res) => {
 })
 
 // TODO: delete only one certificate
-router.delete('/api/interpreters/me/certificates', auth, async (req, res) => {
+router.delete('/api/interpreter/me/certificates', userAuth, async (req, res) => {
     try {
         // deletes all for now
         req.interpreter.certificates = []
@@ -135,7 +153,7 @@ router.post('/api/interpreters/:id/certificate/upload', imgUpload.single('certif
 })
 
 // fetch a certificate image
-router.get('/api/interpreters/certificates/:id', async (req, res) => {
+router.get('/api/interpreter/certificates/:id', async (req, res) => {
     try {
         const id = req.params.id
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })

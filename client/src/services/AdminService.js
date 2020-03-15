@@ -17,7 +17,7 @@ export const rejectCertificate = async (certificateID) => {
 
 
 export const createEvent = async (data) => {
-    const endpoint = `api/events/create`;
+    const endpoint = `api/event/create`;
     let formData = new FormData();
     formData.append('title', data.title);
     formData.append('summary', data.summary);

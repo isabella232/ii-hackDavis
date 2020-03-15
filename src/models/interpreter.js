@@ -3,9 +3,7 @@ const validator = require('validator')
 const User = require('./user')
 const { getCoordinates } = require('../utils/geocoder')
 
-// returns a model with overlapping schema with the user
 const interpreterSchema = new mongoose.Schema({
-    // location
     location: {
         locationString: {
             type: String,
@@ -23,7 +21,6 @@ const interpreterSchema = new mongoose.Schema({
             }
         }
     },
-    // indigenous language fluency
     languages: [{
         language: {
             type: String,
@@ -37,7 +34,6 @@ const interpreterSchema = new mongoose.Schema({
             max: 5
         }
     }],
-    // english fluency
     englishFluency: {
         type: Number,
         trim: true,
@@ -45,7 +41,6 @@ const interpreterSchema = new mongoose.Schema({
         min: 1,
         max: 5
     },
-    // certifications
     certifications: [{
         title: {
             type: String,
@@ -58,7 +53,7 @@ const interpreterSchema = new mongoose.Schema({
             },
             buffer: {
                 type: Buffer,
-                required: true
+                // required: true
             }
         },
         isValidated: {
@@ -70,19 +65,16 @@ const interpreterSchema = new mongoose.Schema({
             default: false
         },
     }],
-    // type of interpreting: simultaneous, etc
     service: {
         type: String,
         trim: true,
         lowercase: true
     },
-    // rating
     rating: {
         type: Number,
         min: 1,
         max: 5,
     },
-    // reviews
     reviews: [{
         reviewerName: {
             type: String,
@@ -122,7 +114,7 @@ const interpreterSchema = new mongoose.Schema({
 
 interpreterSchema.methods.generateCoordinates = async function (location) {
     const interpreter = this
-    const coordinates = await getCoordinates(location)
+    await getCoordinates(location)
         .then(coordinates => {
             interpreter.location.coordinates = coordinates
         })

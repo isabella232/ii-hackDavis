@@ -9,6 +9,9 @@ const Button = (props) => {
     if (props.delete) {
         buttonClass = classes.delete;
     }
+    if (props.invertedDelete) {
+        buttonClass = classes.invertedDelete;
+    }
 
     return (
         <div className={buttonClass} onClick={props.click}>{props.content}</div>

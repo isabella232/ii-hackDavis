@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import classes from './EventCard.module.css';
 
-import Button from '../../shared/Button/Button';
 import EventModal from '../EventModal/EventModal';
-import DeleteModal from '../../shared/DeleteModal/DeleteModal';
+import DeleteModal from '../../shared/DoubleCheckModal/DoubleCheckModal';
 
 import { deleteEvent } from '../../../services/AdminService';
 
@@ -26,7 +25,8 @@ class EventCard extends Component {
     render() {
         const date = new Date(this.props.date);
         const parsedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-        const parsedTime = `${date.getHours()}:${date.getMinutes()}`
+        const parsedTime = `${date.getHours()}:${date.getMinutes()}`;
+        const doubleCheckContent = `Are You Sure You Want To Delete ${this.props.title}?`;
 
         return (
             <div className={classes.EventCard}>
@@ -43,7 +43,7 @@ class EventCard extends Component {
                     <div className={classes.footer}>
                         {!this.props.past ? (
                             <>
-                                <DeleteModal clickDelete={this.clickDelete} />
+                                <DeleteModal content={doubleCheckContent} clickDelete={this.clickDelete} />
                                 <EventModal edit
                                     id={this.props.id}
                                     title={this.props.title}

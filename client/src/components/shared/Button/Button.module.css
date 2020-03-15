@@ -24,7 +24,7 @@
     padding: 8px;
     color: #03A0B5;
     -webkit-transition: color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, border-radius .2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
 }
 
 .inverted:hover {
@@ -36,16 +36,37 @@
     margin-right: .5rem;
 }
 
-.delete {
+.invertedDelete {
     color: red;
     padding: 8px;
     -webkit-transition: color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, border-radius .2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
+}
+
+.invertedDelete:hover {
+    border-radius: 9px;
+    background: rgb(255, 174, 164);
+}
+
+.invertedDelete:not(:last-child) {
+    margin-right: .5rem;
+}
+
+.delete    {
+    background: rgb(255, 25, 0);
+    border: 2px solid rgb(255, 25, 0);
+    box-sizing: border-box;
+    border-radius: 9px;
+    color: white;
+    padding: 8px;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
 }
 
 .delete:hover {
     border-radius: 9px;
-    background: rgb(247, 209, 209);
+    background: rgb(255, 135, 122);
+    border-color: rgb(255, 135, 122);
 }
 
 .delete:not(:last-child) {
