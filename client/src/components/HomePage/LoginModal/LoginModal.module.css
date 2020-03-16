@@ -1,0 +1,26 @@
+.Modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Modal .card {
+    padding: 1rem;
+    width: 400px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.Modal .title {
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 45px;
+}
+
+.Modal .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem .5rem;
+}
