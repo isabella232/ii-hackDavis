@@ -10,7 +10,7 @@ const router = new express.Router()
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-// getting users by their credentials
+// login
 router.post('/api/user/login', urlencodedParser, async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -18,41 +18,42 @@ router.post('/api/user/login', urlencodedParser, async (req, res) => {
         const data = {
             name: user.name,
             email: user.email,
-            token: token
         }
+        res.cookie('token', token, { httpOnly: true })
         res.send(data)
     } catch (e) {
         res.status(400).send()
     }
 })
 
-// logout of current session (deletes only current token)
+// logout of current session (delete only current token)
 router.post('/api/user/logout', userAuth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token !== req.token
+            return token.token !== req.cookies.token
         })
         await req.user.save()
-
+        res.clearCookie('token')
         res.send()
     } catch (e) {
         res.send(500).send()
     }
 })
 
-// logout of all sessions (deletes all tokens)
+// logout of all sessions (delete all tokens)
 router.post('/api/user/logoutAll', userAuth, async (req, res) => {
     try {
         req.user.tokens = []
         await req.user.save()
-
+        res.clearCookie('token')
         res.send()
     } catch (e) {
         res.send(500).send()
     }
 })
 
-router.get('/api/user/avatar/:id', async (req, res) => {
+// get avatar image url
+router.get('/api/user/avatar/:id', userAuth, async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         if (!user || !user.avatar) {
@@ -65,8 +66,8 @@ router.get('/api/user/avatar/:id', async (req, res) => {
     }
 })
 
-// testing route for above uploading avatar route
-router.post('/api/user/avatar/:id', imgUpload.single('avatar'), async (req, res) => {
+// upload avatar separately
+router.post('/api/user/avatar/:id', userAuth, imgUpload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     const user = await User.findById(req.params.id)
     user.avatar.buffer = buffer

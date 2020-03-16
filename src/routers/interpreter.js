@@ -14,9 +14,9 @@ router.post('/api/interpreter/create', async (req, res) => {
     try {
         await interpreter.save()
         const token = await interpreter.generateAuthToken()
-        res.status(201).send(interpreter)
+        res.cookie('token', token, { httpOnly: true })
+        res.status(201).send()
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })

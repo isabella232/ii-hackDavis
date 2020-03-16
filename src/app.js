@@ -3,6 +3,7 @@ require('./db/mongoose')
 
 const path = require('path')
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const homeRouter = require('./routers/home')
@@ -23,7 +24,8 @@ var corsOptions = {
 }
 
 app.use(cors(corsOptions))
-app.options(cors())
+app.use(cookieParser())
+// app.options(cors())
 app.use(express.json())
 app.use(homeRouter)
 app.use(contactRouter)

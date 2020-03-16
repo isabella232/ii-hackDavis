@@ -14,6 +14,7 @@ const { fillSignupInfo } = require('../utils/user')
 
 const router = new express.Router()
 
+// create admin account
 router.post('/api/admin/create', imgUpload.single('avatar'), async (req, res) => {
     if (req.body.adminCode !== 'secretCode') {
         const error = new Error('Invalid Admin Code')
@@ -28,12 +29,14 @@ router.post('/api/admin/create', imgUpload.single('avatar'), async (req, res) =>
         sendWelcomeEmail(admin.email, admin.name)
         const token = await admin.generateAuthToken()
         await admin.save()
-        res.status(201).send(token)
+        res.cookie('token', token, { httpOnly: true })
+        res.status(201).send()
     } catch (e) {
         res.status(400).send({ error: e.message })
     }
 })
 
+// get admin home page
 router.get('/api/admin/adminpage', adminAuth, async (req, res) => {
     try {
         const now = new Date()
@@ -58,6 +61,7 @@ router.get('/api/admin/adminpage', adminAuth, async (req, res) => {
     }
 })
 
+// validate a certificate
 router.patch('/api/admin/certificates/:id/validate', async (req, res) => {
     const id = req.params.id
     try {
@@ -79,6 +83,7 @@ router.patch('/api/admin/certificates/:id/validate', async (req, res) => {
     }
 })
 
+// reject a certificate
 router.patch('/api/admin/certificates/:id/reject', async (req, res) => {
     const id = req.params.id
     try {
@@ -96,6 +101,7 @@ router.patch('/api/admin/certificates/:id/reject', async (req, res) => {
     }
 })
 
+// verify a interpreter
 router.patch('/api/admin/interpreters/:id/verify', async (req, res) => {
     const id = req.params.id
     try {

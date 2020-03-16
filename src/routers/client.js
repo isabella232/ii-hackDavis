@@ -8,6 +8,7 @@ const { fillSignupInfo } = require('../utils/user')
 
 const router = new express.Router()
 
+// create client account
 router.post('/api/client/create', imgUpload.single('avatar'), async (req, res) => {
     try {
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
@@ -16,12 +17,14 @@ router.post('/api/client/create', imgUpload.single('avatar'), async (req, res) =
         sendWelcomeEmail(client.email, client.name)
         const token = await client.generateAuthToken()
         await client.save()
-        res.status(201).send(token)
+        res.cookie('token', token, { httpOnly: true })
+        res.status(201).send()
     } catch (e) {
         res.status(400).send({ error: e.message })
     }
 })
 
+// get client's profile
 router.patch('/api/client/me', userAuth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password']
