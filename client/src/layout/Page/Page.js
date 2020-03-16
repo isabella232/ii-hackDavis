@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import Navigation from "../Navigation/Navigation";
+// import Navigation from "../Navigation/Navigation";
+import NavBar from '../NavBar/NavBar';
 import Footer from "../Footer/Footer";
 
 import HomePage from "../../containers/HomePage/HomePage";
@@ -12,7 +13,8 @@ import AdminPage from "../../containers/AdminPage/AdminPage";
 const Page = props => {
   return (
     <>
-      <Navigation />
+      {/* <Navigation /> */}
+      <NavBar />
 
       <main>
         <Switch>

@@ -19,7 +19,7 @@ router.post('/api/user/login', urlencodedParser, async (req, res) => {
             name: user.name,
             email: user.email,
         }
-        res.cookie('token', token, { httpOnly: true })
+        res.cookie('token', token, { maxAge: 900000, httpOnly: true })
         res.send(data)
     } catch (e) {
         res.status(400).send()

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import classes from './HomePage.module.css';
 
 import Avatar from '../../components/shared/Avatar/Avatar';
-import PreviewCard from '../../components/HomePage/PreviewCard';
+import PreviewCard from '../../components/HomePage/PreviewCard/PreviewCard';
 
 import { fetchHome } from '../../services/HomeService';
 
