@@ -18,14 +18,12 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 var corsOptions = {
-    origin: 'localhost:8000', // change to actual url later
+    origin: 'http://localhost:8000', // change to actual url later
     credentials: true,
-    origin: true,
 }
 
 app.use(cors(corsOptions))
 app.use(cookieParser())
-// app.options(cors())
 app.use(express.json())
 app.use(homeRouter)
 app.use(contactRouter)

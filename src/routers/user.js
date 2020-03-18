@@ -16,12 +16,14 @@ router.post('/api/user/login', urlencodedParser, async (req, res) => {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
         const data = {
-            name: user.name,
-            email: user.email,
+            userKind: user.kind,
+            // name: user.name,
+            // email: user.email,
         }
-        res.cookie('token', token, { maxAge: 900000, httpOnly: true })
+        res.cookie('token', token, { maxAge: 900000, httpOnly: true, sameSite: 'None', secure: true })
         res.send(data)
     } catch (e) {
+        console.log(e)
         res.status(400).send()
     }
 })

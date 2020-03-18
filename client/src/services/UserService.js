@@ -2,6 +2,13 @@ import { backend } from './AxiosInstances';
 
 export const login = async (data) => {
     const endpoint = `api/user/login`;
-    // return backend.post(endpoint, data);
-    return { userKind: 'Client' };
+    data = {
+        email: 'm@o.com',
+        password: 'a'
+    }
+    return backend.post(endpoint, data);
+}
+
+export const setUserKind = async (userKind) => {
+    localStorage.setItem('userKind', userKind);
 }

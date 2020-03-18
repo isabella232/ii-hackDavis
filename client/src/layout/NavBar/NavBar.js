@@ -1,42 +1,52 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 import classes from "./NavBar.module.css";
+import { setUserKind } from '../../services/UserService';
 
 import Button from '../../components/shared/Button/Button';
 import LoginModal from '../../components/HomePage/LoginModal/LoginModal';
 
 class NavBar extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             modalStatus: false,
-            isLoggedIn: false,
-            userKind: 'Client'
+            userKind: props.userKind,
+            isLoggedIn: props.isLoggedIn
         }
 
-        this.changeModalStatus = this.changeModalStatus.bind(this);
+        this.switchModalStatus = this.switchModalStatus.bind(this);
         this.processLogin = this.processLogin.bind(this);
     }
 
-    changeModalStatus = () => {
+    componentDidUpdate(prevProps) {
+        if (this.props.userKind !== prevProps.userKind) {
+            const isLoggedIn = (this.props.userKind !== 'Visitor') ? true : false;
+            this.setState({
+                userKind: this.props.userKind,
+                isLoggedIn: isLoggedIn
+            })
+        }
+    }
+
+    switchModalStatus = () => {
         const status = this.state.modalStatus;
         this.setState({
             modalStatus: !status
-        })
+        });
     }
 
-    processLogin = (data) => {
-        this.setState({
-            modalStatus: false,
-            isLoggedIn: true,
-            userKind: data.userKind
-        })
+    processLogin = async (userKind) => {
+        await setUserKind(userKind);
+        this.props.login();
+        this.switchModalStatus();
     }
 
     render() {
         return (
             <div className={classes.NavBar}>
-                <Link className={classes.logo} to={"/"}>Logo</Link>
+                <Link className={classes.logo} to={"/"}>Logo - {this.state.userKind}</Link>
                 <div className={classes.items}>
                     <Link className={classes.item} to={"/about"}>About</Link>
                     {this.state.userKind === 'Admin' ? <Link className={classes.item} to={"/admin"}>Admin</Link> : null}
@@ -45,7 +55,7 @@ class NavBar extends Component {
                     <Link className={classes.item} to={"/contactus"}>Contact Us</Link>
 
                     <div className={classes.button}>
-                        {!this.state.isLoggedIn ? <Button content='Login' click={this.changeModalStatus} /> : <Button content='Logout' inverted />}
+                        {!this.state.isLoggedIn ? <Button content='Login' click={this.switchModalStatus} /> : <Button content='Logout' inverted />}
                     </div>
                 </div>
                 <LoginModal open={this.state.modalStatus} processLogin={this.processLogin} />
@@ -54,4 +64,15 @@ class NavBar extends Component {
     }
 }
 
-export default NavBar;
+const mapStateToProps = state => ({
+    userKind: state.userKind,
+    isLoggedIn: state.isLoggedIn
+});
+
+const mapDispatchToProps = dispatch => {
+    return {
+        login: () => dispatch({ type: 'LOGIN' })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
