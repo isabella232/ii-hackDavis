@@ -107,9 +107,6 @@ class ReviewModal extends Component {
         const button = (this.props.edit) ?
             <Button content={'Edit'} click={this.openModal} />
             : <Button content={'Create Event'} click={this.openModal} />;
-        const postButton = (this.props.edit) ?
-            <Button content={'Edit'} click={this.openModal} />
-            : <Button content={'Create'} click={this.openModal} />;
         const header = (this.props.edit) ?
             <span>Edit Selected Event</span>
             : <span>Create A New Event</span>;

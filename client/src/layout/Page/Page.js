@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-// import Navigation from "../Navigation/Navigation";
 import NavBar from '../NavBar/NavBar';
 import Footer from "../Footer/Footer";
 
@@ -9,19 +8,20 @@ import HomePage from "../../containers/HomePage/HomePage";
 import SearchPage from "../../containers/SearchPage/SearchPage";
 import ContactUsPage from "../../containers/ContactUsPage/ContactUsPage";
 import AdminPage from "../../containers/AdminPage/AdminPage";
+import ProfilePage from '../../containers/ProfilePage/ProfilePage';
 
 const Page = props => {
   return (
     <>
-      {/* <Navigation /> */}
       <NavBar />
 
       <main>
         <Switch>
           <Route path="/" exact component={HomePage} />
-          <Route path="/contactus" component={ContactUsPage} />
           <Route path="/admin" component={AdminPage} />
+          <Route path="/profile" component={ProfilePage} />
           <Route path="/search" component={SearchPage} />
+          <Route path="/contactus" component={ContactUsPage} />
         </Switch>
       </main>
 

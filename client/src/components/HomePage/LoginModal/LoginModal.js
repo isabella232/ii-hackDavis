@@ -5,7 +5,7 @@ import Fade from "@material-ui/core/Fade";
 import classes from './LoginModal.module.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '../../shared/Button/Button';
-import { login } from '../../../services/UserService';
+import { signIn } from '../../../services/UserService';
 
 class LoginModal extends Component {
     constructor(props) {
@@ -13,12 +13,18 @@ class LoginModal extends Component {
         this.state = {
             open: props.open,
             email: '',
-            password: ''
+            password: '',
         }
 
         this.closeModal = this.closeModal.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.submitForm = this.submitForm.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.open !== prevProps.open) {
+            this.setState({ open: this.props.open });
+        }
     }
 
     openModal = () => {
@@ -27,14 +33,6 @@ class LoginModal extends Component {
 
     closeModal = () => {
         this.setState({ open: false });
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.open !== prevProps.open) {
-            this.setState({
-                open: this.props.open
-            })
-        }
     }
 
     changeInput = (e) => {
@@ -52,9 +50,8 @@ class LoginModal extends Component {
             email: this.props.email,
             password: this.props.password,
         }
-        login(data)
+        signIn(data)
             .then(data => {
-                console.log('log', data)
                 this.props.processLogin(data.userKind);
             })
             .catch(e => {

@@ -81,7 +81,7 @@ class InterpreterInfoModal extends Component {
                             <Grid container spacing={2} justify='center'>
                                 <Grid item xs={5} sm={5}>
                                     <div className={classes.avatar}>
-                                        <img src={this.props.avatar} width='100%' />
+                                        <img src={this.props.avatar} width='100%' alt={`avatar-${this.props.id}`} />
                                     </div>
                                 </Grid>
 

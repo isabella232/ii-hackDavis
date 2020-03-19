@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class ProfilePage extends Component{
     render() {
         return (
-            <p>this is the landing page</p>
+            <h1>Profile Page Y'All.</h1>
         )
     }
 }

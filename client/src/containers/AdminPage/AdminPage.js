@@ -51,6 +51,7 @@ class AdminPage extends Component {
         ))
         const pastEvents = this.state.pastEvents.map(event => {
             return <EventCard id={event.id}
+                key={`event-${event.id}`}
                 title={event.title}
                 date={event.date}
                 location={event.location}
@@ -61,6 +62,7 @@ class AdminPage extends Component {
         })
         const upcomingEvents = this.state.upcomingEvents.map(event => {
             return <EventCard id={event.id}
+                key={`event-${event.id}`}
                 title={event.title}
                 date={event.date}
                 location={event.location}

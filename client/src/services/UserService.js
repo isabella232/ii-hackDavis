@@ -1,14 +1,29 @@
-import { backend } from './AxiosInstances';
+import { auth } from './AxiosInstances';
 
-export const login = async (data) => {
+export const signIn = async (data) => {
     const endpoint = `api/user/login`;
     data = {
-        email: 'm@o.com',
-        password: 'a'
+        email: 'admin@gmail.com',
+        password: 'noadnomin'
     }
-    return backend.post(endpoint, data);
+    const response = await auth.post(endpoint, data);
+    if (response.status === 200) {
+        localStorage.setItem('userKind', response.data.userKind);
+    }
+    return response.data;
+
 }
 
-export const setUserKind = async (userKind) => {
-    localStorage.setItem('userKind', userKind);
+export const signOut = async () => {
+    const endpoint = `api/user/logout`;
+    const response = await auth.post(endpoint);
+    if (response.status === 200) {
+        localStorage.removeItem('userKind');
+    }
+    return response.data;
+}
+
+export const hj = async () => {
+    const endpoint = `api/user/hj`;
+    await auth.post(endpoint);
 }
