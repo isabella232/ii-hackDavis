@@ -4,7 +4,7 @@ const Client = require('../models/client')
 const { userAuth } = require('../middleware/auth')
 const { imgUpload } = require('../utils/multer')
 const { sendWelcomeEmail } = require('../utils/email')
-const { fillSignupInfo } = require('../utils/user')
+const { fillSignupInfo, } = require('../utils/user')
 
 const router = new express.Router()
 
@@ -17,7 +17,6 @@ router.post('/api/client/create', imgUpload.single('avatar'), async (req, res) =
         sendWelcomeEmail(client.email, client.name)
         const token = await client.generateAuthToken()
         await client.save()
-        res.cookie('token', token, { maxAge: 900000, httpOnly: true })
         res.status(201).send()
     } catch (e) {
         res.status(400).send({ error: e.message })

@@ -1,7 +1,7 @@
 const express = require('express')
 const sharp = require('sharp')
 const User = require('../models/user')
-const { userAuth } = require('../middleware/auth')
+const { userAuth, checkExpiration } = require('../middleware/auth')
 const bodyParser = require('body-parser')
 const { imgUpload } = require('../utils/multer')
 const { getAvatarURL } = require('../utils/image')
@@ -15,12 +15,14 @@ router.post('/api/user/login', urlencodedParser, async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
+        const expireDate = new Date()
+        // expireDate.setFullYear(expireDate.getFullYear() + 1) // cookie will expire in 1 years
+        expireDate.setSeconds(expireDate.getSeconds() + 20)
         const data = {
             userKind: user.kind,
-            // name: user.name,
-            // email: user.email,
         }
-        res.cookie('token', token, { maxAge: 900000, httpOnly: true, sameSite: 'None', secure: true })
+        res.cookie('token', token, { expires: expireDate, httpOnly: true, sameSite: 'None', secure: true })
+        // res.cookie('token', token, { expires: expireDate, httpOnly: true })
         res.send(data)
     } catch (e) {
         console.log(e)
@@ -35,10 +37,42 @@ router.post('/api/user/logout', userAuth, async (req, res) => {
             return token.token !== req.cookies.token
         })
         await req.user.save()
-        res.clearCookie('token')
+        res.clearCookie('token', { sameSite: 'None', secure: true })
         res.send()
     } catch (e) {
-        res.send(500).send()
+        res.status(500).send()
+    }
+})
+
+router.post('/api/user/authenticate', async (req, res) => {
+    try {
+        if (!req.cookies.token) {
+            // const user = await User.findOne({ _id: req.body.id })
+            // for (let i = 0; i < user.tokens.length; i++) {
+            //     if (checkExpiration(user.tokens[i])) {
+            //         user.tokens.splice(i, 1)
+            //         await user.save()
+            //     }
+            // }
+            res.status(200).send({ isLoggedIn: false })
+        } else {
+            res.status(200).send({ isLoggedIn: true })
+        }
+    } catch (e) {
+        res.status(401).send({ error: 'Fail To Authenticate User.' })
+    }
+})
+
+router.post('/api/user/hj', async (req, res) => {
+    try {
+        if (req.cookies.token) {
+            res.status(200).send('hj')
+        } else {
+            res.status(500).send()
+        }
+        res.send()
+    } catch (e) {
+        res.status(500).send()
     }
 })
 
@@ -50,7 +84,7 @@ router.post('/api/user/logoutAll', userAuth, async (req, res) => {
         res.clearCookie('token')
         res.send()
     } catch (e) {
-        res.send(500).send()
+        res.status(500).send()
     }
 })
 
@@ -78,6 +112,16 @@ router.post('/api/user/avatar/:id', userAuth, imgUpload.single('avatar'), async 
     res.send()
 }, (error, req, res, next) => {
     res.status(400).send({ error: error.message })
+})
+
+router.get('/api/user/profile', userAuth, async (req, res) => {
+    try {
+        // console.log(req.user)
+        res.send()
+    } catch (e) {
+        console.log(e)
+        res.status(404).send()
+    }
 })
 
 module.exports = router

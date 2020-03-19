@@ -29,7 +29,6 @@ router.post('/api/admin/create', imgUpload.single('avatar'), async (req, res) =>
         sendWelcomeEmail(admin.email, admin.name)
         const token = await admin.generateAuthToken()
         await admin.save()
-        res.cookie('token', token, { maxAge: 900000, httpOnly: true })
         res.status(201).send()
     } catch (e) {
         res.status(400).send({ error: e.message })
