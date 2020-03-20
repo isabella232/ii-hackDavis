@@ -15,7 +15,7 @@ router.post('/api/client/create', imgUpload.single('avatar'), async (req, res) =
         const info = fillSignupInfo(req.body, buffer)
         const client = new Client(info)
         sendWelcomeEmail(client.email, client.name)
-        const token = await client.generateAuthToken()
+        // const token = await client.generateAuthToken()
         await client.save()
         res.status(201).send()
     } catch (e) {

@@ -1,59 +1,44 @@
 const jwt = require('jsonwebtoken')
-const Admin = require('../models/admin')
 const User = require('../models/user')
+const { setCookies, clearCookies } = require('../utils/user')
 
-const adminAuth = async (req, res, next) => {
+const isValid = async (token) => {
     try {
-        // const token = req.header('Authorization').replace('Bearer ', '')
-        const token = req.cookies.token
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
-        const admin = await Admin.findOne({ _id: decoded._id, 'tokens.token': token })
-
-        if (!admin) {
-            throw new Error('No Admin Found.')
-        }
-
-        req.admin = admin
-        next()
+        await jwt.verify(token, process.env.JWT_SECRET_KEY)
+        return true
     } catch (e) {
-        res.status(401).send({ error: 'Fail To Authenticate Admin.' })
+        return false
     }
 }
 
 const userAuth = async (req, res, next) => {
+    const accessToken = req.cookies.accessToken
+    const refreshToken = req.cookies.refreshToken
     try {
-        // console.log('cookie', req.cookies)
-        // const token = req.header('Authorization').replace('Bearer ', '')
-        const token = req.cookies.token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
-        const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
-
-        if (!user) {
-            throw new Error('No User Found.')
+        if (await isValid(accessToken) && await isValid(refreshToken)) {
+            req.user = await User.findByToken(accessToken)
+        } else if (await isValid(refreshToken)) {
+            const user = await User.findByToken(refreshToken)
+            const newToken = await user.generateAuthToken()
+            res = setCookies(res, newToken)
+            await user.clearAuthToken(accessToken, refreshToken)
+            await user.save()
+            req.user = user
+        } else {
+            const user = await User.findByToken(accessToken)
+            await user.clearAuthToken(accessToken, refreshToken)
+            res = clearCookies(res)
+            await user.save()
+            throw new Error('Tokens Expired.')
         }
 
-        req.user = user
         next()
     } catch (e) {
         console.log(e)
-        res.status(401).send({ error: 'Fail To Authenticate User.' })
-    }
-}
-
-const checkExpiration = async (token) => {
-    try {
-        await jwt.verify(token, process.env.JWT_SECRET_KEY)
-        return false
-    } catch (e) {
-        if (e.name === 'TokenExpiredError') {
-            return true
-        }
+        return res.status(401).send({ error: 'Failed To Authenticate User.' })
     }
 }
 
 module.exports = {
-    adminAuth,
-    userAuth,
-    checkExpiration
+    userAuth
 }

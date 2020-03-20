@@ -37,9 +37,11 @@ const userSchema = new mongoose.Schema({
         }
     },
     tokens: [{
-        token: {
+        accessToken: {
             type: String,
-            required: true
+        },
+        refreshToken: {
+            type: String,
         }
     }],
 }, { discriminatorKey: 'kind', timestamps: true })
@@ -59,15 +61,42 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-// generates the auth token
+userSchema.statics.findByToken = async (token) => {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    const user = await User.findOne({ _id: decoded._id })
+
+    if (!user) {
+        throw new Error('No User Found.')
+    }
+
+    return user
+}
+
+// generate new auth token
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '20 seconds' })
+    const accessToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '31 days' })
+    const refreshToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '30 days' })
+    const token = {
+        accessToken: accessToken,
+        refreshToken: refreshToken
+    }
 
-    user.tokens = user.tokens.concat({ token })
+    user.tokens = user.tokens.concat(token)
     await user.save()
 
     return token
+}
+
+// delete expired auth token
+userSchema.methods.clearAuthToken = async function (accessToken, refreshToken) {
+    const user = this
+
+    user.tokens = user.tokens.filter((token) => {
+        return (token.accessToken !== accessToken && token.refreshToken !== refreshToken)
+    })
+
+    await user.save()
 }
 
 // doesn't print password or tokens

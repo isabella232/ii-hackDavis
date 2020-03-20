@@ -1,8 +1,9 @@
 const express = require('express')
 const sharp = require('sharp')
 const User = require('../models/user')
-const { userAuth, checkExpiration } = require('../middleware/auth')
+const { userAuth } = require('../middleware/auth')
 const bodyParser = require('body-parser')
+const { setCookies, clearCookies } = require('../utils/user')
 const { imgUpload } = require('../utils/multer')
 const { getAvatarURL } = require('../utils/image')
 
@@ -15,14 +16,10 @@ router.post('/api/user/login', urlencodedParser, async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        const expireDate = new Date()
-        // expireDate.setFullYear(expireDate.getFullYear() + 1) // cookie will expire in 1 years
-        expireDate.setSeconds(expireDate.getSeconds() + 20)
         const data = {
             userKind: user.kind,
         }
-        res.cookie('token', token, { expires: expireDate, httpOnly: true, sameSite: 'None', secure: true })
-        // res.cookie('token', token, { expires: expireDate, httpOnly: true })
+        res = setCookies(res, token)
         res.send(data)
     } catch (e) {
         console.log(e)
@@ -30,42 +27,38 @@ router.post('/api/user/login', urlencodedParser, async (req, res) => {
     }
 })
 
-// logout of current session (delete only current token)
+// logout of current session
 router.post('/api/user/logout', userAuth, async (req, res) => {
     try {
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token !== req.cookies.token
-        })
-        await req.user.save()
-        res.clearCookie('token', { sameSite: 'None', secure: true })
+        const token = {
+            accessToken: req.cookies.accessToken,
+            refreshToken: req.cookies.refreshToken
+        }
+        await req.user.clearAuthToken(token)
+        res = clearCookies(res)
         res.send()
     } catch (e) {
         res.status(500).send()
     }
 })
 
-router.post('/api/user/authenticate', async (req, res) => {
+router.post('/api/user/authenticate', userAuth, async (req, res) => {
+    console.log('ne')
     try {
-        if (!req.cookies.token) {
-            // const user = await User.findOne({ _id: req.body.id })
-            // for (let i = 0; i < user.tokens.length; i++) {
-            //     if (checkExpiration(user.tokens[i])) {
-            //         user.tokens.splice(i, 1)
-            //         await user.save()
-            //     }
-            // }
-            res.status(200).send({ isLoggedIn: false })
-        } else {
-            res.status(200).send({ isLoggedIn: true })
+        const data = {
+            isLoggedIn: true,
+            userKind: req.user.kind
         }
+        res.status(200).send(data)
     } catch (e) {
-        res.status(401).send({ error: 'Fail To Authenticate User.' })
+        console.log(e)
+        res.status(401).send({ error: 'User Not Logged In.' })
     }
 })
 
 router.post('/api/user/hj', async (req, res) => {
     try {
-        if (req.cookies.token) {
+        if (req.cookies.accessToken) {
             res.status(200).send('hj')
         } else {
             res.status(500).send()
@@ -81,7 +74,7 @@ router.post('/api/user/logoutAll', userAuth, async (req, res) => {
     try {
         req.user.tokens = []
         await req.user.save()
-        res.clearCookie('token')
+        res = clearCookies(res)
         res.send()
     } catch (e) {
         res.status(500).send()

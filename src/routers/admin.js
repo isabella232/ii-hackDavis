@@ -4,7 +4,7 @@ const sharp = require('sharp')
 const Admin = require('../models/admin')
 const Interpreter = require('../models/interpreter')
 const Event = require('../models/event')
-const { adminAuth } = require('../middleware/auth')
+const { userAuth } = require('../middleware/auth')
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveInterpreter } = require('../utils/algolia')
 const { getToValidate } = require('../utils/admin')
@@ -36,7 +36,7 @@ router.post('/api/admin/create', imgUpload.single('avatar'), async (req, res) =>
 })
 
 // get admin home page
-router.get('/api/admin/adminpage', adminAuth, async (req, res) => {
+router.get('/api/admin/adminpage', userAuth, async (req, res) => {
     try {
         const now = new Date()
         const pastEvents = await Event.find().where('date').lt(now).limit(2)
