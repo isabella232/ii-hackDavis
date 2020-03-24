@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const User = require('./user')
-const { getCoordinates } = require('../utils/geocoder')
+const { getCoordinates } = require('../utils/interpreter')
 
 const interpreterSchema = new mongoose.Schema({
     location: {

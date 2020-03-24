@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { validateToken } = require('../utils/user')
+const { asyncFilter } = require('../utils/misc')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -61,10 +63,10 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
+// find user by token
 userSchema.statics.findByToken = async (token) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
     const user = await User.findOne({ _id: decoded._id })
-
     if (!user) {
         throw new Error('No User Found.')
     }
@@ -75,8 +77,8 @@ userSchema.statics.findByToken = async (token) => {
 // generate new auth token
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const accessToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '31 days' })
-    const refreshToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '30 days' })
+    const accessToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '30 days' })
+    const refreshToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '31 days' })
     const token = {
         accessToken: accessToken,
         refreshToken: refreshToken
@@ -89,11 +91,22 @@ userSchema.methods.generateAuthToken = async function () {
 }
 
 // delete expired auth token
-userSchema.methods.clearAuthToken = async function (accessToken, refreshToken) {
+userSchema.methods.clearAuthToken = async function (refreshToken) {
     const user = this
 
     user.tokens = user.tokens.filter((token) => {
-        return (token.accessToken !== accessToken && token.refreshToken !== refreshToken)
+        return (token.refreshToken !== refreshToken)
+    })
+
+    await user.save()
+}
+
+// delete expired auth token
+userSchema.methods.clearExpiredTokens = async function () {
+    const user = this
+
+    user.tokens = await asyncFilter(user.tokens, async token => {
+        return (await validateToken(token.refreshToken))
     })
 
     await user.save()

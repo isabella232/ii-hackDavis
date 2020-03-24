@@ -1,6 +1,6 @@
 const express = require('express')
-const ObjectID = require('mongodb').ObjectID
 const sharp = require('sharp')
+const ObjectID = require('mongodb').ObjectID
 const Admin = require('../models/admin')
 const Interpreter = require('../models/interpreter')
 const Event = require('../models/event')
@@ -8,14 +8,14 @@ const { userAuth } = require('../middleware/auth')
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveInterpreter } = require('../utils/algolia')
 const { getToValidate } = require('../utils/admin')
-const { imgUpload } = require('../utils/multer')
+const { imgUploader } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo } = require('../utils/user')
 
 const router = new express.Router()
 
 // create admin account
-router.post('/api/admin/create', imgUpload.single('avatar'), async (req, res) => {
+router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) => {
     if (req.body.adminCode !== 'secretCode') {
         const error = new Error('Invalid Admin Code')
         res.status(400).send({ error: error.message })

@@ -3,8 +3,7 @@ const sharp = require('sharp')
 const ObjectID = require('mongodb').ObjectID
 const Interpreter = require('../models/interpreter')
 const { userAuth } = require('../middleware/auth')
-const { imgUpload } = require('../utils/multer')
-const { getCertificateURL } = require('../utils/image')
+const { imgUploader, getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
 
 const router = new express.Router()
@@ -21,7 +20,7 @@ router.post('/api/interpreter/create', async (req, res) => {
 })
 
 // how to accept both JSON and form data?
-// router.post('/api/interpreter/create', imgUpload.single('avatar'), async (req, res) => {
+// router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req, res) => {
 //     try {
 //         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
 //         const interpreter = new Interpreter({
@@ -131,7 +130,7 @@ router.post('/api/interpreters/:id/reviews/add', async (req, res) => {
 })
 
 // upload a certificate separately
-router.post('/api/interpreters/:id/certificate/upload', imgUpload.single('certificate'), async (req, res) => {
+router.post('/api/interpreters/:id/certificate/upload', imgUploader.single('certificate'), async (req, res) => {
     const id = req.params.id
     const interpreter = await Interpreter.findById(id)
     const certificateID = ObjectID()

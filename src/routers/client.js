@@ -2,14 +2,14 @@ const express = require('express')
 const sharp = require('sharp')
 const Client = require('../models/client')
 const { userAuth } = require('../middleware/auth')
-const { imgUpload } = require('../utils/multer')
+const { imgUploader } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo, } = require('../utils/user')
 
 const router = new express.Router()
 
 // create client account
-router.post('/api/client/create', imgUpload.single('avatar'), async (req, res) => {
+router.post('/api/client/create', imgUploader.single('avatar'), async (req, res) => {
     try {
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
         const info = fillSignupInfo(req.body, buffer)
@@ -30,7 +30,7 @@ router.patch('/api/client/me', userAuth, async (req, res) => {
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' })
+        return res.status(400).send({ error: 'Invalid updates' })
     }
 
     try {
