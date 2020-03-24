@@ -61,7 +61,7 @@ router.get('/api/admin/adminpage', auth, async (req, res) => {
 })
 
 // validate a certificate
-router.patch('/api/admin/certificates/:id/validate', async (req, res) => {
+router.patch('/api/admin/certificates/:id/validate', auth, async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
@@ -83,7 +83,7 @@ router.patch('/api/admin/certificates/:id/validate', async (req, res) => {
 })
 
 // reject a certificate
-router.patch('/api/admin/certificates/:id/reject', async (req, res) => {
+router.patch('/api/admin/certificates/:id/reject', auth, async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
@@ -101,7 +101,7 @@ router.patch('/api/admin/certificates/:id/reject', async (req, res) => {
 })
 
 // verify a interpreter
-router.patch('/api/admin/interpreters/:id/verify', async (req, res) => {
+router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: true })

@@ -6,7 +6,7 @@ const { imgUploader, getEventImageURL } = require('../utils/image')
 
 const router = new express.Router()
 
-router.post('/api/event/create', imgUploader.single('image'), async (req, res) => {
+router.post('/api/event/create', auth, imgUploader.single('image'), async (req, res) => {
     try {
         const id = ObjectID()
         const parsedEvent = {
@@ -29,7 +29,7 @@ router.post('/api/event/create', imgUploader.single('image'), async (req, res) =
     }
 })
 
-router.patch('/api/events/:id/edit', imgUploader.single('image'), async (req, res) => {
+router.patch('/api/events/:id/edit', auth, imgUploader.single('image'), async (req, res) => {
     try {
         const id = req.params.id
         const event = await Event.findById(id)
@@ -52,7 +52,7 @@ router.patch('/api/events/:id/edit', imgUploader.single('image'), async (req, re
     }
 })
 
-router.get('/api/events/:id', async (req, res) => {
+router.get('/api/events/:id', auth, async (req, res) => {
     try {
         const id = req.params.id
         const event = await Event.findById(req.params.id)
@@ -68,7 +68,7 @@ router.get('/api/events/:id', async (req, res) => {
     }
 })
 
-router.delete('/api/events/:id/delete', async (req, res) => {
+router.delete('/api/events/:id/delete', auth, async (req, res) => {
     try {
         const event = await Event.findById(req.params.id)
         await event.delete()

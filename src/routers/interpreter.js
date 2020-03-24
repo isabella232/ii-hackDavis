@@ -81,7 +81,7 @@ router.delete('/api/interpreter/me/certificates', auth, async (req, res) => {
 })
 
 // fetch all details for interpreter
-router.get('/api/interpreters/:id/details', async (req, res) => {
+router.get('/api/interpreters/:id/details', auth, async (req, res) => {
     try {
         const interpreter = await Interpreter.findById(req.params.id)
         const reviews = processReviews([...interpreter.reviews])
@@ -108,7 +108,7 @@ router.get('/api/interpreters/:id/details', async (req, res) => {
 })
 
 // add review by interpreter to db
-router.post('/api/interpreters/:id/reviews/add', async (req, res) => {
+router.post('/api/interpreters/:id/reviews/add', auth, async (req, res) => {
     try {
         const interpreter = await Interpreter.findById(req.params.id)
         if (!interpreter.rating) {
@@ -130,7 +130,7 @@ router.post('/api/interpreters/:id/reviews/add', async (req, res) => {
 })
 
 // upload a certificate separately
-router.post('/api/interpreters/:id/certificate/upload', imgUploader.single('certificate'), async (req, res) => {
+router.post('/api/interpreters/:id/certificate/upload', auth, imgUploader.single('certificate'), async (req, res) => {
     const id = req.params.id
     const interpreter = await Interpreter.findById(id)
     const certificateID = ObjectID()

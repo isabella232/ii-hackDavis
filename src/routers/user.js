@@ -54,19 +54,6 @@ router.post('/api/user/authenticate', auth, async (req, res) => {
     }
 })
 
-router.post('/api/user/hj', async (req, res) => {
-    try {
-        if (req.cookies.accessToken) {
-            res.status(200).send('hj')
-        } else {
-            res.status(500).send()
-        }
-        res.send()
-    } catch (e) {
-        res.status(500).send()
-    }
-})
-
 // logout of all sessions (delete all tokens)
 router.post('/api/user/logoutAll', auth, async (req, res) => {
     try {
@@ -80,7 +67,7 @@ router.post('/api/user/logoutAll', auth, async (req, res) => {
 })
 
 // get avatar image url
-router.get('/api/user/avatar/:id', auth, async (req, res) => {
+router.get('/api/user/avatar/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         if (!user || !user.avatar) {
@@ -105,6 +92,7 @@ router.post('/api/user/avatar/:id', auth, imgUploader.single('avatar'), async (r
     res.status(400).send({ error: error.message })
 })
 
+// need to implement profile page for user
 router.get('/api/user/profile', auth, async (req, res) => {
     try {
         res.send()

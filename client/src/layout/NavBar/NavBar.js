@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import classes from "./NavBar.module.css";
 import { signOut } from '../../services/UserService';
-import { hj } from '../../services/UserService';
 
 import Button from '../../components/shared/Button/Button';
 import LoginModal from '../../components/HomePage/LoginModal/LoginModal';
@@ -59,10 +58,9 @@ class NavBar extends Component {
     render() {
         return (
             <div className={classes.NavBar}>
-                <Link className={classes.logo} to={"/"}>Logo - {this.state.userKind}</Link>
+                <Link className={classes.logo} to={"/"}>Logo</Link>
                 <div className={classes.items}>
-                    {/* <Link className={classes.item} to={"/about"}>About</Link> */}
-                    <div onClick={hj} className={classes.item}>Hj</div>
+                    <Link className={classes.item} to={"/about"}>About</Link>
                     {this.state.userKind === 'Admin' ? <Link className={classes.item} to={"/admin"}>Admin</Link> : null}
                     {this.state.userKind === 'Client' ? <Link className={classes.item} to={"/profile"}>Profile</Link> : null}
                     <Link className={classes.item} to={"/search"}>Search</Link>
