@@ -22,23 +22,23 @@ const setCookies = (res, token) => {
     const accessExp = getExpirationDate(now, 30)
     const refreshExp = getExpirationDate(now, 31)
 
-    // res.cookie('accessToken', token.accessToken, { expires: expirationDates.access, httpOnly: true, sameSite: 'None', secure: true })
-    // res.cookie('refreshToken', token.refreshToken, { maxAge: expirationDates.refresh, httpOnly: true, sameSite: 'None', secure: true })
+    res.cookie('accessToken', token.accessToken, { expires: accessExp, httpOnly: true, sameSite: 'None', secure: true })
+    res.cookie('refreshToken', token.refreshToken, { expires: refreshExp, httpOnly: true, sameSite: 'None', secure: true })
 
     // Postman testing
-    res.cookie('accessToken', token.accessToken, { expires: accessExp, httpOnly: true })
-    res.cookie('refreshToken', token.refreshToken, { expires: refreshExp, httpOnly: true })
+    // res.cookie('accessToken', token.accessToken, { expires: accessExp, httpOnly: true })
+    // res.cookie('refreshToken', token.refreshToken, { expires: refreshExp, httpOnly: true })
 
     return res
 }
 
 const clearCookies = (res) => {
-    // res.clearCookie('accessToken', { sameSite: 'None', secure: true })
-    // res.clearCookie('refreshToken', { sameSite: 'None', secure: true })
+    res.clearCookie('accessToken', { sameSite: 'None', secure: true })
+    res.clearCookie('refreshToken', { sameSite: 'None', secure: true })
 
     // Postman testing
-    res.clearCookie('accessToken')
-    res.clearCookie('refreshToken')
+    // res.clearCookie('accessToken')
+    // res.clearCookie('refreshToken')
 
     return res
 }

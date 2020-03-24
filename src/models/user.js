@@ -77,8 +77,8 @@ userSchema.statics.findByToken = async (token) => {
 // generate new auth token
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const accessToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '30 days' })
-    const refreshToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '31 days' })
+    const accessToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '5 seconds' })
+    const refreshToken = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET_KEY, { expiresIn: '8 seconds' })
     const token = {
         accessToken: accessToken,
         refreshToken: refreshToken

@@ -1,7 +1,7 @@
 const express = require('express')
 const sharp = require('sharp')
 const Client = require('../models/client')
-const { userAuth } = require('../middleware/auth')
+const auth = require('../middleware/auth')
 const { imgUploader } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo, } = require('../utils/user')
@@ -24,7 +24,7 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
 })
 
 // get client's profile
-router.patch('/api/client/me', userAuth, async (req, res) => {
+router.patch('/api/client/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))

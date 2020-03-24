@@ -1,7 +1,7 @@
 const express = require('express')
 const Event = require('../models/event')
 const ObjectID = require('mongodb').ObjectID
-const { adminAuth } = require('../middleware/auth')
+const auth = require('../middleware/auth')
 const { imgUploader, getEventImageURL } = require('../utils/image')
 
 const router = new express.Router()

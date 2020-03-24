@@ -3,15 +3,14 @@ import { auth } from './AxiosInstances';
 export const signIn = async (data) => {
     const endpoint = `api/user/login`;
     data = {
-        email: 'admin@gmail.com',
-        password: 'noadnomin'
+        email: 'm@o.com',
+        password: 'a'
     }
     const response = await auth.post(endpoint, data);
     if (response.status === 200) {
         localStorage.setItem('userKind', response.data.userKind);
     }
     return response.data;
-
 }
 
 export const signOut = async () => {
@@ -24,6 +23,6 @@ export const signOut = async () => {
 }
 
 export const hj = async () => {
-    const endpoint = `api/user/hj`;
+    const endpoint = `api/user/authenticate`;
     await auth.post(endpoint);
 }

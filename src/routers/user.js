@@ -1,7 +1,7 @@
 const express = require('express')
 const sharp = require('sharp')
 const User = require('../models/user')
-const { userAuth } = require('../middleware/auth')
+const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
 const { setCookies, clearCookies } = require('../utils/user')
 const { imgUploader, getAvatarURL } = require('../utils/image')
@@ -28,7 +28,7 @@ router.post('/api/user/login', urlencodedParser, async (req, res) => {
 })
 
 // logout of current session
-router.post('/api/user/logout', userAuth, async (req, res) => {
+router.post('/api/user/logout', auth, async (req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken
         await req.user.clearAuthToken(refreshToken)
@@ -40,14 +40,16 @@ router.post('/api/user/logout', userAuth, async (req, res) => {
     }
 })
 
-router.post('/api/user/authenticate', userAuth, async (req, res) => {
+router.post('/api/user/authenticate', auth, async (req, res) => {
     try {
         const data = {
             isLoggedIn: true,
             userKind: req.user.kind
         }
+        console.log('ye')
         res.status(200).send(data)
     } catch (e) {
+        console.log('noo')
         res.status(401).send({ error: 'User not logged in.' })
     }
 })
@@ -66,7 +68,7 @@ router.post('/api/user/hj', async (req, res) => {
 })
 
 // logout of all sessions (delete all tokens)
-router.post('/api/user/logoutAll', userAuth, async (req, res) => {
+router.post('/api/user/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []
         await req.user.save()
@@ -78,7 +80,7 @@ router.post('/api/user/logoutAll', userAuth, async (req, res) => {
 })
 
 // get avatar image url
-router.get('/api/user/avatar/:id', userAuth, async (req, res) => {
+router.get('/api/user/avatar/:id', auth, async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         if (!user || !user.avatar) {
@@ -92,7 +94,7 @@ router.get('/api/user/avatar/:id', userAuth, async (req, res) => {
 })
 
 // upload avatar separately
-router.post('/api/user/avatar/:id', userAuth, imgUploader.single('avatar'), async (req, res) => {
+router.post('/api/user/avatar/:id', auth, imgUploader.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     const user = await User.findById(req.params.id)
     user.avatar.buffer = buffer
@@ -103,7 +105,7 @@ router.post('/api/user/avatar/:id', userAuth, imgUploader.single('avatar'), asyn
     res.status(400).send({ error: error.message })
 })
 
-router.get('/api/user/profile', userAuth, async (req, res) => {
+router.get('/api/user/profile', auth, async (req, res) => {
     try {
         res.send()
     } catch (e) {

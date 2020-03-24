@@ -2,7 +2,7 @@ const express = require('express')
 const sharp = require('sharp')
 const ObjectID = require('mongodb').ObjectID
 const Interpreter = require('../models/interpreter')
-const { userAuth } = require('../middleware/auth')
+const auth = require('../middleware/auth')
 const { imgUploader, getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
 
@@ -43,7 +43,7 @@ router.post('/api/interpreter/create', async (req, res) => {
 // })
 
 // interpreters can update their own profiles
-router.patch('/api/interpreter/me', userAuth, async (req, res) => {
+router.patch('/api/interpreter/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['location', 'languagues', 'englishFluency', 'certification']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -69,7 +69,7 @@ router.patch('/api/interpreter/me', userAuth, async (req, res) => {
 })
 
 // TODO: delete only one certificate
-router.delete('/api/interpreter/me/certificates', userAuth, async (req, res) => {
+router.delete('/api/interpreter/me/certificates', auth, async (req, res) => {
     try {
         // deletes all for now
         req.interpreter.certificates = []

@@ -3,10 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 class WithAuth extends Component {
-    constructor() {
-        super();
-    }
-
     componentDidMount() {
         if (!this.props.isLoggedIn) {
             this.props.history.push("/");

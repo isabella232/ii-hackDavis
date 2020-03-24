@@ -4,7 +4,7 @@ const ObjectID = require('mongodb').ObjectID
 const Admin = require('../models/admin')
 const Interpreter = require('../models/interpreter')
 const Event = require('../models/event')
-const { userAuth } = require('../middleware/auth')
+const auth = require('../middleware/auth')
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveInterpreter } = require('../utils/algolia')
 const { getToValidate } = require('../utils/admin')
@@ -36,7 +36,7 @@ router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) 
 })
 
 // get admin home page
-router.get('/api/admin/adminpage', userAuth, async (req, res) => {
+router.get('/api/admin/adminpage', auth, async (req, res) => {
     try {
         const now = new Date()
         const pastEvents = await Event.find().where('date').lt(now).limit(2)

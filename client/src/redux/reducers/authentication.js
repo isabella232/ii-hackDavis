@@ -1,22 +1,11 @@
-import { auth } from '../../services/AxiosInstances';
-
-const checkAuthentication = async () => {
-    const endpoint = `api/user/authenticate`;
-    const response = await auth.post(endpoint);
-    const data = response.data;
-    if (!data.isLoggedIn) {
-        localStorage.removeItem('userKind');
-    }
-}
-
-checkAuthentication();
-const userKind = localStorage.getItem('userKind') || 'Visitor';
 const getIsLoggedIn = () => {
     if (localStorage.getItem('userKind') && localStorage.getItem('userKind') !== 'Visitor') {
         return true;
     }
     return false;
 }
+
+const userKind = localStorage.getItem('userKind') || 'Visitor';
 const isLoggedIn = getIsLoggedIn();
 
 const initialState = {

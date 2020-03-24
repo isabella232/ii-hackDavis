@@ -1,8 +1,8 @@
 const User = require('../models/user')
-const { setCookies, clearCookies } = require('../utils/user')
+const { setCookies } = require('../utils/user')
 const { validateToken } = require('../utils/user')
 
-const userAuth = async (req, res, next) => {
+const auth = async (req, res, next) => {
     const accessToken = req.cookies.accessToken
     const refreshToken = req.cookies.refreshToken
     try {
@@ -24,6 +24,4 @@ const userAuth = async (req, res, next) => {
     }
 }
 
-module.exports = {
-    userAuth
-}
+module.exports = auth
