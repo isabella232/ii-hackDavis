@@ -1,0 +1,150 @@
+.ais-InstantSearch__root {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.ais-GeoSearch-map {
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+    width: 100%;
+}
+  
+.ais-Highlight-highlighted,
+.ais-Snippet-highlighted {
+    font-style: normal;
+    font-weight: bold;
+    color: #03A0B5;
+}
+
+.ais-SearchBox {
+    margin-top: 1rem;
+    position: relative;
+}
+
+.ais-SearchBox-submit,
+.ais-SearchBox-reset {
+    position: absolute;
+    left: inherit;
+    margin: 14px 16px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.ais-SearchBox-submit svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+
+.ais-SearchBox-reset svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+.ais-SearchBox-submit svg {
+    fill: #03A0B5;
+}
+
+.ais-SearchBox-reset svg {
+    fill: #ed5a6a;
+}
+
+.ais-SearchBox-submit {
+    right: 0;
+}
+
+.ais-SearchBox-reset {
+    right: 30px;
+    top: 4px;
+}
+
+.ais-SearchBox-input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    height: 50px;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    font-weight: normal;
+    border: none;
+    font-family: inherit;
+    line-height: inherit;
+    font-size: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.ais-SearchBox-input::-webkit-search-decoration,
+.ais-SearchBox-input::-webkit-search-cancel-button,
+.ais-SearchBox-input::-webkit-search-results-button,
+.ais-SearchBox-input::-webkit-search-results-decoration { 
+    display: none; 
+}
+
+.ais-MapControl {
+    margin: 1rem 0;
+}
+
+#pagination {
+    order: 1;
+}
+  
+.ais-Pagination-list {
+    display: flex;
+    margin: 0 0 16px;
+    padding: 0;
+    background: none;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: none;
+    box-shadow: none;
+    flex-wrap: wrap;
+}
+  
+.ais-Pagination-link {
+    display: block;
+    font-weight: bold;
+}
+  
+.ais-Pagination-item,
+.ais-Pagination-item--disabled {
+    flex: 0 0 40px;
+    width: auto;
+    height: auto;
+    margin: 4px;
+    background: #03A0B5;
+    border: 2px solid #03A0B5;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.1s linear;
+}
+  
+.ais-Pagination-item--disabled {
+    display: none;
+}
+
+.ais-Pagination-item:hover,
+.ais-Pagination-item--selected {
+    border: 2px solid rgb(39, 194, 214);
+    background: rgb(39, 194, 214);
+}
+
+.ais-Pagination-item .ais-Pagination-link,
+.ais-Pagination-item--disabled .ais-Pagination-link {
+    padding: 6px 16px;
+    text-decoration: none;
+    color: #fff;
+    line-height: 20px;
+}

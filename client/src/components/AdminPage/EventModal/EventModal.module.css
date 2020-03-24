@@ -1,0 +1,39 @@
+.Modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Modal .reviewEditor {
+    padding: 1rem;
+    width: 400px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.Modal .title {
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 45px;
+}
+
+.Modal .comment {
+    display: block;
+    height: 200px;
+    width: 100%;
+    background: #FFFFFF;
+    border: 2px solid #03A0B5;
+    box-sizing: border-box;
+    border-radius: 13px;
+    padding: 1rem;
+    font-size: 16px;
+    margin: 1rem 0;
+}
+
+.Modal .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem .5rem;
+}

@@ -1,0 +1,42 @@
+.Hit {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    margin: -15px 0 30px -35px;
+    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.Hit:hover {
+    box-shadow: 0px 8px 25px lightgrey;
+    transform: translateY(-5px);
+}
+
+.Hit .avatar {
+    border-radius: 10px;
+    padding: .5rem;
+    min-width: 120px;
+    max-width: 150px;
+}
+
+.Hit .content {
+    padding: 1rem;
+}
+
+.Hit .name {
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 35px;
+}
+
+.Hit .languages {
+    font-size: 20px;
+    line-height: 30px;
+    color: #027888;
+}
+
+.Hit .location, .email {
+    line-height: 30px;
+}

@@ -1,0 +1,79 @@
+.Modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Modal .infoCard {
+    padding: 1rem;
+    width: 700px;
+    margin: 1rem;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px #027888;
+    border-radius: 10px;
+    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.Modal .infoCard:hover {
+    box-shadow: 0px 8px 25px rgba(3, 160, 181, 0.25);
+}
+
+.Modal .noReviews {
+    font-size: 16px;
+    color: black;
+    margin: 1rem 2rem;
+}
+
+.Modal .language {
+    margin-left: 2rem;
+}
+
+.Modal .title {
+    font-weight: 500;
+    font-size: 21px;
+    color: #027888;
+}
+
+.Modal .name {
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 54px;
+}
+
+.Modal .infoItem {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    color: #5A4F5A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Modal .horzLine {
+    margin: 2rem 0;
+    border: 1px solid #03A0B5;
+}
+
+.Modal .reviewOptions {
+    margin: .5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Modal .halfArea {
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.moreInfo {
+    margin-top: 2rem;
+    color: #027888;
+    font-weight: 500;
+    transition: color .2s ease-in-out;
+}
+
+.moreInfo:hover {
+    color: rgb(39, 194, 214);
+}
