@@ -41,24 +41,25 @@ class LoginModal extends Component {
     }
 
     submitForm = async () => {
-        // if (!this.state.email) {
-        // alert(`Please fill out your email.`);
-        // } else if (!this.state.password) {
-        // alert(`Please fill out your password.`);
-        // } else {
-        const data = {
-            email: this.props.email,
-            password: this.props.password,
+        if (!this.state.email) {
+            alert(`Please fill out your email.`);
+        } else if (!this.state.password) {
+            alert(`Please fill out your password.`);
+        } else {
+            const data = {
+                email: this.state.email,
+                password: this.state.password,
+            }
+            console.log(data)
+            signIn(data)
+                .then(data => {
+                    this.props.processLogin(data.userKind);
+                })
+                .catch(e => {
+                    console.log(e);
+                    alert('You cannot be logged in at this time.')
+                })
         }
-        signIn(data)
-            .then(data => {
-                this.props.processLogin(data.userKind);
-            })
-            .catch(e => {
-                console.log(e);
-                alert('You cannot be logged in at this time.')
-            })
-        // }
     }
 
     render() {

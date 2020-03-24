@@ -46,10 +46,8 @@ router.post('/api/user/authenticate', auth, async (req, res) => {
             isLoggedIn: true,
             userKind: req.user.kind
         }
-        console.log('ye')
         res.status(200).send(data)
     } catch (e) {
-        console.log('noo')
         res.status(401).send({ error: 'User not logged in.' })
     }
 })
