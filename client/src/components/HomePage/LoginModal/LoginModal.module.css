@@ -19,6 +19,11 @@
     line-height: 45px;
 }
 
+.Modal .footer {
+    display: flex;
+    flex-direction: column;
+}
+
 .Modal .buttons {
     display: flex;
     justify-content: flex-end;

@@ -19,10 +19,10 @@ const Page = props => {
       <main>
         <Switch>
           <Route path="/" exact component={HomePage} />
-          <WithAuth>
+          {/* {<WithAuth>} */}
             <Route path="/admin" component={AdminPage} />
             <Route path="/profile" component={ProfilePage} />
-          </WithAuth>
+          {/* {</WithAuth>} */}
           <Route path="/search" component={SearchPage} />
           <Route path="/contactus" component={ContactUsPage} />
         </Switch>

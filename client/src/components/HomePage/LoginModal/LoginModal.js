@@ -91,8 +91,14 @@ class LoginModal extends Component {
                                 variant="outlined"
                                 onChange={this.changeInput} />
 
-                            <div className={classes.buttons}>
-                                <Button content={'Login'} click={this.submitForm} />
+                            <div className={classes.footer}>
+                                <div>
+                                    <Button content={'Forgot Password'} inverted click={this.submitForm} />
+                                </div>
+                                <div className={classes.buttons}>
+                                    <Button content={'SignUp'} inverted click={this.submitForm} />
+                                    <Button content={'Login'} click={this.submitForm} />
+                                </div>
                             </div>
                         </form>
                     </div>
