@@ -10,6 +10,7 @@ import SearchPage from "../../containers/SearchPage/SearchPage";
 import ContactUsPage from "../../containers/ContactUsPage/ContactUsPage";
 import AdminPage from "../../containers/AdminPage/AdminPage";
 import ProfilePage from '../../containers/ProfilePage/ProfilePage';
+import SignUpPage from '../../containers/SignUpPage/SignUpPage';
 
 const Page = props => {
   return (
@@ -25,6 +26,7 @@ const Page = props => {
           {/* {</WithAuth>} */}
           <Route path="/search" component={SearchPage} />
           <Route path="/contactus" component={ContactUsPage} />
+          <Route path="/signup" component={SignUpPage} />
         </Switch>
       </main>
 

@@ -29,3 +29,22 @@
     justify-content: flex-end;
     margin: 1rem .5rem;
 }
+
+.Modal .link {
+    display: inline-block;
+    padding: 8px;
+    color: #03A0B5;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
+
+    text-decoration: none;
+}
+
+.Modal .link:hover {
+    border-radius: 9px;
+    background: rgb(235, 247, 249);
+}
+
+.Modal .link:not(:last-child) {
+    margin-right: .5rem;
+}

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import classes from './LoginModal.module.css';
 import TextField from '@material-ui/core/TextField';
+
 import Button from '../../shared/Button/Button';
 import { signIn } from '../../../services/UserService';
 
@@ -96,8 +98,9 @@ class LoginModal extends Component {
                                     <Button content={'Forgot Password'} inverted click={this.submitForm} />
                                 </div>
                                 <div className={classes.buttons}>
-                                    <Button content={'SignUp'} inverted click={this.submitForm} />
-                                    <Button content={'Login'} click={this.submitForm} />
+                                    <Link className={classes.link} to={"/signup"} onClick={this.closeModal}>Sign Up</Link>
+                                    <Button content={'Log In'} click={this.submitForm} />
+                                    {/* <Button content={'Login'} /> */}
                                 </div>
                             </div>
                         </form>
