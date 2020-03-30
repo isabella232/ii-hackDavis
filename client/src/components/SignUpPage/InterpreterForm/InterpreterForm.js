@@ -12,7 +12,7 @@ class InterpreterForm extends Component {
     constructor(props) {
         super();
         this.state = {
-
+            
         }
     }
 
@@ -103,7 +103,14 @@ class InterpreterForm extends Component {
                 <h1>Records</h1>
                 <div className={classes.Records}>
                     <div className={classes.RecordName}>
-                        <StyledTextField content={"Record Name"} />
+                        <TextField label="Record Name"
+                            name="recordName"
+                            required
+                            value={this.props.title}
+                            margin="none"
+                            fullWidth
+                            variant="outlined"
+                            onChange={this.changeInput} />
                     </div>
                     <div className={classes.RecordFile}>
                         <p>insert file to upload</p>
