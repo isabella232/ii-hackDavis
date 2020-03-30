@@ -14,7 +14,16 @@ class InterpreterForm extends Component {
     constructor(props) {
         super();
         this.state = {
-
+            open: false,
+            showInterpreterForm: false,
+            name: "",
+            email: "",
+            repeatEmail: "",
+            password: "",
+            repeatPassword: "",
+            username: "",
+            isAdmin: false,
+            errors: {}
         }
     }
 

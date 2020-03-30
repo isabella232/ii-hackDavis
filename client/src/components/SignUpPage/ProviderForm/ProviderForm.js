@@ -23,8 +23,10 @@ class ProviderForm extends Component {
             name: "",
             email: "",
             repeatEmail: "",
+            emailMatch: true,
             password: "",
             repeatPassword: "",
+            passwordMatch: true,
             username: "",
             isAdmin: false,
             errors: {}
@@ -40,24 +42,28 @@ class ProviderForm extends Component {
     changeInput = (e) => {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value });
+
+        // form validation for email & passwords
         if (e.target.name === "repeatPassword"){
-            this.checkPasswords();
+            if (e.target.value !== this.state.password){
+                this.setState({passwordMatch: false})
+            }
+            else{
+                this.setState({passwordMatch: true})
+            }
         }
         if (e.target.name === "repeatEmail"){
-            this.checkCheckEmails();
+            if (e.target.value !== this.state.email){
+                this.setState({emailMatch: false})
+            }
+            else{
+                this.setState({emailMatch: true})
+            }
         }
     }
 
-    checkPasswords() {
-        if (this.state.repeatPassword !== this.state.password){
-            this.errors.push("Please make sure passwords match");
-        }
-    }
-
-    checkEmails() {
-        if (this.state.repeatEmail !== this.state.email){
-            this.errors.push("Please make sure emails match");
-        }
+    clearForm = (e) => {
+        this.setState({ open: this.props.open });
     }
 
     createUser = () => {
@@ -66,9 +72,7 @@ class ProviderForm extends Component {
         const data = {
             name: this.state.name,
             email: this.state.email,
-            repeatEmail: this.state.repeatEmail,
             password: this.state.comment,
-            repeatPassword: this.state.repeatPassword,
             username: this.state.username,
             isAdmin: this.state.isAdmin
         }
@@ -118,7 +122,9 @@ class ProviderForm extends Component {
                                 margin="none"
                                 fullWidth
                                 variant="outlined"
-                                onChange={this.changeInput} />
+                                onChange={this.changeInput}
+                                error = {!this.state.emailMatch}
+                                helperText = {this.state.emailMatch ? "":"Please make sure emails match"} />
                             </div>
                             <div className={classes.passwordCol}>
                                 <TextField label="Password"
@@ -128,6 +134,7 @@ class ProviderForm extends Component {
                                 margin="none"
                                 fullWidth
                                 variant="outlined"
+                                type="password"
                                 onChange={this.changeInput} />
 
                                 <TextField label="Confirm Password"
@@ -137,13 +144,16 @@ class ProviderForm extends Component {
                                 margin="none"
                                 fullWidth
                                 variant="outlined"
-                                onChange={this.changeInput} />
+                                type="password"
+                                onChange={this.changeInput}
+                                error = {!this.state.passwordMatch}
+                                helperText = {this.state.passwordMatch ? "":"Please make sure passwords match"} />
                             </div>
                         </div>
                     </div>
                 </form>
                 <div className={classes.actions}>
-                    <Button content="Clear" inverted />
+                    <Button content='Clear' inverted click={this.clearForm}/>
                     <Button content='Sign Up' click={this.createUser} />
                 </div>
             </div>
