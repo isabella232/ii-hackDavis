@@ -63,19 +63,17 @@ class ProviderForm extends Component {
     }
 
     clearForm = (e) => {
-        this.setState({ open: this.props.open });
+        document.getElementById("new-provider").reset();
     }
 
     createUser = () => {
-        // check that all fields are filled
-
         const data = {
             name: this.state.name,
             email: this.state.email,
-            password: this.state.comment,
-            username: this.state.username,
+            password: this.state.password,
             isAdmin: this.state.isAdmin
         }
+        console.log(data)
         signUpProvider(this.state.id, data)
             .then(data => {
                 // display thanks for signing up message
@@ -93,7 +91,7 @@ class ProviderForm extends Component {
 
             <div>
                 <h1>Account Information</h1>
-                <form encType="multipart/form-data">
+                <form encType="multipart/form-data" id="new-provider">
                     <div className={classes.signUpForm}>
                         <div className={classes.fields}>
                             <div className={classes.nameEmailCol}>
