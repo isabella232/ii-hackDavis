@@ -6,13 +6,15 @@ import TextField from '@material-ui/core/TextField';
 
 import classes from './InterpreterForm.module.css';
 import StyledTextField from '../../shared/StyledTextField/StyledTextField';
+import ProviderForm from '../ProviderForm/ProviderForm';
+import Button from '../../shared/Button/Button';
 
 
 class InterpreterForm extends Component {
     constructor(props) {
         super();
         this.state = {
-            
+
         }
     }
 
@@ -21,8 +23,62 @@ class InterpreterForm extends Component {
     }
 
     render() {
+
+
         return (
             <div className={classes.InterpreterForm}>
+                <h1>Account Information</h1>
+                <div className={classes.accountInfo}>
+                    <div className={classes.fields}>
+                        <div className={classes.nameEmailCol}>
+                            <TextField label="Full Name"
+                                name="name"
+                                required
+                                value={this.props.title}
+                                margin="none"
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.changeInput} />
+
+                            <TextField label="Email"
+                                name="email"
+                                required
+                                value={this.props.title}
+                                margin="none"
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.changeInput} />
+
+                            <TextField label="Confirm Email"
+                                name="repeatEmail"
+                                required
+                                value={this.props.title}
+                                margin="none"
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.changeInput} />
+                        </div>
+                        <div className={classes.passwordCol}>
+                            <TextField label="Password"
+                                name="password"
+                                required
+                                value={this.props.title}
+                                margin="none"
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.changeInput} />
+
+                            <TextField label="Confirm Password"
+                                name="repeatPassword"
+                                required
+                                value={this.props.title}
+                                margin="none"
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.changeInput} />
+                        </div>
+                    </div>
+                </div>
                 <h1>Location</h1>
                 <div className={classes.fields}>
                     {/* <StyledTextField content={"Location"} /> */}
@@ -115,6 +171,10 @@ class InterpreterForm extends Component {
                     <div className={classes.RecordFile}>
                         <p>insert file to upload</p>
                     </div>
+                </div>
+                <div className={classes.actions}>
+                    <Button content="Clear" inverted />
+                    <Button content='Sign Up' click={this.createUser} />
                 </div>
             </div>
         );

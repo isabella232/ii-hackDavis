@@ -6,15 +6,15 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 
-import classes from './SignUpForm.module.css';
+import classes from './ProviderForm.module.css';
 import StyledTextField from '../../shared/StyledTextField/StyledTextField';
 import Button from '../../shared/Button/Button';
 
 import InterpreterForm from '../InterpreterForm/InterpreterForm';
-import { signUp } from '../../../services/SignUpService';
+import { signUpProvider } from '../../../services/SignUpService';
 
 
-class SignUpForm extends Component {
+class ProviderForm extends Component {
     constructor(props) {
         super();
         this.state = {
@@ -37,14 +37,27 @@ class SignUpForm extends Component {
         }
     }
 
-    onChangeCheckbox = e => {
-        this.setState({ showInterpreterForm: e.target.value === "interpreter" })
-        console.log(e.target.value)
-    }
-
     changeInput = (e) => {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value });
+        if (e.target.name === "repeatPassword"){
+            this.checkPasswords();
+        }
+        if (e.target.name === "repeatEmail"){
+            this.checkCheckEmails();
+        }
+    }
+
+    checkPasswords() {
+        if (this.state.repeatPassword !== this.state.password){
+            this.errors.push("Please make sure passwords match");
+        }
+    }
+
+    checkEmails() {
+        if (this.state.repeatEmail !== this.state.email){
+            this.errors.push("Please make sure emails match");
+        }
     }
 
     createUser = () => {
@@ -59,7 +72,7 @@ class SignUpForm extends Component {
             username: this.state.username,
             isAdmin: this.state.isAdmin
         }
-        signUp(this.state.id, data)
+        signUpProvider(this.state.id, data)
             .then(data => {
                 // display thanks for signing up message
                 // send email
@@ -71,46 +84,15 @@ class SignUpForm extends Component {
     }
 
     render() {
-        let sif = null;
-
-        if (this.state.showInterpreterForm) {
-            sif = <InterpreterForm />;
-            // you also have to append this to the form somehow
-            // like append the state
-        }
 
         return (
 
             <div>
-                <h1>Sign Up</h1>
+                <h1>Account Information</h1>
                 <form encType="multipart/form-data">
                     <div className={classes.signUpForm}>
-                        <div className={classes.userType}>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend">I am a:</FormLabel>
-                                <RadioGroup defaultValue="provider" onChange={this.onChangeCheckbox} aria-label="user type" name="user-radios">
-                                    <FormControlLabel value="provider" control={
-                                        <Radio
-                                            disableRipple
-                                            color="primary"
-                                        />}
-                                        label="provider" />
-                                    <FormControlLabel value="interpreter" control={
-                                        <Radio
-                                            // onChange={this.onChangeCheckbox}
-                                            disableRipple
-                                            color="primary"
-                                            name="showInterpreterForm"
-                                        />}
-                                        label="interpreter" />
-                                </RadioGroup>
-                            </FormControl>
-                        </div>
                         <div className={classes.fields}>
                             <div className={classes.nameEmailCol}>
-                                {/* <StyledTextField content={"Name"} />
-                                <StyledTextField content={"Email"} />
-                                <StyledTextField content={"Confirm Email"} /> */}
                                 <TextField label="Full Name"
                                 name="name"
                                 required
@@ -139,8 +121,6 @@ class SignUpForm extends Component {
                                 onChange={this.changeInput} />
                             </div>
                             <div className={classes.passwordCol}>
-                                {/* <StyledTextField content={"Password"} />
-                                <StyledTextField content={"Confirm Password"} /> */}
                                 <TextField label="Password"
                                 name="password"
                                 required
@@ -161,7 +141,6 @@ class SignUpForm extends Component {
                             </div>
                         </div>
                     </div>
-                    {sif}
                 </form>
                 <div className={classes.actions}>
                     <Button content="Clear" inverted />
@@ -172,4 +151,4 @@ class SignUpForm extends Component {
     }
 }
 
-export default SignUpForm;
+export default ProviderForm;
