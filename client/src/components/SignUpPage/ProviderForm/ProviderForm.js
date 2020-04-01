@@ -74,7 +74,7 @@ class ProviderForm extends Component {
             isAdmin: this.state.isAdmin
         }
         console.log(data)
-        signUpProvider(this.state.id, data)
+        signUpProvider(data)
             .then(data => {
                 // display thanks for signing up message
                 // send email
