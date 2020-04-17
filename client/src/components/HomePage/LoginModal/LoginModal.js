@@ -30,11 +30,17 @@ class LoginModal extends Component {
     }
 
     openModal = () => {
-        this.setState({ open: true });
+        this.props.switchLoginModal();
     }
 
     closeModal = () => {
-        this.setState({ open: false });
+        this.props.switchLoginModal();
+
+    }
+
+    switchToSignUp = () => {
+        this.props.switchLoginModal();
+        this.props.openSignUp();
     }
 
     changeInput = (e) => {
@@ -98,9 +104,8 @@ class LoginModal extends Component {
                                     <Button content={'Forgot Password'} inverted click={this.submitForm} />
                                 </div>
                                 <div className={classes.buttons}>
-                                    <Link className={classes.link} to={"/signup"} onClick={this.closeModal}>Sign Up</Link>
+                                    <Button content={'Sign Up'} inverted click={this.switchToSignUp} />
                                     <Button content={'Log In'} click={this.submitForm} />
-                                    {/* <Button content={'Login'} /> */}
                                 </div>
                             </div>
                         </form>

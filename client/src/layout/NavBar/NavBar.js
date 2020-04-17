@@ -6,18 +6,21 @@ import classes from "./NavBar.module.css";
 import { signOut } from '../../services/UserService';
 
 import Button from '../../components/shared/Button/Button';
+import SignUpModal from '../../components/HomePage/SignUpModal/SignUpModal';
 import LoginModal from '../../components/HomePage/LoginModal/LoginModal';
 
 class NavBar extends Component {
     constructor(props) {
         super();
         this.state = {
-            modalStatus: false,
+            loginModal: false,
+            signUpModal: false,
             userKind: props.userKind,
             isLoggedIn: props.isLoggedIn,
         }
 
-        this.switchModalStatus = this.switchModalStatus.bind(this);
+        this.switchLoginModal = this.switchLoginModal.bind(this);
+        this.switchSignUpModal = this.switchSignUpModal.bind(this);
         this.processLogin = this.processLogin.bind(this);
         this.processLogout = this.processLogout.bind(this);
     }
@@ -32,16 +35,23 @@ class NavBar extends Component {
         }
     }
 
-    switchModalStatus = () => {
-        const status = this.state.modalStatus;
+    switchLoginModal = () => {
+        const status = this.state.loginModal;
         this.setState({
-            modalStatus: !status
+            loginModal: !status
+        });
+    }
+
+    switchSignUpModal = () => {
+        const status = this.state.signUpModal;
+        this.setState({
+            signUpModal: !status
         });
     }
 
     processLogin = async (userKind) => {
         this.props.login();
-        this.switchModalStatus();
+        this.switchLoginModal();
         if (this.state.userKind === 'Admin') {
             this.props.history.push('/admin');
         } else {
@@ -66,11 +76,18 @@ class NavBar extends Component {
                     <Link className={classes.item} to={"/search"}>Search</Link>
 
                     <div className={classes.button}>
-                        {!this.state.isLoggedIn ? <Button content='Login' click={this.switchModalStatus} />
+                        {!this.state.isLoggedIn ? <Button content='Login' click={this.switchLoginModal} />
                             : <Button content='Logout' inverted click={this.processLogout} />}
                     </div>
                 </div>
-                <LoginModal open={this.state.modalStatus} isLoggedOut={!this.state.isLoggedIn} processLogin={this.processLogin} />
+                <LoginModal open={this.state.loginModal}
+                    isLoggedOut={!this.state.isLoggedIn}
+                    processLogin={this.processLogin}
+                    switchLoginModal={this.switchLoginModal}
+                    openSignUp={this.switchSignUpModal} />
+                <SignUpModal open={this.state.signUpModal}
+                    switchSignUpModal={this.switchSignUpModal}
+                    openLogin={this.switchLoginModal} />
             </div>
         )
     }

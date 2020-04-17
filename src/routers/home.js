@@ -8,14 +8,14 @@ router.get('/api/home', async (req, res) => {
     try {
         const quote = fetchQuote()
         const interpreters = await Interpreter.aggregate([
-            // {
-            //     $match: {
-            //         'isVerified': true,
-            //         'certifications.isValidated': true,
-            //         'certifications.isRejected': false,
-            //         rating: { $gt: 2 }
-            //     }
-            // },
+            {
+                $match: {
+                    'isVerified': true,
+                    'certifications.isValidated': true,
+                    'certifications.isRejected': false,
+                    rating: { $gt: 2 }
+                }
+            },
             { $sample: { size: 10 } }
         ])
         const parsedInterpreters = interpreters.map(interpreter => {

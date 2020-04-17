@@ -1,4 +1,4 @@
-import { auth } from './AxiosInstances';
+import { auth, backend } from './AxiosInstances';
 
 export const signIn = async (data) => {
     const endpoint = `api/user/login`;
@@ -17,3 +17,13 @@ export const signOut = async () => {
     }
     return response.data;
 }
+
+export const signUp = async (data) => {
+    const endpoint = `api/user/create`;
+    return backend.post(endpoint, data);
+}
+
+// export const signUpInterpreter = async (data) => {
+//     const endpoint = `api/interpreter/create`;
+//     return backend.post(endpoint, data);
+// }
