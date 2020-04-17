@@ -42,4 +42,11 @@
     margin: -3px 20px 0 0;
 }
 
+.Modal .langFieldIcons {
+    margin-top: .9rem;
+}
+
+.Modal .langFieldIcon:hover {
+    filter: brightness(150%);
+}
 
