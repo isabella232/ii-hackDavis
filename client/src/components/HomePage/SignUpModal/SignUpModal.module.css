@@ -36,9 +36,9 @@
     display: flex;
 }
 
-.Modal .kindLabel {
+.Modal .label {
     font-weight: 400;
-    font-size: 20px;
+    font-size: 19px;
     margin: -3px 20px 0 0;
 }
 
@@ -50,3 +50,6 @@
     filter: brightness(150%);
 }
 
+.Modal .fileUpload {
+    margin: 10px 0;
+}

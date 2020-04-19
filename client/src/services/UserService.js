@@ -18,19 +18,26 @@ export const signOut = async () => {
     return response.data;
 }
 
-export const signUp = async (data, kind) => {
-    if (kind === 'Client') {
-        const endpoint = `api/client/create`;
-        let formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('email', data.email);
-        formData.append('password', data.password);
-        formData.append('avatar', data.avatar);
-        return backend.post(endpoint, formData);
-    }
+export const signUpClient = async (data) => {
+    const endpoint = `api/client/create`;
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('avatar', data.avatar);
+    return backend.post(endpoint, formData);
+}
 
-    // else if (kind === 'Interpreter') {
-    //     const endpoint = `api/user/create`;
-    //     return backend.post(endpoint, data);
-    // }
+export const signUpInterpreter = async (data) => {
+    const endpoint = `api/interpreter/create`;
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('avatar', data.avatar);
+    formData.append('location', data.location);
+    formData.append('summary', data.summary);
+    formData.append('service', data.service);
+    formData.append('languages', JSON.stringify(data.languages));
+    return backend.post(endpoint, formData);
 }

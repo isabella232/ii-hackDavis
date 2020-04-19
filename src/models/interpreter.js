@@ -34,13 +34,13 @@ const interpreterSchema = new mongoose.Schema({
             max: 5
         }
     }],
-    englishFluency: {
-        type: Number,
-        trim: true,
-        required: true,
-        min: 1,
-        max: 5
-    },
+    // englishFluency: {
+    //     type: Number,
+    //     trim: true,
+    //     required: true,
+    //     min: 1,
+    //     max: 5
+    // },
     certifications: [{
         title: {
             type: String,
@@ -68,6 +68,7 @@ const interpreterSchema = new mongoose.Schema({
     service: {
         type: String,
         trim: true,
+        required: true,
         lowercase: true
     },
     rating: {
@@ -100,6 +101,7 @@ const interpreterSchema = new mongoose.Schema({
     }],
     isVerified: {
         type: Boolean,
+        required: true,
         default: false
     },
     summary: {
@@ -116,6 +118,7 @@ interpreterSchema.methods.generateCoordinates = async function (location) {
     const interpreter = this
     await getCoordinates(location)
         .then(coordinates => {
+            interpreter.location.locationString = location
             interpreter.location.coordinates = coordinates
         })
 }

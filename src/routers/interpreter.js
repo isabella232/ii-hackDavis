@@ -5,42 +5,36 @@ const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
 const { imgUploader, getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
+const { getAvatarURL } = require('../utils/image')
+const { sendWelcomeEmail } = require('../utils/email')
 
 const router = new express.Router()
 
-router.post('/api/interpreter/create', async (req, res) => {
-    var interpreter = new Interpreter(req.body)
+router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req, res) => {
+    console.log('here')
     try {
+        const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+        const interpreter = new Interpreter({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            avatar: {
+                buffer: buffer,
+                url: getAvatarURL(req.params.id)
+            },
+            service: req.body.service,
+            summary: req.body.summary,
+            languages: JSON.parse(req.body.languages)
+        })
+        sendWelcomeEmail(interpreter.email, interpreter.name)
+        await interpreter.generateCoordinates(req.body.location)
         await interpreter.save()
-        const token = await interpreter.generateAuthToken()
         res.status(201).send()
     } catch (e) {
-        res.status(400).send(e)
+        console.log(e)
+        res.status(400).send({ error: e.message })
     }
 })
-
-// how to accept both JSON and form data?
-// router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req, res) => {
-//     try {
-//         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
-//         const interpreter = new Interpreter({
-//             name: req.body.name,
-//             email: req.body.email,
-//             password: req.body.password,
-//             avatar: {
-//                 buffer: buffer,
-//                 url: getAvatarURL(req.params.id)
-//             }
-//         })
-//         sendWelcomeEmail(interpreter.email, interpreter.name)
-//         const token = await interpreter.generateAuthToken()
-//         await interpreter.generateCoordinates(req.body.location.locationString)
-//         await interpreter.save()
-//         res.status(201).send(token)
-//     } catch (e) {
-//         res.status(400).send({ error: e.message })
-//     }
-// })
 
 // interpreters can update their own profiles
 router.patch('/api/interpreter/me', auth, async (req, res) => {
