@@ -17,6 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import Button from '../../shared/Button/Button';
+import FileUploader from '../../shared/FileUploader/FileUploader';
 import { signUp } from '../../../services/UserService';
 
 class SignUpModal extends Component {
@@ -24,24 +25,28 @@ class SignUpModal extends Component {
         super();
         this.state = {
             // open: props.open,
-            // window: 1,
-            // kind: 'User',
+            window: 1,
+            kind: 'Client',
             open: true,
-            window: 2,
-            kind: 'Interpreter',
+            // window: 2,
+            // kind: 'Interpreter',
             name: '',
             email: '',
             password: '',
             confirmPassword: '',
+            avatar: null,
             languages: [{
                 language: '',
                 fluency: ''
-            }]
+            }],
+            summary: '',
+            service: ''
         }
 
         this.closeModal = this.closeModal.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.changeWindow = this.changeWindow.bind(this);
+        this.fileUpload = this.fileUpload.bind(this);
         this.submitForm = this.submitForm.bind(this);
     }
 
@@ -87,43 +92,61 @@ class SignUpModal extends Component {
     }
 
     changeKindRadio = (e) => {
+        e.preventDefault();
         this.setState({ kind: e.target.value });
     }
 
     changeLanguage = (e, i) => {
+        e.preventDefault();
         const languages = this.state.languages;
         languages[i].language = e.target.value;
         this.setState({ languages: languages });
     }
 
     changeFluency = (e, i) => {
+        e.preventDefault();
         const languages = this.state.languages;
         languages[i].fluency = e.target.value;
         this.setState({ languages: languages });
     }
 
+    changeService = (e) => {
+        e.preventDefault();
+        this.setState({ service: e.target.value });
+    }
+
+    fileUpload = (fileItem) => {
+        this.setState({ avatar: fileItem });
+    }
+
     submitForm = async () => {
-        console.log(this.state.languages);
         if (!this.state.email) {
             alert(`Please fill out your email.`);
         } else if (!this.state.password) {
             alert(`Please fill out your password.`);
+        } else if (!this.state.avatar) {
+            alert(`Please upload your avatar.`);
+        } else if (this.state.password !== this.state.confirmPassword) {
+            alert(`Please check your password.`);
         } else {
-            const data = {
-                type: this.state.type,
-                name: this.state.name,
-                email: this.state.email,
-                password: this.state.password,
+            if (this.state.kind == 'Client') {
+                const data = {
+                    kind: this.state.kind,
+                    name: this.state.name,
+                    email: this.state.email,
+                    password: this.state.password,
+                    avatar: this.state.avatar
+                }
+                signUp(data, this.state.kind)
+                    .then(data => {
+                        alert('duoc ui');
+                        // this.props.processLogin(data.userKind);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        alert('You cannot be signed up at this time.')
+                    })
             }
-            console.log(data)
-            signUp(data)
-                .then(data => {
-                    this.props.processLogin(data.userKind);
-                })
-                .catch(e => {
-                    console.log(e);
-                    alert('You cannot be signed up at this time.')
-                })
         }
     }
 
@@ -132,7 +155,7 @@ class SignUpModal extends Component {
             <RadioGroup aria-label="kind" name={'kind'} value={this.state.kind} onChange={this.changeInput}>
                 <div className={classes.kindArea}>
                     <div className={classes.kindLabel}>I am a:</div>
-                    <FormControlLabel value="User" control={<Radio checked={this.state.kind === 'User'} color="primary" />} label="User" />
+                    <FormControlLabel value="Client" control={<Radio checked={this.state.kind === 'Client'} color="primary" />} label="Client" />
                     <FormControlLabel value="Interpreter" control={<Radio checked={this.state.kind === 'Interpreter'} color="primary" />} label="Interpreter" />
                 </div>
             </RadioGroup>
@@ -142,7 +165,7 @@ class SignUpModal extends Component {
                     <TextField label="Name"
                         name="name"
                         required
-                        value={this.props.title}
+                        value={this.state.name}
                         margin="dense"
                         fullWidth
                         variant="outlined"
@@ -150,7 +173,7 @@ class SignUpModal extends Component {
                     <TextField label="Email"
                         name="email"
                         required
-                        value={this.props.title}
+                        value={this.state.email}
                         margin="dense"
                         fullWidth
                         variant="outlined"
@@ -163,7 +186,7 @@ class SignUpModal extends Component {
                         type="password"
                         required
                         margin="dense"
-                        value={this.props.location}
+                        value={this.state.password}
                         fullWidth
                         variant="outlined"
                         onChange={this.changeInput} />
@@ -172,12 +195,14 @@ class SignUpModal extends Component {
                         type="password"
                         required
                         margin="dense"
-                        value={this.props.location}
+                        value={this.state.confirmPassword}
                         fullWidth
                         variant="outlined"
                         onChange={this.changeInput} />
                 </Grid>
             </Grid>
+
+            <FileUploader upload={this.fileUpload} />
         </>;
         const singleBack = <Button content={'Back'} inverted click={this.switchToLogin} />;
         const singleNext = <Button content={'Sign Up'} click={this.submitForm} />;
@@ -196,7 +221,7 @@ class SignUpModal extends Component {
                         <TextField label="Language"
                             name="language"
                             required
-                            value={this.props.title}
+                            value={lang.language}
                             margin="dense"
                             fullWidth
                             variant="outlined"
@@ -227,13 +252,25 @@ class SignUpModal extends Component {
         const secondWindow = <>
             {langFields}
 
-            <TextField label="Type of Interpreting"
-                name="typeOfInterpreting"
+            <FormControl variant="outlined" fullWidth margin="dense">
+                <InputLabel>Interpreting Service</InputLabel>
+                <Select label="Service"
+                    value={this.state.service}
+                    onChange={this.changeService}>
+                    <MenuItem value={'Direct'}>Direct</MenuItem>
+                    <MenuItem value={'Indirect'}>Indirect</MenuItem>
+                </Select>
+            </FormControl>
+
+            <TextField label="Summary"
+                name="summary"
                 required
-                value={this.props.title}
+                value={this.state.summary}
                 margin="dense"
                 fullWidth
                 variant="outlined"
+                multiline
+                rows={5}
                 onChange={this.changeInput} />
         </>;
 
@@ -247,9 +284,9 @@ class SignUpModal extends Component {
             <Button content={'Next'} click={this.changeWindow} />
             : singleNext;
 
-        const window = (this.state.kind === 'User') ? singleWindow : doubleWindow;
-        const backButton = (this.state.kind === 'User') ? singleBack : doubleBack;
-        const nextButton = (this.state.kind === 'User') ? singleNext : doubleNext;
+        const window = (this.state.kind === 'Client') ? singleWindow : doubleWindow;
+        const backButton = (this.state.kind === 'Client') ? singleBack : doubleBack;
+        const nextButton = (this.state.kind === 'Client') ? singleNext : doubleNext;
 
         return (
             <Modal className={classes.Modal}

@@ -6,16 +6,9 @@ import classes from './EventModal.module.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '../../shared/Button/Button';
 import DateTimePicker from '../../shared/DateTimePicker/DateTimePicker';
-
-import { FilePond, registerPlugin } from 'react-filepond';
-import 'filepond/dist/filepond.min.css';
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import FileUploader from '../../shared/FileUploader/FileUploader';
 
 import { createEvent, editEvent } from '../../../services/AdminService';
-
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 class ReviewModal extends Component {
     constructor(props) {
@@ -33,6 +26,7 @@ class ReviewModal extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.pickDate = this.pickDate.bind(this);
         this.changeInput = this.changeInput.bind(this);
+        this.fileUpload = this.fileUpload.bind(this);
         this.submitForm = this.submitForm.bind(this);
     }
 
@@ -91,16 +85,8 @@ class ReviewModal extends Component {
         }
     }
 
-    fileUpload = (fileItems) => {
-        if (fileItems.length) {
-            this.setState({
-                image: fileItems[0].file
-            })
-        } else {
-            this.setState({
-                image: null
-            })
-        }
+    fileUpload = (fileItem) => {
+        this.setState({ image: fileItem });
     }
 
     render() {
@@ -152,9 +138,7 @@ class ReviewModal extends Component {
                                     variant="outlined"
                                     onChange={this.changeInput} />
 
-                                <FilePond ref={ref => (this.pond = ref)}
-                                    allowMultiple={false}
-                                    onupdatefiles={fileItems => this.fileUpload(fileItems)} />
+                                <FileUploader upload={this.fileUpload} />
 
                                 <div className={classes.buttons}>
                                     <Button content={'Cancel'} inverted click={this.closeModal} />

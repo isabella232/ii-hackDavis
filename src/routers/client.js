@@ -15,10 +15,10 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
         const info = fillSignupInfo(req.body, buffer)
         const client = new Client(info)
         sendWelcomeEmail(client.email, client.name)
-        // const token = await client.generateAuthToken()
         await client.save()
         res.status(201).send()
     } catch (e) {
+        console.log(e)
         res.status(400).send({ error: e.message })
     }
 })

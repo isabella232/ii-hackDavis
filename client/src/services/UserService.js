@@ -18,12 +18,19 @@ export const signOut = async () => {
     return response.data;
 }
 
-export const signUp = async (data) => {
-    const endpoint = `api/user/create`;
-    return backend.post(endpoint, data);
-}
+export const signUp = async (data, kind) => {
+    if (kind === 'Client') {
+        const endpoint = `api/client/create`;
+        let formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('avatar', data.avatar);
+        return backend.post(endpoint, formData);
+    }
 
-// export const signUpInterpreter = async (data) => {
-//     const endpoint = `api/interpreter/create`;
-//     return backend.post(endpoint, data);
-// }
+    // else if (kind === 'Interpreter') {
+    //     const endpoint = `api/user/create`;
+    //     return backend.post(endpoint, data);
+    // }
+}
