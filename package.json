@@ -29,7 +29,7 @@
     "path": "^0.12.7",
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
-    "sharp": "^0.24.0",
+    "sharp": "^0.25.2",
     "validator": "^12.2.0"
   },
   "devDependencies": {

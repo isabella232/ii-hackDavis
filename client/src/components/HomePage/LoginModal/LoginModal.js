@@ -57,7 +57,6 @@ class LoginModal extends Component {
                 email: this.state.email,
                 password: this.state.password,
             }
-            console.log(data)
             signIn(data)
                 .then(data => {
                     this.props.processLogin(data.userKind);

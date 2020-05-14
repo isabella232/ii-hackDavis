@@ -24,12 +24,14 @@ class SignUpModal extends Component {
     constructor(props) {
         super();
         this.state = {
-            // open: props.open,
-            window: 1,
-            kind: 'Client',
-            open: true,
-            // window: 2,
-            // kind: 'Interpreter',
+            open: props.open,
+            window: 2,
+            kind: 'Interpreter',
+
+            // window: 1,
+            // kind: 'Client',
+            // open: true,
+
             name: '',
             email: '',
             password: '',
