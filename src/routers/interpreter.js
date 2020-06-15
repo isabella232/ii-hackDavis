@@ -11,9 +11,12 @@ const { sendWelcomeEmail } = require('../utils/email')
 const router = new express.Router()
 
 router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req, res) => {
-    console.log('here')
     try {
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+        let services = [], list = JSON.parse(req.body.services)
+        for (const service in list) {
+            services.push(list[service])
+        }
         const interpreter = new Interpreter({
             name: req.body.name,
             email: req.body.email,
@@ -22,7 +25,7 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
                 buffer: buffer,
                 url: getAvatarURL(req.params.id)
             },
-            service: req.body.service,
+            services: services,
             summary: req.body.summary,
             languages: JSON.parse(req.body.languages)
         })

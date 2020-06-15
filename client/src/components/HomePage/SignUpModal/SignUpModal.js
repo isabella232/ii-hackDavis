@@ -15,6 +15,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AddIcon from '@material-ui/icons/Add';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
 
 import Button from '../../shared/Button/Button';
 import FileUploader from '../../shared/FileUploader/FileUploader';
@@ -24,7 +26,7 @@ class SignUpModal extends Component {
     constructor(props) {
         super();
         this.state = {
-            open: props.open,
+            open: true,
             window: 2,
             kind: 'Interpreter',
 
@@ -43,7 +45,12 @@ class SignUpModal extends Component {
             }],
             location: '',
             summary: '',
-            service: ''
+            services: {
+                Simultaneous: false,
+                Consecutive: false,
+                Relating: false,
+                Translating: false
+            }
         }
 
         this.closeModal = this.closeModal.bind(this);
@@ -113,9 +120,11 @@ class SignUpModal extends Component {
         this.setState({ languages: languages });
     }
 
-    changeService = (e) => {
+    changeServices = (e) => {
         e.preventDefault();
-        this.setState({ service: e.target.value });
+        const services = this.state.services;
+        services[e.target.name] = e.target.checked;
+        this.setState({ services: services });
     }
 
     fileUpload = (fileItem) => {
@@ -135,10 +144,6 @@ class SignUpModal extends Component {
     }
 
     submitInterpreter = async (data) => {
-        if (this.state.service === '') {
-            alert(`Please fill out your interpreting service.`);
-        }
-
         let check = true;
         for (const lang in this.state.languages) {
             if (lang.language === '' || lang.fluency === '') {
@@ -147,10 +152,23 @@ class SignUpModal extends Component {
             }
         }
 
+        let services = [];
+        for (const service in this.state.services) {
+            console.log(service, this.state.services[service]);
+            if (this.state.services[service]) {
+                services.push(service);
+            }
+        }
+
+        if (services.length === 0) {
+            check = false;
+            alert(`Please fill out your interpreting services.`);
+        }
+
         if (check) {
             data.languages = this.state.languages;
             data.location = this.state.location;
-            data.servie = this.state.service;
+            data.services = services;
             data.summary = this.state.summary;
             signUpInterpreter(data)
                 .then(data => {
@@ -295,16 +313,12 @@ class SignUpModal extends Component {
         const secondWindow = <>
             {langFields}
 
-            <FormControl variant="outlined" fullWidth margin="dense">
-                <InputLabel>Interpreting Service</InputLabel>
-                <Select label="Service"
-                    required
-                    value={this.state.service}
-                    onChange={this.changeService}>
-                    <MenuItem value={'Direct'}>Direct</MenuItem>
-                    <MenuItem value={'Indirect'}>Indirect</MenuItem>
-                </Select>
-            </FormControl>
+            <FormGroup row>
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Simultaneous} onChange={this.changeServices} name="Simultaneous" />} label="Simultaneous" />
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Consecutive} onChange={this.changeServices} name="Consecutive" />} label="Consecutive" />
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Relating} onChange={this.changeServices} name="Relating" />} label="Relating" />
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Translating} onChange={this.changeServices} name="Translating" />} label="Translating" />
+            </FormGroup>
 
             <TextField label="Location"
                 name="location"

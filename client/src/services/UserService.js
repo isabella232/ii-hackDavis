@@ -37,7 +37,7 @@ export const signUpInterpreter = async (data) => {
     formData.append('avatar', data.avatar);
     formData.append('location', data.location);
     formData.append('summary', data.summary);
-    formData.append('service', data.service);
+    formData.append('services', JSON.stringify(data.services));
     formData.append('languages', JSON.stringify(data.languages));
     return backend.post(endpoint, formData);
 }

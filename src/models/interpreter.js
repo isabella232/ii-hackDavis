@@ -65,11 +65,8 @@ const interpreterSchema = new mongoose.Schema({
             default: false
         },
     }],
-    service: {
-        type: String,
-        trim: true,
-        required: true,
-        lowercase: true
+    services: {
+        type: Array,
     },
     rating: {
         type: Number,
