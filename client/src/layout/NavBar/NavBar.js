@@ -87,7 +87,7 @@ class NavBar extends Component {
                     openSignUp={this.switchSignUpModal} />
                 <SignUpModal open={this.state.signUpModal}
                     switchSignUpModal={this.switchSignUpModal}
-                    openLogin={this.switchLoginModal} />
+                    switchLoginModal={this.switchLoginModal} />
             </div>
         )
     }

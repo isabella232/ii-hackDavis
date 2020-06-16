@@ -26,13 +26,13 @@ class SignUpModal extends Component {
     constructor(props) {
         super();
         this.state = {
-            open: true,
-            window: 2,
-            kind: 'Interpreter',
-
-            // window: 1,
-            // kind: 'Client',
             // open: true,
+            // window: 2,
+            // kind: 'Interpreter',
+
+            window: 1,
+            kind: 'Client',
+            open: props.open,
 
             name: '',
             email: '',
@@ -74,11 +74,6 @@ class SignUpModal extends Component {
         this.props.switchSignUpModal();
     }
 
-    switchToLogin = () => {
-        this.props.switchSignUpModal();
-        this.props.openLogin();
-    }
-
     changeWindow = () => {
         const currentWindow = this.state.window;
         this.setState({ window: (currentWindow === 1) ? 2 : 1 });
@@ -113,6 +108,7 @@ class SignUpModal extends Component {
         this.setState({ languages: languages });
     }
 
+    // chua xong
     changeFluency = (e, i) => {
         e.preventDefault();
         const languages = this.state.languages;
@@ -131,15 +127,44 @@ class SignUpModal extends Component {
         this.setState({ avatar: fileItem });
     }
 
+    clearAllFields = () => {
+        const state = {
+            window: 1,
+            kind: 'Client',
+            open: this.props.open,
+
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            avatar: null,
+            languages: [{
+                language: '',
+                fluency: ''
+            }],
+            location: '',
+            summary: '',
+            services: {
+                Simultaneous: false,
+                Consecutive: false,
+                Relating: false,
+                Translating: false
+            }
+        };
+        for (const field in state) {
+            this.setState({ [field]: state[field] });
+        }
+    }
+
     submitClient = async (data) => {
         signUpClient(data)
             .then(data => {
-                alert('duoc ui');
-                // this.props.processLogin(data.userKind);
+                this.clearAllFields();
+                this.props.switchSignUpModal();
+                this.props.switchLoginModal();
             })
             .catch(e => {
-                console.log(e);
-                alert('You cannot be signed up at this time.')
+                alert('You cannot be signed up at this time.');
             })
     }
 
@@ -172,11 +197,11 @@ class SignUpModal extends Component {
             data.summary = this.state.summary;
             signUpInterpreter(data)
                 .then(data => {
-                    alert('duoc ui');
-                    // this.props.processLogin(data.userKind);
+                    this.clearAllFields();
+                    this.props.switchSignUpModal();
+                    this.props.switchLoginModal();
                 })
                 .catch(e => {
-                    console.log(e);
                     alert('You cannot be signed up at this time.')
                 })
         }
