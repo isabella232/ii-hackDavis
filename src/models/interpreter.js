@@ -31,7 +31,7 @@ const interpreterSchema = new mongoose.Schema({
             required: true,
             trim: true,
             min: 1,
-            max: 5
+            max: 10
         }
     }],
     // englishFluency: {

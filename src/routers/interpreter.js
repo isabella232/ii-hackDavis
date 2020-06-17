@@ -14,8 +14,8 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
     try {
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
         let services = [], list = JSON.parse(req.body.services)
-        for (const service in list) {
-            services.push(list[service])
+        for (const service of list) {
+            services.push(service)
         }
         const interpreter = new Interpreter({
             name: req.body.name,

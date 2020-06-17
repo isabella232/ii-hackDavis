@@ -2,12 +2,13 @@ const express = require('express')
 const sharp = require('sharp')
 const ObjectID = require('mongodb').ObjectID
 const Admin = require('../models/admin')
+const AdminCode = require('../models/adminCode')
 const Interpreter = require('../models/interpreter')
 const Event = require('../models/event')
 const auth = require('../middleware/auth')
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveInterpreter } = require('../utils/algolia')
-const { getToValidate } = require('../utils/admin')
+const { getToValidate, checkAdmin, checkAdminCode } = require('../utils/admin')
 const { imgUploader } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo } = require('../utils/user')
@@ -16,13 +17,8 @@ const router = new express.Router()
 
 // create admin account
 router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) => {
-    if (req.body.adminCode !== 'secretCode') {
-        const error = new Error('Invalid Admin Code')
-        res.status(400).send({ error: error.message })
-        throw error
-    }
-
     try {
+        await checkAdminCode(req.body.adminCode)
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
         const info = fillSignupInfo(req.body, buffer)
         const admin = new Admin(info)
@@ -109,6 +105,23 @@ router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
         res.send()
     } catch (error) {
         res.status(400).send(error)
+    }
+})
+
+// create an admin code
+router.post('/api/admin/code/create', async (req, res) => {
+    const admin = req.user
+    if (checkAdmin(admin.email)) {
+        const error = new Error('User is not an admin.')
+        res.status(400).send({ error: error.message })
+    }
+    try {
+        const adminCode = new AdminCode({ code: req.body.adminCode })
+        await adminCode.save()
+        res.status(201).send()
+    } catch (e) {
+        console.log(e)
+        res.status(400).send({ error: e.message })
     }
 })
 

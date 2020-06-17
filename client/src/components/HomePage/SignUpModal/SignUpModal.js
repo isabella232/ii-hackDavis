@@ -41,7 +41,7 @@ class SignUpModal extends Component {
             avatar: null,
             languages: [{
                 language: '',
-                fluency: ''
+                fluency: 0
             }],
             location: '',
             summary: '',
@@ -108,7 +108,6 @@ class SignUpModal extends Component {
         this.setState({ languages: languages });
     }
 
-    // chua xong
     changeFluency = (e, i) => {
         e.preventDefault();
         const languages = this.state.languages;
