@@ -8,7 +8,7 @@ const Event = require('../models/event')
 const auth = require('../middleware/auth')
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveInterpreter } = require('../utils/algolia')
-const { getToValidate, checkAdmin, checkAdminCode } = require('../utils/admin')
+const { getToValidate, checkAdminCode } = require('../utils/admin')
 const { imgUploader } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo } = require('../utils/user')
@@ -109,13 +109,24 @@ router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
 })
 
 // create an admin code
-router.post('/api/admin/code/create', async (req, res) => {
-    const admin = req.user
-    if (checkAdmin(admin.email)) {
-        const error = new Error('User is not an admin.')
-        res.status(400).send({ error: error.message })
-    }
+router.post('/api/admin/code/create', auth, async (req, res) => {
     try {
+        const admin = req.user
+        await admin.isAdmin()
+        const adminCode = new AdminCode({ code: req.body.adminCode })
+        await adminCode.save()
+        res.status(201).send()
+    } catch (e) {
+        console.log(e)
+        res.status(400).send({ error: e.message })
+    }
+})
+
+// get admin code created
+router.post('/api/admin/code/all', auth, async (req, res) => {
+    try {
+        const admin = req.user
+        await admin.isAdmin()
         const adminCode = new AdminCode({ code: req.body.adminCode })
         await adminCode.save()
         res.status(201).send()

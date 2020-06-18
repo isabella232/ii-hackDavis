@@ -27,20 +27,12 @@ const getToValidate = (interpreters) => {
     return toValidate
 }
 
-const checkAdmin = async (email) => {
-    const admin = await Admin.findOne({ email })
-    if (!admin) {
-        return false
-    }
-    return true
-}
-
 const checkAdminCode = async (code) => {
     const adminCodes = await AdminCode.find({})
     let isMatch = false
 
     if (!adminCodes) {
-        throw new Error('No codes exist.')
+        throw new Error('No admin codes exist.')
     }
 
     for (const adminCode of adminCodes) {
@@ -51,11 +43,10 @@ const checkAdminCode = async (code) => {
         }
     }
 
-    throw new Error('No matches.')
+    throw new Error('No matched admin codes.')
 }
 
 module.exports = {
     getToValidate,
-    checkAdmin,
     checkAdminCode
 }

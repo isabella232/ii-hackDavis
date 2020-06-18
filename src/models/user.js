@@ -68,7 +68,7 @@ userSchema.statics.findByToken = async (token) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
     const user = await User.findOne({ _id: decoded._id })
     if (!user) {
-        throw new Error('No User Found.')
+        throw new Error('No user found.')
     }
 
     return user
@@ -110,6 +110,14 @@ userSchema.methods.clearExpiredTokens = async function () {
     })
 
     await user.save()
+}
+
+// check if user is admin
+userSchema.methods.isAdmin = async function () {
+    if (this.kind === "Admin") {
+        return true
+    }
+    throw new Error("User is not an admin")
 }
 
 // doesn't print password or tokens
