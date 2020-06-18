@@ -41,3 +41,14 @@ export const signUpInterpreter = async (data) => {
     formData.append('languages', JSON.stringify(data.languages));
     return backend.post(endpoint, formData);
 }
+
+export const signUpAdmin = async (data) => {
+    const endpoint = `api/admin/create`;
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('avatar', data.avatar);
+    formData.append('adminCode', data.adminCode)
+    return backend.post(endpoint, formData);
+}

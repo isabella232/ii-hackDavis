@@ -1,7 +1,7 @@
 import { backend } from './AxiosInstances';
 
 export const fetchData = async () => {
-    const endpoint = `api/admin/adminpage`;
+    const endpoint = `api/admin/home`;
     return backend.get(endpoint);
 }
 
@@ -14,7 +14,6 @@ export const rejectCertificate = async (certificateID) => {
     const endpoint = `api/admin/certificates/${certificateID}/reject`;
     return backend.patch(endpoint);
 }
-
 
 export const createEvent = async (data) => {
     const endpoint = `api/event/create`;
@@ -47,15 +46,4 @@ export const deleteEvent = async (eventID) => {
 export const createAdminCode = async (adminCode) => {
     const endpoint = `api/admin/code/create`;
     return backend.post(endpoint, { adminCode: adminCode });
-}
-
-export const signUpAdmin = async (data) => {
-    const endpoint = `api/admin/create`;
-    let formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-    formData.append('avatar', data.avatar);
-    formData.append('adminCode', data.adminCode)
-    return backend.post(endpoint, formData);
 }

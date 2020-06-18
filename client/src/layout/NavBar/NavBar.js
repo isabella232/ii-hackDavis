@@ -49,13 +49,15 @@ class NavBar extends Component {
         });
     }
 
-    processLogin = async (userKind) => {
+    processLogin = () => {
         this.props.login();
         this.switchLoginModal();
         if (this.state.userKind === 'Admin') {
             this.props.history.push('/admin');
-        } else {
-            this.props.history.push('/profile');
+        } else if (this.state.userKind === 'Interpreter') {
+            this.props.history.push('/interpreter');
+        } else if (this.state.userKind === 'Client') {
+            this.props.history.push('/client');
         }
     }
 
@@ -72,7 +74,8 @@ class NavBar extends Component {
                 <div className={classes.items}>
                     <Link className={classes.item} to={"/about"}>About</Link>
                     {this.state.userKind === 'Admin' ? <Link className={classes.item} to={"/admin"}>Admin</Link> : null}
-                    {this.state.userKind === 'Client' ? <Link className={classes.item} to={"/profile"}>Profile</Link> : null}
+                    {this.state.userKind === 'Interpreter' ? <Link className={classes.item} to={"/interpreter"}>Profile</Link> : null}
+                    {this.state.userKind === 'Client' ? <Link className={classes.item} to={"/client"}>Profile</Link> : null}
                     <Link className={classes.item} to={"/search"}>Search</Link>
 
                     <div className={classes.button}>

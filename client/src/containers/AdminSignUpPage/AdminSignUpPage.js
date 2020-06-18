@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 
 import Button from '../../components/shared/Button/Button';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
-import { signUpAdmin } from '../../services/AdminService';
+import { signUpAdmin } from '../../services/UserService';
 
 class AdminSignUpPage extends Component {
     constructor(props) {

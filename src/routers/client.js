@@ -23,8 +23,24 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
     }
 })
 
-// get client's profile
-router.patch('/api/client/me', auth, async (req, res) => {
+// get client's home page
+router.get('/api/client/home', auth, async (req, res) => {
+    try {
+        const client = req.user
+        const data = {
+            name: client.name,
+            email: client.email,
+            avatar: client.avatar.url,
+            bookmarks: ["Yee", "Yoo"]
+        }
+        res.send(data)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
+// update client's profile
+router.patch('/api/client/update', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))

@@ -215,6 +215,8 @@ class SignUpModal extends Component {
             alert(`Please upload your avatar.`);
         } else if (this.state.password !== this.state.confirmPassword) {
             alert(`Please check your password.`);
+        } else if (this.state.length < 8 || this.state.confirmPassword.length < 8) {
+            alert(`Password must be at least 8 characters.`);
         } else {
             const data = {
                 kind: this.state.kind,
@@ -293,7 +295,7 @@ class SignUpModal extends Component {
         const singleNext = <Button content={'Sign Up'} click={this.submitForm} />;
 
         const menuItems = [];
-        for (let i = 1; i <= 10; i++) {
+        for (let i = 1; i <= 5; i++) {
             menuItems.push(<MenuItem id={`menu-item-${i}`} value={i}>{i}</MenuItem>)
         }
         const addIcon = <AddIcon className={classes.langFieldIcon} color="primary" onClick={this.pushLangField} />;
@@ -337,6 +339,7 @@ class SignUpModal extends Component {
         const secondWindow = <>
             {langFields}
 
+            <div className={classes.serviceLabel}>Services:</div>
             <FormGroup row>
                 <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Simultaneous} onChange={this.changeServices} name="Simultaneous" />} label="Simultaneous" />
                 <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Consecutive} onChange={this.changeServices} name="Consecutive" />} label="Consecutive" />

@@ -31,8 +31,8 @@ router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) 
     }
 })
 
-// get admin home page
-router.get('/api/admin/adminpage', auth, async (req, res) => {
+// get admin's home page
+router.get('/api/admin/home', auth, async (req, res) => {
     try {
         const now = new Date()
         const pastEvents = await Event.find().where('date').lt(now).limit(2)

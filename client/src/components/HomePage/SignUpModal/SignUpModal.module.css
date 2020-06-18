@@ -42,6 +42,12 @@
     margin: -3px 20px 0 0;
 }
 
+.Modal .serviceLabel {
+    font-weight: 400;
+    font-size: 19px;
+    margin: 10px 0 -10px 0;
+}
+
 .Modal .langFieldIcons {
     margin-top: .9rem;
 }
