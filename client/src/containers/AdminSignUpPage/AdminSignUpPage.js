@@ -72,7 +72,6 @@ class AdminSignUpPage extends Component {
 
             signUpAdmin(data)
                 .then(data => {
-                    alert('Successfully signed up as admin.')
                     this.clearAllFields();
                     this.props.history.push('/');
                 })

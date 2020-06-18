@@ -68,6 +68,12 @@ class LoginModal extends Component {
         }
     }
 
+    pressEnter = (e) => {
+        if (e.key === 'Enter') {
+            this.submitForm();
+        }
+    }
+
     render() {
         return (
             <Modal className={classes.Modal}
@@ -95,11 +101,12 @@ class LoginModal extends Component {
                                 value={this.props.location}
                                 fullWidth
                                 variant="outlined"
-                                onChange={this.changeInput} />
+                                onChange={this.changeInput}
+                                onKeyDown={this.pressEnter} />
 
                             <div className={classes.footer}>
                                 <div>
-                                    <Button content={'Forgot Password'} inverted click={this.submitForm} />
+                                    <Button content={'Forgot Password'} inverted />
                                 </div>
                                 <div className={classes.buttons}>
                                     <Button content={'Sign Up'} inverted click={this.switchToSignUp} />

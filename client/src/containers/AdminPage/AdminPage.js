@@ -50,7 +50,6 @@ class AdminPage extends Component {
         } else {
             createAdminCode(this.state.adminCode)
                 .then(data => {
-                    alert("Successfully created admin code.");
                     this.setState({ adminCode: '' });
                 }).catch(error => {
                     alert("Failed to create admin code.");
@@ -62,7 +61,6 @@ class AdminPage extends Component {
     copyToClipboard = () => {
         const url = process.env.REACT_APP_BACKEND_URL + "/admin/register";
         navigator.clipboard.writeText(url);
-        alert("Admin Register URL Copied!");
     };
 
     render() {
