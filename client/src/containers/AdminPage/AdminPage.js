@@ -5,8 +5,9 @@ import CertificationCard from '../../components/AdminPage/CertificationCard/Cert
 import EventCard from '../../components/AdminPage/EventCard/EventCard';
 import Button from '../../components/shared/Button/Button';
 import EventModal from '../../components/AdminPage/EventModal/EventModal';
+import TextField from '@material-ui/core/TextField';
 
-import { fetchData } from '../../services/AdminService';
+import { fetchData, createAdminCode } from '../../services/AdminService';
 
 class AdminPage extends Component {
     constructor() {
@@ -14,7 +15,8 @@ class AdminPage extends Component {
         this.state = {
             pastEvents: [],
             upcomingEvents: [],
-            interpreters: []
+            interpreters: [],
+            adminCode: ''
         }
 
         this.loadData = this.loadData.bind(this);
@@ -36,6 +38,32 @@ class AdminPage extends Component {
     componentDidMount() {
         this.loadData();
     }
+
+    changeInput = (e) => {
+        e.preventDefault();
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    submitForm = () => {
+        if (this.state.adminCode === '') {
+            alert("Please fill out the admin code.")
+        } else {
+            createAdminCode(this.state.adminCode)
+                .then(data => {
+                    alert("Successfully created admin code.");
+                    this.setState({ adminCode: '' });
+                }).catch(error => {
+                    alert("Failed to create admin code.");
+                    console.log(error);
+                })
+        }
+    }
+
+    copyToClipboard = () => {
+        const url = process.env.REACT_APP_BACKEND_URL + "/admin/register";
+        navigator.clipboard.writeText(url);
+        alert("Admin Register URL Copied!");
+    };
 
     render() {
         const toValidateCertificates = this.state.interpreters.map(interpreter => (
@@ -89,6 +117,26 @@ class AdminPage extends Component {
                 <div className={classes.title}>New Certification Uploads</div>
 
                 {toValidateCertificates}
+
+                <div className={classes.horzLine} />
+
+                <div className={classes.title}>Manage Administration</div>
+
+                <form enctype="multipart/form-data">
+                    <TextField label="Admin Code"
+                        name="adminCode"
+                        required
+                        value={this.state.adminCode}
+                        margin="dense"
+                        fullWidth
+                        variant="outlined"
+                        onChange={this.changeInput} />
+                </form>
+
+                <div className={classes.adminCodeButton}>
+                    <Button content='Copy Admin Register URL' click={this.copyToClipboard} />
+                    <Button content='Create Admin Code' click={this.submitForm} />
+                </div>
             </div >
         )
     }

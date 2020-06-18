@@ -1,0 +1,28 @@
+.Container {
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    margin: auto;
+    max-width: 800px;
+}
+
+.Container .title {
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 45px;
+}
+
+.Container .footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.Container .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem .5rem;
+}
+
+.Container .fileUpload {
+    margin: 10px 0;
+}

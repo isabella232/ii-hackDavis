@@ -43,3 +43,19 @@ export const deleteEvent = async (eventID) => {
     const endpoint = `api/events/${eventID}/delete`;
     return backend.delete(endpoint);
 }
+
+export const createAdminCode = async (adminCode) => {
+    const endpoint = `api/admin/code/create`;
+    return backend.post(endpoint, { adminCode: adminCode });
+}
+
+export const signUpAdmin = async (data) => {
+    const endpoint = `api/admin/create`;
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('avatar', data.avatar);
+    formData.append('adminCode', data.adminCode)
+    return backend.post(endpoint, formData);
+}

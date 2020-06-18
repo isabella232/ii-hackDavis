@@ -110,22 +110,8 @@ router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
 
 // create an admin code
 router.post('/api/admin/code/create', auth, async (req, res) => {
+    const admin = req.user
     try {
-        const admin = req.user
-        await admin.isAdmin()
-        const adminCode = new AdminCode({ code: req.body.adminCode })
-        await adminCode.save()
-        res.status(201).send()
-    } catch (e) {
-        console.log(e)
-        res.status(400).send({ error: e.message })
-    }
-})
-
-// get admin code created
-router.post('/api/admin/code/all', auth, async (req, res) => {
-    try {
-        const admin = req.user
         await admin.isAdmin()
         const adminCode = new AdminCode({ code: req.body.adminCode })
         await adminCode.save()

@@ -1,6 +1,6 @@
 .Container {
     margin: auto;
-    padding: 0 2rem;
+    padding: 20px 2rem;
     max-width: 800px;
 }
 
@@ -24,4 +24,10 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 2rem;
+}
+
+.Container .adminCodeButton {
+    display: flex;
+    justify-content: flex-end;
+    margin: .5rem;
 }
