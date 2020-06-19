@@ -28,7 +28,7 @@ const PreviewCard = props => {
                     {props.location}
                 </div>
                 <div className={classes.rating}>
-                    <Rating value={props.rating} readOnly />
+                    <Rating value={props.rating} precision={0.5} readOnly />
                 </div>
             </div>
         </div>

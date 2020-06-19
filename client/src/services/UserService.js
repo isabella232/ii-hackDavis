@@ -52,3 +52,9 @@ export const signUpAdmin = async (data) => {
     formData.append('adminCode', data.adminCode)
     return backend.post(endpoint, formData);
 }
+
+export const updateUserPassword = async (data) => {
+    const endpoint = 'api/user/updatePassword';
+    return backend.patch(endpoint, data);
+}
+

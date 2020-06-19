@@ -62,21 +62,4 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     }
 })
 
-// update client's password
-router.patch('/api/client/updatePassword', auth, async (req, res) => {
-    const client = req.user
-
-    try {
-        if (await bcrypt.compare(req.body.currentPassword, client.password)) {
-            client.password = req.body.newPassword
-            await client.save()
-            res.send()
-        } else {
-            res.status(400).send(new Error("Current password doesn't match."))
-        }
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
-
 module.exports = router

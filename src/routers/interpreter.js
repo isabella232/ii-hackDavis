@@ -39,7 +39,7 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
     }
 })
 
-// interpreters can update their own profiles
+// (OUTDATED)interpreters can update their own profiles
 router.patch('/api/interpreter/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['location', 'languagues', 'englishFluency', 'certification']
@@ -115,7 +115,7 @@ router.post('/api/interpreters/:id/reviews/add', auth, async (req, res) => {
         }
         const review = {
             rating: req.body.rating,
-            reviewerName: req.body.name,
+            reviewerName: req.user.name,
             comment: req.body.comment,
         }
         interpreter.reviews.push(review)
@@ -162,6 +162,61 @@ router.get('/api/interpreter/certificates/:id', async (req, res) => {
         res.send(certificate.file.buffer)
     } catch (e) {
         res.status(404).send()
+    }
+})
+
+// get interpreter's home page
+router.get('/api/interpreter/home', auth, async (req, res) => {
+    try {
+        const interpreter = req.user
+        const certifications = []
+        for (const cert of interpreter.certifications) {
+            certifications.push({
+                title: cert.title,
+                file: cert.url,
+                isValidated: cert.isValidated,
+                isRejected: cert.isRejected
+            })
+        }
+        const data = {
+            name: interpreter.name,
+            email: interpreter.email,
+            avatar: interpreter.avatar.url,
+            location: interpreter.location.str,
+            phone: interpreter.phone,
+            languages: interpreter.languages,
+            certifications: certifications,
+            services: interpreter.services,
+            rating: interpreter.rating,
+            reviews: interpreter.reviews,
+            isVerified: interpreter.isVerified,
+            summary: interpreter.summary,
+        }
+        res.send(data)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
+// update interpreter's info
+router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), async (req, res) => {
+    const interpreter = req.user
+    const updates = Object.keys(req.body)
+
+    if (req.body.avatar) {
+        interpreter.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
+    }
+
+    try {
+        updates.forEach((update) => {
+            if (req.body[update] !== null) {
+                interpreter[update] = req.body[update]
+            }
+        })
+        await interpreter.save()
+        res.send()
+    } catch (e) {
+        res.status(400).send(e)
     }
 })
 

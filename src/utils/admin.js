@@ -19,7 +19,7 @@ const getToValidate = (interpreters) => {
         return {
             name: interpreter.name,
             avatar: interpreter.avatar.url,
-            location: interpreter.location.locationString,
+            location: interpreter.location.str,
             unvalidatedCertificates: unvalidatedCertificates,
         }
     })

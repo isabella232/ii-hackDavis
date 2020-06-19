@@ -8,7 +8,8 @@ import Avatar from '../../components/shared/Avatar/Avatar';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
-import { fetchClientPage, updateClientInfo, updateClientPassword } from '../../services/ClientService';
+import { fetchClientPage, updateClientInfo } from '../../services/ClientService';
+import { updateUserPassword } from '../../services/UserService';
 
 class ClientPage extends Component {
     constructor() {
@@ -62,7 +63,7 @@ class ClientPage extends Component {
     }
 
     submitInfoForm = () => {
-        if (!this.state.name || this.state.name == this.state.currentName) {
+        if (!this.state.name || this.state.name === this.state.currentName) {
             alert(`Please fill out your name.`);
         } else {
             const data = {
@@ -92,7 +93,7 @@ class ClientPage extends Component {
                 currentPassword: this.state.currentPassword,
                 newPassword: this.state.newPassword
             };
-            updateClientPassword(data)
+            updateUserPassword(data)
                 .then(data => {
                 }).catch(error => {
                     alert("Failed To Update Password.");
@@ -106,15 +107,19 @@ class ClientPage extends Component {
     }
 
     render() {
-        const menuItems = ['Events', 'Account Update'];
+        const menuItems = ['Events', 'Bookmarks', 'Account Update'];
         const menu = menuItems.map((item, i) =>
-            <div id={`menu-item-${i}`} value={i}
-                className={(this.state.window === i) ? classes.activeMenuItem : classes.menuItem}
-                onClick={(e) => this.switchWindow(e, i)}>
-                {menuItems[i]}
+            <div className={classes.menuItemWrapper}>
+                <div className={(this.state.window === i) ? classes.activeDot : classes.dot} />
+                <div id={`menu-item-${i}`} value={i}
+                    className={(this.state.window === i) ? classes.activeMenuItem : classes.menuItem}
+                    onClick={(e) => this.switchWindow(e, i)}>
+                    {menuItems[i]}
+                </div>
             </div>);
 
         const eventWindow = <div>event</div>;
+        const bookmarkWindow = <div>bookmarks</div>
 
         const updateWindow = <>
             <Grid container spacing={2} justify='center'>
@@ -189,7 +194,7 @@ class ClientPage extends Component {
             </div>
         </>;
 
-        const windows = [eventWindow, updateWindow];
+        const windows = [eventWindow, bookmarkWindow, updateWindow];
 
         return (
             <div className={classes.Container}>
@@ -204,6 +209,7 @@ class ClientPage extends Component {
                         <div className={classes.menu}>
                             {menu}
                         </div>
+                        <HorzLine />
                     </Grid>
 
                     <Grid item xs={12} sm={8}>

@@ -26,7 +26,7 @@ router.get('/api/home', async (req, res) => {
                 avatar: interpreter.avatar.url,
                 languages: languages,
                 email: interpreter.email,
-                location: interpreter.location.locationString,
+                location: interpreter.location.str,
                 rating: interpreter.rating
             }
         })

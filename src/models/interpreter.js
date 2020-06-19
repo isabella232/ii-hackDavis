@@ -5,7 +5,7 @@ const { getCoordinates } = require('../utils/interpreter')
 
 const interpreterSchema = new mongoose.Schema({
     location: {
-        locationString: {
+        str: {
             type: String,
             trim: true,
             required: true,
@@ -20,6 +20,16 @@ const interpreterSchema = new mongoose.Schema({
                 required: true
             }
         }
+    },
+    phone: {
+        type: String,
+        validate: {
+            validator: function (v) {
+                return /\d{3}-\d{3}-\d{4}/.test(v);
+            },
+            message: props => `${props.value} is not a valid phone number!`
+        },
+        required: false
     },
     languages: [{
         language: {
@@ -107,7 +117,7 @@ const interpreterSchema = new mongoose.Schema({
         maxlength: 2000
     },
     resume: {
-        type: Buffer,
+        type: Buffer
     }
 })
 
@@ -115,7 +125,7 @@ interpreterSchema.methods.generateCoordinates = async function (location) {
     const interpreter = this
     await getCoordinates(location)
         .then(coordinates => {
-            interpreter.location.locationString = location
+            interpreter.location.str = location
             interpreter.location.coordinates = coordinates
         })
 }

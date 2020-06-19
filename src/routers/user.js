@@ -90,13 +90,20 @@ router.post('/api/user/avatar/:id', auth, imgUploader.single('avatar'), async (r
     res.status(400).send({ error: error.message })
 })
 
-// need to implement profile page for user
-router.get('/api/user/profile', auth, async (req, res) => {
+// update user's password
+router.patch('/api/user/updatePassword', auth, async (req, res) => {
+    const user = req.user
+
     try {
-        res.send()
+        if (await bcrypt.compare(req.body.currentPassword, user.password)) {
+            user.password = req.body.newPassword
+            await user.save()
+            res.send()
+        } else {
+            res.status(400).send(new Error("Current password doesn't match."))
+        }
     } catch (e) {
-        console.log(e)
-        res.status(404).send()
+        res.status(400).send(e)
     }
 })
 
