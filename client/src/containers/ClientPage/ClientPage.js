@@ -14,6 +14,7 @@ class ClientPage extends Component {
     constructor() {
         super();
         this.state = {
+            currentName: '',
             name: '',
             email: '',
             password: '',
@@ -35,6 +36,7 @@ class ClientPage extends Component {
         fetchClientPage()
             .then(data => {
                 this.setState({
+                    currentName: data.name,
                     name: data.name,
                     email: data.email,
                     avatar: data.avatar,
@@ -59,7 +61,10 @@ class ClientPage extends Component {
     }
 
     submitForm = () => {
-
+        console.log(this.state.name);
+        console.log(this.state.file);
+        console.log(this.state.email);
+        console.log(this.state.password);
     }
 
     switchWindow = (e, i) => {
@@ -73,53 +78,6 @@ class ClientPage extends Component {
         const eventWindow = <div>event</div>;
 
         const updateWindow = <>
-            {/* <Grid container spacing={2} justify='center'>
-                <Grid item xs={6}>
-                    <TextField label="Name"
-                        name="name"
-                        required
-                        value={this.state.name}
-                        margin="dense"
-                        fullWidth
-                        variant="outlined"
-                        onChange={this.changeInput} />
-                    <TextField label="Email"
-                        name="email"
-                        required
-                        value={this.state.email}
-                        margin="dense"
-                        fullWidth
-                        variant="outlined"
-                        onChange={this.changeInput} />
-                </Grid>
-
-                <Grid item xs={6}>
-                    <TextField label="Password"
-                        name="password"
-                        type="password"
-                        required
-                        margin="dense"
-                        value={this.state.password}
-                        fullWidth
-                        variant="outlined"
-                        onChange={this.changeInput} />
-                    <TextField label="Confirm Password"
-                        name="confirmPassword"
-                        type="password"
-                        required
-                        margin="dense"
-                        value={this.state.confirmPassword}
-                        fullWidth
-                        variant="outlined"
-                        onChange={this.changeInput} />
-                </Grid>
-            </Grid>
-
-            <div className={classes.fileUpload}>
-                <div className={classes.label}>Avatar</div>
-                <FileUploader upload={this.fileUpload} />
-            </div> */}
-
             <UserFields name={this.state.name} email={this.state.email}
                 password={this.state.password} confirmedPassword={this.state.confirmedPassword}
                 changeInput={this.changeInput} fileUpload={this.fileUpload} />
@@ -134,7 +92,7 @@ class ClientPage extends Component {
                 <Grid container spacing={0}>
                     <Grid item xs={3}>
                         <div className={classes.menu}>
-                            <h2>{this.state.name}</h2>
+                            <h2>{this.state.currentName}</h2>
                             {menu}
                         </div>
                     </Grid>
