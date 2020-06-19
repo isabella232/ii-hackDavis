@@ -4,17 +4,6 @@
     max-width: 800px;
 }
 
-.Container .title {
-    font-size: 30px;
-    color: #027888;
-}
-
-.Container .horzLine {
-    margin: 2rem 15%;
-    border: 2px solid #03A0B5;
-    border-radius: 20px;
-}
-
 .Container .noEvents {
     margin: 1rem;
     text-align: center;
@@ -32,4 +21,10 @@
 
 .Container .currentPassword {
     margin: 0 10px;
+}
+
+.Container .label {
+    font-weight: 400;
+    font-size: 19px;
+    margin: -3px 20px 0 0;
 }

@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '../../components/shared/Button/Button';
 import TextField from '@material-ui/core/TextField';
 import Avatar from '../../components/shared/Avatar/Avatar';
+import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
 import { fetchClientPage, updateClientInfo, updateClientPassword } from '../../services/ClientService';
@@ -143,7 +144,7 @@ class ClientPage extends Component {
                 <Button content={'Update Info'} click={this.submitInfoForm} />
             </div>
 
-            <div className={classes.horzLine} />
+            <HorzLine />
 
             <TextField label="Current Password"
                 name="currentPassword"
