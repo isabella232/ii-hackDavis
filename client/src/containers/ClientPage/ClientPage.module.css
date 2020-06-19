@@ -1,7 +1,7 @@
 .Container {
     margin: auto;
     padding: 20px 2rem;
-    max-width: 800px;
+    max-width: 1000px;
 }
 
 .Container .noEvents {
@@ -27,4 +27,55 @@
     font-weight: 400;
     font-size: 19px;
     margin: -3px 20px 0 0;
+}
+
+.Container .menu {
+    padding: 0 1.5rem;
+}
+
+.Container .menuItem {
+    color: black;
+    margin-bottom: .25rem;
+    font-size: 18px;
+    font-weight: 500;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.Container .menuItem:hover {
+    color: #03a0b5;
+}
+
+.Container .activeMenuItem {
+    color: #03a0b5;
+    margin-bottom: .25rem;
+    font-size: 18px;
+    font-weight: 500;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.Container .userInfo {
+    display: flex;
+    align-items: center;
+}
+
+.Container .userName {
+    margin-left: .5rem;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.Container .userCard {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px lightgrey;
+    border-radius: 10px;
+    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.Container .window {
+    margin-top: 2rem;
 }

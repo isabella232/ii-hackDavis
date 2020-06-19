@@ -23,7 +23,7 @@ class ClientPage extends Component {
             avatar: '',
             file: null,  // for avatar
             bookmarks: [],
-            window: 1
+            window: 0
         }
 
         this.loadData = this.loadData.bind(this);
@@ -107,7 +107,12 @@ class ClientPage extends Component {
 
     render() {
         const menuItems = ['Events', 'Account Update'];
-        const menu = menuItems.map((item, i) => <h3 id={`menu-item-${i}`} value={i} onClick={(e) => this.switchWindow(e, i)}>{menuItems[i]}</h3>);
+        const menu = menuItems.map((item, i) =>
+            <div id={`menu-item-${i}`} value={i}
+                className={(this.state.window === i) ? classes.activeMenuItem : classes.menuItem}
+                onClick={(e) => this.switchWindow(e, i)}>
+                {menuItems[i]}
+            </div>);
 
         const eventWindow = <div>event</div>;
 
@@ -188,16 +193,23 @@ class ClientPage extends Component {
 
         return (
             <div className={classes.Container}>
-                <Grid container spacing={0}>
-                    <Grid item xs={12} sm={3}>
+                <Grid container spacing={4}>
+                    <Grid item xs={12} sm={4}>
+                        <div className={classes.userCard}>
+                            <div className={classes.userInfo}>
+                                <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
+                                <div className={classes.userName}>{this.state.currentName}</div>
+                            </div>
+                        </div>
                         <div className={classes.menu}>
-                            <h2>{this.state.currentName}</h2>
                             {menu}
                         </div>
                     </Grid>
 
-                    <Grid item xs={12} sm={9}>
-                        {windows[this.state.window]}
+                    <Grid item xs={12} sm={8}>
+                        <div className={classes.window}>
+                            {windows[this.state.window]}
+                        </div>
                     </Grid>
                 </Grid>
             </div >
