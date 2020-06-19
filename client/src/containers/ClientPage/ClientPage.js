@@ -6,9 +6,8 @@ import Button from '../../components/shared/Button/Button';
 import TextField from '@material-ui/core/TextField';
 import Avatar from '../../components/shared/Avatar/Avatar';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
-import UserFields from '../../components/UserFields/UserFields';
 
-import { fetchClientPage } from '../../services/ClientService';
+import { fetchClientPage, updateClientInfo, updateClientPassword } from '../../services/ClientService';
 
 class ClientPage extends Component {
     constructor() {
@@ -17,18 +16,19 @@ class ClientPage extends Component {
             currentName: '',
             name: '',
             email: '',
-            password: '',
-            confirmedPassword: '',
+            currentPassword: '',
+            newPassword: '',
+            confirmNewPassword: '',
             avatar: '',
-            file: '',  // for avatar
+            file: null,  // for avatar
             bookmarks: [],
-            window: 0
+            window: 1
         }
 
         this.loadData = this.loadData.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.fileUpload = this.fileUpload.bind(this);
-        this.submitForm = this.submitForm.bind(this);
+        this.submitInfoForm = this.submitInfoForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
     }
 
@@ -60,11 +60,44 @@ class ClientPage extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    submitForm = () => {
-        console.log(this.state.name);
-        console.log(this.state.file);
-        console.log(this.state.email);
-        console.log(this.state.password);
+    submitInfoForm = () => {
+        if (!this.state.name || this.state.name == this.state.currentName) {
+            alert(`Please fill out your name.`);
+        } else {
+            const data = {
+                name: this.state.name,
+                avatar: this.state.file
+            };
+            updateClientInfo(data)
+                .then(data => {
+                    this.loadData();
+                }).catch(error => {
+                    console.log(error);
+                });
+        }
+    }
+
+    submitPasswordForm = () => {
+        if (!this.state.currentPassword) {
+            alert(`Please fill out your current password.`);
+        } else if (!this.state.newPassword) {
+            alert(`Please fill out your new password.`);
+        } else if (this.state.newPassword !== this.state.confirmNewPassword) {
+            alert(`Please check your new password.`);
+        } else if (this.state.length < 8 || this.state.confirmNewPassword.length < 8) {
+            alert(`Password must be at least 8 characters.`);
+        } else {
+            const data = {
+                currentPassword: this.state.currentPassword,
+                newPassword: this.state.newPassword
+            };
+            updateClientPassword(data)
+                .then(data => {
+                }).catch(error => {
+                    alert("Failed To Update Password.");
+                    console.log(error);
+                });
+        }
     }
 
     switchWindow = (e, i) => {
@@ -78,11 +111,76 @@ class ClientPage extends Component {
         const eventWindow = <div>event</div>;
 
         const updateWindow = <>
-            <UserFields name={this.state.name} email={this.state.email}
-                password={this.state.password} confirmedPassword={this.state.confirmedPassword}
-                changeInput={this.changeInput} fileUpload={this.fileUpload} />
+            <Grid container spacing={2} justify='center'>
+                <Grid item xs={6}>
+                    <TextField label="Name"
+                        name="name"
+                        required
+                        value={this.state.name}
+                        margin="dense"
+                        fullWidth
+                        variant="outlined"
+                        onChange={this.changeInput} />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField label="Email"
+                        name="email"
+                        disabled
+                        required
+                        value={this.state.email}
+                        margin="dense"
+                        fullWidth
+                        variant="outlined"
+                        onChange={this.changeInput} />
 
-            <Button content={'Update'} click={this.submitForm} />
+                </Grid>
+            </Grid>
+            <div className={classes.fileUpload}>
+                <div className={classes.label}>Avatar</div>
+                <FileUploader upload={this.state.fileUpload} />
+            </div>
+            <div className={classes.buttons}>
+                <Button content={'Update Info'} click={this.submitInfoForm} />
+            </div>
+
+            <div className={classes.horzLine} />
+
+            <TextField label="Current Password"
+                name="currentPassword"
+                type="password"
+                required
+                margin="dense"
+                value={this.state.currentPassword}
+                fullWidth
+                variant="outlined"
+                onChange={this.changeInput} />
+            <Grid container spacing={2} justify='center'>
+                <Grid item xs={6}>
+                    <TextField label="New Password"
+                        name="newPassword"
+                        type="password"
+                        required
+                        margin="dense"
+                        value={this.state.newPassword}
+                        fullWidth
+                        variant="outlined"
+                        onChange={this.changeInput} />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField label="Confirm New Password"
+                        name="confirmNewPassword"
+                        type="password"
+                        required
+                        margin="dense"
+                        value={this.state.confirmNewPassword}
+                        fullWidth
+                        variant="outlined"
+                        onChange={this.changeInput} />
+                </Grid>
+            </Grid>
+            <div className={classes.buttons}>
+                <Button content={'Update Password'} click={this.submitPasswordForm} />
+            </div>
         </>;
 
         const windows = [eventWindow, updateWindow];
@@ -90,14 +188,14 @@ class ClientPage extends Component {
         return (
             <div className={classes.Container}>
                 <Grid container spacing={0}>
-                    <Grid item xs={3}>
+                    <Grid item xs={12} sm={3}>
                         <div className={classes.menu}>
                             <h2>{this.state.currentName}</h2>
                             {menu}
                         </div>
                     </Grid>
 
-                    <Grid item xs={9}>
+                    <Grid item xs={12} sm={9}>
                         {windows[this.state.window]}
                     </Grid>
                 </Grid>

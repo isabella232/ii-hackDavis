@@ -26,8 +26,10 @@
     margin-top: 2rem;
 }
 
-.Container .adminCodeButton {
-    display: flex;
-    justify-content: flex-end;
-    margin: .5rem;
+.Container .fileUpload {
+    margin: 10px 0;
+}
+
+.Container .currentPassword {
+    margin: 0 10px;
 }

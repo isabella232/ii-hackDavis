@@ -1,10 +1,11 @@
 const express = require('express')
 const sharp = require('sharp')
+const bcrypt = require('bcryptjs')
 const Client = require('../models/client')
 const auth = require('../middleware/auth')
 const { imgUploader } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
-const { fillSignupInfo, } = require('../utils/user')
+const { fillSignupInfo } = require('../utils/user')
 
 const router = new express.Router()
 
@@ -39,20 +40,40 @@ router.get('/api/client/home', auth, async (req, res) => {
     }
 })
 
-// update client's profile
-router.patch('/api/client/update', auth, async (req, res) => {
+// update client's info
+router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async (req, res) => {
+    const client = req.user
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['name', 'email', 'password']
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
-    if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates' })
+    if (req.body.avatar) {
+        client.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
     }
 
     try {
-        updates.forEach((update) => req.user[update] = req.body[update])
-        await req.user.save()
-        res.send(req.user)
+        updates.forEach((update) => {
+            if (req.body[update] !== null) {
+                client[update] = req.body[update]
+            }
+        })
+        await client.save()
+        res.send()
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+// update client's password
+router.patch('/api/client/updatePassword', auth, async (req, res) => {
+    const client = req.user
+
+    try {
+        if (await bcrypt.compare(req.body.currentPassword, client.password)) {
+            client.password = req.body.newPassword
+            await client.save()
+            res.send()
+        } else {
+            res.status(400).send(new Error("Current password doesn't match."))
+        }
     } catch (e) {
         res.status(400).send(e)
     }
