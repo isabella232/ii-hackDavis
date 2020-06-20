@@ -299,7 +299,7 @@ class SignUpModal extends Component {
             menuItems.push(<MenuItem id={`menu-item-${i}`} value={i}>{i}</MenuItem>)
         }
         const addIcon = <AddIcon className={classes.langFieldIcon} color="primary" onClick={this.pushLangField} />;
-        const removeIcon = <HighlightOffIcon className={classes.langFieldIcon} color="error" onClick={this.popLangField}>minus</HighlightOffIcon>;
+        const removeIcon = <HighlightOffIcon className={classes.langFieldIcon} color="error" onClick={this.popLangField} />;
 
         const langFields = this.state.languages.map((lang, i) => {
             return (

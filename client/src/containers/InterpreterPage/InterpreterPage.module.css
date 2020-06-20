@@ -61,7 +61,7 @@
 }
 
 .Container .userInfo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
 }
 
@@ -99,4 +99,25 @@
     margin: 0 1rem .5rem 0;
     -webkit-transition: background-color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
+}
+
+.Container .checkIcon {
+    margin-left: .5rem;
+}
+
+.Container .flexArea {
+    display: flex;
+    align-items: center;
+}
+
+.Container .rating {
+    margin-left: .4rem;
+}
+
+.Container .langFieldIcons {
+    margin-top: .9rem;
+}
+
+.Container .langFieldIcon:hover {
+    filter: brightness(150%);
 }

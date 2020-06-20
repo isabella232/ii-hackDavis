@@ -169,7 +169,7 @@ router.get('/api/interpreter/certificates/:id', async (req, res) => {
 router.get('/api/interpreter/home', auth, async (req, res) => {
     try {
         const interpreter = req.user
-        const certifications = []
+        const certifications = [], languages = [], reviews = []
         for (const cert of interpreter.certifications) {
             certifications.push({
                 title: cert.title,
@@ -178,17 +178,23 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
                 isRejected: cert.isRejected
             })
         }
+        for (const lang of interpreter.languages) {
+            languages.push({ language: lang.language, fluency: lang.fluency })
+        }
+        // for (const review of interpreter.reviews) {
+        //     reviews.push({})
+        // }
         const data = {
             name: interpreter.name,
             email: interpreter.email,
             avatar: interpreter.avatar.url,
             location: interpreter.location.str,
             phone: interpreter.phone,
-            languages: interpreter.languages,
+            languages: languages,
             certifications: certifications,
             services: interpreter.services,
             rating: interpreter.rating,
-            reviews: interpreter.reviews,
+            reviews: reviews,
             isVerified: interpreter.isVerified,
             summary: interpreter.summary,
         }

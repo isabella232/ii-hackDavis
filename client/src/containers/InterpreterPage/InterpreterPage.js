@@ -9,6 +9,17 @@ import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Rating from '@material-ui/lab/Rating';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import AddIcon from '@material-ui/icons/Add';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
 
 import { fetchInterpreterPage, updateInterpreterInfo } from '../../services/InterpreterService';
 import { updateUserPassword } from '../../services/UserService';
@@ -25,8 +36,15 @@ class InterpreterPage extends Component {
             confirmNewPassword: '',
             avatar: '',
             file: null,  // for avatar
-            bookmarks: [],
-            window: 0
+            location: '',
+            phone: '',
+            languages: [],
+            certifications: [],
+            services: [],
+            rating: 0,
+            reviews: [],
+            isVerified: false,
+            window: 2
         }
 
         this.loadData = this.loadData.bind(this);
@@ -45,7 +63,14 @@ class InterpreterPage extends Component {
                     name: data.name,
                     email: data.email,
                     avatar: data.avatar,
-                    bookmarks: data.bookmarks
+                    location: data.location,
+                    phone: data.phone,
+                    languages: data.languages,
+                    certifications: data.certifications,
+                    services: data.services,
+                    rating: data.rating,
+                    reviews: data.reviews,
+                    isVerified: data.isVerified,
                 })
             }).catch(error => {
                 console.log(error);
@@ -109,8 +134,34 @@ class InterpreterPage extends Component {
         this.setState({ window: i });
     }
 
+    pushLangField = () => {
+        const languages = this.state.languages;
+        languages.push({ language: '', fluency: 0 });
+        this.setState({ languages: languages });
+    }
+
+    popLangField = () => {
+        const languages = this.state.languages;
+        languages.pop();
+        this.setState({ languages: languages });
+    }
+
+    changeLanguage = (e, i) => {
+        e.preventDefault();
+        const languages = this.state.languages;
+        languages[i].language = e.target.value;
+        this.setState({ languages: languages });
+    }
+
+    changeFluency = (e, i) => {
+        e.preventDefault();
+        const languages = this.state.languages;
+        languages[i].fluency = e.target.value;
+        this.setState({ languages: languages });
+    }
+
     render() {
-        const menuItems = ['Events', 'Bookmarks', 'Account Update'];
+        const menuItems = ['Events', 'Reviews', 'Account Update'];
         const menu = menuItems.map((item, i) =>
             <div className={classes.menuItemWrapper}>
                 <div className={(this.state.window === i) ? classes.activeDot : classes.dot} />
@@ -122,7 +173,48 @@ class InterpreterPage extends Component {
             </div>);
 
         const eventWindow = <div>event</div>;
-        const bookmarkWindow = <div>bookmarks</div>
+        const reviewWindow = <div>reviews</div>
+
+        const addIcon = <AddIcon className={classes.langFieldIcon} color="primary" onClick={this.pushLangField} />;
+        const removeIcon = <HighlightOffIcon className={classes.langFieldIcon} color="error" onClick={this.popLangField} />;
+        const fluencyChoices = [];
+        for (let i = 1; i <= 5; i++) {
+            fluencyChoices.push(<MenuItem id={`menu-item-${i}`} value={i}>{i}</MenuItem>)
+        }
+        const langFields = this.state.languages.map((lang, i) => {
+            return (
+                <Grid container spacing={2} id={`language-field-${i}`}>
+                    <Grid item xs={7}>
+                        <TextField label="Language"
+                            name="language"
+                            required
+                            value={lang.language}
+                            margin="dense"
+                            fullWidth
+                            variant="outlined"
+                            onChange={(e) => this.changeLanguage(e, i)} />
+                    </Grid>
+
+                    <Grid item xs={3}>
+                        <FormControl variant="outlined" fullWidth margin="dense">
+                            <InputLabel>Fluency</InputLabel>
+                            <Select label="Age"
+                                value={lang.fluency}
+                                onChange={(e) => this.changeFluency(e, i)}>
+                                {fluencyChoices}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item xs={2}>
+                        <div className={classes.langFieldIcons}>
+                            {(i > 0) ? removeIcon : null}
+                            {(this.state.languages.length === 1 || i === this.state.languages.length - 1) ? addIcon : null}
+                        </div>
+                    </Grid>
+                </Grid>
+            )
+        });
 
         const updateWindow = <>
             <Grid container spacing={2} justify='center'>
@@ -153,6 +245,33 @@ class InterpreterPage extends Component {
                 <div className={classes.label}>Avatar</div>
                 <FileUploader upload={this.state.fileUpload} />
             </div>
+            {langFields}
+            <div className={classes.serviceLabel}>Services:</div>
+            <FormGroup row>
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Simultaneous} onChange={this.changeServices} name="Simultaneous" />} label="Simultaneous" />
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Consecutive} onChange={this.changeServices} name="Consecutive" />} label="Consecutive" />
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Relating} onChange={this.changeServices} name="Relating" />} label="Relating" />
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Translating} onChange={this.changeServices} name="Translating" />} label="Translating" />
+            </FormGroup>
+
+            <TextField label="Location"
+                name="location"
+                required
+                value={this.state.location}
+                margin="dense"
+                fullWidth
+                variant="outlined"
+                onChange={this.changeInput} />
+
+            <TextField label="Summary"
+                name="summary"
+                value={this.state.summary}
+                margin="dense"
+                fullWidth
+                variant="outlined"
+                multiline
+                rows={5}
+                onChange={this.changeInput} />
             <div className={classes.buttons}>
                 <Button content={'Update Info'} click={this.submitInfoForm} />
             </div>
@@ -197,7 +316,7 @@ class InterpreterPage extends Component {
             </div>
         </>;
 
-        const windows = [eventWindow, bookmarkWindow, updateWindow];
+        const windows = [eventWindow, reviewWindow, updateWindow];
 
         return (
             <div className={classes.Container}>
@@ -206,9 +325,18 @@ class InterpreterPage extends Component {
                         <div className={classes.userCard}>
                             <div className={classes.userInfo}>
                                 <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
-                                <div className={classes.userName}>{this.state.currentName}</div>
-                                <CheckCircleIcon color="primary" />
-                                <Rating value={3.5} precision={0.5} readOnly />
+                                <div>
+                                    <div className={classes.flexArea}>
+                                        <div className={classes.userName}>{this.state.currentName}</div>
+                                        {this.state.isVerified ?
+                                            <CheckCircleIcon className={classes.checkIcon}
+                                                fontSize="small" color="primary" />
+                                            : null}
+                                    </div>
+                                    <Rating className={classes.rating}
+                                        size="small" value={this.state.rating}
+                                        precision={0.5} readOnly />
+                                </div>
                             </div>
                         </div>
                         <div className={classes.menu}>
