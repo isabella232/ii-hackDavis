@@ -15,8 +15,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AddIcon from '@material-ui/icons/Add';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -40,10 +38,16 @@ class InterpreterPage extends Component {
             phone: '',
             languages: [],
             certifications: [],
-            services: [],
+            services: {
+                Simultaneous: false,
+                Consecutive: false,
+                Relating: false,
+                Translating: false
+            },
             rating: 0,
             reviews: [],
             isVerified: false,
+            summary: '',
             window: 2
         }
 
@@ -52,12 +56,16 @@ class InterpreterPage extends Component {
         this.fileUpload = this.fileUpload.bind(this);
         this.submitInfoForm = this.submitInfoForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
+        this.changeServices = this.changeServices.bind(this);
     }
 
     loadData = () => {
         fetchInterpreterPage()
             .then(data => {
-                console.log('here', data);
+                const services = this.state.services;
+                data.services.forEach(service => {
+                    services[service] = true;
+                })
                 this.setState({
                     currentName: data.name,
                     name: data.name,
@@ -67,10 +75,11 @@ class InterpreterPage extends Component {
                     phone: data.phone,
                     languages: data.languages,
                     certifications: data.certifications,
-                    services: data.services,
                     rating: data.rating,
+                    services: services,
                     reviews: data.reviews,
                     isVerified: data.isVerified,
+                    summary: data.summary
                 })
             }).catch(error => {
                 console.log(error);
@@ -91,12 +100,30 @@ class InterpreterPage extends Component {
     }
 
     submitInfoForm = () => {
-        if (!this.state.name || this.state.name === this.state.currentName) {
-            alert(`Please fill out your name.`);
-        } else {
+        let check = true;
+        for (const lang in this.state.languages) {
+            if (lang.language === '' || lang.fluency === '') {
+                check = false;
+                alert("Please fill out all of the language fields.")
+                break;
+            }
+        }
+
+        let services = [];
+        for (const service in this.state.services) {
+            if (this.state.services[service]) {
+                services.push(service);
+            }
+        }
+
+        if (check) {
             const data = {
                 name: this.state.name,
-                avatar: this.state.file
+                avatar: this.state.file,
+                languages: this.state.languages,
+                services: services,
+                location: this.state.location,
+                summary: this.state.summary
             };
             updateInterpreterInfo(data)
                 .then(data => {
@@ -158,6 +185,13 @@ class InterpreterPage extends Component {
         const languages = this.state.languages;
         languages[i].fluency = e.target.value;
         this.setState({ languages: languages });
+    }
+
+    changeServices = (e) => {
+        e.preventDefault();
+        const services = this.state.services;
+        services[e.target.name] = e.target.checked;
+        this.setState({ services: services });
     }
 
     render() {

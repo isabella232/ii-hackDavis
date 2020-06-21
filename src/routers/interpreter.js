@@ -207,7 +207,8 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
 // update interpreter's info
 router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), async (req, res) => {
     const interpreter = req.user
-    const updates = Object.keys(req.body)
+    let updates = Object.keys(req.body)
+    updates = updates.filter(item => item !== 'location')
 
     if (req.body.avatar) {
         interpreter.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
@@ -219,9 +220,11 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
                 interpreter[update] = req.body[update]
             }
         })
+        await interpreter.generateCoordinates(req.body.location)
         await interpreter.save()
         res.send()
     } catch (e) {
+        console.log(e)
         res.status(400).send(e)
     }
 })

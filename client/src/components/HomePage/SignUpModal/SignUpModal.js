@@ -172,13 +172,13 @@ class SignUpModal extends Component {
         for (const lang in this.state.languages) {
             if (lang.language === '' || lang.fluency === '') {
                 check = false;
+                alert("Please fill out all of the language fields.");
                 break;
             }
         }
 
         let services = [];
         for (const service in this.state.services) {
-            console.log(service, this.state.services[service]);
             if (this.state.services[service]) {
                 services.push(service);
             }
