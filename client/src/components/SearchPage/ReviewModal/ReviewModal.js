@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -62,7 +64,9 @@ class ReviewModal extends Component {
     render() {
         return (
             <>
-                <Button content={'Leave a Review'} click={this.writeReview} />
+                {(this.props.userKind !== 'Interpreter' && this.props.isLoggedIn) ?
+                    <Button content={'Leave a Review'} click={this.writeReview} />
+                    : null}
 
                 <Modal className={classes.Modal}
                     open={this.state.open}
@@ -72,7 +76,7 @@ class ReviewModal extends Component {
                     <Fade in={this.state.open}>
                         <div className={classes.reviewEditor}>
                             <div className={classes.title}>Review for {this.props.name}</div>
-                            <Rating name='simple-controlled' value={this.state.rating} onChange={(event, newValue) => { this.setState({ rating: newValue }) }} />
+                            <Rating value={this.state.rating} onChange={(event, newValue) => { this.setState({ rating: newValue }) }} />
                             <textarea className={classes.comment} onChange={e => { this.setState({ comment: e.target.value }) }} />
                             <div className={classes.buttons}>
                                 <Button content={'Post'} click={this.postReview} />
@@ -85,4 +89,9 @@ class ReviewModal extends Component {
     }
 }
 
-export default ReviewModal;
+const mapStateToProps = state => ({
+    userKind: state.userKind,
+    isLoggedIn: state.isLoggedIn
+});
+
+export default connect(mapStateToProps)(ReviewModal);

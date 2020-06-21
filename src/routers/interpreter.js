@@ -7,6 +7,7 @@ const { imgUploader, getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
 const { getAvatarURL } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
+const { saveInterpreter } = require('../utils/algolia')
 
 const router = new express.Router()
 
@@ -32,36 +33,11 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
         sendWelcomeEmail(interpreter.email, interpreter.name)
         await interpreter.generateCoordinates(req.body.location)
         await interpreter.save()
+        saveInterpreter(interpreter)
         res.status(201).send()
     } catch (e) {
         console.log(e)
         res.status(400).send({ error: e.message })
-    }
-})
-
-// (OUTDATED)interpreters can update their own profiles
-router.patch('/api/interpreter/me', auth, async (req, res) => {
-    const updates = Object.keys(req.body)
-    const allowedUpdates = ['location', 'languagues', 'englishFluency', 'certification']
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-
-    if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' })
-    }
-
-    try {
-        // from being logged in
-        const profile = await Interpreter.findOne({ owner: req.interpreter._id })
-
-        updates.forEach((update) => profile[update] = req.body[update])
-        await profile.save() // where middleware gets executed
-
-        if (!profile) {
-            return res.status(404).send()
-        }
-        res.status(201).send(profile)
-    } catch (e) {
-        res.status(400).send(e)
     }
 })
 
@@ -169,7 +145,7 @@ router.get('/api/interpreter/certificates/:id', async (req, res) => {
 router.get('/api/interpreter/home', auth, async (req, res) => {
     try {
         const interpreter = req.user
-        const certifications = [], languages = [], reviews = []
+        const certifications = [], languages = []
         for (const cert of interpreter.certifications) {
             certifications.push({
                 title: cert.title,
@@ -181,9 +157,6 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
         for (const lang of interpreter.languages) {
             languages.push({ language: lang.language, fluency: lang.fluency })
         }
-        // for (const review of interpreter.reviews) {
-        //     reviews.push({})
-        // }
         const data = {
             name: interpreter.name,
             email: interpreter.email,
@@ -194,7 +167,7 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
             certifications: certifications,
             services: interpreter.services,
             rating: interpreter.rating,
-            reviews: reviews,
+            reviews: processReviews([...interpreter.reviews]),
             isVerified: interpreter.isVerified,
             summary: interpreter.summary,
         }
@@ -224,7 +197,6 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
         await interpreter.save()
         res.send()
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })

@@ -31,15 +31,15 @@ const processReviews = (reviews) => {
     if (reviews.length > 50) {
         reviews.splice(0, reviews.length - 50)
     }
-    reviews.map(review => {
+    const revs = reviews.map(review => {
         const rev = review.toObject()
         delete rev._id
         return rev
     })
-    reviews.sort(function (a, b) {
+    revs.sort(function (a, b) {
         return b.date - a.date;
     });
-    return reviews
+    return revs
 }
 
 

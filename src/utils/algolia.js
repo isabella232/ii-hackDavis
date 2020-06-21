@@ -30,6 +30,7 @@ const saveInterpreter = async (interpreter) => {
     try {
         await index.saveObject(data)
     } catch (error) {
+        console.log(error)
         throw error
     }
 }

@@ -48,7 +48,7 @@ class InterpreterPage extends Component {
             reviews: [],
             isVerified: false,
             summary: '',
-            window: 2
+            window: 1
         }
 
         this.loadData = this.loadData.bind(this);
@@ -62,10 +62,12 @@ class InterpreterPage extends Component {
     loadData = () => {
         fetchInterpreterPage()
             .then(data => {
+                console.log(data)
                 const services = this.state.services;
                 data.services.forEach(service => {
                     services[service] = true;
                 })
+                console.log('revewis', data.reviews);
                 this.setState({
                     currentName: data.name,
                     name: data.name,
@@ -207,7 +209,9 @@ class InterpreterPage extends Component {
             </div>);
 
         const eventWindow = <div>event</div>;
-        const reviewWindow = <div>reviews</div>
+        const reviewWindow = <div>
+            {/* {this.state.reviews} */}
+        </div>;
 
         const addIcon = <AddIcon className={classes.langFieldIcon} color="primary" onClick={this.pushLangField} />;
         const removeIcon = <HighlightOffIcon className={classes.langFieldIcon} color="error" onClick={this.popLangField} />;
