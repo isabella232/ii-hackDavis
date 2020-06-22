@@ -180,26 +180,31 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
 // update interpreter's info
 router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), async (req, res) => {
     const interpreter = req.user
-    let updates = Object.keys(req.body)
-    updates = updates.filter(item => item !== 'location')
-
-    console.log('here', req.file)
-
-    if (req.body.avatar) {
-        interpreter.avatar.url = getAvatarURL(interpreter._id)
-        interpreter.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
-    }
+    const rawUpdates = ['names', 'summary'], processedUpdates = ['languages', 'services']
 
     try {
-        updates.forEach((update) => {
+        if (req.file) { // update avatar
+            interpreter.avatar.url = getAvatarURL(interpreter._id)
+            interpreter.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
+        }
+
+        processedUpdates.forEach((update) => { // update languages, services
+            if (req.body[update] !== null) {
+                interpreter[update] = JSON.parse(req.body[update])
+            }
+        })
+
+        rawUpdates.forEach((update) => { // update names, summary
             if (req.body[update] !== null) {
                 interpreter[update] = req.body[update]
             }
         })
-        await interpreter.generateCoordinates(req.body.location)
+
+        await interpreter.generateCoordinates(req.body.location) // update location
         await interpreter.save()
         res.send()
     } catch (e) {
+        console.log('er', e)
         res.status(400).send(e)
     }
 })

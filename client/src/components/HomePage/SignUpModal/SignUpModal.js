@@ -81,7 +81,7 @@ class SignUpModal extends Component {
 
     pushLangField = () => {
         const languages = this.state.languages;
-        languages.push({ language: '', fluency: 0 });
+        languages.push({ language: '', fluency: 1 });
         this.setState({ languages: languages });
     }
 
@@ -117,7 +117,7 @@ class SignUpModal extends Component {
 
     changeServices = (e) => {
         e.preventDefault();
-        const services = this.state.services;
+        const services = { ...this.state.services };
         services[e.target.name] = e.target.checked;
         this.setState({ services: services });
     }
@@ -178,9 +178,9 @@ class SignUpModal extends Component {
         }
 
         let services = [];
-        for (const service in this.state.services) {
-            if (this.state.services[service]) {
-                services.push(service);
+        for (const [key, val] of Object.entries(this.state.services)) {
+            if (val) {
+                services.push(key);
             }
         }
 

@@ -20,8 +20,8 @@ export const updateInterpreterInfo = async (data) => {
     let formData = new FormData();
     formData.append('name', data.name);
     formData.append('avatar', data.avatar)
-    formData.append('languages', data.languages);
-    formData.append('services', data.services);
+    formData.append('languages', JSON.stringify(data.languages));
+    formData.append('services', JSON.stringify(data.services));
     formData.append('location', data.location);
     formData.append('summary', data.summary);
     return backend.patch(endpoint, formData);
