@@ -183,8 +183,11 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
     let updates = Object.keys(req.body)
     updates = updates.filter(item => item !== 'location')
 
+    console.log('here', req.file)
+
     if (req.body.avatar) {
-        interpreter.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
+        interpreter.avatar.url = getAvatarURL(interpreter._id)
+        interpreter.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
     }
 
     try {

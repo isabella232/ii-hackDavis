@@ -7,5 +7,8 @@ export const fetchClientPage = async (data) => {
 
 export const updateClientInfo = async (data) => {
     const endpoint = 'api/client/updateInfo';
-    return backend.patch(endpoint, data);
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('avatar', data.avatar)
+    return backend.patch(endpoint, formData);
 }

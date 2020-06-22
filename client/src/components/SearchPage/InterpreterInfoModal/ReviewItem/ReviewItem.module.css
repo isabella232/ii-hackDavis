@@ -1,21 +1,21 @@
-.Review {
+.ReviewItem {
     margin: .8rem;
     color: #5A4F5A;
 }
 
-.Review .header {
+.ReviewItem .header {
     display: flex;
     justify-content: space-between;
     font-size: 15px;
     align-items: center;
 }
 
-.Review .comment {
+.ReviewItem .comment {
     margin: .5rem .5rem;
     font-size: 16px;
 }
 
-.Review .userName {
+.ReviewItem .userName {
     display: flex;
     justify-content: flex-end;
     font-size: large;

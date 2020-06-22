@@ -63,7 +63,7 @@ class ClientPage extends Component {
     }
 
     submitInfoForm = () => {
-        if (!this.state.name || this.state.name === this.state.currentName) {
+        if (!this.state.name) {
             alert(`Please fill out your name.`);
         } else {
             const data = {
@@ -148,7 +148,7 @@ class ClientPage extends Component {
             </Grid>
             <div className={classes.fileUpload}>
                 <div className={classes.label}>Avatar</div>
-                <FileUploader upload={this.state.fileUpload} />
+                <FileUploader upload={this.fileUpload} />
             </div>
             <div className={classes.buttons}>
                 <Button content={'Update Info'} click={this.submitInfoForm} />

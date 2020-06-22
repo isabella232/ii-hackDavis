@@ -122,8 +122,7 @@ class InterpreterInfoModal extends Component {
                                     </div>
 
                                     <div className={classes.reviewOptions}>
-                                        {/* change to user's name here */}
-                                        <ReviewModal id={this.state.id} name={this.state.name} userName={'Spicy Spice'} reloadDetails={this.reloadDetails} />
+                                        <ReviewModal id={this.state.id} name={this.state.name} reloadDetails={this.reloadDetails} />
                                     </div>
                                 </Grid>
                             </Grid>

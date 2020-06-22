@@ -3,7 +3,7 @@ const sharp = require('sharp')
 const bcrypt = require('bcryptjs')
 const Client = require('../models/client')
 const auth = require('../middleware/auth')
-const { imgUploader } = require('../utils/image')
+const { imgUploader, getAvatarURL } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo } = require('../utils/user')
 
@@ -45,8 +45,9 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     const client = req.user
     const updates = Object.keys(req.body)
 
-    if (req.body.avatar) {
-        client.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
+    if (req.file) {
+        client.avatar.url = getAvatarURL(client._id)
+        client.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
     }
 
     try {
@@ -60,6 +61,11 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     } catch (e) {
         res.status(400).send(e)
     }
+})
+
+router.patch('/api/test', imgUploader.single('avatar'), async (req, res) => {
+    console.log(req.file)
+    res.send()
 })
 
 module.exports = router

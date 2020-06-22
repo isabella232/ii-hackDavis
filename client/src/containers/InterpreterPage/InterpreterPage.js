@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import classes from './InterpreterPage.module.css'
 
 import Grid from '@material-ui/core/Grid';
-import Button from '../../components/shared/Button/Button';
 import TextField from '@material-ui/core/TextField';
-import Avatar from '../../components/shared/Avatar/Avatar';
-import HorzLine from '../../components/shared/HorzLine/HorzLine';
-import FileUploader from '../../components/shared/FileUploader/FileUploader';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Rating from '@material-ui/lab/Rating';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,6 +14,12 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
+
+import Button from '../../components/shared/Button/Button';
+import ReviewItem from '../../components/SearchPage/InterpreterInfoModal/ReviewItem/ReviewItem';
+import Avatar from '../../components/shared/Avatar/Avatar';
+import HorzLine from '../../components/shared/HorzLine/HorzLine';
+import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
 import { fetchInterpreterPage, updateInterpreterInfo } from '../../services/InterpreterService';
 import { updateUserPassword } from '../../services/UserService';
@@ -67,7 +69,6 @@ class InterpreterPage extends Component {
                 data.services.forEach(service => {
                     services[service] = true;
                 })
-                console.log('revewis', data.reviews);
                 this.setState({
                     currentName: data.name,
                     name: data.name,
@@ -90,6 +91,7 @@ class InterpreterPage extends Component {
 
     fileUpload = (fileItem) => {
         this.setState({ file: fileItem });
+        console.log('ye', this.state.file);
     }
 
     componentDidMount() {
@@ -209,9 +211,14 @@ class InterpreterPage extends Component {
             </div>);
 
         const eventWindow = <div>event</div>;
-        const reviewWindow = <div>
-            {/* {this.state.reviews} */}
-        </div>;
+        const reviewWindow = <div className={classes.reviewWindow}>
+            {this.state.reviews.map(review => {
+                return <div className={classes.reviewCard}>
+                    <ReviewItem reviewerName={review.reviewerName} comment={review.comment}
+                        date={review.date} rating={review.rating} />
+                </div>
+            })}
+        </div >;
 
         const addIcon = <AddIcon className={classes.langFieldIcon} color="primary" onClick={this.pushLangField} />;
         const removeIcon = <HighlightOffIcon className={classes.langFieldIcon} color="error" onClick={this.popLangField} />;
@@ -281,7 +288,7 @@ class InterpreterPage extends Component {
             </Grid>
             <div className={classes.fileUpload}>
                 <div className={classes.label}>Avatar</div>
-                <FileUploader upload={this.state.fileUpload} />
+                <FileUploader upload={this.fileUpload} />
             </div>
             {langFields}
             <div className={classes.serviceLabel}>Services:</div>
