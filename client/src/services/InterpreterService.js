@@ -34,3 +34,8 @@ export const uploadCertificate = async (data) => {
     formData.append('certificate', data.certificate)
     return backend.post(endpoint, formData);
 }
+
+export const deleteCertificate = async (id) => {
+    const endpoint = 'api/interpreter/certificate/delete';
+    return backend.patch(endpoint, { id: id });
+}

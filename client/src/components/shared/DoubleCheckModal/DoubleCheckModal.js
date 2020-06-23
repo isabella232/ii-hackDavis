@@ -17,6 +17,13 @@ const DeleteModal = props => {
         setOpen(false);
     };
 
+    const answerYes = () => {
+        if (props.certificateID) {
+            props.clickDelete(props.certificateID);
+        }
+        closeModal();
+    }
+
     return (
         <>
             <Button content={'Delete'} invertedDelete click={openModal} />
@@ -30,7 +37,7 @@ const DeleteModal = props => {
                     <div className={classes.Box}>
                         <h3>{props.content}</h3>
                         <div className={classes.choices}>
-                            <Button content={'Yes'} delete click={props.clickDelete} />
+                            <Button content={'Yes'} delete click={answerYes} />
                             <Button content={'Cancel'} inverted click={closeModal} />
                         </div>
                     </div>

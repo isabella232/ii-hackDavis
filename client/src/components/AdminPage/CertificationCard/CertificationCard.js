@@ -3,8 +3,12 @@ import classes from './CertificationCard.module.css';
 
 import Avatar from '../../shared/Avatar/Avatar';
 import Button from '../../shared/Button/Button';
+import DeleteModal from '../../shared/DoubleCheckModal/DoubleCheckModal';
+
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 import { validateCertificate, rejectCertificate } from '../../../services/AdminService';
 
@@ -65,17 +69,24 @@ const CertificationCard = (props) => {
                         : null}
                 </div>
 
-                {expand ? <Button content='Close' inverted click={() => setExpand(false)} />
-                    : <Button content='Expand' inverted click={() => setExpand(true)} />}
+                {expand ? <ExpandLessIcon color="primary" onClick={() => setExpand(false)} />
+                    : <ExpandMoreIcon color="primary" onClick={() => setExpand(true)} />}
             </div>
 
             <div className={certificateClass}>
                 <img alt={`${props.title} Certificate`} src={props.certificateImage} width='100%' />
-                {!props.interpreter ? <div className={classes.footer}>
-                    <Button content='Reject' inverted click={rejectClicked} />
-                    <Button content='Verify' click={verifyClicked} />
-                </div> : null}
+
+                <div className={classes.buttons}>
+                    {!props.interpreter ? <div className={classes.footer}>
+                        <Button content='Reject' inverted click={rejectClicked} />
+                        <Button content='Verify' click={verifyClicked} />
+                    </div>
+                        : <DeleteModal clickDelete={props.deleteCertificate} certificateID={props.id}
+                            content={`Are You Sure You Want To Delete ${props.title}?`} />}
+                </div>
             </div>
+
+
         </div> : null
     )
 }

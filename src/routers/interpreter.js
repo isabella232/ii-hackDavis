@@ -124,6 +124,20 @@ router.post('/api/interpreter/certificate/upload', auth, imgUploader.single('cer
     }
 })
 
+// delete a certificate
+router.patch('/api/interpreter/certificate/delete', auth, async (req, res) => {
+    try {
+        const interpreter = req.user
+        interpreter.certifications = interpreter.certifications.filter(cert =>
+            cert._id.toString() !== req.body.id)
+        await interpreter.save()
+        res.send()
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({ error: error.message })
+    }
+})
+
 // fetch a certificate image
 router.get('/api/interpreter/certificates/:id', async (req, res) => {
     try {
@@ -149,6 +163,7 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
         const certifications = [], languages = []
         for (const cert of interpreter.certifications) {
             certifications.push({
+                id: cert._id,
                 title: cert.title,
                 file: cert.url,
                 isValidated: cert.isValidated,

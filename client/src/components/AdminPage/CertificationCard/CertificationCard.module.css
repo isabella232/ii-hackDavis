@@ -64,3 +64,9 @@
     display: flex;
     align-items: center;
 }
+
+.CertificationCard .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}

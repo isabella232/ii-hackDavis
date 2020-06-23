@@ -22,8 +22,11 @@ import Avatar from '../../components/shared/Avatar/Avatar';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
-import { fetchInterpreterPage, updateInterpreterInfo, uploadCertificate } from '../../services/InterpreterService';
 import { updateUserPassword } from '../../services/UserService';
+import {
+    fetchInterpreterPage, updateInterpreterInfo,
+    uploadCertificate, deleteCertificate
+} from '../../services/InterpreterService';
 
 class InterpreterPage extends Component {
     constructor() {
@@ -62,6 +65,7 @@ class InterpreterPage extends Component {
         this.submitInfoForm = this.submitInfoForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
         this.changeServices = this.changeServices.bind(this);
+        this.deleteCertificate = this.deleteCertificate.bind(this);
     }
 
     loadData = () => {
@@ -219,6 +223,12 @@ class InterpreterPage extends Component {
         this.setState({ services: services });
     }
 
+    deleteCertificate = (id) => {
+        deleteCertificate(id)
+            .then(data => { this.loadData() })
+            .catch(error => console.log(error));
+    }
+
     render() {
         const menuItems = ['Events', 'Reviews', 'Certifications', 'Account Update'];
         const menu = menuItems.map((item, i) =>
@@ -244,6 +254,7 @@ class InterpreterPage extends Component {
                 certificateImage={certificate.url}
                 isValidated={certificate.isValidated}
                 isRejected={certificate.isRejected}
+                deleteCertificate={this.deleteCertificate}
                 interpreter />
         ));
         const certificationWindow = <div>
