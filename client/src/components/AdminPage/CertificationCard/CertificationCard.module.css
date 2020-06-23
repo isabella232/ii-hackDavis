@@ -54,3 +54,13 @@
 .CertificationCard .collapse {
     display: none
 }
+
+
+.CertificationCard .checkIcon {
+    margin-left: .5rem;
+}
+
+.CertificationCard .title {
+    display: flex;
+    align-items: center;
+}

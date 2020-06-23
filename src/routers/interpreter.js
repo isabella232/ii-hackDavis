@@ -103,24 +103,25 @@ router.post('/api/interpreters/:id/reviews/add', auth, async (req, res) => {
 })
 
 // upload a certificate separately
-router.post('/api/interpreters/:id/certificate/upload', auth, imgUploader.single('certificate'), async (req, res) => {
-    const id = req.params.id
-    const interpreter = await Interpreter.findById(id)
-    const certificateID = ObjectID()
-    const certificate = {
-        _id: certificateID,
-        title: req.body.title,
-        file: {
-            buffer: req.file.buffer,
-            url: getCertificateURL(certificateID)
+router.post('/api/interpreter/certificate/upload', auth, imgUploader.single('certificate'), async (req, res) => {
+    try {
+        const interpreter = req.user
+        const certificateID = ObjectID()
+        const certificate = {
+            _id: certificateID,
+            title: req.body.title,
+            file: {
+                buffer: req.file.buffer,
+                url: getCertificateURL(certificateID)
+            }
         }
-    }
 
-    interpreter.certifications.push(certificate)
-    await interpreter.save()
-    res.send()
-}, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
+        interpreter.certifications.push(certificate)
+        await interpreter.save()
+        res.send()
+    } catch (error) {
+        res.status(400).send({ error: error.message })
+    }
 })
 
 // fetch a certificate image

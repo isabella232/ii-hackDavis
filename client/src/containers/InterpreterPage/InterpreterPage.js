@@ -16,12 +16,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 
 import Button from '../../components/shared/Button/Button';
+import CertificationCard from '../../components/AdminPage/CertificationCard/CertificationCard';
 import ReviewItem from '../../components/SearchPage/InterpreterInfoModal/ReviewItem/ReviewItem';
 import Avatar from '../../components/shared/Avatar/Avatar';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
-import { fetchInterpreterPage, updateInterpreterInfo } from '../../services/InterpreterService';
+import { fetchInterpreterPage, updateInterpreterInfo, uploadCertificate } from '../../services/InterpreterService';
 import { updateUserPassword } from '../../services/UserService';
 
 class InterpreterPage extends Component {
@@ -36,6 +37,8 @@ class InterpreterPage extends Component {
             confirmNewPassword: '',
             avatar: '',
             file: null,  // for avatar
+            title: '', // for certificate
+            certificate: null,
             location: '',
             phone: '',
             languages: [],
@@ -55,7 +58,7 @@ class InterpreterPage extends Component {
 
         this.loadData = this.loadData.bind(this);
         this.changeInput = this.changeInput.bind(this);
-        this.fileUpload = this.fileUpload.bind(this);
+        this.avatarUpload = this.avatarUpload.bind(this);
         this.submitInfoForm = this.submitInfoForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
         this.changeServices = this.changeServices.bind(this);
@@ -64,6 +67,7 @@ class InterpreterPage extends Component {
     loadData = () => {
         fetchInterpreterPage()
             .then(data => {
+                console.log('ew', data);
                 const services = this.state.services;
                 data.services.forEach(service => {
                     services[service] = true;
@@ -88,8 +92,12 @@ class InterpreterPage extends Component {
             })
     }
 
-    fileUpload = (fileItem) => {
+    avatarUpload = (fileItem) => {
         this.setState({ file: fileItem });
+    }
+
+    certificateUpload = (fileItem) => {
+        this.setState({ certificate: fileItem });
     }
 
     componentDidMount() {
@@ -159,6 +167,21 @@ class InterpreterPage extends Component {
         }
     }
 
+    submitCertificateForm = () => {
+        const data = {
+            title: this.state.title,
+            certificate: this.state.certificate
+        };
+        uploadCertificate(data)
+            .then(data => {
+                this.setState({ title: '', certificate: null });
+                this.loadData();
+            }).catch(error => {
+                alert("Failed To Upload Certificate.");
+                console.log(error);
+            });
+    }
+
     switchWindow = (e, i) => {
         this.setState({ window: i });
     }
@@ -197,7 +220,7 @@ class InterpreterPage extends Component {
     }
 
     render() {
-        const menuItems = ['Events', 'Reviews', 'Account Update'];
+        const menuItems = ['Events', 'Reviews', 'Certifications', 'Account Update'];
         const menu = menuItems.map((item, i) =>
             <div className={classes.menuItemWrapper}>
                 <div className={(this.state.window === i) ? classes.activeDot : classes.dot} />
@@ -209,6 +232,35 @@ class InterpreterPage extends Component {
             </div>);
 
         const eventWindow = <div>event</div>;
+
+
+        const certificates = this.state.certifications.map(certificate => (
+            <CertificationCard key={`${certificate.id}`}
+                id={certificate.id}
+                avatar={this.state.avatar}
+                name={this.state.currentName}
+                title={certificate.title}
+                location={this.state.location}
+                certificateImage={certificate.url}
+                isValidated={certificate.isValidated}
+                isRejected={certificate.isRejected}
+                interpreter />
+        ));
+        const certificationWindow = <div>
+            <TextField label="Title" name="title" required value={this.state.title}
+                margin="dense" fullWidth variant="outlined"
+                onChange={this.changeInput} />
+            <div className={classes.fileUpload}>
+                <div className={classes.label}>Certificate</div>
+                <FileUploader upload={this.certificateUpload} />
+            </div>
+            <div className={classes.buttons}>
+                <Button content={'Upload Certificate'} click={this.submitCertificateForm} />
+            </div>
+            <HorzLine />
+            {certificates}
+        </div>
+
         const reviewWindow = <div className={classes.reviewWindow}>
             {this.state.reviews.map(review => {
                 return <div className={classes.reviewCard}>
@@ -284,9 +336,9 @@ class InterpreterPage extends Component {
 
                 </Grid>
             </Grid>
-            <div className={classes.fileUpload}>
+            <div className={classes.avatarUpload}>
                 <div className={classes.label}>Avatar</div>
-                <FileUploader upload={this.fileUpload} />
+                <FileUploader upload={this.avatarUpload} />
             </div>
             {langFields}
             <div className={classes.serviceLabel}>Services:</div>
@@ -359,7 +411,7 @@ class InterpreterPage extends Component {
             </div>
         </>;
 
-        const windows = [eventWindow, reviewWindow, updateWindow];
+        const windows = [eventWindow, reviewWindow, certificationWindow, updateWindow];
 
         return (
             <div className={classes.Container}>

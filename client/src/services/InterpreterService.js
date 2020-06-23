@@ -26,3 +26,11 @@ export const updateInterpreterInfo = async (data) => {
     formData.append('summary', data.summary);
     return backend.patch(endpoint, formData);
 }
+
+export const uploadCertificate = async (data) => {
+    const endpoint = 'api/interpreter/certificate/upload';
+    let formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('certificate', data.certificate)
+    return backend.post(endpoint, formData);
+}
