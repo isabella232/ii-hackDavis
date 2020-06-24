@@ -45,12 +45,12 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     const client = req.user
     const updates = Object.keys(req.body)
 
-    if (req.file) {
-        client.avatar.url = getAvatarURL(client._id)
-        client.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
-    }
-
     try {
+        if (req.file) {
+            client.avatar.url = getAvatarURL(client._id)
+            client.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
+        }
+
         updates.forEach((update) => {
             if (req.body[update] !== null) {
                 client[update] = req.body[update]
@@ -61,11 +61,6 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     } catch (e) {
         res.status(400).send(e)
     }
-})
-
-router.patch('/api/test', imgUploader.single('avatar'), async (req, res) => {
-    console.log(req.file)
-    res.send()
 })
 
 module.exports = router

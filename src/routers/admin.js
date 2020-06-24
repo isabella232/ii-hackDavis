@@ -34,6 +34,7 @@ router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) 
 // get admin's home page
 router.get('/api/admin/home', auth, async (req, res) => {
     try {
+        const admin = req.user
         const now = new Date()
         const pastEvents = await Event.find().where('date').lt(now).limit(2)
         const upcomingEvents = await Event.find().where('date').gte(now).limit(3)
@@ -46,6 +47,9 @@ router.get('/api/admin/home', auth, async (req, res) => {
         const toValidate = getToValidate(interpreters)
 
         const data = {
+            name: admin.name,
+            email: admin.email,
+            avatar: admin.avatar.url,
             pastEvents: pastEvents,
             upcomingEvents: upcomingEvents,
             toValidate: toValidate
@@ -119,6 +123,31 @@ router.post('/api/admin/code/create', auth, async (req, res) => {
     } catch (e) {
         console.log(e)
         res.status(400).send({ error: e.message })
+    }
+})
+
+// update admin's info
+router.patch('/api/admin/updateInfo', auth, imgUploader.single('avatar'), async (req, res) => {
+    const admin = req.user
+    const updates = Object.keys(req.body)
+
+    try {
+        await admin.isAdmin()
+
+        if (req.file) {
+            admin.avatar.url = getAvatarURL(admin._id)
+            admin.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
+        }
+
+        updates.forEach((update) => {
+            if (req.body[update] !== null) {
+                admin[update] = req.body[update]
+            }
+        })
+        await admin.save()
+        res.send()
+    } catch (e) {
+        res.status(400).send(e)
     }
 })
 

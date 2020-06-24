@@ -47,3 +47,11 @@ export const createAdminCode = async (adminCode) => {
     const endpoint = `api/admin/code/create`;
     return backend.post(endpoint, { adminCode: adminCode });
 }
+
+export const updateAdminInfo = async (data) => {
+    const endpoint = 'api/admin/updateInfo';
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('avatar', data.avatar)
+    return backend.patch(endpoint, formData);
+}

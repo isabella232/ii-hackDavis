@@ -9,12 +9,6 @@
     color: #027888;
 }
 
-.Container .horzLine {
-    margin: 2rem 15%;
-    border: 2px solid #03A0B5;
-    border-radius: 20px;
-}
-
 .Container .noEvents {
     margin: 1rem;
     text-align: center;
@@ -30,4 +24,72 @@
     display: flex;
     justify-content: flex-end;
     margin: .5rem;
+}
+
+.Container .menu {
+    padding: 1rem 1.5rem 0 1.5rem;
+}
+
+.Container .menuItemWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.Container .menuItem {
+    color: black;
+    margin-bottom: .5rem;
+    font-size: 18px;
+    font-weight: 500;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.Container .menuItem:hover {
+    color: #03a0b5;
+}
+
+.Container .activeMenuItem {
+    color: #03a0b5;
+    margin-bottom: .5rem;
+    font-size: 18px;
+    font-weight: 500;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.Container .userInfo {
+    display: inline-flex;
+    align-items: center;
+}
+
+.Container .userName {
+    margin-left: .5rem;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.Container .userCard {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px lightgrey;
+    border-radius: 10px;
+}
+
+.Container .dot {
+    height: 8px;
+    width: 8px;
+    background-color: black;
+    border-radius: 50%;
+    margin: 0 1rem .5rem 0;
+}
+
+.Container .activeDot {
+    height: 8px;
+    width: 8px;
+    background-color: #03a0b5;
+    border-radius: 50%;
+    margin: 0 1rem .5rem 0;
+    -webkit-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
 }
