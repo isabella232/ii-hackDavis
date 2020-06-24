@@ -22,7 +22,6 @@ router.post('/api/event/create', auth, imgUploader.single('image'), async (req, 
         }
         const event = await new Event(parsedEvent)
         event.setTarget(req.body.target)
-        console.log(event.forInterpreters)
         await event.save()
         res.send()
     } catch (error) {

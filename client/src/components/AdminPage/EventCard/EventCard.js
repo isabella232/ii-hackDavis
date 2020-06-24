@@ -21,7 +21,6 @@ class EventCard extends Component {
             .catch(e => console.log(e))
     }
 
-
     render() {
         const date = new Date(this.props.date);
         const parsedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
