@@ -23,6 +23,7 @@ export const createEvent = async (data) => {
     formData.append('date', data.date.toJSON());
     formData.append('location', data.location);
     formData.append('image', data.image);
+    formData.append('target', data.target);
     return backend.post(endpoint, formData);
 }
 
@@ -35,6 +36,7 @@ export const editEvent = async (eventID, data) => {
     formData.append('date', data.date);
     formData.append('location', data.location);
     formData.append('image', data.image);
+    formData.append('target', data.target);
     return backend.patch(endpoint, formData);
 }
 

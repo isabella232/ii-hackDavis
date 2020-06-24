@@ -1,7 +1,7 @@
 .Container {
     margin: auto;
     padding: 20px 2rem;
-    max-width: 800px;
+    max-width: 1000px;
 }
 
 .Container .title {
@@ -9,7 +9,7 @@
     color: #027888;
 }
 
-.Container .noEvents {
+.Container .noItems {
     margin: 1rem;
     text-align: center;
 }
@@ -17,6 +17,10 @@
 .Container .buttons {
     display: flex;
     justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.Container .window {
     margin-top: 2rem;
 }
 
@@ -92,4 +96,13 @@
     margin: 0 1rem .5rem 0;
     -webkit-transition: background-color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
+}
+
+.Container .adminIcon {
+    margin-left: .5rem;
+}
+
+.Container .flexArea {
+    display: flex;
+    align-items: center;
 }

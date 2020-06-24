@@ -28,6 +28,22 @@ const eventSchema = new mongoose.Schema({
         buffer: {
             type: Buffer
         }
+    },
+    isArchived: {
+        type: Boolean,
+        default: false
+    },
+    forInterpreters: {
+        type: Boolean,
+        default: false
+    },
+    forClients: {
+        type: Boolean,
+        default: false
+    },
+    forEveryone: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -41,6 +57,19 @@ eventSchema.methods.toJSON = function () {
     delete eventObject._id
 
     return eventObject
+}
+
+eventSchema.methods.setTarget = async function (target) {
+    const event = this
+    console.log(target, 'target')
+    if (target === 'Everyone') {
+        event.forInterpreters = true
+        event.forClients = true
+    } else if (target === 'Interpreters Only') {
+        event.forInterpreters = true
+    } else if (target === 'Clients Only') {
+        event.forClients = true
+    }
 }
 
 const Event = mongoose.model('Event', eventSchema)

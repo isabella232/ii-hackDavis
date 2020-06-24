@@ -51,7 +51,8 @@ class EventCard extends Component {
                                     summary={this.props.summary}
                                     location={this.props.location}
                                     image={this.props.image}
-                                    reloadData={this.props.reloadData} />
+                                    reloadData={this.props.reloadData}
+                                    target={this.props.target} />
                             </>
                         ) : null}
                     </div>

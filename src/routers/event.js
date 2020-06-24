@@ -21,6 +21,8 @@ router.post('/api/event/create', auth, imgUploader.single('image'), async (req, 
             }
         }
         const event = await new Event(parsedEvent)
+        event.setTarget(req.body.target)
+        console.log(event.forInterpreters)
         await event.save()
         res.send()
     } catch (error) {
@@ -44,6 +46,7 @@ router.patch('/api/events/:id/edit', auth, imgUploader.single('image'), async (r
             }
             event.image = image
         }
+        event.setTarget(req.body.target)
         await event.save()
         res.send()
     } catch (error) {
@@ -72,6 +75,28 @@ router.delete('/api/events/:id/delete', auth, async (req, res) => {
     try {
         const event = await Event.findById(req.params.id)
         await event.delete()
+        res.send()
+    } catch (e) {
+        res.status(404).send()
+    }
+})
+
+router.post('/api/events/:id/archive', auth, async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id)
+        event.isArchived = true
+        await event.save()
+        res.send()
+    } catch (e) {
+        res.status(404).send()
+    }
+})
+
+router.post('/api/events/:id/unarchive', auth, async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id)
+        event.isArchived = false
+        await event.save()
         res.send()
     } catch (e) {
         res.status(404).send()

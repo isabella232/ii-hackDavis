@@ -6,7 +6,6 @@
 
 .Modal .reviewEditor {
     padding: 1rem;
-    width: 400px;
     background: #FFFFFF;
     border-radius: 10px;
     -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
@@ -36,4 +35,15 @@
     display: flex;
     justify-content: flex-end;
     margin: 1rem .5rem;
+}
+
+.Modal .targetArea {
+    align-items: center;
+    display: flex;
+}
+
+.Modal .label {
+    font-weight: 400;
+    font-size: 19px;
+    margin: 5px 0 -3px 0;
 }

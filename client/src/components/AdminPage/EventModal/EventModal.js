@@ -4,13 +4,17 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import classes from './EventModal.module.css';
 import TextField from '@material-ui/core/TextField';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import Button from '../../shared/Button/Button';
 import DateTimePicker from '../../shared/DateTimePicker/DateTimePicker';
 import FileUploader from '../../shared/FileUploader/FileUploader';
 
 import { createEvent, editEvent } from '../../../services/AdminService';
 
-class ReviewModal extends Component {
+class EventModal extends Component {
     constructor(props) {
         super();
         this.state = {
@@ -20,7 +24,8 @@ class ReviewModal extends Component {
             summary: props.summary,
             location: props.location,
             date: props.date,
-            image: null
+            image: null,
+            target: props.target
         }
 
         this.closeModal = this.closeModal.bind(this);
@@ -28,6 +33,7 @@ class ReviewModal extends Component {
         this.changeInput = this.changeInput.bind(this);
         this.fileUpload = this.fileUpload.bind(this);
         this.submitForm = this.submitForm.bind(this);
+        this.changeTarget = this.changeTarget.bind(this);
     }
 
     openModal = () => {
@@ -47,6 +53,24 @@ class ReviewModal extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    changeTarget = (e) => {
+        e.preventDefault();
+        console.log(e.target.value);
+        this.setState({ target: e.target.value });
+    }
+
+    clearAllFields = () => {
+        this.setState({
+            id: this.props.id,
+            title: this.props.title,
+            summary: this.props.summary,
+            location: this.props.location,
+            date: this.props.date,
+            image: null,
+            target: this.props.target
+        });
+    }
+
     submitForm = async () => {
         if (!this.state.title) {
             alert(`Please fill out the event's title.`);
@@ -58,13 +82,16 @@ class ReviewModal extends Component {
             alert(`Please fill out the event's date.`);
         } else if (!this.props.edit && !this.state.image) {
             alert(`Please upload the event's image.`);
+        } else if (this.props.target === '') {
+            alert(`Please choose a scale of publication.`);
         } else {
             const data = {
                 title: this.state.title,
                 summary: this.state.summary,
                 location: this.state.location,
                 date: this.state.date,
-                image: this.state.image
+                image: this.state.image,
+                target: this.state.target
             }
             try {
                 if (!this.props.edit) {
@@ -74,11 +101,13 @@ class ReviewModal extends Component {
                 }
 
                 this.props.reloadData();
+                if (this.props.create) {
+                    this.clearAllFields();
+                }
                 this.closeModal();
             }
             catch (e) {
                 alert("Your event cannot be created/edited at this time.");
-                this.closeModal();
                 console.log(e)
             };
 
@@ -109,42 +138,48 @@ class ReviewModal extends Component {
                     <Fade in={this.state.open}>
                         <div className={classes.reviewEditor}>
                             <div className={classes.title}>{header}</div>
-                            <form enctype="multipart/form-data">
-                                <TextField label="Title"
-                                    name="title"
-                                    required
-                                    value={this.state.title}
-                                    margin="dense"
-                                    fullWidth
-                                    variant="outlined"
-                                    onChange={this.changeInput} />
-                                <DateTimePicker pickDate={this.pickDate} initialVal={this.state.date} />
-                                <TextField label="Location"
-                                    name="location"
-                                    required
-                                    margin="dense"
-                                    value={this.state.location}
-                                    fullWidth
-                                    variant="outlined"
-                                    onChange={this.changeInput} />
-                                <TextField label="Summary"
-                                    name="summary"
-                                    required
-                                    margin="dense"
-                                    value={this.state.summary}
-                                    fullWidth
-                                    multiline
-                                    rows="5"
-                                    variant="outlined"
-                                    onChange={this.changeInput} />
-
-                                <FileUploader upload={this.fileUpload} />
-
-                                <div className={classes.buttons}>
-                                    <Button content={'Cancel'} inverted click={this.closeModal} />
-                                    <Button content={'Submit'} click={this.submitForm} />
+                            <TextField label="Title"
+                                name="title"
+                                required
+                                value={this.state.title}
+                                margin="dense"
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.changeInput} />
+                            <DateTimePicker pickDate={this.pickDate} initialVal={this.state.date} />
+                            <div className={classes.label}>Scale of Publishment</div>
+                            <RadioGroup aria-label="target" name={'target'} value={this.state.target} onChange={this.changeTarget}>
+                                <div className={classes.targetArea}>
+                                    <FormControlLabel value="Interpreters Only" control={<Radio checked={this.state.target === 'Interpreters Only'} color="primary" />} label="Interpreters Only" />
+                                    <FormControlLabel value="Clients Only" control={<Radio checked={this.state.target === 'Clients Only'} color="primary" />} label="Clients Only" />
+                                    <FormControlLabel value="Everyone" control={<Radio checked={this.state.target === 'Everyone'} color="primary" />} label="Everyone" />
                                 </div>
-                            </form>
+                            </RadioGroup>
+                            <TextField label="Location"
+                                name="location"
+                                required
+                                margin="dense"
+                                value={this.state.location}
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.changeInput} />
+                            <TextField label="Summary"
+                                name="summary"
+                                required
+                                margin="dense"
+                                value={this.state.summary}
+                                fullWidth
+                                multiline
+                                rows="5"
+                                variant="outlined"
+                                onChange={this.changeInput} />
+
+                            <FileUploader upload={this.fileUpload} />
+
+                            <div className={classes.buttons}>
+                                <Button content={'Cancel'} inverted click={this.closeModal} />
+                                <Button content={'Submit'} click={this.submitForm} />
+                            </div>
                         </div>
                     </Fade>
                 </Modal>
@@ -153,4 +188,4 @@ class ReviewModal extends Component {
     }
 }
 
-export default ReviewModal;
+export default EventModal;

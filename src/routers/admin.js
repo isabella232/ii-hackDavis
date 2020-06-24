@@ -36,8 +36,8 @@ router.get('/api/admin/home', auth, async (req, res) => {
     try {
         const admin = req.user
         const now = new Date()
-        const pastEvents = await Event.find().where('date').lt(now).limit(2)
-        const upcomingEvents = await Event.find().where('date').gte(now).limit(3)
+        const pastEvents = await Event.find({ 'isArchived': false }).where('date').lt(now)
+        const upcomingEvents = await Event.find({ 'isArchived': false }).where('date').gte(now)
         const interpreters = await Interpreter.find({
             $or: [
                 { 'isVerified': false },

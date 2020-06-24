@@ -9,6 +9,7 @@ import EventCard from '../../components/AdminPage/EventCard/EventCard';
 import Button from '../../components/shared/Button/Button';
 import EventModal from '../../components/AdminPage/EventModal/EventModal';
 import TextField from '@material-ui/core/TextField';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
@@ -32,7 +33,7 @@ class AdminPage extends Component {
             upcomingEvents: [],
             interpreters: [],
             adminCode: '',
-            window: 2
+            window: 0
         }
 
         this.loadData = this.loadData.bind(this);
@@ -41,6 +42,7 @@ class AdminPage extends Component {
         this.submitInfoForm = this.submitInfoForm.bind(this);
         this.submitPasswordForm = this.submitPasswordForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
+        this.getTarget = this.getTarget.bind(this);
     }
 
     loadData = () => {
@@ -133,6 +135,16 @@ class AdminPage extends Component {
         }
     }
 
+    getTarget = (event) => {
+        if (event.forEveryone) {
+            return "Everyone";
+        } else if (event.forInterpreters) {
+            return "Interpreters Only";
+        } else if (event.forClients) {
+            return "Clients Only";
+        }
+    }
+
     render() {
         const menuItems = ['Events', 'Certifications', 'Account Update', 'Admin Code'];
         const menu = menuItems.map((item, i) =>
@@ -154,7 +166,8 @@ class AdminPage extends Component {
                 summary={event.summary}
                 image={event.image}
                 past
-                reloadData={this.loadData} />
+                reloadData={this.loadData}
+                target={event.target} />
         })
         const upcomingEvents = this.state.upcomingEvents.map(event => {
             return <EventCard id={event.id}
@@ -164,33 +177,35 @@ class AdminPage extends Component {
                 location={event.location}
                 summary={event.summary}
                 image={event.image}
-                reloadData={this.loadData} />
+                reloadData={this.loadData}
+                target={this.getTarget(event)} />
         })
 
         const eventWindow = <>
             <div className={classes.title}>Upcoming Events</div>
-            {upcomingEvents.length ? upcomingEvents : <div className={classes.noEvents}>There Is No Event Coming Up.</div>}
+            {upcomingEvents.length ? upcomingEvents : <div className={classes.noItems}>There Is No Event Coming Up.</div>}
 
             <div className={classes.title}>Past Events</div>
-            {pastEvents.length ? pastEvents : <div className={classes.noEvents}>There Is No Past Event To Show.</div>}
+            {pastEvents.length ? pastEvents : <div className={classes.noItems}>There Is No Past Event To Show.</div>}
 
             <div className={classes.buttons}>
                 <Button content='Manage All Events' inverted />
-                <EventModal reloadData={this.loadData} />
+                <EventModal reloadData={this.loadData} create />
             </div>
         </>;
 
-        const certificateWindow = this.state.interpreters.map(interpreter => (
-            interpreter.unvalidatedCertificates.map(certificate => (
-                <CertificationCard key={`${certificate.id}`}
-                    id={certificate.id}
-                    avatar={interpreter.avatar}
-                    name={interpreter.name}
-                    title={certificate.title}
-                    location={interpreter.location}
-                    certificateImage={certificate.image} />
-            ))
-        ));
+        const certificateWindow = (this.state.interpreters.length) ?
+            this.state.interpreters.map(interpreter => (
+                interpreter.unvalidatedCertificates.map(certificate => (
+                    <CertificationCard key={`${certificate.id}`}
+                        id={certificate.id}
+                        avatar={interpreter.avatar}
+                        name={interpreter.name}
+                        title={certificate.title}
+                        location={interpreter.location}
+                        certificateImage={certificate.image} />
+                ))
+            )) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;
 
         const updateWindow = <>
             <Grid container spacing={2} justify='center'>
@@ -284,13 +299,17 @@ class AdminPage extends Component {
         const windows = [eventWindow, certificateWindow, updateWindow, adminCodeWindow];
 
         return (
-            <div className={classes.Container}>
+            <div className={classes.Container} >
                 <Grid container spacing={4}>
                     <Grid item xs={12} sm={4}>
                         <div className={classes.userCard}>
                             <div className={classes.userInfo}>
                                 <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
-                                <div className={classes.userName}>{this.state.currentName}</div>
+                                <div className={classes.flexArea}>
+                                    <div className={classes.userName}>{this.state.currentName}</div>
+                                    <AccountCircleIcon className={classes.adminIcon}
+                                        fontSize="small" color="primary" />
+                                </div>
                             </div>
                         </div>
                         <div className={classes.menu}>
