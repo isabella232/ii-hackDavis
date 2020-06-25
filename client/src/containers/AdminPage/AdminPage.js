@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
+import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
 import {
@@ -37,7 +38,8 @@ class AdminPage extends Component {
             interpreters: [],
             adminCode: '',
             window: 0,
-            eventWindow: 0
+            eventWindow: 0,
+            loading: false
         }
 
         this.loadInfo = this.loadInfo.bind(this);
@@ -49,6 +51,14 @@ class AdminPage extends Component {
         this.getTarget = this.getTarget.bind(this);
         this.showEventArchive = this.showEventArchive.bind(this);
         this.hideEventArchive = this.hideEventArchive.bind(this);
+    }
+
+    load = () => {
+        this.setState({ loading: true });
+    }
+
+    unload = () => {
+        this.setState({ loading: false });
     }
 
     loadInfo = () => {
@@ -97,12 +107,14 @@ class AdminPage extends Component {
         if (this.state.adminCode === '') {
             alert("Please fill out the admin code.")
         } else {
+            this.load();
             createAdminCode(this.state.adminCode)
                 .then(data => {
                     this.setState({ adminCode: '' });
+                    this.unload();
                 }).catch(error => {
                     alert("Failed to create admin code.");
-                    console.log(error);
+                    this.unload();
                 })
         }
     }
@@ -122,15 +134,17 @@ class AdminPage extends Component {
         } else if (this.state.length < 8 || this.state.confirmNewPassword.length < 8) {
             alert(`Password must be at least 8 characters.`);
         } else {
+            this.load();
             const data = {
                 currentPassword: this.state.currentPassword,
                 newPassword: this.state.newPassword
             };
             updateUserPassword(data)
                 .then(data => {
+                    this.unload();
                 }).catch(error => {
                     alert("Failed To Update Password.");
-                    console.log(error);
+                    this.unload();
                 });
         }
     }
@@ -139,6 +153,7 @@ class AdminPage extends Component {
         if (!this.state.name) {
             alert(`Please fill out your name.`);
         } else {
+            this.load();
             const data = {
                 name: this.state.name,
                 avatar: this.state.file
@@ -146,8 +161,9 @@ class AdminPage extends Component {
             updateAdminInfo(data)
                 .then(data => {
                     this.loadInfo();
+                    this.unload();
                 }).catch(error => {
-                    console.log(error);
+                    this.unload();
                 });
         }
     }
@@ -163,14 +179,13 @@ class AdminPage extends Component {
     }
 
     loadEventArchive = () => {
-        console.log('here')
-
+        this.load();
         fetchEventArchive()
             .then(data => {
-                console.log('here', data.archivedEvents)
                 this.setState({ archivedEvents: data.archivedEvents });
+                this.unload();
             }).catch(error => {
-                console.log(error);
+                this.unload();
             });
     }
 
@@ -250,8 +265,9 @@ class AdminPage extends Component {
         const eventWindow = !this.state.eventWindow ? events : eventArchive;
 
         const certificateWindow = (this.state.interpreters.length) ?
-            this.state.interpreters.map(interpreter => (
-                interpreter.unvalidatedCertificates.map(certificate => (
+            this.state.interpreters.map(interpreter => <>
+                <h1>{interpreter.name}</h1>
+                {interpreter.unvalidatedCertificates.map(certificate => (
                     <CertificationCard key={`${certificate.id}`}
                         id={certificate.id}
                         avatar={interpreter.avatar}
@@ -259,8 +275,8 @@ class AdminPage extends Component {
                         title={certificate.title}
                         location={interpreter.location}
                         certificateImage={certificate.image} />
-                ))
-            )) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;
+                ))}
+            </>) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;
 
         const updateWindow = <>
             <Grid container spacing={2} justify='center'>
@@ -379,7 +395,9 @@ class AdminPage extends Component {
                         </div>
                     </Grid>
                 </Grid>
-            </div >
+
+                <LoadCircle open={this.state.loading} />
+            </div>
         )
     }
 }

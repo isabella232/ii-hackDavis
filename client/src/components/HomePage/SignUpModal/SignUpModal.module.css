@@ -59,3 +59,9 @@
 .Modal .fileUpload {
     margin: 10px 0;
 }
+
+.Modal .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

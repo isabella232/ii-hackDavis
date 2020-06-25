@@ -18,7 +18,11 @@ const DeleteModal = props => {
     };
 
     const answerYes = () => {
-        props.clickDelete();
+        if (props.id) {
+            props.clickDelete(props.id);
+        } else {
+            props.clickDelete();
+        }
         closeModal();
     }
 

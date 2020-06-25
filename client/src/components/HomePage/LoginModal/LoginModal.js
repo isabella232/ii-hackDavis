@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import classes from './LoginModal.module.css';
+
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import classes from './LoginModal.module.css';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Button from '../../shared/Button/Button';
+
 import { signIn } from '../../../services/UserService';
 
 class LoginModal extends Component {
@@ -15,12 +18,17 @@ class LoginModal extends Component {
             open: props.open,
             email: '',
             password: '',
+            loading: false
         }
 
         this.closeModal = this.closeModal.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.submitForm = this.submitForm.bind(this);
     }
+
+    load = () => { this.setState({ loading: true }); }
+
+    unload = () => { this.setState({ loading: false }); }
 
     componentDidUpdate(prevProps) {
         if (this.props.open !== prevProps.open) {
@@ -53,6 +61,7 @@ class LoginModal extends Component {
         } else if (!this.state.password) {
             alert(`Please fill out your password.`);
         } else {
+            this.load();
             const data = {
                 email: this.state.email,
                 password: this.state.password,
@@ -60,10 +69,11 @@ class LoginModal extends Component {
             signIn(data)
                 .then(data => {
                     this.props.processLogin(data.userKind);
+                    this.unload();
                 })
                 .catch(e => {
-                    console.log(e);
                     alert('You cannot be logged in at this time.')
+                    this.unload();
                 })
         }
     }
@@ -75,7 +85,7 @@ class LoginModal extends Component {
     }
 
     render() {
-        return (
+        return <>
             <Modal className={classes.Modal}
                 open={this.state.open}
                 onClose={this.closeModal}
@@ -83,41 +93,44 @@ class LoginModal extends Component {
                 BackdropProps={{ timeout: 200 }}>
                 <Fade in={this.state.open}>
                     <div className={classes.card}>
-                        <div className={classes.title}>Login</div>
-                        <form encType="multipart/form-data">
-                            <TextField label="Email"
-                                name="email"
-                                required
-                                value={this.props.title}
-                                margin="dense"
-                                fullWidth
-                                variant="outlined"
-                                onChange={this.changeInput} />
-                            <TextField label="Password"
-                                name="password"
-                                type="password"
-                                required
-                                margin="dense"
-                                value={this.props.location}
-                                fullWidth
-                                variant="outlined"
-                                onChange={this.changeInput}
-                                onKeyDown={this.pressEnter} />
 
-                            <div className={classes.footer}>
-                                <div>
-                                    <Button content={'Forgot Password'} inverted />
-                                </div>
-                                <div className={classes.buttons}>
-                                    <Button content={'Sign Up'} inverted click={this.switchToSignUp} />
-                                    <Button content={'Log In'} click={this.submitForm} />
-                                </div>
+                        <div className={classes.header}>
+                            <div className={classes.title}>Login</div>
+                            {this.state.loading ? <CircularProgress color="primary" /> : null}
+                        </div>
+
+                        <TextField label="Email"
+                            name="email"
+                            required
+                            value={this.props.title}
+                            margin="dense"
+                            fullWidth
+                            variant="outlined"
+                            onChange={this.changeInput} />
+                        <TextField label="Password"
+                            name="password"
+                            type="password"
+                            required
+                            margin="dense"
+                            value={this.props.location}
+                            fullWidth
+                            variant="outlined"
+                            onChange={this.changeInput}
+                            onKeyDown={this.pressEnter} />
+
+                        <div className={classes.footer}>
+                            <div>
+                                <Button content={'Forgot Password'} inverted />
                             </div>
-                        </form>
+                            <div className={classes.buttons}>
+                                <Button content={'Sign Up'} inverted click={this.switchToSignUp} />
+                                <Button content={'Log In'} click={this.submitForm} />
+                            </div>
+                        </div>
                     </div>
                 </Fade>
             </Modal>
-        )
+        </>
     }
 }
 

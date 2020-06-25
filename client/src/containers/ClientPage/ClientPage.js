@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Avatar from '../../components/shared/Avatar/Avatar';
 import EventCard from '../../components/shared/EventCard/EventCard';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
+import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
 import { fetchClientPage, updateClientInfo } from '../../services/ClientService';
@@ -27,7 +28,8 @@ class ClientPage extends Component {
             file: null,  // for avatar
             bookmarks: [],
             events: [],
-            window: 0
+            window: 0,
+            loading: false
         }
 
         this.loadData = this.loadData.bind(this);
@@ -35,6 +37,14 @@ class ClientPage extends Component {
         this.fileUpload = this.fileUpload.bind(this);
         this.submitInfoForm = this.submitInfoForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
+    }
+
+    load = () => {
+        this.setState({ loading: true });
+    }
+
+    unload = () => {
+        this.setState({ loading: false });
     }
 
     loadData = () => {
@@ -70,6 +80,7 @@ class ClientPage extends Component {
         if (!this.state.name) {
             alert(`Please fill out your name.`);
         } else {
+            this.load();
             const data = {
                 name: this.state.name,
                 avatar: this.state.file
@@ -77,8 +88,9 @@ class ClientPage extends Component {
             updateClientInfo(data)
                 .then(data => {
                     this.loadData();
+                    this.unload();
                 }).catch(error => {
-                    console.log(error);
+                    this.unload();
                 });
         }
     }
@@ -93,15 +105,17 @@ class ClientPage extends Component {
         } else if (this.state.length < 8 || this.state.confirmNewPassword.length < 8) {
             alert(`Password must be at least 8 characters.`);
         } else {
+            this.load();
             const data = {
                 currentPassword: this.state.currentPassword,
                 newPassword: this.state.newPassword
             };
             updateUserPassword(data)
                 .then(data => {
+                    this.unload();
                 }).catch(error => {
                     alert("Failed To Update Password.");
-                    console.log(error);
+                    this.unload();
                 });
         }
     }
@@ -235,7 +249,9 @@ class ClientPage extends Component {
                         </div>
                     </Grid>
                 </Grid>
-            </div >
+
+                <LoadCircle open={this.state.load} />
+            </div>
         )
     }
 }

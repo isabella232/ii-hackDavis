@@ -36,6 +36,6 @@ export const uploadCertificate = async (data) => {
 }
 
 export const deleteCertificate = async (id) => {
-    const endpoint = 'api/interpreter/certificate/delete';
-    return backend.patch(endpoint, { id: id });
+    const endpoint = `api/interpreter/certificates/${id}/delete`;
+    return backend.delete(endpoint);
 }

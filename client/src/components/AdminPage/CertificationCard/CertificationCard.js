@@ -81,7 +81,7 @@ const CertificationCard = (props) => {
                         <Button content='Reject' inverted click={rejectClicked} />
                         <Button content='Verify' click={verifyClicked} />
                     </div>
-                        : <DeleteModal clickDelete={props.deleteCertificate} certificateID={props.id}
+                        : <DeleteModal clickDelete={props.deleteCertificate} id={props.id}
                             content={`Are You Sure You Want To Delete ${props.title}?`} />}
                 </div>
             </div>

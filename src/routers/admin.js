@@ -7,7 +7,7 @@ const Interpreter = require('../models/interpreter')
 const Event = require('../models/event')
 const auth = require('../middleware/auth')
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
-const { saveInterpreter } = require('../utils/algolia')
+const { saveInterpreter, removeInterpreter } = require('../utils/algolia')
 const { getToValidate, checkAdminCode } = require('../utils/admin')
 const { imgUploader } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
@@ -95,12 +95,24 @@ router.patch('/api/admin/certificates/:id/reject', auth, async (req, res) => {
     }
 })
 
-// verify a interpreter
+// verify an interpreter
 router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
     const id = req.params.id
     try {
         const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: true })
         saveInterpreter(interpreter)
+        res.send()
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
+// reject an interpreter
+router.patch('/api/admin/interpreters/:id/reject', auth, async (req, res) => {
+    const id = req.params.id
+    try {
+        const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: false })
+        removeInterpreter(interpreter._id)
         res.send()
     } catch (error) {
         res.status(400).send(error)

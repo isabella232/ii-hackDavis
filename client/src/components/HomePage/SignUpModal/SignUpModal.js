@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classes from './SignUpModal.module.css';
+
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -8,7 +9,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -20,6 +20,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 
 import Button from '../../shared/Button/Button';
 import FileUploader from '../../shared/FileUploader/FileUploader';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import { signUpClient, signUpInterpreter } from '../../../services/UserService';
 
 class SignUpModal extends Component {
@@ -50,7 +52,8 @@ class SignUpModal extends Component {
                 Consecutive: false,
                 Relating: false,
                 Translating: false
-            }
+            },
+            loading: false
         }
 
         this.closeModal = this.closeModal.bind(this);
@@ -66,13 +69,13 @@ class SignUpModal extends Component {
         }
     }
 
-    openModal = () => {
-        this.props.switchSignUpModal();
-    }
+    openModal = () => { this.props.switchSignUpModal(); }
 
-    closeModal = () => {
-        this.props.switchSignUpModal();
-    }
+    closeModal = () => { this.props.switchSignUpModal(); }
+
+    load = () => { this.setState({ loading: true }); }
+
+    unload = () => { this.setState({ loading: false }); }
 
     changeWindow = () => {
         const currentWindow = this.state.window;
@@ -156,14 +159,17 @@ class SignUpModal extends Component {
     }
 
     submitClient = async (data) => {
+        this.load();
         signUpClient(data)
             .then(data => {
                 this.clearAllFields();
                 this.props.switchSignUpModal();
                 this.props.switchLoginModal();
+                this.unload();
             })
             .catch(e => {
                 alert('You cannot be signed up at this time.');
+                this.unload();
             })
     }
 
@@ -190,6 +196,7 @@ class SignUpModal extends Component {
         }
 
         if (check) {
+            this.load();
             data.languages = this.state.languages;
             data.location = this.state.location;
             data.services = services;
@@ -199,9 +206,11 @@ class SignUpModal extends Component {
                     this.clearAllFields();
                     this.props.switchSignUpModal();
                     this.props.switchLoginModal();
+                    this.unload();
                 })
                 .catch(e => {
                     alert('You cannot be signed up at this time.')
+                    this.unload();
                 })
         }
     }
@@ -381,7 +390,7 @@ class SignUpModal extends Component {
         const backButton = (this.state.kind === 'Client') ? singleBack : doubleBack;
         const nextButton = (this.state.kind === 'Client') ? singleNext : doubleNext;
 
-        return (
+        return <>
             <Modal className={classes.Modal}
                 open={this.state.open}
                 onClose={this.closeModal}
@@ -389,21 +398,23 @@ class SignUpModal extends Component {
                 BackdropProps={{ timeout: 200 }}>
                 <Fade in={this.state.open}>
                     <div className={classes.card}>
-                        <div className={classes.title}>Sign Up</div>
-                        <form encType="multipart/form-data">
-                            {window}
+                        <div className={classes.header}>
+                            <div className={classes.title}>Sign Up</div>
+                            {this.state.loading ? <CircularProgress color="primary" /> : null}
+                        </div>
 
-                            <div className={classes.footer}>
-                                <div className={classes.buttons}>
-                                    {backButton}
-                                    {nextButton}
-                                </div>
+                        {window}
+
+                        <div className={classes.footer}>
+                            <div className={classes.buttons}>
+                                {backButton}
+                                {nextButton}
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </Fade>
             </Modal>
-        )
+        </>
     }
 }
 

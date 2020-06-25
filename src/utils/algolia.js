@@ -35,6 +35,16 @@ const saveInterpreter = async (interpreter) => {
     }
 }
 
+const removeInterpreter = async (_id) => {
+    try {
+        await index.deleteObject(_id.toString())
+    } catch (erorr) {
+        console.log(error)
+        throw error
+    }
+}
+
 module.exports = {
     saveInterpreter,
+    removeInterpreter
 }

@@ -8,7 +8,6 @@ const { imgUploader, getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
 const { getAvatarURL } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
-const { saveInterpreter } = require('../utils/algolia')
 
 const router = new express.Router()
 
@@ -34,7 +33,6 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
         sendWelcomeEmail(interpreter.email, interpreter.name)
         await interpreter.generateCoordinates(req.body.location)
         await interpreter.save()
-        saveInterpreter(interpreter)
         res.status(201).send()
     } catch (e) {
         console.log(e)
@@ -126,11 +124,11 @@ router.post('/api/interpreter/certificate/upload', auth, imgUploader.single('cer
 })
 
 // delete a certificate
-router.patch('/api/interpreter/certificate/delete', auth, async (req, res) => {
+router.delete('/api/interpreter/certificates/:id/delete', auth, async (req, res) => {
     try {
         const interpreter = req.user
         interpreter.certifications = interpreter.certifications.filter(cert =>
-            cert._id.toString() !== req.body.id)
+            cert._id.toString() !== req.params.id)
         await interpreter.save()
         res.send()
     } catch (error) {
@@ -200,7 +198,7 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
 // update interpreter's info
 router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), async (req, res) => {
     const interpreter = req.user
-    const rawUpdates = ['names', 'summary'], processedUpdates = ['languages', 'services']
+    const rawUpdates = ['name', 'summary'], processedUpdates = ['languages', 'services']
 
     try {
         if (req.file) { // update avatar
@@ -224,7 +222,6 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
         await interpreter.save()
         res.send()
     } catch (e) {
-        console.log('er', e)
         res.status(400).send(e)
     }
 })

@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs')
-const Admin = require('../models/admin')
 const AdminCode = require('../models/adminCode')
 
 const getToValidate = (interpreters) => {
@@ -17,6 +16,7 @@ const getToValidate = (interpreters) => {
         })
 
         return {
+            id: interpreter.id,
             name: interpreter.name,
             avatar: interpreter.avatar.url,
             location: interpreter.location.str,

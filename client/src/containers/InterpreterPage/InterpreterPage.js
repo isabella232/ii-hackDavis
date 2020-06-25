@@ -19,6 +19,7 @@ import Avatar from '../../components/shared/Avatar/Avatar';
 import Button from '../../components/shared/Button/Button';
 import CertificationCard from '../../components/AdminPage/CertificationCard/CertificationCard';
 import EventCard from '../../components/shared/EventCard/EventCard';
+import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import ReviewItem from '../../components/SearchPage/InterpreterInfoModal/ReviewItem/ReviewItem';
@@ -58,7 +59,8 @@ class InterpreterPage extends Component {
             isVerified: false,
             summary: '',
             events: [],
-            window: 0
+            window: 0,
+            loading: false
         }
 
         this.loadData = this.loadData.bind(this);
@@ -116,6 +118,7 @@ class InterpreterPage extends Component {
     }
 
     submitInfoForm = () => {
+        this.load();
         let check = true;
         for (const lang in this.state.languages) {
             if (lang.language === '' || lang.fluency === '') {
@@ -144,8 +147,10 @@ class InterpreterPage extends Component {
             updateInterpreterInfo(data)
                 .then(data => {
                     this.loadData();
+                    this.unload();
                 }).catch(error => {
                     console.log(error);
+                    this.unload();
                 });
         }
     }
@@ -160,32 +165,40 @@ class InterpreterPage extends Component {
         } else if (this.state.length < 8 || this.state.confirmNewPassword.length < 8) {
             alert(`Password must be at least 8 characters.`);
         } else {
+            this.load();
             const data = {
                 currentPassword: this.state.currentPassword,
                 newPassword: this.state.newPassword
             };
             updateUserPassword(data)
                 .then(data => {
+                    this.unload();
                 }).catch(error => {
                     alert("Failed To Update Password.");
-                    console.log(error);
+                    this.unload();
                 });
         }
     }
 
     submitCertificateForm = () => {
-        const data = {
-            title: this.state.title,
-            certificate: this.state.certificate
-        };
-        uploadCertificate(data)
-            .then(data => {
-                this.setState({ title: '', certificate: null });
-                this.loadData();
-            }).catch(error => {
-                alert("Failed To Upload Certificate.");
-                console.log(error);
-            });
+        if (!this.state.certificate) {
+            alert("Please upload your certificate.");
+        } else {
+            this.load();
+            const data = {
+                title: this.state.title,
+                certificate: this.state.certificate
+            };
+            uploadCertificate(data)
+                .then(data => {
+                    this.setState({ title: '', certificate: null });
+                    this.loadData();
+                    this.unload();
+                }).catch(error => {
+                    alert("Failed To Upload Certificate.");
+                    this.unload();
+                });
+        }
     }
 
     switchWindow = (e, i) => {
@@ -226,9 +239,24 @@ class InterpreterPage extends Component {
     }
 
     deleteCertificate = (id) => {
+        this.load();
         deleteCertificate(id)
-            .then(data => { this.loadData() })
-            .catch(error => console.log(error));
+            .then(data => {
+                this.loadData();
+                this.unload();
+            })
+            .catch(error => {
+                alert('Failed To Delete Certificate.');
+                this.unload();
+            })
+    }
+
+    load = () => {
+        this.setState({ loading: true });
+    }
+
+    unload = () => {
+        this.setState({ loading: false });
     }
 
     render() {
@@ -470,6 +498,8 @@ class InterpreterPage extends Component {
                         </div>
                     </Grid>
                 </Grid>
+
+                <LoadCircle open={this.state.loading} />
             </div >
         )
     }

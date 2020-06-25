@@ -5,13 +5,23 @@ export const fetchInfo = async () => {
     return backend.get(endpoint);
 }
 
-export const validateCertificate = async (certificateID) => {
-    const endpoint = `api/admin/certificates/${certificateID}/validate`;
+export const validateCertificate = async (id) => {
+    const endpoint = `api/admin/certificates/${id}/validate`;
     return backend.patch(endpoint);
 }
 
-export const rejectCertificate = async (certificateID) => {
-    const endpoint = `api/admin/certificates/${certificateID}/reject`;
+export const rejectCertificate = async (id) => {
+    const endpoint = `api/admin/certificates/${id}/reject`;
+    return backend.patch(endpoint);
+}
+
+export const verifyInterpreter = async (id) => {
+    const endpoint = `api/admin/interpreters/${id}/verify`;
+    return backend.patch(endpoint);
+}
+
+export const rejectInterpreter = async (id) => {
+    const endpoint = `api/admin/interpreters/${id}/reject`;
     return backend.patch(endpoint);
 }
 
@@ -27,10 +37,10 @@ export const createEvent = async (data) => {
     return backend.post(endpoint, formData);
 }
 
-export const editEvent = async (eventID, data) => {
-    const endpoint = `api/events/${eventID}/edit`;
+export const editEvent = async (id, data) => {
+    const endpoint = `api/events/${id}/edit`;
     let formData = new FormData();
-    formData.append('id', eventID);
+    formData.append('id', id);
     formData.append('title', data.title);
     formData.append('summary', data.summary);
     formData.append('date', data.date);
@@ -40,8 +50,8 @@ export const editEvent = async (eventID, data) => {
     return backend.patch(endpoint, formData);
 }
 
-export const deleteEvent = async (eventID) => {
-    const endpoint = `api/events/${eventID}/delete`;
+export const deleteEvent = async (id) => {
+    const endpoint = `api/events/${id}/delete`;
     return backend.delete(endpoint);
 }
 
@@ -55,8 +65,8 @@ export const fetchEvents = async () => {
     return backend.get(endpoint);
 }
 
-export const archiveEvent = async (eventID) => {
-    const endpoint = `api/events/${eventID}/archive`;
+export const archiveEvent = async (id) => {
+    const endpoint = `api/events/${id}/archive`;
     return backend.patch(endpoint);
 }
 
