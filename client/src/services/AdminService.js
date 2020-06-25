@@ -1,6 +1,6 @@
 import { backend } from './AxiosInstances';
 
-export const fetchData = async () => {
+export const fetchInfo = async () => {
     const endpoint = `api/admin/home`;
     return backend.get(endpoint);
 }
@@ -43,6 +43,21 @@ export const editEvent = async (eventID, data) => {
 export const deleteEvent = async (eventID) => {
     const endpoint = `api/events/${eventID}/delete`;
     return backend.delete(endpoint);
+}
+
+export const fetchEventArchive = async () => {
+    const endpoint = `api/events/fetchArchive`;
+    return backend.post(endpoint);
+}
+
+export const fetchEvents = async () => {
+    const endpoint = `api/events/fetch`;
+    return backend.get(endpoint);
+}
+
+export const archiveEvent = async (eventID) => {
+    const endpoint = `api/events/${eventID}/archive`;
+    return backend.patch(endpoint);
 }
 
 export const createAdminCode = async (adminCode) => {

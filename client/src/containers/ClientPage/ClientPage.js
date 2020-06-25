@@ -111,7 +111,7 @@ class ClientPage extends Component {
     }
 
     render() {
-        const menuItems = ['Events', 'Bookmarks', 'Account Update'];
+        const menuItems = ['Upcoming Events', 'Bookmarks', 'Account Update'];
         const menu = menuItems.map((item, i) =>
             <div className={classes.menuItemWrapper}>
                 <div className={(this.state.window === i) ? classes.activeDot : classes.dot} />

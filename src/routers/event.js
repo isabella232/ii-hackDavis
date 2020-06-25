@@ -54,6 +54,21 @@ router.patch('/api/events/:id/edit', auth, imgUploader.single('image'), async (r
     }
 })
 
+router.get('/api/events/fetch', auth, async (req, res) => {
+    try {
+        const now = new Date()
+        const pastEvents = await Event.find({ 'isArchived': false }).where('date').lt(now)
+        const upcomingEvents = await Event.find({ 'isArchived': false }).where('date').gte(now)
+        res.send({
+            pastEvents: pastEvents,
+            upcomingEvents: upcomingEvents
+        })
+    } catch (e) {
+        res.status(404).send()
+    }
+})
+
+
 router.get('/api/events/:id', auth, async (req, res) => {
     try {
         const id = req.params.id
@@ -80,7 +95,7 @@ router.delete('/api/events/:id/delete', auth, async (req, res) => {
     }
 })
 
-router.post('/api/events/:id/archive', auth, async (req, res) => {
+router.patch('/api/events/:id/archive', auth, async (req, res) => {
     try {
         const event = await Event.findById(req.params.id)
         event.isArchived = true
@@ -91,12 +106,22 @@ router.post('/api/events/:id/archive', auth, async (req, res) => {
     }
 })
 
-router.post('/api/events/:id/unarchive', auth, async (req, res) => {
+router.patch('/api/events/:id/unarchive', auth, async (req, res) => {
     try {
         const event = await Event.findById(req.params.id)
         event.isArchived = false
         await event.save()
         res.send()
+    } catch (e) {
+        res.status(404).send()
+    }
+})
+
+// can't use get for this route for some reason
+router.post('/api/events/fetchArchive', async (req, res) => {
+    try {
+        const events = await Event.find({ 'isArchived': true }).sort({ date: -1 })
+        res.send({ archivedEvents: events })
     } catch (e) {
         res.status(404).send()
     }

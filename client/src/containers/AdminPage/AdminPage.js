@@ -14,7 +14,9 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
-import { fetchData, createAdminCode, updateAdminInfo } from '../../services/AdminService';
+import {
+    fetchInfo, createAdminCode, updateAdminInfo, fetchEventArchive, fetchEvents
+} from '../../services/AdminService';
 import { updateUserPassword } from '../../services/UserService';
 
 class AdminPage extends Component {
@@ -31,30 +33,32 @@ class AdminPage extends Component {
             file: null,  // for avatar
             pastEvents: [],
             upcomingEvents: [],
+            archivedEvents: [],
             interpreters: [],
             adminCode: '',
-            window: 0
+            window: 0,
+            eventWindow: 0
         }
 
-        this.loadData = this.loadData.bind(this);
+        this.loadInfo = this.loadInfo.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.submitAdminCodeForm = this.submitAdminCodeForm.bind(this);
         this.submitInfoForm = this.submitInfoForm.bind(this);
         this.submitPasswordForm = this.submitPasswordForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
         this.getTarget = this.getTarget.bind(this);
+        this.showEventArchive = this.showEventArchive.bind(this);
+        this.hideEventArchive = this.hideEventArchive.bind(this);
     }
 
-    loadData = () => {
-        fetchData()
+    loadInfo = () => {
+        fetchInfo()
             .then(data => {
                 this.setState({
                     name: data.name,
                     currentName: data.name,
                     email: data.email,
                     avatar: data.avatar,
-                    pastEvents: data.pastEvents,
-                    upcomingEvents: data.upcomingEvents,
                     interpreters: data.toValidate
                 })
             }).catch(error => {
@@ -62,8 +66,22 @@ class AdminPage extends Component {
             })
     }
 
+    loadEvents = () => {
+        fetchEvents()
+            .then(data => {
+                this.setState({
+                    pastEvents: data.pastEvents,
+                    upcomingEvents: data.upcomingEvents,
+                })
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
     componentDidMount() {
-        this.loadData();
+        this.loadEvents();
+        this.loadInfo();
+        this.loadEventArchive();
     }
 
     switchWindow = (e, i) => {
@@ -127,7 +145,7 @@ class AdminPage extends Component {
             };
             updateAdminInfo(data)
                 .then(data => {
-                    this.loadData();
+                    this.loadInfo();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -142,6 +160,26 @@ class AdminPage extends Component {
         } else if (event.forClients) {
             return "Clients Only";
         }
+    }
+
+    loadEventArchive = () => {
+        console.log('here')
+
+        fetchEventArchive()
+            .then(data => {
+                console.log('here', data.archivedEvents)
+                this.setState({ archivedEvents: data.archivedEvents });
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
+    showEventArchive = () => {
+        this.setState({ eventWindow: 1 });
+    }
+
+    hideEventArchive = () => {
+        this.setState({ eventWindow: 0 });
     }
 
     render() {
@@ -165,9 +203,11 @@ class AdminPage extends Component {
                 summary={event.summary}
                 image={event.image}
                 past
-                reloadData={this.loadData}
-                target={event.target} />
-        })
+                reloadData={this.loadInfo}
+                target={this.getTarget(event)}
+                loadEvents={this.loadEvents}
+                loadEventArchive={this.loadEventArchive} />
+        });
         const upcomingEvents = this.state.upcomingEvents.map(event => {
             return <EventCard id={event.id}
                 key={`event-${event.id}`}
@@ -176,11 +216,10 @@ class AdminPage extends Component {
                 location={event.location}
                 summary={event.summary}
                 image={event.image}
-                reloadData={this.loadData}
+                reloadData={this.loadInfo}
                 target={this.getTarget(event)} />
-        })
-
-        const eventWindow = <>
+        });
+        const events = <>
             <div className={classes.title}>Upcoming Events</div>
             {upcomingEvents.length ? upcomingEvents : <div className={classes.noItems}>There Is No Event Coming Up.</div>}
 
@@ -188,10 +227,28 @@ class AdminPage extends Component {
             {pastEvents.length ? pastEvents : <div className={classes.noItems}>There Is No Past Event To Show.</div>}
 
             <div className={classes.buttons}>
-                <Button content='Manage All Events' inverted />
-                <EventModal reloadData={this.loadData} create />
+                <Button content='Show Archive' inverted click={this.showEventArchive} />
+                <EventModal reloadData={this.loadInfo} create />
+            </div></>;
+        const eventArchive = <>
+            {this.state.archivedEvents.length ?
+                this.state.archivedEvents.map(event => {
+                    return <EventCard id={event.id}
+                        key={`event-${event.id}`}
+                        title={event.title}
+                        date={event.date}
+                        location={event.location}
+                        summary={event.summary}
+                        image={event.image}
+                        past
+                        reloadData={this.loadInfo}
+                        target={event.target} />
+                }) : <div className={classes.noItems}>There Is No Events In Archive.</div>}
+            <div className={classes.buttons}>
+                <Button content='Back' click={this.hideEventArchive} />
             </div>
         </>;
+        const eventWindow = !this.state.eventWindow ? events : eventArchive;
 
         const certificateWindow = (this.state.interpreters.length) ?
             this.state.interpreters.map(interpreter => (

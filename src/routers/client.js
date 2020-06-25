@@ -47,19 +47,13 @@ router.get('/api/client/home', auth, async (req, res) => {
 // update client's info
 router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async (req, res) => {
     const client = req.user
-    const updates = Object.keys(req.body)
 
     try {
         if (req.file) {
             client.avatar.url = getAvatarURL(client._id)
             client.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
         }
-
-        updates.forEach((update) => {
-            if (req.body[update] !== null) {
-                client[update] = req.body[update]
-            }
-        })
+        client.name = req.body.name
         await client.save()
         res.send()
     } catch (e) {

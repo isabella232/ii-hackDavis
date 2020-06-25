@@ -232,7 +232,7 @@ class InterpreterPage extends Component {
     }
 
     render() {
-        const menuItems = ['Events', 'Reviews', 'Certifications', 'Account Update'];
+        const menuItems = ['Upcoming Events', 'Reviews', 'Certifications', 'Account Update'];
         const menu = menuItems.map((item, i) =>
             <div className={classes.menuItemWrapper}>
                 <div className={(this.state.window === i) ? classes.activeDot : classes.dot} />

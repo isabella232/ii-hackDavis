@@ -100,3 +100,8 @@
     -webkit-transition: background-color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
 }
+
+.Container .noItems {
+    margin: 1rem;
+    text-align: center;
+}
