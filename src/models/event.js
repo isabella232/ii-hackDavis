@@ -57,7 +57,6 @@ eventSchema.methods.toJSON = function () {
 
 eventSchema.methods.setTarget = async function (target) {
     const event = this
-    console.log(target, 'target')
     if (target === 'Everyone') {
         event.forInterpreters = true
         event.forClients = true

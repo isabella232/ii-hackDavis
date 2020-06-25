@@ -203,7 +203,6 @@ class AdminPage extends Component {
                 summary={event.summary}
                 image={event.image}
                 past
-                reloadData={this.loadInfo}
                 target={this.getTarget(event)}
                 loadEvents={this.loadEvents}
                 loadEventArchive={this.loadEventArchive} />
@@ -216,7 +215,7 @@ class AdminPage extends Component {
                 location={event.location}
                 summary={event.summary}
                 image={event.image}
-                reloadData={this.loadInfo}
+                loadEvents={this.loadEvents}
                 target={this.getTarget(event)} />
         });
         const events = <>

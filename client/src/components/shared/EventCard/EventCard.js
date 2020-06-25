@@ -18,7 +18,7 @@ class EventCard extends Component {
     clickDelete = () => {
         deleteEvent(this.props.id)
             .then(data => {
-                this.props.reloadData();
+                this.props.loadEvents();
             })
             .catch(e => console.log(e))
     }
@@ -33,10 +33,14 @@ class EventCard extends Component {
             });
     }
 
+    pad0 = (num) => {
+        return num.toString().padStart(2, "0")
+    }
+
     render() {
         const date = new Date(this.props.date);
-        const parsedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-        const parsedTime = `${date.getHours()}:${date.getMinutes()}`;
+        const parsedDate = `${this.pad0(date.getMonth() + 1)}/${this.pad0(date.getDate())}/${this.pad0(date.getFullYear())}`;
+        const parsedTime = `${this.pad0(date.getHours())}:${this.pad0(date.getMinutes())}`;
         const doubleCheckContent = `Are You Sure You Want To Delete ${this.props.title}?`;
 
         return (
@@ -70,7 +74,7 @@ class EventCard extends Component {
                                             summary={this.props.summary}
                                             location={this.props.location}
                                             image={this.props.image}
-                                            reloadData={this.props.reloadData}
+                                            reloadData={this.props.loadEvents}
                                             target={this.props.target} />
                                     </>
                                 ) : null}
