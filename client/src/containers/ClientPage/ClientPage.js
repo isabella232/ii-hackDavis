@@ -4,7 +4,9 @@ import classes from './ClientPage.module.css'
 import Grid from '@material-ui/core/Grid';
 import Button from '../../components/shared/Button/Button';
 import TextField from '@material-ui/core/TextField';
+
 import Avatar from '../../components/shared/Avatar/Avatar';
+import EventCard from '../../components/shared/EventCard/EventCard';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
@@ -24,6 +26,7 @@ class ClientPage extends Component {
             avatar: '',
             file: null,  // for avatar
             bookmarks: [],
+            events: [],
             window: 0
         }
 
@@ -42,7 +45,8 @@ class ClientPage extends Component {
                     name: data.name,
                     email: data.email,
                     avatar: data.avatar,
-                    bookmarks: data.bookmarks
+                    bookmarks: data.bookmarks,
+                    events: data.events
                 })
             }).catch(error => {
                 console.log(error);
@@ -118,7 +122,20 @@ class ClientPage extends Component {
                 </div>
             </div>);
 
-        const eventWindow = <div>event</div>;
+        const events = this.state.events.map(event => {
+            return <EventCard id={event.id}
+                key={`event-${event.id}`}
+                title={event.title}
+                date={event.date}
+                location={event.location}
+                summary={event.summary}
+                image={event.image}
+                reloadData={this.loadData} />
+        })
+
+        const eventWindow = events.length ? events
+            : <div className={classes.noItems}>There Is No Event Coming Up.</div>;
+
         const bookmarkWindow = <div>bookmarks</div>
 
         const updateWindow = <>

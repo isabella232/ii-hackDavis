@@ -40,10 +40,6 @@ const eventSchema = new mongoose.Schema({
     forClients: {
         type: Boolean,
         default: false
-    },
-    forEveryone: {
-        type: Boolean,
-        default: false
     }
 })
 

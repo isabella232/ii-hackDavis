@@ -15,12 +15,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 
+import Avatar from '../../components/shared/Avatar/Avatar';
 import Button from '../../components/shared/Button/Button';
 import CertificationCard from '../../components/AdminPage/CertificationCard/CertificationCard';
-import ReviewItem from '../../components/SearchPage/InterpreterInfoModal/ReviewItem/ReviewItem';
-import Avatar from '../../components/shared/Avatar/Avatar';
-import HorzLine from '../../components/shared/HorzLine/HorzLine';
+import EventCard from '../../components/shared/EventCard/EventCard';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
+import HorzLine from '../../components/shared/HorzLine/HorzLine';
+import ReviewItem from '../../components/SearchPage/InterpreterInfoModal/ReviewItem/ReviewItem';
 
 import { updateUserPassword } from '../../services/UserService';
 import {
@@ -56,7 +57,8 @@ class InterpreterPage extends Component {
             reviews: [],
             isVerified: false,
             summary: '',
-            window: 2
+            events: [],
+            window: 0
         }
 
         this.loadData = this.loadData.bind(this);
@@ -71,7 +73,6 @@ class InterpreterPage extends Component {
     loadData = () => {
         fetchInterpreterPage()
             .then(data => {
-                console.log('ew', data);
                 const services = this.state.services;
                 data.services.forEach(service => {
                     services[service] = true;
@@ -89,7 +90,8 @@ class InterpreterPage extends Component {
                     services: services,
                     reviews: data.reviews,
                     isVerified: data.isVerified,
-                    summary: data.summary
+                    summary: data.summary,
+                    events: data.events
                 })
             }).catch(error => {
                 console.log(error);
@@ -241,8 +243,19 @@ class InterpreterPage extends Component {
                 </div>
             </div>);
 
-        const eventWindow = <div>event</div>;
+        const events = this.state.events.map(event => {
+            return <EventCard id={event.id}
+                key={`event-${event.id}`}
+                title={event.title}
+                date={event.date}
+                location={event.location}
+                summary={event.summary}
+                image={event.image}
+                reloadData={this.loadData} />
+        })
 
+        const eventWindow = events.length ? events
+            : <div className={classes.noItems}>There Is No Event Coming Up.</div>;
 
         const certificates = this.state.certifications.map(certificate => (
             <CertificationCard key={`${certificate.id}`}

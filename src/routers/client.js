@@ -1,7 +1,7 @@
 const express = require('express')
 const sharp = require('sharp')
-const bcrypt = require('bcryptjs')
 const Client = require('../models/client')
+const Event = require('../models/event')
 const auth = require('../middleware/auth')
 const { imgUploader, getAvatarURL } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
@@ -28,12 +28,16 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
 router.get('/api/client/home', auth, async (req, res) => {
     try {
         const client = req.user
+        const now = new Date()
+        const events = await Event.find({ 'isArchived': false, 'forClients': true }).where('date').gte(now)
         const data = {
             name: client.name,
             email: client.email,
             avatar: client.avatar.url,
-            bookmarks: ["Yee", "Yoo"]
+            bookmarks: ["Yee", "Yoo"],
+            events: events
         }
+
         res.send(data)
     } catch (error) {
         res.status(400).send(error)

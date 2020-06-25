@@ -1,6 +1,7 @@
 const express = require('express')
 const sharp = require('sharp')
 const ObjectID = require('mongodb').ObjectID
+const Event = require('../models/event')
 const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
 const { imgUploader, getCertificateURL } = require('../utils/image')
@@ -160,6 +161,8 @@ router.get('/api/interpreter/certificates/:id', async (req, res) => {
 router.get('/api/interpreter/home', auth, async (req, res) => {
     try {
         const interpreter = req.user
+        const now = new Date()
+        const events = await Event.find({ 'isArchived': false, 'forInterpreters': true }).where('date').gte(now)
         const certifications = [], languages = []
         for (const cert of interpreter.certifications) {
             certifications.push({
@@ -186,6 +189,7 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
             reviews: processReviews([...interpreter.reviews]),
             isVerified: interpreter.isVerified,
             summary: interpreter.summary,
+            events: events
         }
         res.send(data)
     } catch (error) {

@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Avatar from '../../components/shared/Avatar/Avatar';
 import CertificationCard from '../../components/AdminPage/CertificationCard/CertificationCard';
-import EventCard from '../../components/AdminPage/EventCard/EventCard';
+import EventCard from '../../components/shared/EventCard/EventCard';
 import Button from '../../components/shared/Button/Button';
 import EventModal from '../../components/AdminPage/EventModal/EventModal';
 import TextField from '@material-ui/core/TextField';
@@ -48,7 +48,6 @@ class AdminPage extends Component {
     loadData = () => {
         fetchData()
             .then(data => {
-
                 this.setState({
                     name: data.name,
                     currentName: data.name,
@@ -136,7 +135,7 @@ class AdminPage extends Component {
     }
 
     getTarget = (event) => {
-        if (event.forEveryone) {
+        if (event.forInterpreters && event.forClients) {
             return "Everyone";
         } else if (event.forInterpreters) {
             return "Interpreters Only";
