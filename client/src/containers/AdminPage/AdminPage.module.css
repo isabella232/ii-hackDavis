@@ -1,45 +1,63 @@
-.Container {
+.AdminPage {
     margin: auto;
-    padding: 20px 2rem;
     max-width: 1000px;
 }
 
-.Container .title {
+.AdminPage .menuWrapper {
+    margin: 2rem 1rem 0 1rem;
+}
+
+.AdminPage .window {
+    margin: 0rem 1rem 0 1rem;
+}
+
+.AdminPage .infoItem {
+    display: block;
+    margin-left: 10px;
+}
+
+.AdminPage .title {
     font-size: 30px;
     color: #027888;
 }
 
-.Container .noItems {
+.AdminPage .noItems {
     margin: 1rem;
     text-align: center;
 }
 
-.Container .buttons {
+.AdminPage .buttons {
     display: flex;
     justify-content: flex-end;
     margin-top: 2rem;
 }
 
-.Container .window {
+.AdminPage .window {
     margin-top: 2rem;
 }
 
-.Container .adminCodeButton {
+.AdminPage .adminCodeButton {
     display: flex;
     justify-content: flex-end;
     margin: .5rem;
 }
 
-.Container .menu {
+.AdminPage .menu {
     padding: 1rem 1.5rem 0 1.5rem;
 }
 
-.Container .menuItemWrapper {
+.AdminPage .menuItemWrapper {
     display: flex;
     align-items: center;
+    -webkit-transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
 }
 
-.Container .menuItem {
+.AdminPage .menuItemWrapper:hover {
+    transform: translateX(10px);
+}
+
+.AdminPage .menuItem {
     color: black;
     margin-bottom: .5rem;
     font-size: 18px;
@@ -48,11 +66,11 @@
     transition: color 0.2s ease-in-out;
 }
 
-.Container .menuItem:hover {
+.AdminPage .menuItem:hover {
     color: #03a0b5;
 }
 
-.Container .activeMenuItem {
+.AdminPage .activeMenuItem {
     color: #03a0b5;
     margin-bottom: .5rem;
     font-size: 18px;
@@ -61,18 +79,24 @@
     transition: color 0.2s ease-in-out;
 }
 
-.Container .userInfo {
-    display: inline-flex;
+.AdminPage .userInfo {
+    display: flex;
     align-items: center;
 }
 
-.Container .userName {
+.AdminPage .interpreterInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.AdminPage .userName {
     margin-left: .5rem;
     font-size: 22px;
     font-weight: 600;
 }
 
-.Container .userCard {
+.AdminPage .userCard {
     margin: 1rem 0;
     padding: 1rem;
     background: #FFFFFF;
@@ -80,7 +104,7 @@
     border-radius: 10px;
 }
 
-.Container .dot {
+.AdminPage .dot {
     height: 8px;
     width: 8px;
     background-color: black;
@@ -88,7 +112,7 @@
     margin: 0 1rem .5rem 0;
 }
 
-.Container .activeDot {
+.AdminPage .activeDot {
     height: 8px;
     width: 8px;
     background-color: #03a0b5;
@@ -98,11 +122,11 @@
     transition: background-color 0.2s ease-in-out;
 }
 
-.Container .adminIcon {
+.AdminPage .adminIcon {
     margin-left: .5rem;
 }
 
-.Container .flexArea {
+.AdminPage .flexArea {
     display: flex;
     align-items: center;
 }

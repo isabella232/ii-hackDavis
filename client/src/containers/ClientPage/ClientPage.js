@@ -39,13 +39,9 @@ class ClientPage extends Component {
         this.switchWindow = this.switchWindow.bind(this);
     }
 
-    load = () => {
-        this.setState({ loading: true });
-    }
+    load = () => { this.setState({ loading: true }); }
 
-    unload = () => {
-        this.setState({ loading: false });
-    }
+    unload = () => { this.setState({ loading: false }); }
 
     loadData = () => {
         fetchClientPage()
@@ -228,19 +224,22 @@ class ClientPage extends Component {
         const windows = [eventWindow, bookmarkWindow, updateWindow];
 
         return (
-            <div className={classes.Container}>
-                <Grid container spacing={4}>
+            <div className={classes.ClientPage}>
+                <Grid container spacing={0}>
                     <Grid item xs={12} sm={4}>
-                        <div className={classes.userCard}>
-                            <div className={classes.userInfo}>
-                                <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
-                                <div className={classes.userName}>{this.state.currentName}</div>
+                        <div className={classes.menuWrapper}>
+
+                            <div className={classes.userCard}>
+                                <div className={classes.userInfo}>
+                                    <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
+                                    <div className={classes.userName}>{this.state.currentName}</div>
+                                </div>
                             </div>
+                            <div className={classes.menu}>
+                                {menu}
+                            </div>
+                            <HorzLine />
                         </div>
-                        <div className={classes.menu}>
-                            {menu}
-                        </div>
-                        <HorzLine />
                     </Grid>
 
                     <Grid item xs={12} sm={8}>

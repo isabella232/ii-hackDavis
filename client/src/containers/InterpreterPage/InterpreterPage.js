@@ -72,6 +72,10 @@ class InterpreterPage extends Component {
         this.deleteCertificate = this.deleteCertificate.bind(this);
     }
 
+    load = () => { this.setState({ loading: true }); }
+
+    unload = () => { this.setState({ loading: false }); }
+
     loadData = () => {
         fetchInterpreterPage()
             .then(data => {
@@ -251,14 +255,6 @@ class InterpreterPage extends Component {
             })
     }
 
-    load = () => {
-        this.setState({ loading: true });
-    }
-
-    unload = () => {
-        this.setState({ loading: false });
-    }
-
     render() {
         const menuItems = ['Upcoming Events', 'Reviews', 'Certifications', 'Account Update'];
         const menu = menuItems.map((item, i) =>
@@ -295,8 +291,7 @@ class InterpreterPage extends Component {
                 certificateImage={certificate.url}
                 isValidated={certificate.isValidated}
                 isRejected={certificate.isRejected}
-                deleteCertificate={this.deleteCertificate}
-                interpreter />
+                deleteCertificate={this.deleteCertificate} />
         ));
         const certificationWindow = <div>
             <TextField label="Title" name="title" required value={this.state.title}
@@ -466,30 +461,32 @@ class InterpreterPage extends Component {
         const windows = [eventWindow, reviewWindow, certificationWindow, updateWindow];
 
         return (
-            <div className={classes.Container}>
-                <Grid container spacing={4}>
+            <div className={classes.InterpreterPage}>
+                <Grid container spacing={0}>
                     <Grid item xs={12} sm={4}>
-                        <div className={classes.userCard}>
-                            <div className={classes.userInfo}>
-                                <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
-                                <div>
-                                    <div className={classes.flexArea}>
-                                        <div className={classes.userName}>{this.state.currentName}</div>
-                                        {this.state.isVerified ?
-                                            <CheckCircleIcon className={classes.checkIcon}
-                                                fontSize="small" color="primary" />
-                                            : null}
+                        <div className={classes.menuWrapper}>
+                            <div className={classes.userCard}>
+                                <div className={classes.userInfo}>
+                                    <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
+                                    <div>
+                                        <div className={classes.flexArea}>
+                                            <div className={classes.userName}>{this.state.currentName}</div>
+                                            {this.state.isVerified ?
+                                                <CheckCircleIcon className={classes.checkIcon}
+                                                    fontSize="small" color="primary" />
+                                                : null}
+                                        </div>
+                                        <Rating className={classes.rating}
+                                            size="small" value={this.state.rating}
+                                            precision={0.5} readOnly />
                                     </div>
-                                    <Rating className={classes.rating}
-                                        size="small" value={this.state.rating}
-                                        precision={0.5} readOnly />
                                 </div>
                             </div>
+                            <div className={classes.menu}>
+                                {menu}
+                            </div>
+                            <HorzLine />
                         </div>
-                        <div className={classes.menu}>
-                            {menu}
-                        </div>
-                        <HorzLine />
                     </Grid>
 
                     <Grid item xs={12} sm={8}>

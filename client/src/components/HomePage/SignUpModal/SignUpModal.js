@@ -310,40 +310,38 @@ class SignUpModal extends Component {
         const addIcon = <AddIcon className={classes.langFieldIcon} color="primary" onClick={this.pushLangField} />;
         const removeIcon = <HighlightOffIcon className={classes.langFieldIcon} color="error" onClick={this.popLangField} />;
 
-        const langFields = this.state.languages.map((lang, i) => {
-            return (
-                <Grid container spacing={2} id={`language-field-${i}`}>
-                    <Grid item xs={7}>
-                        <TextField label="Language"
-                            name="language"
-                            required
-                            value={lang.language}
-                            margin="dense"
-                            fullWidth
-                            variant="outlined"
-                            onChange={(e) => this.changeLanguage(e, i)} />
-                    </Grid>
-
-                    <Grid item xs={3}>
-                        <FormControl variant="outlined" fullWidth margin="dense">
-                            <InputLabel>Fluency</InputLabel>
-                            <Select label="Age"
-                                value={lang.fluency}
-                                onChange={(e) => this.changeFluency(e, i)}>
-                                {menuItems}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item xs={2}>
-                        <div className={classes.langFieldIcons}>
-                            {(i > 0) ? removeIcon : null}
-                            {(this.state.languages.length === 1 || i === this.state.languages.length - 1) ? addIcon : null}
-                        </div>
-                    </Grid>
+        const langFields = this.state.languages.map((lang, i) =>
+            <Grid container spacing={2} key={`lang-outer-grid-${i}`}>
+                <Grid item xs={7}>
+                    <TextField label="Language"
+                        name="language"
+                        required
+                        value={lang.language}
+                        margin="dense"
+                        fullWidth
+                        variant="outlined"
+                        onChange={(e) => this.changeLanguage(e, i)} />
                 </Grid>
-            )
-        });
+
+                <Grid item xs={3}>
+                    <FormControl variant="outlined" fullWidth margin="dense">
+                        <InputLabel>Fluency</InputLabel>
+                        <Select label="Age"
+                            value={lang.fluency}
+                            onChange={(e) => this.changeFluency(e, i)}>
+                            {menuItems}
+                        </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid item xs={2}>
+                    <div className={classes.langFieldIcons}>
+                        {(i > 0) ? removeIcon : null}
+                        {(this.state.languages.length === 1 || i === this.state.languages.length - 1) ? addIcon : null}
+                    </div>
+                </Grid>
+            </Grid>
+        );
 
         const secondWindow = <>
             {langFields}

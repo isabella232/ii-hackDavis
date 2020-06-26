@@ -38,6 +38,7 @@
 }
 
 .invertedDelete {
+    display: inline-block;
     color: red;
     padding: 8px;
     border-radius: 9px;
@@ -54,7 +55,8 @@
     margin-right: .5rem;
 }
 
-.delete    {
+.delete {
+    display: inline-block;
     background: rgba(255, 0, 0, 0.767);
     box-sizing: border-box;
     border-radius: 9px;

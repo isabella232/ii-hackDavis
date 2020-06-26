@@ -37,7 +37,7 @@ class AdminPage extends Component {
             archivedEvents: [],
             interpreters: [],
             adminCode: '',
-            window: 0,
+            window: 1,
             eventWindow: 0,
             loading: false
         }
@@ -53,13 +53,9 @@ class AdminPage extends Component {
         this.hideEventArchive = this.hideEventArchive.bind(this);
     }
 
-    load = () => {
-        this.setState({ loading: true });
-    }
+    load = () => { this.setState({ loading: true }); }
 
-    unload = () => {
-        this.setState({ loading: false });
-    }
+    unload = () => { this.setState({ loading: false }); }
 
     loadInfo = () => {
         fetchInfo()
@@ -96,6 +92,7 @@ class AdminPage extends Component {
 
     switchWindow = (e, i) => {
         this.setState({ window: i });
+        localStorage.setItem('adminWindow', i);
     }
 
     changeInput = (e) => {
@@ -198,13 +195,12 @@ class AdminPage extends Component {
     }
 
     render() {
-        const menuItems = ['Events', 'Certifications', 'Account Update', 'Admin Code'];
+        const menuItems = ['Events', 'Review Interpreters', 'Account Update', 'Admin Code'];
         const menu = menuItems.map((item, i) =>
-            <div className={classes.menuItemWrapper}>
+            <div className={classes.menuItemWrapper} key={`menu-item-${i}`}>
                 <div className={(this.state.window === i) ? classes.activeDot : classes.dot} />
-                <div id={`menu-item-${i}`} value={i}
-                    className={(this.state.window === i) ? classes.activeMenuItem : classes.menuItem}
-                    onClick={(e) => this.switchWindow(e, i)}>
+                <div value={i} onClick={(e) => this.switchWindow(e, i)}
+                    className={(this.state.window === i) ? classes.activeMenuItem : classes.menuItem}>
                     {menuItems[i]}
                 </div>
             </div>);
@@ -266,7 +262,24 @@ class AdminPage extends Component {
 
         const certificateWindow = (this.state.interpreters.length) ?
             this.state.interpreters.map(interpreter => <>
-                <h1>{interpreter.name}</h1>
+                <div className={classes.interpreterInfo}>
+                    <div className={classes.flexArea}>
+                        <Avatar name={interpreter.name} avatar={interpreter.avatar} size={7} />
+                        <div>
+                            <div className={classes.infoItem}>
+                                <strong>{interpreter.name}</strong>
+                            </div>
+                            <div className={classes.infoItem}>
+                                {interpreter.location}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <Button content="Reject" invertedDelete />
+                        <Button content="Verify" />
+                    </div>
+                </div>
                 {interpreter.unvalidatedCertificates.map(certificate => (
                     <CertificationCard key={`${certificate.id}`}
                         id={certificate.id}
@@ -276,6 +289,7 @@ class AdminPage extends Component {
                         location={interpreter.location}
                         certificateImage={certificate.image} />
                 ))}
+                <HorzLine />
             </>) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;
 
         const updateWindow = <>
@@ -370,21 +384,23 @@ class AdminPage extends Component {
         const windows = [eventWindow, certificateWindow, updateWindow, adminCodeWindow];
 
         return (
-            <div className={classes.Container} >
-                <Grid container spacing={4}>
+            <div className={classes.AdminPage} >
+                <Grid container spacing={0}>
                     <Grid item xs={12} sm={4}>
-                        <div className={classes.userCard}>
-                            <div className={classes.userInfo}>
-                                <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
-                                <div className={classes.flexArea}>
-                                    <div className={classes.userName}>{this.state.currentName}</div>
-                                    <AccountCircleIcon className={classes.adminIcon}
-                                        fontSize="small" color="primary" />
+                        <div className={classes.menuWrapper}>
+                            <div className={classes.userCard}>
+                                <div className={classes.userInfo}>
+                                    <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
+                                    <div className={classes.flexArea}>
+                                        <div className={classes.userName}>{this.state.currentName}</div>
+                                        <AccountCircleIcon className={classes.adminIcon}
+                                            fontSize="small" color="primary" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className={classes.menu}>
-                            {menu}
+                            <div className={classes.menu}>
+                                {menu}
+                            </div>
                         </div>
                         <HorzLine />
                     </Grid>

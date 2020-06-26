@@ -1,44 +1,52 @@
-.Container {
+.ClientPage {
     margin: auto;
     padding: 20px 2rem;
     max-width: 1000px;
 }
 
-.Container .noEvents {
+.ClientPage .menuWrapper {
+    margin: 2rem 1rem 0 1rem;
+}
+
+.ClientPage .window {
+    margin: 0rem 1rem 0 1rem;
+}
+
+.ClientPage .noEvents {
     margin: 1rem;
     text-align: center;
 }
 
-.Container .buttons {
+.ClientPage .buttons {
     display: flex;
     justify-content: flex-end;
     margin-top: 2rem;
 }
 
-.Container .fileUpload {
+.ClientPage .fileUpload {
     margin: 10px 0;
 }
 
-.Container .currentPassword {
+.ClientPage .currentPassword {
     margin: 0 10px;
 }
 
-.Container .label {
+.ClientPage .label {
     font-weight: 400;
     font-size: 19px;
     margin: -3px 20px 0 0;
 }
 
-.Container .menu {
+.ClientPage .menu {
     padding: 1rem 1.5rem 0 1.5rem;
 }
 
-.Container .menuItemWrapper {
+.ClientPage .menuItemWrapper {
     display: flex;
     align-items: center;
 }
 
-.Container .menuItem {
+.ClientPage .menuItem {
     color: black;
     margin-bottom: .5rem;
     font-size: 18px;
@@ -47,31 +55,29 @@
     transition: color 0.2s ease-in-out;
 }
 
-.Container .menuItem:hover {
-    color: #03a0b5;
+.ClientPage .menuItemWrapper {
+    display: flex;
+    align-items: center;
+    -webkit-transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
 }
 
-.Container .activeMenuItem {
-    color: #03a0b5;
-    margin-bottom: .5rem;
-    font-size: 18px;
-    font-weight: 500;
-    -webkit-transition: color 0.2s ease-in-out;
-    transition: color 0.2s ease-in-out;
+.ClientPage .menuItemWrapper:hover {
+    transform: translateX(10px);
 }
 
-.Container .userInfo {
+.ClientPage .userInfo {
     display: flex;
     align-items: center;
 }
 
-.Container .userName {
+.ClientPage .userName {
     margin-left: .5rem;
     font-size: 22px;
     font-weight: 600;
 }
 
-.Container .userCard {
+.ClientPage .userCard {
     margin: 1rem 0;
     padding: 1rem;
     background: #FFFFFF;
@@ -79,11 +85,11 @@
     border-radius: 10px;
 }
 
-.Container .window {
+.ClientPage .window {
     margin-top: 2rem;
 }
 
-.Container .dot {
+.ClientPage .dot {
     height: 8px;
     width: 8px;
     background-color: black;
@@ -91,7 +97,7 @@
     margin: 0 1rem .5rem 0;
 }
 
-.Container .activeDot {
+.ClientPage .activeDot {
     height: 8px;
     width: 8px;
     background-color: #03a0b5;
@@ -101,7 +107,7 @@
     transition: background-color 0.2s ease-in-out;
 }
 
-.Container .noItems {
+.ClientPage .noItems {
     margin: 1rem;
     text-align: center;
 }

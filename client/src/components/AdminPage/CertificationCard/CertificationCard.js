@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import classes from './CertificationCard.module.css';
 
-import Avatar from '../../shared/Avatar/Avatar';
 import Button from '../../shared/Button/Button';
 import DeleteModal from '../../shared/DoubleCheckModal/DoubleCheckModal';
 
@@ -42,21 +41,6 @@ const CertificationCard = (props) => {
     return (
         (!verified && !rejected) ? <div className={classes.CertificationCard}>
             <div className={classes.header}>
-
-                {!props.interpreter ? <div className={classes.userInfo}>
-                    <Avatar name={props.name} avatar={props.avatar} size={7} />
-
-                    <div>
-                        <div className={classes.infoItem}>
-                            <strong>{props.name}</strong>
-                        </div>
-                        <div className={classes.infoItem}>
-                            {props.location}
-                        </div>
-                    </div>
-                </div> : null}
-
-
                 <div className={classes.title}>
                     <strong>{props.title}</strong>
                     {props.isValidated ?
