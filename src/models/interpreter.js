@@ -111,6 +111,11 @@ const interpreterSchema = new mongoose.Schema({
         required: true,
         default: false
     },
+    isRejected: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     summary: {
         type: String,
         trim: true,

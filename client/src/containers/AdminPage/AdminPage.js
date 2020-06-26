@@ -16,7 +16,8 @@ import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
 import {
-    fetchInfo, createAdminCode, updateAdminInfo, fetchEventArchive, fetchEvents
+    fetchInfo, createAdminCode, updateAdminInfo, fetchEventArchive, fetchEvents,
+    rejectInterpreter, verifyInterpreter
 } from '../../services/AdminService';
 import { updateUserPassword } from '../../services/UserService';
 
@@ -51,6 +52,8 @@ class AdminPage extends Component {
         this.getTarget = this.getTarget.bind(this);
         this.showEventArchive = this.showEventArchive.bind(this);
         this.hideEventArchive = this.hideEventArchive.bind(this);
+        this.clickRejectInterpreter = this.clickRejectInterpreter.bind(this);
+        this.clickVerifyInterpreter = this.clickVerifyInterpreter.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
@@ -194,6 +197,32 @@ class AdminPage extends Component {
         this.setState({ eventWindow: 0 });
     }
 
+    clickRejectInterpreter = (id) => {
+        this.load();
+        rejectInterpreter(id)
+            .then(data => {
+                this.loadInfo();
+                this.unload();
+            })
+            .catch(e => {
+                alert('Failed to reject interpreter');
+                this.unload();
+            });
+    }
+
+    clickVerifyInterpreter = (id) => {
+        this.load();
+        verifyInterpreter(id)
+            .then(data => {
+                this.loadInfo();
+                this.unload();
+            })
+            .catch(e => {
+                alert('Failed to verify interpreter');
+                this.unload();
+            });
+    }
+
     render() {
         const menuItems = ['Events', 'Review Interpreters', 'Account Update', 'Admin Code'];
         const menu = menuItems.map((item, i) =>
@@ -261,7 +290,7 @@ class AdminPage extends Component {
         const eventWindow = !this.state.eventWindow ? events : eventArchive;
 
         const certificateWindow = (this.state.interpreters.length) ?
-            this.state.interpreters.map(interpreter => <>
+            this.state.interpreters.map(interpreter => <div className={classes.interpreterCard}>
                 <div className={classes.interpreterInfo}>
                     <div className={classes.flexArea}>
                         <Avatar name={interpreter.name} avatar={interpreter.avatar} size={7} />
@@ -276,8 +305,8 @@ class AdminPage extends Component {
                     </div>
 
                     <div>
-                        <Button content="Reject" invertedDelete />
-                        <Button content="Verify" />
+                        <Button content="Reject" id={interpreter.id} invertedDelete click={this.clickRejectInterpreter} />
+                        <Button content="Verify" id={interpreter.id} click={this.clickVerifyInterpreter} />
                     </div>
                 </div>
                 {interpreter.unvalidatedCertificates.map(certificate => (
@@ -289,8 +318,7 @@ class AdminPage extends Component {
                         location={interpreter.location}
                         certificateImage={certificate.image} />
                 ))}
-                <HorzLine />
-            </>) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;
+            </div>) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;
 
         const updateWindow = <>
             <Grid container spacing={2} justify='center'>

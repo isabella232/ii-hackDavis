@@ -13,9 +13,7 @@ const Button = (props) => {
         buttonClass = classes.invertedDelete;
     }
 
-    return (
-        <div className={buttonClass} onClick={props.click}>{props.content}</div>
-    )
+    return <div className={buttonClass} onClick={e => props.click(props.id)}>{props.content}</div>;
 }
 
 export default Button;

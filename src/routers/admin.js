@@ -37,7 +37,7 @@ router.get('/api/admin/home', auth, async (req, res) => {
         const admin = req.user
         const interpreters = await Interpreter.find({
             $or: [
-                { 'isVerified': false },
+                { 'isVerified': false, 'isRejected': false },
                 { 'certifications': { '$elemMatch': { isValidated: false, isRejected: false } } }
             ]
         }).limit(10)
@@ -103,6 +103,7 @@ router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
         saveInterpreter(interpreter)
         res.send()
     } catch (error) {
+        console.log(error)
         res.status(400).send(error)
     }
 })
@@ -111,7 +112,7 @@ router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
 router.patch('/api/admin/interpreters/:id/reject', auth, async (req, res) => {
     const id = req.params.id
     try {
-        const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: false })
+        const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isRejected: true })
         removeInterpreter(interpreter._id)
         res.send()
     } catch (error) {
