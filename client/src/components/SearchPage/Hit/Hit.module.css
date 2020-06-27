@@ -16,27 +16,28 @@
 
 .Hit .avatar {
     border-radius: 10px;
+    margin-left: .5rem;
     padding: .5rem;
     min-width: 120px;
     max-width: 150px;
 }
 
 .Hit .content {
-    padding: 1rem;
+    padding: .8rem;
 }
 
 .Hit .name {
     font-weight: bold;
-    font-size: 28px;
-    line-height: 35px;
+    font-size: 25px;
+    line-height: 30px;
 }
 
 .Hit .languages {
     font-size: 20px;
-    line-height: 30px;
+    line-height: 27px;
     color: #027888;
 }
 
-.Hit .location, .email {
-    line-height: 30px;
+.Hit .location, .email, .phone {
+    line-height: 22px;
 }

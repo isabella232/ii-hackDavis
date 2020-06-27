@@ -1,5 +1,7 @@
 .SearchPage {
-  margin: 0 5%;
+  margin: auto;
+  padding: 1rem;
+  max-width: 1000px;
 }
 
 .SearchPage .searchBox {

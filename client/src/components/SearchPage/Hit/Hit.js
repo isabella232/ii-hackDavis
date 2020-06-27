@@ -1,20 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Highlight } from "react-instantsearch-dom";
+import classes from './Hit.module.css';
 
 import Avatar from '../../shared/Avatar/Avatar';
 import InfoModal from '../InterpreterInfoModal/Modal/InterpreterInfoModal';
-
-import classes from './Hit.module.css';
 
 const Hit = ({ hit }) => {
     const languages = hit.languages.map((lang, index) =>
         (index !== hit.languages.length - 1) ? <span>{lang.language}, </span> : <span>{lang.language}</span>
     )
+
     return (
         <div key={`hit-${hit.objectID}`} className={classes.Hit}>
             <div className={classes.avatar}>
-                <Avatar name={hit.name} avatar={hit.avatar} size={16} />
+                <Avatar name={hit.name} avatar={hit.avatar} size={15} />
             </div>
             <div className={classes.content}>
                 <div className={classes.name}>
@@ -27,6 +27,9 @@ const Hit = ({ hit }) => {
                 <div className={classes.email}>
                     <Highlight attribute="email" hit={hit} tagName="em" />
                 </div>
+                <div className={classes.phone}>
+                    <Highlight attribute="phone" hit={hit} tagName="em" />
+                </div>
                 <div className={classes.location}>
                     <Highlight attribute="location" hit={hit} tagName="em" />
                 </div>
@@ -36,7 +39,7 @@ const Hit = ({ hit }) => {
                     avatar={hit.avatar}
                     email={hit.email}
                     location={hit.location}
-                    // phoneNumber={hit.phoneNumber}
+                    phone={hit.phone}
                     summary={hit.summary}
                     languages={hit.languages} />
             </div>

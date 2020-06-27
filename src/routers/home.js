@@ -11,8 +11,8 @@ router.get('/api/home', async (req, res) => {
             {
                 $match: {
                     'isVerified': true,
-                    'certifications.isValidated': true,
-                    'certifications.isRejected': false,
+                    // 'certifications.isValidated': true,
+                    // 'certifications.isRejected': false,
                     rating: { $gt: 2 }
                 }
             },
