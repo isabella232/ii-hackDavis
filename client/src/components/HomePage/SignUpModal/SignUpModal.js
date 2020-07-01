@@ -57,6 +57,7 @@ class SignUpModal extends Component {
         }
 
         this.closeModal = this.closeModal.bind(this);
+        this.switchToLogin = this.switchToLogin.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.changeWindow = this.changeWindow.bind(this);
         this.fileUpload = this.fileUpload.bind(this);
@@ -76,6 +77,11 @@ class SignUpModal extends Component {
     load = () => { this.setState({ loading: true }); }
 
     unload = () => { this.setState({ loading: false }); }
+
+    switchToLogin = () => {
+        this.props.switchSignUpModal();
+        this.props.openLogin();
+    }
 
     changeWindow = () => {
         const currentWindow = this.state.window;

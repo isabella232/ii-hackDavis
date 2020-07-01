@@ -42,7 +42,6 @@ class LoginModal extends Component {
 
     closeModal = () => {
         this.props.switchLoginModal();
-
     }
 
     switchToSignUp = () => {
