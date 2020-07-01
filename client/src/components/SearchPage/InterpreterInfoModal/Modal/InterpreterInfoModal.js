@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -69,7 +71,9 @@ class InterpreterInfoModal extends Component {
 
         return (
             <div>
-                <div className={classes.moreInfo} onClick={this.expandDetails}>more info</div>
+                {this.props.isLoggedIn ?
+                    <div className={classes.moreInfo} onClick={this.expandDetails}>more info</div>
+                    : null}
 
                 <Modal className={classes.Modal}
                     open={this.state.open}
@@ -94,6 +98,10 @@ class InterpreterInfoModal extends Component {
                                     <div className={classes.infoItem}>
                                         <div>Email:</div>
                                         <div>{this.props.email}</div>
+                                    </div>
+                                    <div className={classes.infoItem}>
+                                        <div>Phone Number:</div>
+                                        <div>{this.props.phone}</div>
                                     </div>
                                     <div className={classes.infoItem}>
                                         <div>Location:</div>
@@ -134,4 +142,8 @@ class InterpreterInfoModal extends Component {
     }
 }
 
-export default InterpreterInfoModal;
+const mapStateToProps = state => ({
+    isLoggedIn: state.isLoggedIn
+});
+
+export default connect(mapStateToProps)(InterpreterInfoModal);

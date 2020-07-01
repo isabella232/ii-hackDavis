@@ -1,10 +1,11 @@
+
 .Hit {
     display: flex;
     align-items: center;
     background: #FFFFFF;
     box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    margin: -15px 0 30px -35px;
+    margin-bottom: 20px;
     -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
@@ -38,6 +39,6 @@
     color: #027888;
 }
 
-.Hit .location, .email, .phone {
+.Hit .location, .email {
     line-height: 22px;
 }

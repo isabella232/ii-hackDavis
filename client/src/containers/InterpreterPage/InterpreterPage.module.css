@@ -52,6 +52,15 @@
     transform: translateX(10px);
 }
 
+.InterpreterPage .menuItem {
+    color: black;
+    margin-bottom: .5rem;
+    font-size: 18px;
+    font-weight: 500;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
 .InterpreterPage .menuItem:hover {
     color: #03a0b5;
 }
