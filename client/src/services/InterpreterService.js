@@ -23,6 +23,7 @@ export const updateInterpreterInfo = async (data) => {
     formData.append('languages', JSON.stringify(data.languages));
     formData.append('services', JSON.stringify(data.services));
     formData.append('location', data.location);
+    formData.append('phone', data.phone);
     formData.append('summary', data.summary);
     return backend.patch(endpoint, formData);
 }

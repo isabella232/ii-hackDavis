@@ -45,7 +45,11 @@
 .Modal .serviceLabel {
     font-weight: 400;
     font-size: 19px;
-    margin: 10px 0 -10px 0;
+    margin: 10px 1.5rem 0 0;
+}
+
+.Modal .serviceArea {
+    display: flex;
 }
 
 .Modal .langFieldIcons {

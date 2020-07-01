@@ -28,13 +28,13 @@ class SignUpModal extends Component {
     constructor(props) {
         super();
         this.state = {
-            // open: true,
-            // window: 2,
-            // kind: 'Interpreter',
+            open: true,
+            window: 2,
+            kind: 'Interpreter',
 
-            window: 1,
-            kind: 'Client',
-            open: props.open,
+            // window: 1,
+            // kind: 'Client',
+            // open: props.open,
 
             name: '',
             email: '',
@@ -46,6 +46,7 @@ class SignUpModal extends Component {
                 fluency: 0
             }],
             location: '',
+            phone: '',
             summary: '',
             services: {
                 Simultaneous: false,
@@ -201,10 +202,15 @@ class SignUpModal extends Component {
             alert(`Please fill out your interpreting services.`);
         }
 
+        if (this.state.location === '') {
+            check = false;
+        }
+
         if (check) {
             this.load();
             data.languages = this.state.languages;
             data.location = this.state.location;
+            data.phone = this.state.phone;
             data.services = services;
             data.summary = this.state.summary;
             signUpInterpreter(data)
@@ -352,18 +358,28 @@ class SignUpModal extends Component {
         const secondWindow = <>
             {langFields}
 
-            <div className={classes.serviceLabel}>Services:</div>
-            <FormGroup row>
-                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Simultaneous} onChange={this.changeServices} name="Simultaneous" />} label="Simultaneous" />
-                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Consecutive} onChange={this.changeServices} name="Consecutive" />} label="Consecutive" />
-                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Relating} onChange={this.changeServices} name="Relating" />} label="Relating" />
-                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Translating} onChange={this.changeServices} name="Translating" />} label="Translating" />
-            </FormGroup>
+            <div className={classes.serviceArea}>
+                <div className={classes.serviceLabel}>Services:</div>
+                <FormGroup row>
+                    <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Simultaneous} onChange={this.changeServices} name="Simultaneous" />} label="Simultaneous" />
+                    <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Consecutive} onChange={this.changeServices} name="Consecutive" />} label="Consecutive" />
+                    <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Relating} onChange={this.changeServices} name="Relating" />} label="Relating" />
+                    <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Translating} onChange={this.changeServices} name="Translating" />} label="Translating" />
+                </FormGroup>
+            </div>
 
             <TextField label="Location"
                 name="location"
                 required
                 value={this.state.location}
+                margin="dense"
+                fullWidth
+                variant="outlined"
+                onChange={this.changeInput} />
+
+            <TextField label="Phone Number"
+                name="phone"
+                value={this.state.phone}
                 margin="dense"
                 fullWidth
                 variant="outlined"
