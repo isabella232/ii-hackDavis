@@ -288,7 +288,7 @@ class InterpreterPage extends Component {
                 name={this.state.currentName}
                 title={certificate.title}
                 location={this.state.location}
-                certificateImage={certificate.url}
+                certificateImage={certificate.file}
                 isValidated={certificate.isValidated}
                 isRejected={certificate.isRejected}
                 deleteCertificate={this.deleteCertificate} />
