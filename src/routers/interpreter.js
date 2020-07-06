@@ -13,6 +13,7 @@ const router = new express.Router()
 
 router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req, res) => {
     try {
+        console.log('ye', req.body.phone)
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
         let services = [], list = JSON.parse(req.body.services)
         for (const service of list) {
@@ -26,6 +27,7 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
                 buffer: buffer,
                 url: getAvatarURL(req.params.id)
             },
+            phone: req.body.phone,
             services: services,
             summary: req.body.summary,
             languages: JSON.parse(req.body.languages)

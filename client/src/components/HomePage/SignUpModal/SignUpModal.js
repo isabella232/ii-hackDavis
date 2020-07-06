@@ -28,13 +28,13 @@ class SignUpModal extends Component {
     constructor(props) {
         super();
         this.state = {
-            open: true,
-            window: 2,
-            kind: 'Interpreter',
+            // open: true,
+            // window: 2,
+            // kind: 'Interpreter',
 
-            // window: 1,
-            // kind: 'Client',
-            // open: props.open,
+            window: 1,
+            kind: 'Client',
+            open: props.open,
 
             name: '',
             email: '',
@@ -43,7 +43,7 @@ class SignUpModal extends Component {
             avatar: null,
             languages: [{
                 language: '',
-                fluency: 0
+                fluency: 1
             }],
             location: '',
             phone: '',
@@ -149,7 +149,7 @@ class SignUpModal extends Component {
             avatar: null,
             languages: [{
                 language: '',
-                fluency: ''
+                fluency: 1
             }],
             location: '',
             summary: '',
@@ -171,7 +171,7 @@ class SignUpModal extends Component {
             .then(data => {
                 this.clearAllFields();
                 this.props.switchSignUpModal();
-                this.props.switchLoginModal();
+                this.props.openLogin();
                 this.unload();
             })
             .catch(e => {
@@ -217,7 +217,7 @@ class SignUpModal extends Component {
                 .then(data => {
                     this.clearAllFields();
                     this.props.switchSignUpModal();
-                    this.props.switchLoginModal();
+                    this.props.openLogin();
                     this.unload();
                 })
                 .catch(e => {
