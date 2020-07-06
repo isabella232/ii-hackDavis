@@ -55,6 +55,19 @@
     transition: color 0.2s ease-in-out;
 }
 
+.ClientPage .menuItem:hover {
+    color: #03a0b5;
+}
+
+.ClientPage .activeMenuItem {
+    color: #03a0b5;
+    margin-bottom: .5rem;
+    font-size: 18px;
+    font-weight: 500;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
 .ClientPage .menuItemWrapper {
     display: flex;
     align-items: center;
