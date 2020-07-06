@@ -38,12 +38,13 @@ class AdminPage extends Component {
             archivedEvents: [],
             interpreters: [],
             adminCode: '',
-            window: 1,
+            window: 0,
             eventWindow: 0,
             loading: false
         }
 
         this.loadInfo = this.loadInfo.bind(this);
+        this.loadEvents = this.loadEvents.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.submitAdminCodeForm = this.submitAdminCodeForm.bind(this);
         this.submitInfoForm = this.submitInfoForm.bind(this);
@@ -267,7 +268,7 @@ class AdminPage extends Component {
 
             <div className={classes.buttons}>
                 <Button content='Show Archive' inverted click={this.showEventArchive} />
-                <EventModal reloadData={this.loadInfo} create />
+                <EventModal reloadData={this.loadEvents} create />
             </div></>;
         const eventArchive = <>
             {this.state.archivedEvents.length ?
