@@ -51,7 +51,7 @@ class InterpreterPage extends Component {
             services: {
                 Simultaneous: false,
                 Consecutive: false,
-                Relating: false,
+                Relate: false,
                 Translating: false
             },
             rating: 0,
@@ -288,7 +288,7 @@ class InterpreterPage extends Component {
                 name={this.state.currentName}
                 title={certificate.title}
                 location={this.state.location}
-                certificateImage={certificate.file}
+                img={certificate.image}
                 isValidated={certificate.isValidated}
                 isRejected={certificate.isRejected}
                 deleteCertificate={this.deleteCertificate} />
@@ -392,7 +392,7 @@ class InterpreterPage extends Component {
             <FormGroup row>
                 <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Simultaneous} onChange={this.changeServices} name="Simultaneous" />} label="Simultaneous" />
                 <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Consecutive} onChange={this.changeServices} name="Consecutive" />} label="Consecutive" />
-                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Relating} onChange={this.changeServices} name="Relating" />} label="Relating" />
+                <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Relate} onChange={this.changeServices} name="Relate" />} label="Relate" />
                 <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Translating} onChange={this.changeServices} name="Translating" />} label="Translating" />
             </FormGroup>
 

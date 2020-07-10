@@ -6,6 +6,10 @@ const eventSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    author: {
+        type: String,
+        trim: true,
+    },
     summary: {
         type: String,
         trim: true,

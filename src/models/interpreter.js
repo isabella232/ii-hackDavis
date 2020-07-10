@@ -44,13 +44,6 @@ const interpreterSchema = new mongoose.Schema({
             max: 10
         }
     }],
-    // englishFluency: {
-    //     type: Number,
-    //     trim: true,
-    //     required: true,
-    //     min: 1,
-    //     max: 5
-    // },
     certifications: [{
         title: {
             type: String,

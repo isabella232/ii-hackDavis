@@ -58,7 +58,9 @@ class EventCard extends Component {
                     {this.props.target ?
                         <div className={classes.footer}>
                             <div className={classes.note}>
-                                {`This Event Is For ${this.props.target}.`}
+                                {`For ${this.props.target}.`}
+                                <br></br>
+                                {`Lasted Updated By ${this.props.author}.`}
                             </div>
                             <div className={classes.buttons}>
                                 {(this.props.target && this.props.past) ? (

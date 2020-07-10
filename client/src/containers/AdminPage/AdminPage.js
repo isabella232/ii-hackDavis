@@ -239,6 +239,7 @@ class AdminPage extends Component {
             return <EventCard id={event.id}
                 key={`event-${event.id}`}
                 title={event.title}
+                author={event.author}
                 date={event.date}
                 location={event.location}
                 summary={event.summary}
@@ -252,6 +253,7 @@ class AdminPage extends Component {
             return <EventCard id={event.id}
                 key={`event-${event.id}`}
                 title={event.title}
+                author={event.author}
                 date={event.date}
                 location={event.location}
                 summary={event.summary}
@@ -317,7 +319,7 @@ class AdminPage extends Component {
                         name={interpreter.name}
                         title={certificate.title}
                         location={interpreter.location}
-                        certificateImage={certificate.image} />
+                        img={certificate.image} />
                 ))}
             </div>) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;
 

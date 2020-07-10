@@ -58,7 +58,7 @@ const CertificationCard = (props) => {
             </div>
 
             <div className={certificateClass}>
-                <img alt={`${props.title} Certificate`} src={props.certificateImage} width='100%' />
+                <img alt={`${props.title} Certificate`} src={props.img} width='100%' />
 
                 <div className={classes.buttons}>
                     {!props.interpreter ? <div className={classes.footer}>

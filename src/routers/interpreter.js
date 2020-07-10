@@ -155,9 +155,9 @@ router.get('/api/interpreter/home', auth, async (req, res) => {
             certifications.push({
                 id: cert._id,
                 title: cert.title,
-                file: cert.url,
+                image: cert.file.url,
                 isValidated: cert.isValidated,
-                isRejected: cert.isRejected
+                isRejected: cert.isRejected,
             })
         }
         for (const lang of interpreter.languages) {

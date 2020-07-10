@@ -4,7 +4,6 @@ const ObjectID = require('mongodb').ObjectID
 const Admin = require('../models/admin')
 const AdminCode = require('../models/adminCode')
 const Interpreter = require('../models/interpreter')
-const Event = require('../models/event')
 const auth = require('../middleware/auth')
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveInterpreter, removeInterpreter } = require('../utils/algolia')

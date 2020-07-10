@@ -12,6 +12,7 @@ router.post('/api/event/create', auth, imgUploader.single('image'), async (req, 
         const parsedEvent = {
             _id: id,
             title: req.body.title,
+            author: req.user.name,
             date: new Date(req.body.date),
             location: req.body.location,
             summary: req.body.summary,
@@ -35,6 +36,7 @@ router.patch('/api/events/:id/edit', auth, imgUploader.single('image'), async (r
         const id = req.params.id
         const event = await Event.findById(id)
         event.title = req.body.title
+        event.author = req.user.name
         event.date = new Date(req.body.date)
         event.location = req.body.location
         event.summary = req.body.summary
@@ -67,7 +69,6 @@ router.get('/api/events/fetch', auth, async (req, res) => {
         res.status(404).send()
     }
 })
-
 
 router.get('/api/events/:id', auth, async (req, res) => {
     try {
@@ -117,7 +118,7 @@ router.patch('/api/events/:id/unarchive', auth, async (req, res) => {
     }
 })
 
-// can't use get for this route for some reason
+// can't use GET for this route for some reason
 router.post('/api/events/fetchArchive', async (req, res) => {
     try {
         const events = await Event.find({ 'isArchived': true }).sort({ date: -1 })
