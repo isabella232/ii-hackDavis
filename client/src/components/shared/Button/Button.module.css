@@ -6,6 +6,7 @@
     box-sizing: border-box;
     border-radius: 9px;
     color: white;
+    cursor: pointer;
     -webkit-transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
 }
@@ -24,6 +25,7 @@
     border-radius: 9px;
     padding: 8px;
     color: #03A0B5;
+    cursor: pointer;
     -webkit-transition: color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
 }
@@ -42,6 +44,7 @@
     color: red;
     padding: 8px;
     border-radius: 9px;
+    cursor: pointer;
     -webkit-transition: color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
 }
@@ -62,6 +65,7 @@
     border-radius: 9px;
     color: white;
     padding: 8px;
+    cursor: pointer;
     -webkit-transition: color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
 }

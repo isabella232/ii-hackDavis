@@ -44,6 +44,9 @@
 .ClientPage .menuItemWrapper {
     display: flex;
     align-items: center;
+    -webkit-transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 .ClientPage .menuItem {
