@@ -1,7 +1,6 @@
 import React from "react";
 import { connectStateResults } from "react-instantsearch/connectors";
 import { Highlight, connectHits } from 'react-instantsearch-dom';
-import { connect } from 'react-redux';
 
 import classes from './Content.module.css';
 
@@ -9,8 +8,8 @@ import Avatar from '../../shared/Avatar/Avatar';
 import InfoModal from '../InterpreterInfoModal/Modal/InterpreterInfoModal';
 
 const Hits = connectHits(({ hits }) => {
-    return (
-        hits.map(hit => {
+    return <>
+        {hits.map(hit => {
             const languages = hit.languages.map((lang, index) =>
                 (index !== hit.languages.length - 1) ? <span>{lang.language}, </span> : <span>{lang.language}</span>
             )
@@ -44,16 +43,9 @@ const Hits = connectHits(({ hits }) => {
                         languages={hit.languages} />
                 </div>
             </div>;
-        })
-    )
+        })}
+    </>
 });
-
-const mapStateToProps = state => ({
-    userKind: state.userKind,
-    isLoggedIn: state.isLoggedIn
-});
-
-connect(mapStateToProps)(Hits);
 
 const Content = ({ searchState, searchResults }) =>
     <>

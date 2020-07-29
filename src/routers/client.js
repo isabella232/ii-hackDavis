@@ -34,7 +34,7 @@ router.get('/api/client/home', auth, async (req, res) => {
             name: client.name,
             email: client.email,
             avatar: client.avatar.url,
-            bookmarks: ["Yee", "Yoo"],
+            bookmarks: client.bookmarks,
             events: events
         }
 
@@ -47,7 +47,6 @@ router.get('/api/client/home', auth, async (req, res) => {
 // update client's info
 router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async (req, res) => {
     const client = req.user
-
     try {
         if (req.file) {
             client.avatar.url = getAvatarURL(client._id)
@@ -60,5 +59,18 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
         res.status(400).send(e)
     }
 })
+
+router.patch('/api/client/bookmarkInterpreter', auth, async (req, res) => {
+    const client = req.user
+    try {
+        client.bookmarks.push(req.body.email)
+        await client.save()
+        res.send()
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+})
+
 
 module.exports = router

@@ -12,3 +12,13 @@ export const updateClientInfo = async (data) => {
     formData.append('avatar', data.avatar)
     return backend.patch(endpoint, formData);
 }
+
+export const fetchBookmarks = async () => {
+    const endpoint = 'api/client/allBookmarks';
+    return backend.get(endpoint);
+}
+
+export const bookmarkInterpreter = async (email) => {
+    const endpoint = 'api/client/bookmarkInterpreter';
+    return backend.patch(endpoint, { email: email });
+}

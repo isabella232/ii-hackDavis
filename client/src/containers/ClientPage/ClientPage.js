@@ -6,6 +6,7 @@ import Button from '../../components/shared/Button/Button';
 import TextField from '@material-ui/core/TextField';
 
 import Avatar from '../../components/shared/Avatar/Avatar';
+import Bookmark from '../../components/ClientPage/Bookmark/Bookmark';
 import EventCard from '../../components/shared/EventCard/EventCard';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
@@ -146,7 +147,10 @@ class ClientPage extends Component {
         const eventWindow = events.length ? events
             : <div className={classes.noItems}>There Is No Event Coming Up.</div>;
 
-        const bookmarkWindow = <div>bookmarks</div>
+        const bookmarkWindow = <>
+            {this.state.bookmarks.map(bookmark =>
+                <Bookmark /*name={bookmark.email}*/ email={bookmark} languages={[]} />)}
+        </>
 
         const updateWindow = <>
             <Grid container spacing={2} justify='center'>

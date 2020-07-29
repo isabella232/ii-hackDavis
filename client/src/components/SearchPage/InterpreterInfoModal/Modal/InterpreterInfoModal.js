@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 
+import classes from './InterpreterInfoModal.module.css';
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
-import classes from './InterpreterInfoModal.module.css';
 
+import Button from '../../../shared/Button/Button';
 import CertificationItem from '../CertificateItem/CertificateItem';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import ReviewModal from '../../ReviewModal/ReviewModal';
 
 import { fetchRatingAndReviews } from '../../../../services/InterpreterService';
+import { bookmarkInterpreter } from '../../../../services/ClientService';
 
 class InterpreterInfoModal extends Component {
     constructor(props) {
@@ -27,6 +29,7 @@ class InterpreterInfoModal extends Component {
         };
 
         this.reloadDetails = this.reloadDetails.bind(this);
+        this.bookmark = this.bookmark.bind(this);
     }
 
     openModal = () => {
@@ -62,12 +65,24 @@ class InterpreterInfoModal extends Component {
         this.fetchDetails();
     }
 
+    bookmark = () => {
+        bookmarkInterpreter(this.props.email)
+            .then(data => {
+
+            }).catch(e => {
+                alert('howdy error');
+            })
+    }
+
     render() {
         const languages = this.props.languages.map(lang => <div className={classes.language}>{lang.language}: {lang.fluency} </div>)
         const reviews = (this.state.reviews.length) ?
             this.state.reviews.map(review => <ReviewItem reviewerName={review.reviewerName} rating={review.rating} comment={review.comment} date={review.date} />)
             : <div className={classes.noReviews}>{this.props.name} Has No Reviews Yet.</div>;
         const certifications = this.state.certifications.map(cert => <CertificationItem title={cert.title} image={cert.image} isValidated={cert.isValidated} />)
+        // const bookmarkIcon = this.props.bookmarked ?
+        //     <BookmarkIcon color="primary" onClick={this.bookmark} />
+        //     : <BookmarkBorderIcon color="primary" onClick={this.bookmark} />;
 
         return (
             <div>
@@ -91,7 +106,9 @@ class InterpreterInfoModal extends Component {
 
                                 <Grid item xs={7} sm={7}>
                                     <div className={classes.title}>Your Interpreter</div>
-                                    <div className={classes.name}>{this.props.name}</div>
+                                    <div className={classes.name}>
+                                        {this.props.name}
+                                    </div>
                                     <div className={classes.infoItem}>
                                         <Rating value={this.state.rating} readOnly />
                                     </div>
@@ -130,6 +147,7 @@ class InterpreterInfoModal extends Component {
                                     </div>
 
                                     <div className={classes.reviewOptions}>
+                                        <Button content={'Bookmark'} click={this.bookmark} />
                                         <ReviewModal id={this.state.id} name={this.state.name} reloadDetails={this.reloadDetails} />
                                     </div>
                                 </Grid>
@@ -143,7 +161,8 @@ class InterpreterInfoModal extends Component {
 }
 
 const mapStateToProps = state => ({
-    isLoggedIn: state.isLoggedIn
+    isLoggedIn: state.isLoggedIn,
+    userKind: state.userKind
 });
 
 export default connect(mapStateToProps)(InterpreterInfoModal);
