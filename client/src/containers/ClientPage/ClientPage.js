@@ -29,7 +29,8 @@ class ClientPage extends Component {
             file: null,  // for avatar
             bookmarks: [],
             events: [],
-            window: 0,
+            // window: 0,
+            window: 1,
             loading: false
         }
 
@@ -149,7 +150,9 @@ class ClientPage extends Component {
 
         const bookmarkWindow = <>
             {this.state.bookmarks.map(bookmark =>
-                <Bookmark /*name={bookmark.email}*/ email={bookmark} languages={[]} />)}
+                <Bookmark name={bookmark.name} email={bookmark.email}
+                    languages={bookmark.languages} location={bookmark.location}
+                    phone={bookmark.phone} rating={bookmark.rating} />)}
         </>
 
         const updateWindow = <>

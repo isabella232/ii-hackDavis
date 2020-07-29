@@ -2,6 +2,7 @@ const express = require('express')
 const sharp = require('sharp')
 const Client = require('../models/client')
 const Event = require('../models/event')
+const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
 const { imgUploader, getAvatarURL } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
@@ -25,21 +26,37 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
 })
 
 // get client's home page
+/*
+ * reference: use async/await with map
+ * https://zellwk.com/blog/async-await-in-loops/
+ */
 router.get('/api/client/home', auth, async (req, res) => {
     try {
         const client = req.user
         const now = new Date()
         const events = await Event.find({ 'isArchived': false, 'forClients': true }).where('date').gte(now)
+        const promises = client.bookmarks.map(async email => {
+            const interpreter = await Interpreter.findOne({ email: email })
+            return {
+                name: interpreter.name,
+                email: interpreter.email,
+                languages: interpreter.languages,
+                location: interpreter.location.str,
+                phone: interpreter.phone,
+                rating: interpreter.rating,
+            }
+        })
+        const bookmarks = await Promise.all(promises)
         const data = {
             name: client.name,
             email: client.email,
             avatar: client.avatar.url,
-            bookmarks: client.bookmarks,
+            bookmarks: bookmarks,
             events: events
         }
-
         res.send(data)
     } catch (error) {
+        console.log(error)
         res.status(400).send(error)
     }
 })
@@ -63,7 +80,8 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
 router.patch('/api/client/bookmarkInterpreter', auth, async (req, res) => {
     const client = req.user
     try {
-        client.bookmarks.push(req.body.email)
+        const email = req.body.email
+        if (!client.bookmarks.includes(email)) client.bookmarks.push(email)
         await client.save()
         res.send()
     } catch (e) {
@@ -72,5 +90,16 @@ router.patch('/api/client/bookmarkInterpreter', auth, async (req, res) => {
     }
 })
 
+router.patch('/api/client/unbookmarkInterpreter', auth, async (req, res) => {
+    const client = req.user
+    try {
+        client.bookmarks = client.bookmarks.filter(email => email !== req.body.email)
+        await client.save()
+        res.send()
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+})
 
 module.exports = router

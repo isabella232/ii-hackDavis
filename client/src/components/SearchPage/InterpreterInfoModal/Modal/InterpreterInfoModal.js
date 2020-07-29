@@ -68,9 +68,9 @@ class InterpreterInfoModal extends Component {
     bookmark = () => {
         bookmarkInterpreter(this.props.email)
             .then(data => {
-
+                alert('Successfully Bookmarked Interpreter.')
             }).catch(e => {
-                alert('howdy error');
+                alert('Cannot Bookmark Interpreter At This Moment.');
             })
     }
 
@@ -80,9 +80,6 @@ class InterpreterInfoModal extends Component {
             this.state.reviews.map(review => <ReviewItem reviewerName={review.reviewerName} rating={review.rating} comment={review.comment} date={review.date} />)
             : <div className={classes.noReviews}>{this.props.name} Has No Reviews Yet.</div>;
         const certifications = this.state.certifications.map(cert => <CertificationItem title={cert.title} image={cert.image} isValidated={cert.isValidated} />)
-        // const bookmarkIcon = this.props.bookmarked ?
-        //     <BookmarkIcon color="primary" onClick={this.bookmark} />
-        //     : <BookmarkBorderIcon color="primary" onClick={this.bookmark} />;
 
         return (
             <div>
@@ -145,13 +142,15 @@ class InterpreterInfoModal extends Component {
                                     <div className={classes.title}>Reviews:
                                         <div className={classes.halfArea}>{reviews}</div>
                                     </div>
-
-                                    <div className={classes.reviewOptions}>
-                                        <Button content={'Bookmark'} click={this.bookmark} />
-                                        <ReviewModal id={this.state.id} name={this.state.name} reloadDetails={this.reloadDetails} />
-                                    </div>
                                 </Grid>
                             </Grid>
+
+                            <div className={classes.buttons}>
+                                {this.props.userKind === 'Client' ?
+                                    <Button content={'Bookmark'} click={this.bookmark} />
+                                    : null}
+                                <ReviewModal id={this.state.id} name={this.state.name} reloadDetails={this.reloadDetails} />
+                            </div>
                         </div>
                     </Fade>
                 </Modal>

@@ -30,6 +30,14 @@
     font-weight: bold;
     font-size: 25px;
     line-height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.Bookmark .bookmark {
+    display: flex;
+    align-items: center;
+    margin-left: .5rem;
 }
 
 .Bookmark .languages {
@@ -38,6 +46,6 @@
     color: #027888;
 }
 
-.Bookmark .location, .email {
+.Bookmark .location, .email, .phone {
     line-height: 22px;
 }

@@ -56,7 +56,7 @@
     border: 1px solid #03A0B5;
 }
 
-.Modal .reviewOptions {
+.Modal .buttons {
     margin: .5rem;
     display: flex;
     justify-content: flex-end;

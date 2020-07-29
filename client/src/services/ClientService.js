@@ -22,3 +22,8 @@ export const bookmarkInterpreter = async (email) => {
     const endpoint = 'api/client/bookmarkInterpreter';
     return backend.patch(endpoint, { email: email });
 }
+
+export const unbookmarkInterpreter = async (email) => {
+    const endpoint = 'api/client/unbookmarkInterpreter';
+    return backend.patch(endpoint, { email: email });
+}
