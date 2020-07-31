@@ -11,6 +11,10 @@ import EventCard from '../../components/shared/EventCard/EventCard';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import { fetchClientPage, updateClientInfo } from '../../services/ClientService';
 import { updateUserPassword } from '../../services/UserService';
@@ -24,6 +28,7 @@ class ClientPage extends Component {
             email: '',
             currentPassword: '',
             newPassword: '',
+            showNewPassword: '',
             confirmNewPassword: '',
             avatar: '',
             file: null,  // for avatar
@@ -39,6 +44,7 @@ class ClientPage extends Component {
         this.fileUpload = this.fileUpload.bind(this);
         this.submitInfoForm = this.submitInfoForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
+        this.clickShowNewPassword = this.clickShowNewPassword.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
@@ -59,6 +65,12 @@ class ClientPage extends Component {
             }).catch(error => {
                 console.log(error);
             })
+    }
+
+    clickShowNewPassword = (event) => {
+        event.preventDefault();
+        const val = !this.state.showNewPassword
+        this.setState({ showNewPassword: val });
     }
 
     fileUpload = (fileItem) => {
@@ -203,13 +215,20 @@ class ClientPage extends Component {
                 <Grid item xs={6}>
                     <TextField label="New Password"
                         name="newPassword"
-                        type="password"
+                        type={this.state.showNewPassword ? 'text' : 'password'}
                         required
                         margin="dense"
                         value={this.state.newPassword}
                         fullWidth
                         variant="outlined"
-                        onChange={this.changeInput} />
+                        onChange={this.changeInput}
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">
+                                <IconButton onClick={this.clickShowNewPassword}>
+                                    {this.state.showNewPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        }} />
                 </Grid>
                 <Grid item xs={6}>
                     <TextField label="Confirm New Password"

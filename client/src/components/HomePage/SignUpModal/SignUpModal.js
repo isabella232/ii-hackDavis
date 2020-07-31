@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import classes from './SignUpModal.module.css';
 
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -57,7 +61,9 @@ class SignUpModal extends Component {
             loading: false
         }
 
+        this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.clickShowPassword = this.clickShowPassword.bind(this);
         this.switchToLogin = this.switchToLogin.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.changeWindow = this.changeWindow.bind(this);
@@ -78,6 +84,12 @@ class SignUpModal extends Component {
     load = () => { this.setState({ loading: true }); }
 
     unload = () => { this.setState({ loading: false }); }
+
+    clickShowPassword = (event) => {
+        event.preventDefault();
+        const val = !this.state.showPassword
+        this.setState({ showPassword: val });
+    }
 
     switchToLogin = () => {
         this.props.switchSignUpModal();
@@ -146,6 +158,7 @@ class SignUpModal extends Component {
             email: '',
             password: '',
             confirmPassword: '',
+            showPassword: '',
             avatar: null,
             languages: [{
                 language: '',
@@ -288,13 +301,20 @@ class SignUpModal extends Component {
                 <Grid item xs={6}>
                     <TextField label="Password"
                         name="password"
-                        type="password"
+                        type={this.state.showPassword ? 'text' : 'password'}
                         required
                         margin="dense"
                         value={this.state.password}
                         fullWidth
                         variant="outlined"
-                        onChange={this.changeInput} />
+                        onChange={this.changeInput}
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">
+                                <IconButton onClick={this.clickShowPassword}>
+                                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        }} />
                     <TextField label="Confirm Password"
                         name="confirmPassword"
                         type="password"

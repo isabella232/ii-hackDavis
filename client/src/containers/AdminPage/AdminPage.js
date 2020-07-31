@@ -10,6 +10,10 @@ import Button from '../../components/shared/Button/Button';
 import EventModal from '../../components/AdminPage/EventModal/EventModal';
 import TextField from '@material-ui/core/TextField';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
@@ -30,6 +34,7 @@ class AdminPage extends Component {
             email: '',
             currentPassword: '',
             newPassword: '',
+            showNewPassword: '',
             confirmNewPassword: '',
             avatar: '',
             file: null,  // for avatar
@@ -55,11 +60,18 @@ class AdminPage extends Component {
         this.hideEventArchive = this.hideEventArchive.bind(this);
         this.clickRejectInterpreter = this.clickRejectInterpreter.bind(this);
         this.clickVerifyInterpreter = this.clickVerifyInterpreter.bind(this);
+        this.clickShowNewPassword = this.clickShowNewPassword.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
 
     unload = () => { this.setState({ loading: false }); }
+
+    clickShowNewPassword = (event) => {
+        event.preventDefault();
+        const val = !this.state.showNewPassword
+        this.setState({ showNewPassword: val });
+    }
 
     loadInfo = () => {
         fetchInfo()
@@ -371,13 +383,20 @@ class AdminPage extends Component {
                 <Grid item xs={6}>
                     <TextField label="New Password"
                         name="newPassword"
-                        type="password"
+                        type={this.state.showNewPassword ? 'text' : 'password'}
                         required
                         margin="dense"
                         value={this.state.newPassword}
                         fullWidth
                         variant="outlined"
-                        onChange={this.changeInput} />
+                        onChange={this.changeInput}
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">
+                                <IconButton onClick={this.clickShowNewPassword}>
+                                    {this.state.showNewPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        }} />
                 </Grid>
                 <Grid item xs={6}>
                     <TextField label="Confirm New Password"
