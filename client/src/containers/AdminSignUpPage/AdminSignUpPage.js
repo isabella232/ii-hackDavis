@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import classes from './AdminSignUpPage.module.css';
+
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import Button from '../../components/shared/Button/Button';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
@@ -17,13 +22,29 @@ class AdminSignUpPage extends Component {
             password: '',
             confirmPassword: '',
             avatar: null,
-            adminCode: ''
+            adminCode: '',
+            showPassword: false,
+            showAdminCode: false
         }
 
+        this.clickShowPassword = this.clickShowPassword.bind(this);
+        this.clickShowAdminCode = this.clickShowAdminCode.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.fileUpload = this.fileUpload.bind(this);
         this.submitForm = this.submitForm.bind(this);
     }
+
+    clickShowPassword = (event) => {
+        event.preventDefault();
+        const val = !this.state.showPassword
+        this.setState({ showPassword: val });
+    }
+
+    clickShowAdminCode = (event) => {
+        event.preventDefault();
+        const val = !this.state.showAdminCode
+        this.setState({ showAdminCode: val });
+    };
 
     changeInput = (e) => {
         e.preventDefault();
@@ -109,13 +130,21 @@ class AdminSignUpPage extends Component {
                         <Grid item xs={6}>
                             <TextField label="Password"
                                 name="password"
-                                type="password"
+                                type={this.state.showPassword ? 'text' : 'password'}
                                 required
                                 margin="dense"
                                 value={this.state.password}
                                 fullWidth
                                 variant="outlined"
-                                onChange={this.changeInput} />
+                                onChange={this.changeInput}
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="end">
+                                        <IconButton onClick={this.clickShowPassword}>
+                                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }}
+                            />
                             <TextField label="Confirm Password"
                                 name="confirmPassword"
                                 type="password"
@@ -130,12 +159,20 @@ class AdminSignUpPage extends Component {
 
                     <TextField label="Admin Code"
                         name="adminCode"
+                        type={this.state.showAdminCode ? 'text' : 'password'}
                         required
                         margin="dense"
                         value={this.state.adminCode}
                         fullWidth
                         variant="outlined"
-                        onChange={this.changeInput} />
+                        onChange={this.changeInput}
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">
+                                <IconButton onClick={this.clickShowAdminCode}>
+                                    {this.state.showAdminCode ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        }} />
 
                     <div className={classes.fileUpload}>
                         <div className={classes.label}>Avatar</div>
