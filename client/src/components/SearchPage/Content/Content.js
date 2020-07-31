@@ -36,6 +36,7 @@ const Hits = connectHits(({ hits }) => {
                     <InfoModal key={`moreInfo-${hit.objectID}`} id={hit.objectID}
                         name={hit.name}
                         avatar={hit.avatar}
+                        services={hit.services}
                         email={hit.email}
                         location={hit.location}
                         phone={hit.phone}

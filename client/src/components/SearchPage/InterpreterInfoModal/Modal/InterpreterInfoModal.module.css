@@ -25,8 +25,30 @@
     margin: 1rem 2rem;
 }
 
+.Modal .rating {
+    margin-bottom: 1rem;
+}
+
 .Modal .language {
-    margin-left: 2rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Modal .infoTitle {
+    color: #027888;
+    font-weight: 600;
+}
+
+.Modal .name {
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 40px;
+}
+
+.Modal .verifyIcon {
+    margin-left: .5rem;
 }
 
 .Modal .title {
@@ -35,20 +57,32 @@
     color: #027888;
 }
 
-.Modal .name {
-    font-weight: bold;
-    font-size: 30px;
-    line-height: 54px;
-}
-
 .Modal .infoItem {
     font-weight: 500;
     font-size: 18px;
-    line-height: 30px;
+    line-height: 28px;
     color: #5A4F5A;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.Modal .mtlInfoItem {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+    color: #5A4F5A;
+}
+
+.Modal .mtlContent {
+    margin-left: 1.5rem;
+    margin-top: -.2rem;
+}
+
+.Modal .scale {
+    color: orangered;
+    font-size: 14px;
+    float: right;
 }
 
 .Modal .horzLine {
@@ -63,9 +97,15 @@
 }
 
 .Modal .halfArea {
-    height: 200px;
+    max-height: 120px;
     overflow-y: scroll;
 }
+
+.Modal .infoSection {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
 
 .moreInfo {
     margin-top: 1rem;

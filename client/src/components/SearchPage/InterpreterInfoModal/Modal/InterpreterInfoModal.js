@@ -7,6 +7,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import Button from '../../../shared/Button/Button';
 import CertificationItem from '../CertificateItem/CertificateItem';
@@ -75,7 +76,11 @@ class InterpreterInfoModal extends Component {
     }
 
     render() {
-        const languages = this.props.languages.map(lang => <div className={classes.language}>{lang.language}: {lang.fluency} </div>)
+        const services = this.props.services.map((service, i) => (i < this.props.services.length - 1) ? service + ', ' : service);
+        const languages = this.props.languages.map((lang, i) => {
+            const str = lang.language + ' (' + lang.fluency + ')';
+            return (i < this.props.languages.length - 1) ? str + ', ' : str;
+        });
         const reviews = (this.state.reviews.length) ?
             this.state.reviews.map(review => <ReviewItem reviewerName={review.reviewerName} rating={review.rating} comment={review.comment} date={review.date} />)
             : <div className={classes.noReviews}>{this.props.name} Has No Reviews Yet.</div>;
@@ -102,28 +107,41 @@ class InterpreterInfoModal extends Component {
                                 </Grid>
 
                                 <Grid item xs={7} sm={7}>
-                                    <div className={classes.title}>Your Interpreter</div>
                                     <div className={classes.name}>
                                         {this.props.name}
+                                        <CheckCircleIcon className={classes.verifyIcon}
+                                            fontSize="small" color="primary" />
                                     </div>
                                     <div className={classes.infoItem}>
-                                        <Rating value={this.state.rating} readOnly />
+                                        <Rating className={classes.rating}
+                                            value={this.state.rating} readOnly />
                                     </div>
-                                    <div className={classes.infoItem}>
-                                        <div>Email:</div>
-                                        <div>{this.props.email}</div>
-                                    </div>
-                                    <div className={classes.infoItem}>
-                                        <div>Phone Number:</div>
-                                        <div>{this.props.phone}</div>
-                                    </div>
-                                    <div className={classes.infoItem}>
-                                        <div>Location:</div>
-                                        <div>{this.props.location}</div>
-                                    </div>
-                                    <div className={classes.infoItem}>
-                                        <div>Languages:
-                                        <div>{languages}</div>
+                                    <div className={classes.infoSection}>
+                                        <div className={classes.infoItem}>
+                                            <div className={classes.infoTitle}>Email</div>
+                                            {this.props.email}
+                                        </div>
+                                        <div className={classes.infoItem}>
+                                            <div className={classes.infoTitle}>Phone Number</div>
+                                            {this.props.phone}
+                                        </div>
+                                        <div className={classes.infoItem}>
+                                            <div className={classes.infoTitle}>Location</div>
+                                            {this.props.location}
+                                        </div>
+                                        <div className={classes.mtlInfoItem}>
+                                            <div className={classes.infoTitle}>Services</div>
+                                            <div className={classes.mtlContent}>{services}</div>
+                                        </div>
+                                        <div className={classes.mtlInfoItem}>
+                                            <div className={classes.infoTitle}>Language (Fluency)
+                                            <span className={classes.scale}> *scale of 1-5</span>
+                                            </div>
+                                            <div className={classes.mtlContent}>{languages}</div>
+                                        </div>
+                                        <div className={classes.mtlInfoItem}>
+                                            <div className={classes.infoTitle}>Summary</div>
+                                            <div className={classes.mtlContent}>{this.props.summary}</div>
                                         </div>
                                     </div>
                                 </Grid>

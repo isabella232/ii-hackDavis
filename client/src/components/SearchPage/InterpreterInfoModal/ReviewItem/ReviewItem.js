@@ -1,6 +1,7 @@
 import React from 'react';
-import Rating from '@material-ui/lab/Rating/Rating';
 import classes from './ReviewItem.module.css';
+
+import Rating from '@material-ui/lab/Rating/Rating';
 
 const ReviewItem = (props) => {
     const date = new Date(props.date);
@@ -9,7 +10,7 @@ const ReviewItem = (props) => {
     return (
         <div className={classes.ReviewItem}>
             <div className={classes.header}>
-                <div><Rating value={props.rating} readOnly /></div>
+                <div><Rating size="small" value={props.rating} readOnly /></div>
                 <div><emphasize>{parsedDate}</emphasize></div>
             </div>
             <div className={classes.comment}>
