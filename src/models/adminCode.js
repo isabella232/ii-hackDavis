@@ -10,44 +10,37 @@ const adminCodeSchema = new mongoose.Schema({
     }
 })
 
-// find admin code by token
-// userSchema.statics.findByToken = async (token) => {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
-//     const adminCode = await AdminCode.findOne({ _id: decoded._id })
-//     if (!adminCode) {
-//         throw new Error('No Admin Code Found.')
-//     }
+adminCodeSchema.statics.checkMatch = async (code) => {
+    const adminCodes = await AdminCode.find({})
 
-//     return adminCode
-// }
+    if (!adminCodes) throw new Error('No admin codes exist.')
 
-// checks that the admin code exists in database
-adminCodeSchema.statics.checkMatch = async (adminCode) => {
-    const codes = await AdminCode.find({})
-    let isMatch = false
-
-    if (!codes) {
-        throw new Error('No codes exist.')
+    for (const adminCode of adminCodes) {
+        let isMatch = await bcrypt.compare(code, adminCode.code)
+        if (isMatch) return true
     }
 
-    for (const code in codes) {
-        isMatch = await bcrypt.compare(code, adminCode.code)
-
-        if (isMatch) {
-            return true
-        }
-    }
-
-    return false
+    throw new Error('No matched admin codes.')
 }
+
+adminCodeSchema.statics.isNew = async (code) => {
+    const adminCodes = await AdminCode.find({})
+
+    for (const adminCode of adminCodes) {
+        let isMatch = await bcrypt.compare(code, adminCode.code)
+        if (isMatch) throw new Error('Admin code already existed.')
+    }
+
+    return true
+}
+
 
 // hash the plain text pw before saving
 adminCodeSchema.pre('save', async function (next) {
     const adminCode = this
 
-    if (adminCode.isModified('code')) {
+    if (adminCode.isModified('code'))
         adminCode.code = await bcrypt.hash(adminCode.code, 8)
-    }
 
     next()
 })

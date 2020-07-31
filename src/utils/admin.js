@@ -27,26 +27,6 @@ const getToValidate = (interpreters) => {
     return toValidate
 }
 
-const checkAdminCode = async (code) => {
-    const adminCodes = await AdminCode.find({})
-    let isMatch = false
-
-    if (!adminCodes) {
-        throw new Error('No admin codes exist.')
-    }
-
-    for (const adminCode of adminCodes) {
-        isMatch = await bcrypt.compare(code, adminCode.code)
-
-        if (isMatch) {
-            return true
-        }
-    }
-
-    throw new Error('No matched admin codes.')
-}
-
 module.exports = {
     getToValidate,
-    checkAdminCode
 }

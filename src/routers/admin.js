@@ -7,7 +7,7 @@ const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
 const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
 const { saveInterpreter, removeInterpreter } = require('../utils/algolia')
-const { getToValidate, checkAdminCode } = require('../utils/admin')
+const { getToValidate } = require('../utils/admin')
 const { imgUploader } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo } = require('../utils/user')
@@ -17,7 +17,7 @@ const router = new express.Router()
 // create admin account
 router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) => {
     try {
-        await checkAdminCode(req.body.adminCode)
+        await AdminCode.checkAdminCode(req.body.adminCode)
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
         const info = fillSignupInfo(req.body, buffer)
         const admin = new Admin(info)
@@ -26,6 +26,7 @@ router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) 
         await admin.save()
         res.status(201).send()
     } catch (e) {
+        console.log(e)
         res.status(400).send({ error: e.message })
     }
 })
@@ -120,11 +121,11 @@ router.patch('/api/admin/interpreters/:id/reject', auth, async (req, res) => {
 })
 
 // create an admin code
-router.post('/api/admin/code/create', async (req, res) => {
-    // router.post('/api/admin/code/create', auth, async (req, res) => {
+router.post('/api/admin/code/create', auth, async (req, res) => {
     const admin = req.user
     try {
-        // await admin.isAdmin()
+        await admin.isAdmin()
+        await AdminCode.isNew(req.body.adminCode)
         const adminCode = new AdminCode({ code: req.body.adminCode })
         await adminCode.save()
         res.status(201).send()

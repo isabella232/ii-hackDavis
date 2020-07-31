@@ -18,6 +18,7 @@ const parseInterpreter = (interpreter) => {
         avatar: interpreter.avatar.url,
         email: interpreter.email,
         languages: languagues,
+        services: interpreter.services,
         location: interpreter.location.str,
         phone: interpreter.phone,
         summary: interpreter.summary,

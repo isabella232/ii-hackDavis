@@ -68,9 +68,9 @@ const interpreterSchema = new mongoose.Schema({
             default: false
         },
     }],
-    services: {
-        type: Array,
-    },
+    services: [{
+        type: String,
+    }],
     rating: {
         type: Number,
         min: 1,
