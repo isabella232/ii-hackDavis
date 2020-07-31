@@ -11,6 +11,7 @@ import AdminPage from "../../containers/AdminPage/AdminPage";
 import AdminSignUpPage from "../../containers/AdminSignUpPage/AdminSignUpPage";
 import InterpreterPage from '../../containers/InterpreterPage/InterpreterPage';
 import ClientPage from '../../containers/ClientPage/ClientPage';
+import AccountVerifyPage from '../../containers/AccountVerifyPage/AccountVerifyPage';
 
 import { withAuth } from '../../components/HOC/withAuth';
 
@@ -28,6 +29,7 @@ const Page = () => {
           <Route path="/client" component={withAuth(ClientPage)} />
           <Route path="/search" component={SearchPage} />
           <Route path="/contactus" component={ContactUsPage} />
+          <Route path="/user/:id/verify" component={AccountVerifyPage} />
         </Switch>
       </main>
 

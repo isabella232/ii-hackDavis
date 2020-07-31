@@ -2,12 +2,14 @@ const sgMail = require('@sendgrid/mail')
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendWelcomeEmail = (email, name) => {
+// replace from email with an offical email
+
+const sendWelcomeEmail = (email, name, id) => {
     sgMail.send({
         to: email,
-        from: 'mxthu@ucdavis.edu',
-        subject: 'welcome to the app',
-        text: `Welcome to the app, ${name}. Let me know how you get along.`
+        from: 'test@example.com',
+        subject: 'Welcome to Indigenous Interpreters!',
+        text: `Welcome to Indigenous Interpreters, ${name}. Please click on the attached link to verify your account.\n ${process.env.PROD_FRONTEND_URL}/user/${id}/verify`
     })
 }
 

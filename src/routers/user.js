@@ -40,6 +40,19 @@ router.post('/api/user/logout', auth, async (req, res) => {
     }
 })
 
+// verify account
+router.post('/api/user/:id/verifyAccount', async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate({ _id: req.params.id }, { isOfficial: true })
+        await user.save()
+        res.send()
+    } catch (e) {
+        console.log(e)
+        res.status(500).send()
+    }
+})
+
+// check authentication when app starts
 router.post('/api/user/authenticate', auth, async (req, res) => {
     try {
         const data = {

@@ -16,7 +16,7 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
         const info = fillSignupInfo(req.body, buffer)
         const client = new Client(info)
-        sendWelcomeEmail(client.email, client.name)
+        sendWelcomeEmail(client.email, client.name, client._id.toString())
         await client.save()
         res.status(201).send()
     } catch (e) {

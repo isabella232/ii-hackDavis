@@ -59,3 +59,7 @@ export const updateUserPassword = async (data) => {
     return backend.patch(endpoint, data);
 }
 
+export const verifyAccount = async (id) => {
+    const endpoint = `api/user/${id}/verifyAccount`;
+    return backend.post(endpoint);
+}
