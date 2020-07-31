@@ -17,12 +17,11 @@ const router = new express.Router()
 // create admin account
 router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) => {
     try {
-        await AdminCode.checkAdminCode(req.body.adminCode)
+        await AdminCode.checkMatch(req.body.adminCode)
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
         const info = fillSignupInfo(req.body, buffer)
         const admin = new Admin(info)
         sendWelcomeEmail(admin.email, admin.name)
-        const token = await admin.generateAuthToken()
         await admin.save()
         res.status(201).send()
     } catch (e) {
