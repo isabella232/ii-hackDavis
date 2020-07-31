@@ -295,6 +295,7 @@ class InterpreterPage extends Component {
 
         const certificates = this.state.certifications.map(certificate => (
             <CertificationCard key={`${certificate.id}`}
+                interpreter
                 id={certificate.id}
                 avatar={this.state.avatar}
                 name={this.state.currentName}
