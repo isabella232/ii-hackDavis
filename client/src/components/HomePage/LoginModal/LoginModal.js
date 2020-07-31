@@ -6,6 +6,10 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import Button from '../../shared/Button/Button';
 
@@ -18,12 +22,14 @@ class LoginModal extends Component {
             open: props.open,
             email: '',
             password: '',
+            showPassword: false,
             loading: false
         }
 
         this.closeModal = this.closeModal.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.submitForm = this.submitForm.bind(this);
+        this.clickShowPassword = this.clickShowPassword.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
@@ -44,6 +50,12 @@ class LoginModal extends Component {
         this.props.switchLoginModal();
     }
 
+    clickShowPassword = (event) => {
+        event.preventDefault();
+        const val = !this.state.showPassword
+        this.setState({ showPassword: val });
+    }
+
     switchToSignUp = () => {
         this.props.switchLoginModal();
         this.props.openSignUp();
@@ -52,6 +64,10 @@ class LoginModal extends Component {
     changeInput = (e) => {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    clearAllFields = () => {
+        this.setState({ email: null, password: null, showPassword: false });
     }
 
     submitForm = async () => {
@@ -67,6 +83,7 @@ class LoginModal extends Component {
             }
             signIn(data)
                 .then(data => {
+                    this.clearAllFields();
                     this.props.processLogin(data.userKind);
                     this.unload();
                 })
@@ -108,14 +125,21 @@ class LoginModal extends Component {
                             onChange={this.changeInput} />
                         <TextField label="Password"
                             name="password"
-                            type="password"
+                            type={this.state.showPassword ? 'text' : 'password'}
                             required
                             margin="dense"
-                            value={this.props.location}
+                            value={this.state.password}
                             fullWidth
                             variant="outlined"
                             onChange={this.changeInput}
-                            onKeyDown={this.pressEnter} />
+                            onKeyDown={this.pressEnter}
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">
+                                    <IconButton onClick={this.clickShowPassword}>
+                                        {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }} />
 
                         <div className={classes.footer}>
                             <div>
@@ -134,3 +158,4 @@ class LoginModal extends Component {
 }
 
 export default LoginModal;
+

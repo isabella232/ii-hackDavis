@@ -32,7 +32,7 @@ const Bookmark = (props) => {
 
     return <div key={`props-${props.objectID}`} className={classes.Bookmark}>
         <div className={classes.avatar}>
-            <Avatar name={props.name} avatar={props.avatar} size={15} />
+            <Avatar name={props.name} avatar={props.avatar} size={14} />
         </div>
         <div className={classes.content}>
             <div className={classes.name}>
@@ -41,7 +41,7 @@ const Bookmark = (props) => {
                     {bookmarkIcon}
                 </div>
             </div>
-            <Rating value={props.rating} readOnly />
+            <Rating value={props.rating} readOnly size='small' />
 
             <div className={classes.languages}>
                 {languages}
