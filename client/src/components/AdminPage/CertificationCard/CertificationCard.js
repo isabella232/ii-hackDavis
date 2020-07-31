@@ -62,7 +62,7 @@ const CertificationCard = (props) => {
 
                 <div className={classes.buttons}>
                     {!props.interpreter ? <div className={classes.footer}>
-                        <Button content='Reject' inverted click={rejectClicked} />
+                        <Button content='Reject' invertedDelete click={rejectClicked} />
                         <Button content='Verify' click={verifyClicked} />
                     </div>
                         : <DeleteModal clickDelete={props.deleteCertificate} id={props.id}

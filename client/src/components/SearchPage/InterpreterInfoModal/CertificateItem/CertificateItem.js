@@ -1,6 +1,7 @@
 import React from 'react';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import classes from './CertificateItem.module.css';
+
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import CertificateModal from '../../CertificateModal/CertificateModal';
 

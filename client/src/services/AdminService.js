@@ -5,6 +5,11 @@ export const fetchInfo = async () => {
     return backend.get(endpoint);
 }
 
+export const fetchToReviews = async () => {
+    const endpoint = `api/admin/allToReviews`;
+    return backend.get(endpoint);
+}
+
 export const validateCertificate = async (id) => {
     const endpoint = `api/admin/certificates/${id}/validate`;
     return backend.patch(endpoint);

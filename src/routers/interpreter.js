@@ -4,6 +4,7 @@ const ObjectID = require('mongodb').ObjectID
 const Event = require('../models/event')
 const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
+const { saveInterpreter } = require('../utils/algolia')
 const { imgUploader, getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
 const { getAvatarURL } = require('../utils/image')
@@ -209,6 +210,7 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
 
         await interpreter.generateCoordinates(req.body.location) // update location
         await interpreter.save()
+        saveInterpreter(interpreter)
         res.send()
     } catch (e) {
         res.status(400).send(e)

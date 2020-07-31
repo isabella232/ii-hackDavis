@@ -207,7 +207,7 @@ class InterpreterPage extends Component {
             };
             uploadCertificate(data)
                 .then(data => {
-                    this.setState({ title: '', certificate: null });
+                    this.setState({ title: '' });
                     this.loadData();
                     this.unload();
                 }).catch(error => {

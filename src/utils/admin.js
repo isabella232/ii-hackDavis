@@ -1,6 +1,3 @@
-const bcrypt = require('bcryptjs')
-const AdminCode = require('../models/adminCode')
-
 const getToValidate = (interpreters) => {
     const toValidate = interpreters.map(interpreter => {
         const unvalidatedCertificates = []
@@ -21,6 +18,8 @@ const getToValidate = (interpreters) => {
             avatar: interpreter.avatar.url,
             location: interpreter.location.str,
             unvalidatedCertificates: unvalidatedCertificates,
+            isVerified: interpreter.isVerified,
+            isRejected: interpreter.isRejected
         }
     })
 

@@ -14,6 +14,8 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
@@ -21,7 +23,7 @@ import FileUploader from '../../components/shared/FileUploader/FileUploader';
 
 import {
     fetchInfo, createAdminCode, updateAdminInfo, fetchEventArchive, fetchEvents,
-    rejectInterpreter, verifyInterpreter
+    rejectInterpreter, verifyInterpreter, fetchToReviews
 } from '../../services/AdminService';
 import { updateUserPassword } from '../../services/UserService';
 
@@ -43,12 +45,14 @@ class AdminPage extends Component {
             archivedEvents: [],
             interpreters: [],
             adminCode: '',
-            window: 0,
+            // window: 0,
+            window: 1,
             eventWindow: 0,
             loading: false
         }
 
         this.loadInfo = this.loadInfo.bind(this);
+        this.loadToReviews = this.loadToReviews.bind(this);
         this.loadEvents = this.loadEvents.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.submitAdminCodeForm = this.submitAdminCodeForm.bind(this);
@@ -81,7 +85,18 @@ class AdminPage extends Component {
                     currentName: data.name,
                     email: data.email,
                     avatar: data.avatar,
-                    interpreters: data.toValidate
+                })
+            }).catch(error => {
+                console.log(error);
+            })
+        this.loadToReviews();
+    }
+
+    loadToReviews = () => {
+        fetchToReviews()
+            .then(data => {
+                this.setState({
+                    interpreters: data
                 })
             }).catch(error => {
                 console.log(error);
@@ -214,7 +229,7 @@ class AdminPage extends Component {
         this.load();
         rejectInterpreter(id)
             .then(data => {
-                this.loadInfo();
+                this.loadToReviews();
                 this.unload();
             })
             .catch(e => {
@@ -227,7 +242,7 @@ class AdminPage extends Component {
         this.load();
         verifyInterpreter(id)
             .then(data => {
-                this.loadInfo();
+                this.loadToReviews();
                 this.unload();
             })
             .catch(e => {
@@ -312,6 +327,10 @@ class AdminPage extends Component {
                         <div>
                             <div className={classes.infoItem}>
                                 <strong>{interpreter.name}</strong>
+                                {interpreter.isVerified ? <CheckCircleIcon className={classes.verifyIcon}
+                                    fontSize="small" color="primary" /> : null}
+                                {interpreter.isRejected ? <CancelIcon className={classes.verifyIcon}
+                                    fontSize="small" color="error" /> : null}
                             </div>
                             <div className={classes.infoItem}>
                                 {interpreter.location}
@@ -320,8 +339,14 @@ class AdminPage extends Component {
                     </div>
 
                     <div>
-                        <Button content="Reject" id={interpreter.id} invertedDelete click={this.clickRejectInterpreter} />
-                        <Button content="Verify" id={interpreter.id} click={this.clickVerifyInterpreter} />
+                        {!interpreter.isRejected ?
+                            <Button content="Reject" id={interpreter.id} invertedDelete
+                                click={this.clickRejectInterpreter} />
+                            : null}
+                        {!interpreter.isVerified ?
+                            <Button content="Verify" id={interpreter.id}
+                                click={this.clickVerifyInterpreter} />
+                            : null}
                     </div>
                 </div>
                 {interpreter.unvalidatedCertificates.map(certificate => (
