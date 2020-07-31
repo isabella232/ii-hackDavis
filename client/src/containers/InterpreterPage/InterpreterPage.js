@@ -322,12 +322,12 @@ class InterpreterPage extends Component {
         </div>
 
         const reviewWindow = <div className={classes.reviewWindow}>
-            {this.state.reviews.map(review => {
+            {this.state.reviews.length ? this.state.reviews.map(review => {
                 return <div className={classes.reviewCard}>
                     <ReviewItem reviewerName={review.reviewerName} comment={review.comment}
                         date={review.date} rating={review.rating} />
                 </div>
-            })}
+            }) : <div className={classes.noItems}>There Is No Reviews Yet.</div>}
         </div >;
 
         const addIcon = <AddIcon className={classes.langFieldIcon} color="primary" onClick={this.pushLangField} />;

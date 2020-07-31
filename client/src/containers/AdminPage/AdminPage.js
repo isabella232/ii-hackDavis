@@ -45,8 +45,7 @@ class AdminPage extends Component {
             archivedEvents: [],
             interpreters: [],
             adminCode: '',
-            // window: 0,
-            window: 1,
+            window: 0,
             eventWindow: 0,
             loading: false
         }
@@ -87,7 +86,6 @@ class AdminPage extends Component {
                     avatar: data.avatar,
                 })
             }).catch(error => {
-                console.log(error);
             })
         this.loadToReviews();
     }
@@ -99,7 +97,6 @@ class AdminPage extends Component {
                     interpreters: data
                 })
             }).catch(error => {
-                console.log(error);
             })
     }
 
@@ -111,7 +108,6 @@ class AdminPage extends Component {
                     upcomingEvents: data.upcomingEvents,
                 })
             }).catch(error => {
-                console.log(error);
             })
     }
 

@@ -153,7 +153,6 @@ class SignUpModal extends Component {
             window: 1,
             kind: 'Client',
             open: this.props.open,
-
             name: '',
             email: '',
             password: '',
@@ -217,6 +216,10 @@ class SignUpModal extends Component {
 
         if (this.state.location === '') {
             check = false;
+            alert(`Please fill out your location.`);
+        } else if (this.state.phone !== '' && !/\d{3}-\d{3}-\d{4}/.test(this.state.phone)) {
+            check = false;
+            alert(`Please format your phone number correctly.`);
         }
 
         if (check) {
@@ -248,7 +251,7 @@ class SignUpModal extends Component {
         } else if (!this.state.avatar) {
             alert(`Please upload your avatar.`);
         } else if (this.state.password !== this.state.confirmPassword) {
-            alert(`Please check your password.`);
+            alert(`Passwords do not match.`);
         } else if (this.state.length < 8 || this.state.confirmPassword.length < 8) {
             alert(`Password must be at least 8 characters.`);
         } else {
@@ -397,7 +400,7 @@ class SignUpModal extends Component {
                 variant="outlined"
                 onChange={this.changeInput} />
 
-            <TextField label="Phone Number"
+            <TextField label="Phone Number (###-###-####)"
                 name="phone"
                 value={this.state.phone}
                 margin="dense"
