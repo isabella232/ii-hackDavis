@@ -4,35 +4,80 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // replace from email with an offical email
 
-const sendWelcomeEmail = (email, name, id) => {
-    sgMail.send({
-        to: email,
-        from: 'test@example.com',
-        subject: 'Welcome to Indigenous Interpreters!',
-        text: `Welcome to Indigenous Interpreters, ${name}. Please click on the attached link to verify your account.\n ${process.env.PROD_FRONTEND_URL}/user/${id}/verify`
-    })
+const sendWelcomeEmail = async (email, name, id) => {
+    try {
+        const msg = {
+            to: email,
+            from: process.env.HOST_EMAIL,
+            subject: 'Welcome to Indigenous Interpreters!',
+            text: `Welcome to Indigenous Interpreters, ${name}. Please click on the attached link to verify your account.\n ${process.env.PROD_FRONTEND_URL}/user/${id}/verify`
+        }
+        await sgMail.send(msg)
+    } catch (error) {
+        throw error
+    }
 }
 
-const sendVerifyEmail = async (email, name) => {
-    sgMail.send({
-        to: email,
-        from: 'test@example.com',
-        subject: 'Your Certificate Has Been Verified!',
-        text: `Dear, ${name}.\n Your uploaded certificate has been verified. Thank you.`
-    })
+const sendCertVerifyEmail = async (email, name, certTitle) => {
+    try {
+        const msg = {
+            to: email,
+            from: process.env.HOST_EMAIL,
+            subject: 'Your Certificate Has Been Verified!',
+            text: `Dear, ${name}.\n Your uploaded certificate ${certTitle} has been verified. Thank you.`
+        }
+        await sgMail.send(msg)
+    } catch (error) {
+        throw error
+    }
 }
 
-const sendRejectEmail = async (email, name) => {
-    sgMail.send({
-        to: email,
-        from: 'test@example.com',
-        subject: 'Your Certificate Has Been Rejected.',
-        text: `Dear, ${name}.\n Your uploaded certificate has been rejected. Please reupload it.`
-    })
+const sendCertRejectEmail = async (email, name, certTitle) => {
+    try {
+        const msg = {
+            to: email,
+            from: process.env.HOST_EMAIL,
+            subject: 'Your Certificate Has Been Rejected.',
+            text: `Dear, ${name}.\n Your uploaded certificate ${certTitle} has been rejected. Please check the uploaded file again or contact us for more details.`
+        }
+        await sgMail.send(msg)
+    } catch (error) {
+        throw error
+    }
+}
+
+const sendInterpreterVerifyEmail = async (email, name) => {
+    try {
+        const msg = {
+            to: email,
+            from: process.env.HOST_EMAIL,
+            subject: 'Your Account Has Been Verified!',
+            text: `Dear, ${name}.\n Your uploaded certificate has been verified. Thank you.`
+        }
+        await sgMail.send(msg)
+    } catch (error) {
+        throw error
+    }
+}
+
+const sendInterpreterRejectEmail = async (email, name) => {
+    try {
+        const msg = {
+            to: email,
+            from: process.env.HOST_EMAIL,
+            subject: 'Your Account Has Been Rejected.',
+            text: `Dear, ${name}.\n Your uploaded certificate has been rejected. Please reupload it.`
+        }
+        await sgMail.send(msg)
+    } catch (error) {
+        throw error
+    }
 }
 
 module.exports = {
     sendWelcomeEmail,
-    sendVerifyEmail,
-    sendRejectEmail
+    sendCertVerifyEmail,
+    sendCertRejectEmail,
+    sendInterpreterVerifyEmail,
+    sendInterpreterRejectEmail
 }

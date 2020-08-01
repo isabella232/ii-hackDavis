@@ -5,7 +5,8 @@ const Admin = require('../models/admin')
 const AdminCode = require('../models/adminCode')
 const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
-const { sendVerifyEmail, sendRejectEmail } = require('../utils/email')
+const { sendCertVerifyEmail, sendCertRejectEmail,
+    sendInterpreterVerifyEmail, sendInterpreterRejectEmail } = require('../utils/email')
 const { saveInterpreter, removeInterpreter } = require('../utils/algolia')
 const { getToValidate } = require('../utils/admin')
 const { imgUploader } = require('../utils/image')
@@ -21,7 +22,7 @@ router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) 
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
         const info = fillSignupInfo(req.body, buffer)
         const admin = new Admin(info)
-        sendWelcomeEmail(admin.email, admin.name, admin._id.toString())
+        await sendWelcomeEmail(admin.email, admin.name, admin._id.toString())
         await admin.save()
         res.status(201).send()
     } catch (e) {
@@ -68,9 +69,11 @@ router.patch('/api/admin/certificates/:id/validate', auth, async (req, res) => {
         const index = interpreter.certifications.findIndex(certificate => certificate._id.toString() === id)
 
         interpreter.certifications[index].isValidated = true
+        interpreter.certifications[index].isRejected = false
+
         await interpreter.save()
 
-        sendVerifyEmail(interpreter.email, interpreter.name)
+        await sendCertVerifyEmail(interpreter.email, interpreter.name, interpreter.certifications[index].title)
 
         res.send()
     } catch (error) {
@@ -86,9 +89,10 @@ router.patch('/api/admin/certificates/:id/reject', auth, async (req, res) => {
         const index = interpreter.certifications.findIndex(certificate => certificate._id.toString() === id)
 
         interpreter.certifications[index].isRejected = true
+        interpreter.certifications[index].isValidated = false
         await interpreter.save()
 
-        sendRejectEmail(interpreter.email, interpreter.name)
+        await sendCertRejectEmail(interpreter.email, interpreter.name, interpreter.certifications[index].title)
 
         res.send()
     } catch (error) {
@@ -102,6 +106,7 @@ router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
     try {
         const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: true, isRejected: false })
         saveInterpreter(interpreter)
+        await sendInterpreterVerifyEmail(interpreter.email, interpreter.name)
         res.send()
     } catch (error) {
         console.log(error)
@@ -115,6 +120,7 @@ router.patch('/api/admin/interpreters/:id/reject', auth, async (req, res) => {
     try {
         const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: false, isRejected: true })
         removeInterpreter(interpreter._id)
+        await sendInterpreterRejectEmail(interpreter.email, interpreter.name)
         res.send()
     } catch (error) {
         res.status(400).send(error)

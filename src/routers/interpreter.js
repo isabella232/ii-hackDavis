@@ -32,7 +32,7 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
             summary: req.body.summary,
             languages: JSON.parse(req.body.languages)
         })
-        sendWelcomeEmail(interpreter.email, interpreter.name, interpreter._id.toString())
+        await sendWelcomeEmail(interpreter.email, interpreter.name, interpreter._id.toString())
         await interpreter.generateCoordinates(req.body.location)
         await interpreter.save()
         res.status(201).send()
