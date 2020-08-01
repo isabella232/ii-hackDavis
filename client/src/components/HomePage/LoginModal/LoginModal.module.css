@@ -27,11 +27,15 @@
 .Modal .buttons {
     display: flex;
     justify-content: flex-end;
-    margin: 1rem .5rem;
+    margin-top: 1rem;
 }
 
 .Modal .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.Modal .instruction {
+    font-size: 14px;
 }

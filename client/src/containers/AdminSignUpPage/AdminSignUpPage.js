@@ -78,7 +78,9 @@ class AdminSignUpPage extends Component {
         } else if (!this.state.avatar) {
             alert(`Please upload your avatar.`);
         } else if (this.state.password !== this.state.confirmPassword) {
-            alert(`Please check your password.`);
+            alert(`Passwords do not match. Check again.`);
+        } else if (this.state.password.length < 8) {
+            alert(`Password must be at least 8 characters.`);
         } else if (!this.state.adminCode) {
             alert(`Please fill out an admin code.`);
         } else {
@@ -104,7 +106,7 @@ class AdminSignUpPage extends Component {
 
     render() {
         return (
-            <div className={classes.Container}>
+            <div className={classes.AdminSignUpPage}>
                 <div className={classes.title}>Admin Sign Up</div>
                 <form encType="multipart/form-data">
                     <Grid container spacing={2} justify='center'>

@@ -126,12 +126,14 @@ router.patch('/api/user/updatePassword', auth, async (req, res) => {
 })
 
 // forget password
-router.patch('/api/user/:email/forgetPassword', async (req, res) => {
+router.post('/api/user/:email/forgetPassword', async (req, res) => {
+    console.log('yee', req.params)
     try {
         const user = await User.findOne({ email: req.params.email })
         await sendResetPasswordEmail(user.email, user.name, user._id.toString())
         res.send()
     } catch (e) {
+        console.log(e)
         res.status(400).send(e)
     }
 })

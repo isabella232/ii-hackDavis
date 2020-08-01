@@ -63,3 +63,13 @@ export const verifyAccount = async (id) => {
     const endpoint = `api/user/${id}/verifyAccount`;
     return backend.post(endpoint);
 }
+
+export const sendForgetPassword = async (email) => {
+    const endpoint = `api/user/${email}/forgetPassword`;
+    return backend.post(endpoint);
+}
+
+export const resetPassword = async (id, password) => {
+    const endpoint = `api/user/${id}/resetPassword`;
+    return backend.post(endpoint, { password: password });
+}

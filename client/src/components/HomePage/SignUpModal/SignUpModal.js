@@ -251,8 +251,8 @@ class SignUpModal extends Component {
         } else if (!this.state.avatar) {
             alert(`Please upload your avatar.`);
         } else if (this.state.password !== this.state.confirmPassword) {
-            alert(`Passwords do not match.`);
-        } else if (this.state.length < 8 || this.state.confirmPassword.length < 8) {
+            alert(`Passwords do not match. Check again.`);
+        } else if (this.state.password.length < 8) {
             alert(`Password must be at least 8 characters.`);
         } else {
             const data = {
@@ -442,8 +442,8 @@ class SignUpModal extends Component {
                 <Fade in={this.state.open}>
                     <div className={classes.card}>
                         <div className={classes.header}>
-                            <div className={classes.title}>Sign Up</div>
-                            {this.state.loading ? <CircularProgress color="primary" /> : null}
+                            <div className={classes.title}>Join Us!</div>
+                            {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
                         </div>
 
                         {window}

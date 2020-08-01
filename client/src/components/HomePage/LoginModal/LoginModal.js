@@ -13,7 +13,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import Button from '../../shared/Button/Button';
 
-import { signIn } from '../../../services/UserService';
+import { signIn, sendForgetPassword } from '../../../services/UserService';
 
 class LoginModal extends Component {
     constructor(props) {
@@ -23,13 +23,16 @@ class LoginModal extends Component {
             email: '',
             password: '',
             showPassword: false,
-            loading: false
+            loading: false,
+            window: 0,
         }
 
         this.closeModal = this.closeModal.bind(this);
         this.changeInput = this.changeInput.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.clickShowPassword = this.clickShowPassword.bind(this);
+        this.switchWindow = this.switchWindow.bind(this);
+        this.submitForgetPassword = this.submitForgetPassword.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
@@ -94,13 +97,101 @@ class LoginModal extends Component {
         }
     }
 
-    pressEnter = (e) => {
-        if (e.key === 'Enter') {
-            this.submitForm();
+    submitForgetPassword = async () => {
+        if (!this.state.email) {
+            alert(`Please fill out your email.`);
+        } else {
+            this.load();
+            sendForgetPassword(this.state.email)
+                .then(data => {
+                    this.clearAllFields();
+                    this.unload();
+                    this.setState({ window: 0, open: false });
+                })
+                .catch(e => {
+                    alert('You cannot reset your password at this time.')
+                    this.unload();
+                })
         }
     }
 
+    pressEnter = (e) => {
+        if (e.key === 'Enter' && !this.state.window) this.submitForm();
+        else if (e.key === 'Enter' && this.state.window) this.submitForgetPassword();
+    }
+
+    switchWindow = () => {
+        const newWindow = !this.state.window;
+        this.setState({ window: newWindow })
+    }
+
     render() {
+        const loginWindow = <>
+            <div className={classes.header}>
+                <div className={classes.title}>Welcome Back!</div>
+                {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
+            </div>
+
+            <TextField label="Email"
+                name="email"
+                required
+                value={this.props.title}
+                margin="dense"
+                fullWidth
+                variant="outlined"
+                onChange={this.changeInput} />
+            <TextField label="Password"
+                name="password"
+                type={this.state.showPassword ? 'text' : 'password'}
+                required
+                margin="dense"
+                value={this.state.password}
+                fullWidth
+                variant="outlined"
+                onChange={this.changeInput}
+                onKeyDown={this.pressEnter}
+                InputProps={{
+                    endAdornment: <InputAdornment position="end">
+                        <IconButton onClick={this.clickShowPassword}>
+                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                    </InputAdornment>
+                }} />
+
+            <div className={classes.footer}>
+                <div>
+                    <Button content={'Forgot Your Password?'} inverted click={this.switchWindow} />
+                </div>
+                <div className={classes.buttons}>
+                    <Button content={'Sign Up'} inverted click={this.switchToSignUp} />
+                    <Button content={'Log In'} click={this.submitForm} />
+                </div>
+            </div>
+        </>
+
+        const forgetPasswordWindow = <>
+            <div className={classes.header}>
+                <div className={classes.title}>It's Okay!</div>
+                {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
+            </div>
+            <div className={classes.instruction}>Please input your email to receive instructions for password resetting.</div>
+
+            <TextField label="Email"
+                name="email"
+                required
+                value={this.props.title}
+                margin="dense"
+                fullWidth
+                variant="outlined"
+                onChange={this.changeInput} />
+            <div className={classes.footer}>
+                <div className={classes.buttons}>
+                    <Button content={'Back'} inverted click={this.switchWindow} />
+                    <Button content={'Submit'} click={this.submitForgetPassword} />
+                </div>
+            </div>
+        </>;
+
         return <>
             <Modal className={classes.Modal}
                 open={this.state.open}
@@ -109,47 +200,7 @@ class LoginModal extends Component {
                 BackdropProps={{ timeout: 200 }}>
                 <Fade in={this.state.open}>
                     <div className={classes.card}>
-
-                        <div className={classes.header}>
-                            <div className={classes.title}>Login</div>
-                            {this.state.loading ? <CircularProgress color="primary" /> : null}
-                        </div>
-
-                        <TextField label="Email"
-                            name="email"
-                            required
-                            value={this.props.title}
-                            margin="dense"
-                            fullWidth
-                            variant="outlined"
-                            onChange={this.changeInput} />
-                        <TextField label="Password"
-                            name="password"
-                            type={this.state.showPassword ? 'text' : 'password'}
-                            required
-                            margin="dense"
-                            value={this.state.password}
-                            fullWidth
-                            variant="outlined"
-                            onChange={this.changeInput}
-                            onKeyDown={this.pressEnter}
-                            InputProps={{
-                                endAdornment: <InputAdornment position="end">
-                                    <IconButton onClick={this.clickShowPassword}>
-                                        {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }} />
-
-                        <div className={classes.footer}>
-                            <div>
-                                <Button content={'Forgot Password'} inverted />
-                            </div>
-                            <div className={classes.buttons}>
-                                <Button content={'Sign Up'} inverted click={this.switchToSignUp} />
-                                <Button content={'Log In'} click={this.submitForm} />
-                            </div>
-                        </div>
+                        {!this.state.window ? loginWindow : forgetPasswordWindow}
                     </div>
                 </Fade>
             </Modal>

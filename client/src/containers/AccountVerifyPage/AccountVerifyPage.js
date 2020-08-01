@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { verifyAccount } from '../../services/UserService';
 
-class AccountVerifyPage extends Component {
+class AccountVerifyPage extends React.Component {
     componentDidMount() {
         const id = this.props.location.pathname.split('/')[2];
 

@@ -28,7 +28,7 @@
 .Modal .buttons {
     display: flex;
     justify-content: flex-end;
-    margin: 1rem .5rem;
+    margin-top: 1rem;
 }
 
 .Modal .kindArea {
