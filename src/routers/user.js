@@ -5,6 +5,7 @@ const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
 const { setCookies, clearCookies } = require('../utils/user')
 const { imgUploader, getAvatarURL } = require('../utils/image')
+const { sendResetPasswordEmail } = require('../utils/email')
 
 const router = new express.Router()
 
@@ -119,6 +120,27 @@ router.patch('/api/user/updatePassword', auth, async (req, res) => {
         } else {
             res.status(400).send(new Error("Current password doesn't match."))
         }
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+// forget password
+router.patch('/api/user/:email/forgetPassword', async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.params.email })
+        await sendResetPasswordEmail(user.email, user.name, user._id.toString())
+        res.send()
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+// reset user's password
+router.patch('/api/user/:id/resetPassword', async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate({ _id: req.params.id }, { password: newPassword })
+        res.send()
     } catch (e) {
         res.status(400).send(e)
     }

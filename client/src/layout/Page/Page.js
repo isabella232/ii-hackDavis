@@ -12,6 +12,7 @@ import AdminSignUpPage from "../../containers/AdminSignUpPage/AdminSignUpPage";
 import InterpreterPage from '../../containers/InterpreterPage/InterpreterPage';
 import ClientPage from '../../containers/ClientPage/ClientPage';
 import AccountVerifyPage from '../../containers/AccountVerifyPage/AccountVerifyPage';
+import ResetPasswordPage from '../../containers/ResetPasswordPage/ResetPasswordPage';
 
 import { withAuth } from '../../components/HOC/withAuth';
 
@@ -29,7 +30,8 @@ const Page = () => {
           <Route path="/client" component={withAuth(ClientPage)} />
           <Route path="/search" component={SearchPage} />
           <Route path="/contactus" component={ContactUsPage} />
-          <Route path="/user/:id/verify" component={AccountVerifyPage} />
+          <Route path="/user/:id/account/verify" component={AccountVerifyPage} />
+          <Route path="/user/:id/password/reset" component={ResetPasswordPage} />
         </Switch>
       </main>
 
