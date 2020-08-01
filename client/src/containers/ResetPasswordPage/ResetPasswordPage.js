@@ -40,12 +40,17 @@ class ResetPasswordPage extends Component {
         this.setState({ showPassword: val });
     }
 
+    clearAllFields = () => {
+        this.setState({ password: '', confirmPassword: '' });
+    }
+
     changeInput = (e) => {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value });
     }
 
     submitForm = async () => {
+        this.load();
         if (!this.state.password) {
             alert(`Please fill out your password.`);
         } else if (this.state.password !== this.state.confirmPassword) {
@@ -54,21 +59,26 @@ class ResetPasswordPage extends Component {
             alert(`Password must be at least 8 characters.`);
         } else {
             const id = this.props.location.pathname.split('/')[2];
-            const data = { password: this.state.password }
-            resetPassword(id, data)
+            resetPassword(id, this.state.password)
                 .then(data => {
                     this.clearAllFields();
                     this.props.history.push('/');
+                    this.unload();
                 })
                 .catch(e => {
                     alert('You cannot reset your password at this time.');
+                    this.unload();
                 })
         }
     }
 
     render() {
         return <div className={classes.ResetPasswordPage}>
-            <div className={classes.title}>Reset Your Password</div>
+            <div className={classes.header}>
+                <div className={classes.title}>Reset Your Password</div>
+                {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
+            </div>
+
             <form encType="multipart/form-data">
                 <Grid container spacing={2} justify='center'>
                     <Grid item xs={6}>

@@ -7,6 +7,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Button from '../../components/shared/Button/Button';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
@@ -24,7 +25,8 @@ class AdminSignUpPage extends Component {
             avatar: null,
             adminCode: '',
             showPassword: false,
-            showAdminCode: false
+            showAdminCode: false,
+            loading: false
         }
 
         this.clickShowPassword = this.clickShowPassword.bind(this);
@@ -33,6 +35,10 @@ class AdminSignUpPage extends Component {
         this.fileUpload = this.fileUpload.bind(this);
         this.submitForm = this.submitForm.bind(this);
     }
+
+    load = () => { this.setState({ loading: true }); }
+
+    unload = () => { this.setState({ loading: false }); }
 
     clickShowPassword = (event) => {
         event.preventDefault();
@@ -71,6 +77,7 @@ class AdminSignUpPage extends Component {
     }
 
     submitForm = async () => {
+        this.load();
         if (!this.state.email) {
             alert(`Please fill out your email.`);
         } else if (!this.state.password) {
@@ -96,10 +103,12 @@ class AdminSignUpPage extends Component {
             signUpAdmin(data)
                 .then(data => {
                     this.clearAllFields();
+                    this.unload();
                     this.props.history.push('/');
                 })
                 .catch(e => {
                     alert('You cannot be signed up at this time.');
+                    this.unload();
                 })
         }
     }
@@ -107,7 +116,11 @@ class AdminSignUpPage extends Component {
     render() {
         return (
             <div className={classes.AdminSignUpPage}>
-                <div className={classes.title}>Admin Sign Up</div>
+                <div className={classes.header}>
+                    <div className={classes.title}>Admin Sign Up</div>
+                    {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
+                </div>
+
                 <form encType="multipart/form-data">
                     <Grid container spacing={2} justify='center'>
                         <Grid item xs={6}>

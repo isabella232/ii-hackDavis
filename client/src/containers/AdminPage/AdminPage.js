@@ -155,7 +155,7 @@ class AdminPage extends Component {
             alert(`Please fill out your new password.`);
         } else if (this.state.newPassword !== this.state.confirmNewPassword) {
             alert(`Passwords do not match. Check again.`);
-        } else if (this.state.password.length < 8) {
+        } else if (this.state.currentPassword.length < 8) {
             alert(`Password must be at least 8 characters.`);
         } else {
             this.load();

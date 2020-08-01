@@ -71,5 +71,5 @@ export const sendForgetPassword = async (email) => {
 
 export const resetPassword = async (id, password) => {
     const endpoint = `api/user/${id}/resetPassword`;
-    return backend.post(endpoint, { password: password });
+    return backend.patch(endpoint, { password: password });
 }

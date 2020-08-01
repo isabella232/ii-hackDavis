@@ -1,5 +1,6 @@
 const express = require('express')
 const sharp = require('sharp')
+const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
@@ -127,7 +128,6 @@ router.patch('/api/user/updatePassword', auth, async (req, res) => {
 
 // forget password
 router.post('/api/user/:email/forgetPassword', async (req, res) => {
-    console.log('yee', req.params)
     try {
         const user = await User.findOne({ email: req.params.email })
         await sendResetPasswordEmail(user.email, user.name, user._id.toString())
@@ -141,9 +141,12 @@ router.post('/api/user/:email/forgetPassword', async (req, res) => {
 // reset user's password
 router.patch('/api/user/:id/resetPassword', async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate({ _id: req.params.id }, { password: newPassword })
+        const user = await User.findById({ _id: req.params.id })
+        user.password = req.body.password
+        await user.save()
         res.send()
     } catch (e) {
+        console.log(e)
         res.status(400).send(e)
     }
 })

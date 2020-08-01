@@ -12,6 +12,12 @@
     line-height: 45px;
 }
 
+.AdminSignUpPage .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .AdminSignUpPage .footer {
     display: flex;
     flex-direction: column;
