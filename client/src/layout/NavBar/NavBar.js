@@ -2,12 +2,16 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import classes from "./NavBar.module.css";
-import { signOut } from '../../services/UserService';
+import logo from './MII_logo.png'
 
 import Button from '../../components/shared/Button/Button';
 import SignUpModal from '../../components/HomePage/SignUpModal/SignUpModal';
 import LoginModal from '../../components/HomePage/LoginModal/LoginModal';
+
+import { signOut } from '../../services/UserService';
+
 
 class NavBar extends Component {
     constructor(props) {
@@ -70,7 +74,9 @@ class NavBar extends Component {
     render() {
         return (
             <div className={classes.NavBar}>
-                <Link className={classes.logo} to={"/"}>Logo</Link>
+                <Link className={classes.logo} to={"/"}>
+                    <img src={logo} alt="MII Logo" width={'30%'} />
+                </Link>
                 <div className={classes.items}>
                     <Link className={classes.item} to={"/about"}>About</Link>
                     {this.state.userKind === 'Admin' ? <Link className={classes.item} to={"/admin"}>Admin</Link> : null}
