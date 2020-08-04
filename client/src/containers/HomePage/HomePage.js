@@ -80,7 +80,7 @@ class HomePage extends Component {
                     <Grid container spacing={2} justify='center' alignItems='center'>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.title}>Never Easier To Find An Interpreter</div>
-                            <p>Bacon ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet.</p>
+                            <p>Need an indigenous interpreter? Just look for the language you need on our map and we will take care of the rest.</p>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <img src='https://cdn.dribbble.com/users/799185/screenshots/7085057/media/85e47d49c4557e920ff245c8ebbea08b.png' alt='illustration2' className={classes.image} />
@@ -102,19 +102,21 @@ class HomePage extends Component {
                     <Grid container spacing={4} justify='center' alignItems='center'>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>Who Are We?</div>
-                            <p>Bacon ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet.</p>
+                            <p>Multilingual Indigenous Interpreters (MII) is a collective of trilingual youth and youth adults from Guatemala and Oaxaca whose main purpose is to bridge the language gaps between service providers and monolingual indigenous communities from Latin America. Interpreters from this collective reside throughout the state of California, with a focal concentration in Oakland, CA. The interpreters are trilingual and are proficient in Spanish, English, and their native languages; Zapoteco, Mam, and Mixteco. The objective of MII is to remove the language barriers that monolingual indigenous communities experience when accessing services, understanding and advocating for their civil rights in hospitals and immigration courts, as well as raise awareness about the growing indigenous communities migrating to the U.S. who only speak their indigenous languages.<br />
+                                Our mission is to serve monolingual Indigenous communities by providing adequate and accurate interpreting services to best fit the needs of our indigenous communities, building language and cultural understanding. Our vision is to eliminate language barriers between indigenous language speakers and their service providers for the dignity, respect, and equitable representation of indigenous communities.</p>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>What Do We Do?</div>
-                            <p>Bacon ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet.</p>
+                            <p>Multilingual Indigenous Interpreters provides high quality interpreting services to monolingual indigenous communities with the ultimate goal to provide accurate and efficient interpreting services and breach the communication gap between service providers and indigenous communities.
+                            We offer relay, simultaneous and consecutive interpretation in multiple indigenous languages such as Mam from Guatemala, Zapotec and Mixtec from Oaxaca, Mexico. We focus on promoting direct interpretation from indigenous languages to English for better and adequate communication.</p>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>Join Us!</div>
-                            <p>Bacon ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet.</p>
+                            <p>To support us on our mission just sing up as an interpreter, or service provider and offer your best services with qualified interpreters.</p>
                         </Grid>
                     </Grid>
                 </div>
-            </div>
+            </div >
         )
     }
 }
