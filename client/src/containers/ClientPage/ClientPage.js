@@ -34,8 +34,7 @@ class ClientPage extends Component {
             file: null,  // for avatar
             bookmarks: [],
             events: [],
-            // window: 0,
-            window: 1,
+            window: 0,
             loading: false
         }
 
