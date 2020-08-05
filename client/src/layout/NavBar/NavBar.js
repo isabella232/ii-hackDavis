@@ -75,7 +75,7 @@ class NavBar extends Component {
         return (
             <div className={classes.NavBar}>
                 <Link className={classes.logo} to={"/"}>
-                    <img src={logo} alt="MII Logo" width={'30%'} />
+                    <img src={logo} alt="MII Logo" width={'70px'} />
                 </Link>
                 <div className={classes.items}>
                     <Link className={classes.item} to={"/about"}>About</Link>
