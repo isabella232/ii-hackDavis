@@ -34,7 +34,7 @@ const CertificationModal = props => {
                 BackdropComponent={Backdrop}
                 BackdropProps={{ timeout: 200 }}>
                 <Fade in={open}>
-                    <img src={props.image} height='auto' width='80%' alt={`certification-${props.image}`} />
+                    <img src={props.image} height='auto' width='95%' alt={`certification-${props.image}`} />
                 </Fade>
             </Modal>
         </div>

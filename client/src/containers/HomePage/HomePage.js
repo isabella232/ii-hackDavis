@@ -162,7 +162,7 @@ class HomePage extends Component {
                 <div className={classes.joinSection}>
                     <div className={classes.previewHeader}>
                         <div className={classes.title}>Join Us!</div>
-                        <p>To support us on our mission just sing up as an interpreter, or service provider and offer your best services with qualified interpreters.</p>
+                        <p>To support us on our mission just sign up as an interpreter, or service provider and offer your best services with qualified interpreters.</p>
 
                         <a href="mailto: caindigenousinterpreters@gmail.com" target=" _blank">
                             <MailIcon className={classes.icon} color="primary" fontSize='large' />
