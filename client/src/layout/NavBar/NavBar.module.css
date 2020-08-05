@@ -1,43 +1,43 @@
 .NavBar {
-    display: flex;
-    height: 4rem;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  height: 4rem;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
 }
 
 .NavBar .logo {
-    margin: 0 1rem;
-    font-size: 20px;
-    font-weight: 500;
-    align-self: center;
-    text-decoration: none;
-    color: black;
+  margin: 0 1rem;
+  font-size: 20px;
+  font-weight: 500;
+  align-self: center;
+  text-decoration: none;
+  color: black;
 }
 
 .NavBar .items {
-    display: flex;
+  display: flex;
 }
-  
+
 .NavBar .item {
-    margin-right: 1em;
-    font-size: 20px;
-    font-weight: 500;
-    align-self: center;
-    text-decoration: none;
-    color: black;
-    -webkit-transition: color 0.2s ease-in-out;
-    transition: color 0.2s ease-in-out;
+  margin-right: 1em;
+  font-size: 20px;
+  font-weight: 500;
+  align-self: center;
+  text-decoration: none;
+  color: black;
+  -webkit-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
 }
 
 .NavBar .button {
-    margin-right: 1em;
+  margin-right: 1em;
 }
 
 .NavBar .item:hover {
-    color: #03a0b5;
+  color: #03a0b5;
 }
 
 .NavBar .item:active {
-    color: #03a0b5;
+  color: #03a0b5;
 }

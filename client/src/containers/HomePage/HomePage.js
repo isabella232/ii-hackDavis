@@ -64,12 +64,12 @@ class HomePage extends Component {
                 <div className={classes.section}>
                     <Grid container spacing={2} justify='center' alignItems='center'>
                         <Grid item xs={12} sm={6}>
-                            <img src='https://cdn.dribbble.com/users/799185/screenshots/8569374/media/6fbbdb4b3e53f791a8868ee9cc87a5af.png' alt='illustration1' className={classes.image} />
+                            <div className={classes.title}>Never Easier To Find An Interpreter</div>
+                            <p>Need an indigenous interpreter? Just look for the language you need on our map and we will take care of the rest.</p>
                         </Grid>
-
                         <Grid item xs={12} sm={6}>
-                            <div className={classes.title}>Changing the Way We Communiate</div>
-                            <p>Bacon ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet ipsum dolor amet sausage turducken shankle filet.</p>
+                            <img src='https://cdn.dribbble.com/users/799185/screenshots/7085057/media/85e47d49c4557e920ff245c8ebbea08b.png' alt='illustration2'
+                                className={classes.image} />
                         </Grid>
                     </Grid>
                 </div>
@@ -91,47 +91,7 @@ class HomePage extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div> : null
-                }
-
-                <div className={classes.section}>
-                    <Grid container spacing={2} justify='center' alignItems='center'>
-                        <Grid item xs={12} sm={6}>
-                            <div className={classes.title}>Never Easier To Find An Interpreter</div>
-                            <p>Need an indigenous interpreter? Just look for the language you need on our map and we will take care of the rest.</p>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <img src='https://cdn.dribbble.com/users/799185/screenshots/7085057/media/85e47d49c4557e920ff245c8ebbea08b.png' alt='illustration2' className={classes.image} />
-                        </Grid>
-                    </Grid>
-                </div>
-
-                <div className={classes.invertedSection}>
-                    {this.state.phrases[0].show ?
-                        <Grow in={this.state.phrases[0].show}>
-                            <div className={classes.centeredQuote}>
-                                Your Voice Matters
-                        </div>
-                        </Grow> : null}
-                    {this.state.phrases[1].show ?
-                        <Grow in={this.state.phrases[1].show}>
-                            <div className={classes.centeredQuote}>
-                                There Is Power In Your Voice
-                        </div>
-                        </Grow> : null}
-                    {this.state.phrases[2].show ?
-                        <Grow in={this.state.phrases[2].show}>
-                            <div className={classes.centeredQuote}>
-                                A Pleasure To Serve Your Needs
-                        </div>
-                        </Grow> : null}
-                    {this.state.phrases[3].show ?
-                        <Grow in={this.state.phrases[3].show}>
-                            <div className={classes.centeredQuote}>
-                                We Are A Part Of Our Communit
-                        </div>
-                        </Grow> : null}
-                </div>
+                    </div> : null}
 
                 <div className={classes.previewSection}>
                     <div className={classes.previewHeader}>
@@ -140,28 +100,74 @@ class HomePage extends Component {
                     </div>
                     <div className={classes.previewArea}>
                         {previews}
+                        {previews}
+
+                        {previews}
+
                     </div>
+                </div>
+
+                <div className={classes.invertedSection}>
+                    {this.state.phrases[0].show ?
+                        <Grow in={this.state.phrases[0].show}>
+                            <div className={classes.centeredQuote}>
+                                Your Voice Matters
+                            </div>
+                        </Grow> : null}
+                    {this.state.phrases[1].show ?
+                        <Grow in={this.state.phrases[1].show}>
+                            <div className={classes.centeredQuote}>
+                                There Is Power In Your Voice
+                            </div>
+                        </Grow> : null}
+                    {this.state.phrases[2].show ?
+                        <Grow in={this.state.phrases[2].show}>
+                            <div className={classes.centeredQuote}>
+                                A Pleasure To Serve Your Needs
+                            </div>
+                        </Grow> : null}
+                    {this.state.phrases[3].show ?
+                        <Grow in={this.state.phrases[3].show}>
+                            <div className={classes.centeredQuote}>
+                                We Are A Part Of Our Community
+                            </div>
+                        </Grow> : null}
                 </div>
 
                 <div className={classes.section}>
                     <Grid container spacing={4} justify='center' alignItems='center'>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>Who Are We?</div>
-                            <p>Multilingual Indigenous Interpreters (MII) is a collective of trilingual youth and youth adults from Guatemala and Oaxaca whose main purpose is to bridge the language gaps between service providers and monolingual indigenous communities from Latin America. Interpreters from this collective reside throughout the state of California, with a focal concentration in Oakland, CA. The interpreters are trilingual and are proficient in Spanish, English, and their native languages; Zapoteco, Mam, and Mixteco. The objective of MII is to remove the language barriers that monolingual indigenous communities experience when accessing services, understanding and advocating for their civil rights in hospitals and immigration courts, as well as raise awareness about the growing indigenous communities migrating to the U.S. who only speak their indigenous languages.<br />
-                                Our mission is to serve monolingual Indigenous communities by providing adequate and accurate interpreting services to best fit the needs of our indigenous communities, building language and cultural understanding. Our vision is to eliminate language barriers between indigenous language speakers and their service providers for the dignity, respect, and equitable representation of indigenous communities.</p>
+                            <p>Multilingual Indigenous Interpreters (MII) is a collective of trilingual youth and youth adults from Guatemala and Oaxaca whose main purpose is to
+                            bridge the language gaps between service providers and monolingual native Latin-Americans. Interpreters from this collective reside
+                            throughout California, primarily in Oakland, CA. The interpreters are trilingual and are proficient in Spanish, English,
+                            and their native languages; Zapoteco, Mam, and Mixteco.</p>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>What Do We Do?</div>
-                            <p>Multilingual Indigenous Interpreters provides high quality interpreting services to monolingual indigenous communities with the ultimate goal to provide accurate and efficient interpreting services and breach the communication gap between service providers and indigenous communities.
-                            We offer relay, simultaneous and consecutive interpretation in multiple indigenous languages such as Mam from Guatemala, Zapotec and Mixtec from Oaxaca, Mexico. We focus on promoting direct interpretation from indigenous languages to English for better and adequate communication.</p>
+                            <p>Multilingual Indigenous Interpreters provides high quality interpreting services to monolingual indigenous communities with the ultimate goal to provide
+                            accurate and efficient interpreting services and breach the communication gap between service providers and indigenous communities. We offer relay,
+                            simultaneous and consecutive interpretation in multiple indigenous languages such as Mam from Guatemala, Zapotec and Mixtec from Oaxaca, Mexico. We focus
+                            on promoting direct interpretation from indigenous languages to English for better and adequate communication.</p>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <div className={classes.title}>Join Us!</div>
-                            <p>To support us on our mission just sing up as an interpreter, or service provider and offer your best services with qualified interpreters.</p>
+                            <div className={classes.title}>Our Missions</div>
+                            <p>Our mission is to serve monolingual indigenous communities by providing adequate and accurate interpreting services to best fit their needs and building
+                            language and cultural understanding. Our vision is to eliminate language barriers between native language speakers and their service providers for the
+                            dignity, respect, and equitable representation of indigenous communities. Our objective is to remove the language barriers that monolingual native communities
+                            experience when accessing services, understanding and advocating for their civil rights in hospitals and immigration courts, as well as raise awareness
+                            about the growing indigenous communities migrating to the U.S. who only speak their indigenous languages.</p>
                         </Grid>
                     </Grid>
                 </div>
-            </div >
+
+                <div className={classes.joinSection}>
+                    <div className={classes.previewHeader}>
+                        <div className={classes.title}>Join Us!</div>
+                        <div>To support us on our mission just sing up as an interpreter, or service provider and offer your best services with qualified interpreters.</div>
+                    </div>
+                </div>
+            </div>
         )
     }
 }

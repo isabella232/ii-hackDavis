@@ -2,14 +2,18 @@
   padding: 10px 5%;
 }
 
-.HomePage .section,
-.previewSection {
+.HomePage .section {
+  margin: 1rem auto;
+  max-width: 1000px;
+}
+
+.HomePage .previewSection {
   margin: 2rem auto;
-  max-width: 900px;
+  max-width: 1000px;
 }
 
 .HomePage .invertedSection {
-  margin: 3rem -6%;
+  margin: 0 -6%;
   padding: 5% 10%;
   background: #03a0b5;
   color: white;
@@ -20,7 +24,6 @@
 }
 
 .HomePage .title {
-  font-weight: 600;
   font-size: 30px;
   line-height: 30px;
   color: #027888;
@@ -40,13 +43,11 @@
 }
 
 .HomePage .quote {
-  font-weight: 400;
-  font-size: 35px;
+  font-size: 32px;
   line-height: 35px;
 }
 
 .HomePage .centeredQuote {
-  font-weight: 400;
   font-size: 35px;
   line-height: 35px;
   text-align: center;
@@ -68,7 +69,6 @@
   padding: 2rem 0;
   display: flex;
   overflow-x: scroll;
-  scroll-padding: 0 50%;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }
@@ -79,5 +79,10 @@
 
 .HomePage .previewCard {
   scroll-snap-align: center;
-  display: flex;
+}
+
+.HomePage .joinSection {
+  margin: 0 -6%;
+  padding: 2rem 10%;
+  background: rgb(235, 247, 249);
 }
