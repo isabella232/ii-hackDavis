@@ -132,8 +132,8 @@ class HomePage extends Component {
                         </Grow> : null}
                 </div>
 
-                <div className={classes.section}>
-                    <Grid container spacing={4} justify='center' alignItems='center'>
+                <div className={classes.infoSection}>
+                    <Grid container spacing={4} justify='center' alignItems='start'>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>Who Are We?</div>
                             <p>Multilingual Indigenous Interpreters (MII) is a collective of trilingual youth and youth adults from Guatemala and Oaxaca whose main purpose is to
@@ -150,11 +150,11 @@ class HomePage extends Component {
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>Our Missions</div>
-                            <p>Our mission is to serve monolingual indigenous communities by providing adequate and accurate interpreting services to best fit their needs and building
-                            language and cultural understanding. Our vision is to eliminate language barriers between native language speakers and their service providers for the
-                            dignity, respect, and equitable representation of indigenous communities. Our objective is to remove the language barriers that monolingual native communities
+                            <p>Our mission is to serve monolingual indigenous communities by providing adequate and accurate interpreting services to best fit their needs. Our vision
+                            is to eliminate language barriers between native language speakers and their service providers for the
+                            dignity, respect, and equitable representation of indigenous communities. Our objective is to help with the difficulties that monolingual native communities
                             experience when accessing services, understanding and advocating for their civil rights in hospitals and immigration courts, as well as raise awareness
-                            about the growing indigenous communities migrating to the U.S. who only speak their indigenous languages.</p>
+                            about the growing indigenous communities migrating to the U.S.</p>
                         </Grid>
                     </Grid>
                 </div>

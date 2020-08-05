@@ -7,6 +7,11 @@
   max-width: 1000px;
 }
 
+.HomePage .infoSection {
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
 .HomePage .previewSection {
   margin: 2rem auto;
   max-width: 1000px;
