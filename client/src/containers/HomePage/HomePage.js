@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
 import classes from './HomePage.module.css';
+
+import Grow from '@material-ui/core/Grow'
+import Grid from '@material-ui/core/Grid';
 
 import Avatar from '../../components/shared/Avatar/Avatar';
 import PreviewCard from '../../components/HomePage/PreviewCard/PreviewCard';
@@ -12,7 +14,12 @@ class HomePage extends Component {
         super();
         this.state = {
             quote: {},
-            interpreters: []
+            interpreters: [],
+            phrases: [{ show: false, next: 1 },
+            { show: false, next: 2 },
+            { show: false, next: 3 },
+            { show: false, next: 0 }],
+            nextPhrase: Math.floor(Math.random() * 4)
         }
     }
 
@@ -27,6 +34,17 @@ class HomePage extends Component {
             .catch(error => {
                 console.log(error);
             })
+        this.changePhrase();
+    }
+
+    changePhrase = () => {
+        const newState = this.state;
+        newState.phrases[this.state.nextPhrase].show = false;
+        const next = this.state.phrases[this.state.nextPhrase].next;
+        newState.phrases[next].show = true;
+        newState.nextPhrase = next;
+        this.setState({ newState });
+        setTimeout(this.changePhrase, 30000);
     }
 
     render() {
@@ -60,7 +78,7 @@ class HomePage extends Component {
                     <div className={classes.invertedSection}>
                         <div className={classes.quote}>
                             "{this.state.quote.quote}"
-                    </div>
+                        </div>
                         <div className={classes.author}>
                             <Avatar name={this.state.quote.authorName} avatar={this.state.quote.avatar} size={7} />
 
@@ -86,6 +104,33 @@ class HomePage extends Component {
                             <img src='https://cdn.dribbble.com/users/799185/screenshots/7085057/media/85e47d49c4557e920ff245c8ebbea08b.png' alt='illustration2' className={classes.image} />
                         </Grid>
                     </Grid>
+                </div>
+
+                <div className={classes.invertedSection}>
+                    {this.state.phrases[0].show ?
+                        <Grow in={this.state.phrases[0].show}>
+                            <div className={classes.centeredQuote}>
+                                Your Voice Matters
+                        </div>
+                        </Grow> : null}
+                    {this.state.phrases[1].show ?
+                        <Grow in={this.state.phrases[1].show}>
+                            <div className={classes.centeredQuote}>
+                                There Is Power In Your Voice
+                        </div>
+                        </Grow> : null}
+                    {this.state.phrases[2].show ?
+                        <Grow in={this.state.phrases[2].show}>
+                            <div className={classes.centeredQuote}>
+                                A Pleasure To Serve Your Needs
+                        </div>
+                        </Grow> : null}
+                    {this.state.phrases[3].show ?
+                        <Grow in={this.state.phrases[3].show}>
+                            <div className={classes.centeredQuote}>
+                                We Are A Part Of Our Communit
+                        </div>
+                        </Grow> : null}
                 </div>
 
                 <div className={classes.previewSection}>

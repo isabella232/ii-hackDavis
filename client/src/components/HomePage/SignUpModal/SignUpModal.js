@@ -50,7 +50,7 @@ class SignUpModal extends Component {
             services: {
                 Simultaneous: false,
                 Consecutive: false,
-                Relate: false,
+                Relay: false,
                 Translating: false
             },
             loading: false
@@ -163,7 +163,7 @@ class SignUpModal extends Component {
             services: {
                 Simultaneous: false,
                 Consecutive: false,
-                Relate: false,
+                Relay: false,
                 Translating: false
             }
         };
@@ -381,7 +381,7 @@ class SignUpModal extends Component {
                 <FormGroup row>
                     <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Simultaneous} onChange={this.changeServices} name="Simultaneous" />} label="Simultaneous" />
                     <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Consecutive} onChange={this.changeServices} name="Consecutive" />} label="Consecutive" />
-                    <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Relate} onChange={this.changeServices} name="Relate" />} label="Relate" />
+                    <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Relay} onChange={this.changeServices} name="Relay" />} label="Relay" />
                     <FormControlLabel control={<Checkbox color="primary" checked={this.state.services.Translating} onChange={this.changeServices} name="Translating" />} label="Translating" />
                 </FormGroup>
             </div>
