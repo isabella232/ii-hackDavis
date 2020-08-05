@@ -86,3 +86,7 @@
   padding: 2rem 10%;
   background: rgb(235, 247, 249);
 }
+
+.HomePage .icon {
+  margin: 1rem 0.5rem 0;
+}

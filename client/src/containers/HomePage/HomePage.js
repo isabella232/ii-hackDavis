@@ -3,6 +3,8 @@ import classes from './HomePage.module.css';
 
 import Grow from '@material-ui/core/Grow'
 import Grid from '@material-ui/core/Grid';
+import MailIcon from '@material-ui/icons/Mail';
+import InstagramIcon from '@material-ui/icons/Instagram';
 
 import Avatar from '../../components/shared/Avatar/Avatar';
 import PreviewCard from '../../components/HomePage/PreviewCard/PreviewCard';
@@ -100,10 +102,6 @@ class HomePage extends Component {
                     </div>
                     <div className={classes.previewArea}>
                         {previews}
-                        {previews}
-
-                        {previews}
-
                     </div>
                 </div>
 
@@ -164,10 +162,17 @@ class HomePage extends Component {
                 <div className={classes.joinSection}>
                     <div className={classes.previewHeader}>
                         <div className={classes.title}>Join Us!</div>
-                        <div>To support us on our mission just sing up as an interpreter, or service provider and offer your best services with qualified interpreters.</div>
+                        <p>To support us on our mission just sing up as an interpreter, or service provider and offer your best services with qualified interpreters.</p>
+
+                        <a href="mailto: caindigenousinterpreters@gmail.com" target=" _blank">
+                            <MailIcon className={classes.icon} color="primary" fontSize='large' />
+                        </a>
+                        <a href="https://www.instagram.com/tuvoz_interpreters/" target=" _blank">
+                            <InstagramIcon className={classes.icon} color="primary" fontSize='large' />
+                        </a>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
