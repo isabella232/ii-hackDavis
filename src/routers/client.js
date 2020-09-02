@@ -20,8 +20,8 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
         await client.save()
         res.status(201).send()
     } catch (e) {
-        console.log(e)
-        res.status(400).send({ error: e.message })
+        console.log("howdy", e)
+        res.status(400).send(e.message)
     }
 })
 

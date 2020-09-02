@@ -182,7 +182,8 @@ class SignUpModal extends Component {
                 this.unload();
             })
             .catch(e => {
-                alert('You cannot be signed up at this time.');
+                alert(e.message);
+                console.log(e);
                 this.unload();
             })
     }
