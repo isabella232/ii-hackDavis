@@ -164,8 +164,8 @@ class InterpreterPage extends Component {
                 .then(data => {
                     this.loadData();
                     this.unload();
-                }).catch(error => {
-                    console.log(error);
+                }).catch(e => {
+                    alert(e.message);
                     this.unload();
                 });
         }

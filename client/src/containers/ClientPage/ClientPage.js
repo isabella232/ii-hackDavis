@@ -98,7 +98,8 @@ class ClientPage extends Component {
                 .then(data => {
                     this.loadData();
                     this.unload();
-                }).catch(error => {
+                }).catch(e => {
+                    alert(e.message);
                     this.unload();
                 });
         }

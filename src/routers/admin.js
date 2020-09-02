@@ -9,7 +9,7 @@ const { sendCertVerifyEmail, sendCertRejectEmail,
     sendInterpreterVerifyEmail, sendInterpreterRejectEmail } = require('../utils/email')
 const { saveInterpreter, removeInterpreter } = require('../utils/algolia')
 const { getToValidate } = require('../utils/admin')
-const { imgUploader } = require('../utils/image')
+const { imgUploader, getAvatarURL } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo } = require('../utils/user')
 

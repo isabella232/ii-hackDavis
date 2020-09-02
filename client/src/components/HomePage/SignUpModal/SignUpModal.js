@@ -183,7 +183,6 @@ class SignUpModal extends Component {
             })
             .catch(e => {
                 alert(e.message);
-                console.log(e.message);
                 this.unload();
             })
     }

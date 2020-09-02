@@ -127,6 +127,10 @@ class AdminPage extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    fileUpload = (fileItem) => {
+        this.setState({ file: fileItem });
+    }
+
     submitAdminCodeForm = () => {
         if (this.state.adminCode === '') {
             alert("Please fill out the admin code.")
@@ -186,7 +190,8 @@ class AdminPage extends Component {
                 .then(data => {
                     this.loadInfo();
                     this.unload();
-                }).catch(error => {
+                }).catch(e => {
+                    alert(e.message);
                     this.unload();
                 });
         }
