@@ -38,8 +38,14 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
         res.status(201).send()
     } catch (e) {
         console.log(e)
-        res.status(400).send({ error: e.message })
+
+        if (e.code === 11000)
+            res.status(400).send({ message: "Email already registered. Please use another email." })
+
+        res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ message: error.message })
 })
 
 // fetch all details for interpreter
@@ -111,6 +117,8 @@ router.post('/api/interpreter/certificate/upload', auth, imgUploader.single('cer
     } catch (error) {
         res.status(400).send({ error: error.message })
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 // delete a certificate
@@ -215,6 +223,8 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
     } catch (e) {
         res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 module.exports = router

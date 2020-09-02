@@ -183,7 +183,7 @@ class SignUpModal extends Component {
             })
             .catch(e => {
                 alert(e.message);
-                console.log(e);
+                console.log(e.message);
                 this.unload();
             })
     }
@@ -233,7 +233,7 @@ class SignUpModal extends Component {
                     this.unload();
                 })
                 .catch(e => {
-                    alert('You cannot be signed up at this time.')
+                    alert(e.message);
                     this.unload();
                 })
         }

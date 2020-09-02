@@ -107,7 +107,7 @@ class AdminSignUpPage extends Component {
                     this.props.history.push('/');
                 })
                 .catch(e => {
-                    alert('You cannot be signed up at this time.');
+                    alert(e.message);
                     this.unload();
                 })
         }

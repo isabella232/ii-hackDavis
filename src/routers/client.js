@@ -20,9 +20,16 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
         await client.save()
         res.status(201).send()
     } catch (e) {
-        console.log("howdy", e)
-        res.status(400).send(e.message)
+        console.log(e)
+
+        if (e.code === 11000)
+            res.status(400).send({ message: "Email already registered. Please use another email." })
+
+        res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    console.log(error)
+    res.status(400).send({ message: error.message })
 })
 
 // get client's home page
@@ -55,9 +62,9 @@ router.get('/api/client/home', auth, async (req, res) => {
             events: events
         }
         res.send(data)
-    } catch (error) {
-        console.log(error)
-        res.status(400).send(error)
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
     }
 })
 
@@ -75,6 +82,8 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     } catch (e) {
         res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 router.patch('/api/client/bookmarkInterpreter', auth, async (req, res) => {
