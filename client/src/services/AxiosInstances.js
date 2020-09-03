@@ -10,4 +10,10 @@ export const backend = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL
 });
 
-backend.interceptors.response.use(response => response.data);
+backend.interceptors.response.use(
+    response => response.data,
+    error => {
+        if (error.response) return Promise.reject(error.response.data);
+        else return Promise.reject(error);
+    }
+);

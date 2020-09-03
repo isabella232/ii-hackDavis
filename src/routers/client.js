@@ -21,8 +21,15 @@ router.post('/api/client/create', imgUploader.single('avatar'), async (req, res)
         res.status(201).send()
     } catch (e) {
         console.log(e)
-        res.status(400).send({ error: e.message })
+
+        if (e.code === 11000)
+            res.status(400).send({ message: "Email already registered. Please use another email." })
+
+        res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    console.log(error)
+    res.status(400).send({ message: error.message })
 })
 
 // get client's home page
@@ -55,9 +62,9 @@ router.get('/api/client/home', auth, async (req, res) => {
             events: events
         }
         res.send(data)
-    } catch (error) {
-        console.log(error)
-        res.status(400).send(error)
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
     }
 })
 
@@ -66,7 +73,6 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     const client = req.user
     try {
         if (req.file) {
-            client.avatar.url = getAvatarURL(client._id)
             client.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
         }
         client.name = req.body.name
@@ -75,6 +81,8 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     } catch (e) {
         res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 router.patch('/api/client/bookmarkInterpreter', auth, async (req, res) => {

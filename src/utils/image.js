@@ -6,7 +6,7 @@ const imgUploader = multer({
     },
     fileFilter(req, file, callback) {
         if (!file.originalname.toLowerCase().match(/\.(png|jpg|jpeg)$/)) {
-            return cb(new Error('Please upload an image of extension .png,.jpg, or .jpeg.'))
+            return callback(new Error('Please upload an image of extension .png,.jpg, or .jpeg.'))
         }
         callback(undefined, true)
     }

@@ -5,10 +5,10 @@ const Event = require('../models/event')
 const Interpreter = require('../models/interpreter')
 const auth = require('../middleware/auth')
 const { saveInterpreter } = require('../utils/algolia')
-const { imgUploader, getCertificateURL } = require('../utils/image')
+const { imgUploader, getAvatarURL, getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
-const { getAvatarURL } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
+const { fillSignupInfo } = require('../utils/user')
 
 const router = new express.Router()
 
@@ -19,27 +19,29 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
         for (const service of list) {
             services.push(service)
         }
-        const interpreter = new Interpreter({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            avatar: {
-                buffer: buffer,
-                url: getAvatarURL(req.params.id)
-            },
+        const info = fillSignupInfo(req.body, buffer)
+        const extraInfo = {
             phone: req.body.phone,
             services: services,
             summary: req.body.summary,
             languages: JSON.parse(req.body.languages)
-        })
+        }
+        const interpreter = new Interpreter(Object.assign({}, info, extraInfo))
         await sendWelcomeEmail(interpreter.email, interpreter.name, interpreter._id.toString())
         await interpreter.generateCoordinates(req.body.location)
         await interpreter.save()
         res.status(201).send()
     } catch (e) {
         console.log(e)
-        res.status(400).send({ error: e.message })
+
+        if (e.code === 11000)
+            res.status(400).send({ message: "Email already registered. Please use another email." })
+
+        res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    console.log(error)
+    res.status(400).send({ message: error.message })
 })
 
 // fetch all details for interpreter
@@ -111,6 +113,8 @@ router.post('/api/interpreter/certificate/upload', auth, imgUploader.single('cer
     } catch (error) {
         res.status(400).send({ error: error.message })
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 // delete a certificate
@@ -192,7 +196,6 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
 
     try {
         if (req.file) { // update avatar
-            interpreter.avatar.url = getAvatarURL(interpreter._id)
             interpreter.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
         }
 
@@ -215,6 +218,8 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
     } catch (e) {
         res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 module.exports = router

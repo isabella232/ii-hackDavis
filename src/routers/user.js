@@ -25,7 +25,7 @@ router.post('/api/user/login', urlencodedParser, async (req, res) => {
         res.send(data)
     } catch (e) {
         console.log(e)
-        res.status(400).send()
+        res.status(400).send({ message: e.message })
     }
 })
 

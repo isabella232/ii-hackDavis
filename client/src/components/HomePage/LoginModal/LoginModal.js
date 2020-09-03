@@ -91,7 +91,7 @@ class LoginModal extends Component {
                     this.unload();
                 })
                 .catch(e => {
-                    alert('You cannot be logged in at this time.')
+                    alert(e.message)
                     this.unload();
                 })
         }

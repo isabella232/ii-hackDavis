@@ -9,7 +9,7 @@ const { sendCertVerifyEmail, sendCertRejectEmail,
     sendInterpreterVerifyEmail, sendInterpreterRejectEmail } = require('../utils/email')
 const { saveInterpreter, removeInterpreter } = require('../utils/algolia')
 const { getToValidate } = require('../utils/admin')
-const { imgUploader } = require('../utils/image')
+const { imgUploader, getAvatarURL } = require('../utils/image')
 const { sendWelcomeEmail } = require('../utils/email')
 const { fillSignupInfo } = require('../utils/user')
 
@@ -27,8 +27,14 @@ router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) 
         res.status(201).send()
     } catch (e) {
         console.log(e)
-        res.status(400).send({ error: e.message })
+
+        if (e.code === 11000)
+            res.status(400).send({ message: "Email already registered. Please use another email." })
+
+        res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ message: error.message })
 })
 
 // get admin's home page
@@ -44,6 +50,8 @@ router.get('/api/admin/home', auth, async (req, res) => {
     } catch (error) {
         res.status(400).send(error)
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 // get all interpreter reviews
@@ -123,6 +131,7 @@ router.patch('/api/admin/interpreters/:id/reject', auth, async (req, res) => {
         await sendInterpreterRejectEmail(interpreter.email, interpreter.name)
         res.send()
     } catch (error) {
+        console.log(error)
         res.status(400).send(error)
     }
 })
@@ -150,7 +159,6 @@ router.patch('/api/admin/updateInfo', auth, imgUploader.single('avatar'), async 
     try {
         await admin.isAdmin()
         if (req.file) {
-            admin.avatar.url = getAvatarURL(admin._id)
             admin.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
         }
         admin.name = req.body.name
@@ -160,6 +168,8 @@ router.patch('/api/admin/updateInfo', auth, imgUploader.single('avatar'), async 
         console.log(e)
         res.status(400).send(e)
     }
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 module.exports = router
