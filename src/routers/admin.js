@@ -158,7 +158,6 @@ router.patch('/api/admin/updateInfo', auth, imgUploader.single('avatar'), async 
     try {
         await admin.isAdmin()
         if (req.file) {
-            admin.avatar.url = getAvatarURL(admin._id)
             admin.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
         }
         admin.name = req.body.name

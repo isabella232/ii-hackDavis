@@ -35,7 +35,7 @@ class ClientPage extends Component {
             bookmarks: [],
             events: [],
             window: 0,
-            loading: false
+            loading: false,
         }
 
         this.loadData = this.loadData.bind(this);
@@ -76,8 +76,15 @@ class ClientPage extends Component {
         this.setState({ file: fileItem });
     }
 
+    loadCurrentWindow = () => {
+        const curWindow = parseInt(localStorage.getItem('window'));
+        if (curWindow)
+            this.setState({ window: curWindow });
+    }
+
     componentDidMount() {
         this.loadData();
+        this.loadCurrentWindow();
     }
 
     changeInput = (e) => {
@@ -132,6 +139,7 @@ class ClientPage extends Component {
 
     switchWindow = (e, i) => {
         this.setState({ window: i });
+        localStorage.setItem("window", i);
     }
 
     render() {

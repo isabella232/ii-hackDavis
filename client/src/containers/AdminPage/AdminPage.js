@@ -47,7 +47,8 @@ class AdminPage extends Component {
             adminCode: '',
             window: 0,
             eventWindow: 0,
-            loading: false
+            loading: false,
+            archiveVisited: false
         }
 
         this.loadInfo = this.loadInfo.bind(this);
@@ -77,6 +78,7 @@ class AdminPage extends Component {
     }
 
     loadInfo = () => {
+        this.load();
         fetchInfo()
             .then(data => {
                 this.setState({
@@ -84,42 +86,57 @@ class AdminPage extends Component {
                     currentName: data.name,
                     email: data.email,
                     avatar: data.avatar,
-                })
+                });
+                this.unload();
             }).catch(error => {
+                this.unload();
             })
         this.loadToReviews();
     }
 
-    loadToReviews = () => {
+    loadToReviews = async () => {
+        this.load();
         fetchToReviews()
             .then(data => {
                 this.setState({
                     interpreters: data
-                })
+                });
+                this.unload();
             }).catch(error => {
+                this.unload();
             })
     }
 
-    loadEvents = () => {
+    loadEvents = async () => {
+        this.load();
         fetchEvents()
             .then(data => {
                 this.setState({
                     pastEvents: data.pastEvents,
                     upcomingEvents: data.upcomingEvents,
-                })
+                });
+                this.unload();
             }).catch(error => {
+                this.unload();
             })
     }
 
+    loadCurrentWindow = () => {
+        const curWindow = parseInt(localStorage.getItem('window'));
+        if (curWindow)
+            this.setState({ window: curWindow });
+    }
+
     componentDidMount() {
+        this.loadCurrentWindow();
         this.loadEvents();
+        this.loadToReviews();
         this.loadInfo();
-        this.loadEventArchive();
     }
 
     switchWindow = (e, i) => {
         this.setState({ window: i });
-        localStorage.setItem('adminWindow', i);
+        localStorage.setItem('window', i);
     }
 
     changeInput = (e) => {
@@ -219,6 +236,14 @@ class AdminPage extends Component {
     }
 
     showEventArchive = () => {
+        if (!this.state.archiveVisited) {
+            this.loadEventArchive();
+            this.setState({
+                archiveVisited: true,
+                eventWindow: 1
+            });
+            return
+        }
         this.setState({ eventWindow: 1 });
     }
 
@@ -254,14 +279,15 @@ class AdminPage extends Component {
 
     render() {
         const menuItems = ['Events', 'Review Interpreters', 'Account Update', 'Admin Code'];
-        const menu = menuItems.map((item, i) =>
-            <div className={classes.menuItemWrapper} key={`menu-item-${i}`}>
+        const menu = menuItems.map((item, i) => {
+            return <div className={classes.menuItemWrapper} key={`menu-item-${i}`}>
                 <div className={(this.state.window === i) ? classes.activeDot : classes.dot} />
                 <div value={i} onClick={(e) => this.switchWindow(e, i)}
                     className={(this.state.window === i) ? classes.activeMenuItem : classes.menuItem}>
                     {menuItems[i]}
                 </div>
-            </div>);
+            </div>
+        });
 
         const pastEvents = this.state.pastEvents.map(event => {
             return <EventCard id={event.id}

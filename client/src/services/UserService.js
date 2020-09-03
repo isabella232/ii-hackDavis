@@ -17,8 +17,11 @@ export const signOut = async () => {
     const endpoint = `api/user/logout`;
     try {
         const response = await auth.post(endpoint);
-        if (response.status === 200)
+
+        if (response.status === 200) {
             localStorage.removeItem('userKind');
+            localStorage.removeItem('window');
+        }
 
         return response.data;
     } catch (e) {

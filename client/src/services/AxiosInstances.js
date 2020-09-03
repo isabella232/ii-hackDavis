@@ -12,5 +12,8 @@ export const backend = axios.create({
 
 backend.interceptors.response.use(
     response => response.data,
-    error => Promise.reject(error.response.data)
+    error => {
+        if (error.response) Promise.reject(error.response.data)
+        else Promise.reject(error)
+    }
 );

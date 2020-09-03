@@ -73,7 +73,6 @@ router.patch('/api/client/updateInfo', auth, imgUploader.single('avatar'), async
     const client = req.user
     try {
         if (req.file) {
-            client.avatar.url = getAvatarURL(client._id)
             client.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
         }
         client.name = req.body.name

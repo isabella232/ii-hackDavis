@@ -342,7 +342,7 @@ class SignUpModal extends Component {
 
         const langFields = this.state.languages.map((lang, i) =>
             <Grid container spacing={2} key={`lang-outer-grid-${i}`}>
-                <Grid item xs={7}>
+                <Grid item xs={7} key={`lang-inner-grid-${i}`}>
                     <TextField label="Language"
                         name="language"
                         required

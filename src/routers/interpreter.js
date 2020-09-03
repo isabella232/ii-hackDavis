@@ -199,7 +199,6 @@ router.patch('/api/interpreter/updateInfo', auth, imgUploader.single('avatar'), 
 
     try {
         if (req.file) { // update avatar
-            interpreter.avatar.url = getAvatarURL(interpreter._id)
             interpreter.avatar.buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
         }
 

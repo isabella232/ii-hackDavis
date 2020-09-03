@@ -65,7 +65,7 @@ class InterpreterPage extends Component {
             summary: '',
             events: [],
             window: 0,
-            loading: false
+            loading: false,
         }
 
         this.loadData = this.loadData.bind(this);
@@ -110,6 +110,12 @@ class InterpreterPage extends Component {
             })
     }
 
+    loadCurrentWindow = () => {
+        const curWindow = parseInt(localStorage.getItem('window'));
+        if (curWindow)
+            this.setState({ window: curWindow });
+    }
+
     clickShowNewPassword = (event) => {
         event.preventDefault();
         const val = !this.state.showNewPassword
@@ -126,6 +132,7 @@ class InterpreterPage extends Component {
 
     componentDidMount() {
         this.loadData();
+        this.loadCurrentWindow();
     }
 
     changeInput = (e) => {
@@ -219,6 +226,7 @@ class InterpreterPage extends Component {
 
     switchWindow = (e, i) => {
         this.setState({ window: i });
+        localStorage.setItem("window", i);
     }
 
     pushLangField = () => {
