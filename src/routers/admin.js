@@ -131,6 +131,7 @@ router.patch('/api/admin/interpreters/:id/reject', auth, async (req, res) => {
         await sendInterpreterRejectEmail(interpreter.email, interpreter.name)
         res.send()
     } catch (error) {
+        console.log(error)
         res.status(400).send(error)
     }
 })

@@ -8,12 +8,15 @@ import Fade from "@material-ui/core/Fade";
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 import Button from '../../../shared/Button/Button';
 import CertificationItem from '../CertificateItem/CertificateItem';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import ReviewModal from '../../ReviewModal/ReviewModal';
+import LoadCircle from '../../../shared/LoadCircle/LoadCircle';
 
+import { rejectInterpreter, verifyInterpreter } from '../../../../services/AdminService';
 import { fetchRatingAndReviews } from '../../../../services/InterpreterService';
 import { bookmarkInterpreter } from '../../../../services/ClientService';
 
@@ -26,12 +29,18 @@ class InterpreterInfoModal extends Component {
             name: props.name,
             rating: 0,
             reviews: [],
-            certifications: []
+            certifications: [],
+            isRejected: false,
+            loading: false
         };
 
         this.reloadDetails = this.reloadDetails.bind(this);
         this.bookmark = this.bookmark.bind(this);
     }
+
+    load = () => { this.setState({ loading: true }); }
+
+    unload = () => { this.setState({ loading: false }); }
 
     openModal = () => {
         this.setState({ open: true });
@@ -75,6 +84,32 @@ class InterpreterInfoModal extends Component {
             })
     }
 
+    clickVerifyInterpreter = (id) => {
+        this.load();
+        verifyInterpreter(id)
+            .then(data => {
+                this.setState({ isRejected: false });
+                this.unload();
+            })
+            .catch(e => {
+                alert('Failed to verify interpreter');
+                this.unload();
+            });
+    }
+
+    clickRejectInterpreter = (id) => {
+        this.load();
+        rejectInterpreter(id)
+            .then(data => {
+                this.setState({ isRejected: true });
+                this.unload();
+            })
+            .catch(e => {
+                alert('Failed to reject interpreter');
+                this.unload();
+            });
+    }
+
     render() {
         const services = this.props.services.map((service, i) => (i < this.props.services.length - 1) ? service + ', ' : service);
         const languages = this.props.languages.map((lang, i) => {
@@ -109,8 +144,10 @@ class InterpreterInfoModal extends Component {
                                 <Grid item xs={7} sm={7}>
                                     <div className={classes.name}>
                                         {this.props.name}
-                                        <CheckCircleIcon className={classes.verifyIcon}
-                                            fontSize="small" color="primary" />
+                                        {!this.state.isRejected ? <CheckCircleIcon className={classes.verifyIcon}
+                                            fontSize="small" color="primary" /> : null}
+                                        {this.state.isRejected ? <CancelIcon className={classes.verifyIcon}
+                                            fontSize="small" color="error" /> : null}
                                     </div>
                                     <div className={classes.infoItem}>
                                         <Rating className={classes.rating}
@@ -167,12 +204,21 @@ class InterpreterInfoModal extends Component {
                                 {this.props.userKind === 'Client' ?
                                     <Button content={'Bookmark'} click={this.bookmark} />
                                     : null}
+                                {this.props.userKind === 'Admin' ? <>
+
+                                    {!this.state.isRejected ?
+                                        <Button content={'Reject'} id={this.state.id} invertedDelete click={this.clickRejectInterpreter} />
+                                        : <Button content="Verify" id={this.state.id} click={this.clickVerifyInterpreter} />}
+                                </>
+                                    : null}
                                 <ReviewModal id={this.state.id} name={this.state.name} reloadDetails={this.reloadDetails} />
                             </div>
+
+                            <LoadCircle open={this.state.loading} />
                         </div>
                     </Fade>
                 </Modal>
-            </div >
+            </div>
         );
     }
 }
