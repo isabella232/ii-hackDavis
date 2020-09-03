@@ -13,6 +13,8 @@ const parseInterpreter = (interpreter) => {
         lng: interpreter.location.coordinates.longitude
     }
 
+    console.log('avatar here', interpreter.avatar.url)
+
     return {
         name: interpreter.name,
         avatar: interpreter.avatar.url,

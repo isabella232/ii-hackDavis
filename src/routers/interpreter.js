@@ -8,6 +8,7 @@ const { saveInterpreter } = require('../utils/algolia')
 const { imgUploader, getAvatarURL, getCertificateURL } = require('../utils/image')
 const { accumulateRatings, processReviews } = require('../utils/interpreter')
 const { sendWelcomeEmail } = require('../utils/email')
+const { fillSignupInfo } = require('../utils/user')
 
 const router = new express.Router()
 
@@ -18,19 +19,14 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
         for (const service of list) {
             services.push(service)
         }
-        const interpreter = new Interpreter({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            avatar: {
-                buffer: buffer,
-                url: getAvatarURL(req.params.id)
-            },
+        const info = fillSignupInfo(req.body, buffer)
+        const extraInfo = {
             phone: req.body.phone,
             services: services,
             summary: req.body.summary,
             languages: JSON.parse(req.body.languages)
-        })
+        }
+        const interpreter = new Interpreter(Object.assign({}, info, extraInfo))
         await sendWelcomeEmail(interpreter.email, interpreter.name, interpreter._id.toString())
         await interpreter.generateCoordinates(req.body.location)
         await interpreter.save()
@@ -44,6 +40,7 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
         res.status(400).send(e)
     }
 }, (error, req, res, next) => {
+    console.log(error)
     res.status(400).send({ message: error.message })
 })
 

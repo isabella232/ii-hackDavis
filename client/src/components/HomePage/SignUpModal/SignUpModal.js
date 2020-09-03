@@ -159,6 +159,7 @@ class SignUpModal extends Component {
                 fluency: 1
             }],
             location: '',
+            phone: '',
             summary: '',
             services: {
                 Simultaneous: false,
