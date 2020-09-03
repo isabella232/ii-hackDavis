@@ -123,7 +123,7 @@ class AdminPage extends Component {
 
     loadCurrentWindow = () => {
         const curWindow = parseInt(localStorage.getItem('window'));
-        if (curWindow)
+        if (curWindow && curWindow < 4)
             this.setState({ window: curWindow });
     }
 
