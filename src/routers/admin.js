@@ -39,8 +39,9 @@ router.post('/api/admin/create', imgUploader.single('avatar'), async (req, res) 
 
 // get admin's home page
 router.get('/api/admin/home', auth, async (req, res) => {
+    const admin = req.user
     try {
-        const admin = req.user
+        await admin.isAdmin()
         const data = {
             name: admin.name,
             email: admin.email,
@@ -57,6 +58,7 @@ router.get('/api/admin/home', auth, async (req, res) => {
 // get all interpreter reviews
 router.get('/api/admin/allToReviews', auth, async (req, res) => {
     try {
+        await req.user.isAdmin()
         const interpreters = await Interpreter.find({
             $or: [
                 { 'isVerified': false },
@@ -73,6 +75,7 @@ router.get('/api/admin/allToReviews', auth, async (req, res) => {
 router.patch('/api/admin/certificates/:id/validate', auth, async (req, res) => {
     const id = req.params.id
     try {
+        await req.user.isAdmin()
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
         const index = interpreter.certifications.findIndex(certificate => certificate._id.toString() === id)
 
@@ -93,6 +96,7 @@ router.patch('/api/admin/certificates/:id/validate', auth, async (req, res) => {
 router.patch('/api/admin/certificates/:id/reject', auth, async (req, res) => {
     const id = req.params.id
     try {
+        await req.user.isAdmin()
         const interpreter = await Interpreter.findOne().elemMatch('certifications', { _id: new ObjectID(id) })
         const index = interpreter.certifications.findIndex(certificate => certificate._id.toString() === id)
 
@@ -112,6 +116,7 @@ router.patch('/api/admin/certificates/:id/reject', auth, async (req, res) => {
 router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
     const id = req.params.id
     try {
+        await req.user.isAdmin()
         const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: true, isRejected: false })
         saveInterpreter(interpreter)
         await sendInterpreterVerifyEmail(interpreter.email, interpreter.name)
@@ -126,6 +131,7 @@ router.patch('/api/admin/interpreters/:id/verify', auth, async (req, res) => {
 router.patch('/api/admin/interpreters/:id/reject', auth, async (req, res) => {
     const id = req.params.id
     try {
+        await req.user.isAdmin()
         const interpreter = await Interpreter.findOneAndUpdate({ _id: new ObjectID(id) }, { isVerified: false, isRejected: true })
         removeInterpreter(interpreter._id)
         await sendInterpreterRejectEmail(interpreter.email, interpreter.name)

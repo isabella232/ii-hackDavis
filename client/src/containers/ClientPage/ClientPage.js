@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import classes from './ClientPage.module.css'
 
 import Grid from '@material-ui/core/Grid';
 import Button from '../../components/shared/Button/Button';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import Avatar from '../../components/shared/Avatar/Avatar';
 import Bookmark from '../../components/ClientPage/Bookmark/Bookmark';
@@ -11,13 +17,10 @@ import EventCard from '../../components/shared/EventCard/EventCard';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import DeleteModal from '../../components/shared/DoubleCheckModal/DoubleCheckModal';
 
 import { fetchClientPage, updateClientInfo } from '../../services/ClientService';
-import { updateUserPassword } from '../../services/UserService';
+import { updateUserPassword, deleteUser } from '../../services/UserService';
 
 class ClientPage extends Component {
     constructor() {
@@ -44,6 +47,7 @@ class ClientPage extends Component {
         this.submitInfoForm = this.submitInfoForm.bind(this);
         this.switchWindow = this.switchWindow.bind(this);
         this.clickShowNewPassword = this.clickShowNewPassword.bind(this);
+        this.deleteAccount = this.deleteAccount.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
@@ -140,6 +144,13 @@ class ClientPage extends Component {
     switchWindow = (e, i) => {
         this.setState({ window: i });
         localStorage.setItem("window", i);
+    }
+
+    deleteAccount = () => {
+        deleteUser(this.state.email)
+            .then(data => {
+                this.props.history.go(0);
+            })
     }
 
     render() {
@@ -253,6 +264,12 @@ class ClientPage extends Component {
             <div className={classes.buttons}>
                 <Button content={'Update Password'} click={this.submitPasswordForm} />
             </div>
+
+            <HorzLine />
+
+            <div className={classes.buttons}>
+                <DeleteModal content={'Are You Sure You Want To Permanently Delete Your Account?'} account clickDelete={this.deleteAccount} />
+            </div>
         </>;
 
         const windows = [eventWindow, bookmarkWindow, updateWindow];
@@ -289,5 +306,5 @@ class ClientPage extends Component {
     }
 }
 
-export default ClientPage;
+export default withRouter(ClientPage);
 

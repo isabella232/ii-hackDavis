@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import classes from './AdminPage.module.css'
 
 import Grid from '@material-ui/core/Grid';
@@ -20,12 +22,13 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
+import DeleteModal from '../../components/shared/DoubleCheckModal/DoubleCheckModal';
 
 import {
     fetchInfo, createAdminCode, updateAdminInfo, fetchEventArchive, fetchEvents,
     rejectInterpreter, verifyInterpreter, fetchToReviews
 } from '../../services/AdminService';
-import { updateUserPassword } from '../../services/UserService';
+import { updateUserPassword, deleteUser } from '../../services/UserService';
 
 class AdminPage extends Component {
     constructor() {
@@ -65,6 +68,7 @@ class AdminPage extends Component {
         this.clickRejectInterpreter = this.clickRejectInterpreter.bind(this);
         this.clickVerifyInterpreter = this.clickVerifyInterpreter.bind(this);
         this.clickShowNewPassword = this.clickShowNewPassword.bind(this);
+        this.deleteAccount = this.deleteAccount.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
@@ -277,6 +281,13 @@ class AdminPage extends Component {
             });
     }
 
+    deleteAccount = () => {
+        deleteUser(this.state.email)
+            .then(data => {
+                this.props.history.go(0);
+            })
+    }
+
     render() {
         const menuItems = ['Events', 'Review Interpreters', 'Account Update', 'Admin Code'];
         const menu = menuItems.map((item, i) => {
@@ -465,6 +476,13 @@ class AdminPage extends Component {
             <div className={classes.buttons}>
                 <Button content={'Update Password'} click={this.submitPasswordForm} />
             </div>
+
+
+            <HorzLine />
+
+            <div className={classes.buttons}>
+                <DeleteModal content={'Are You Sure You Want To Permanently Delete Your Account?'} account clickDelete={this.deleteAccount} />
+            </div>
         </>;
 
         const adminCodeWindow = <>
@@ -520,5 +538,5 @@ class AdminPage extends Component {
     }
 }
 
-export default AdminPage;
+export default withRouter(AdminPage);
 

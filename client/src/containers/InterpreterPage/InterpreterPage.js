@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import classes from './InterpreterPage.module.css'
 
 import Grid from '@material-ui/core/Grid';
@@ -27,12 +29,13 @@ import LoadCircle from '../../components/shared/LoadCircle/LoadCircle';
 import FileUploader from '../../components/shared/FileUploader/FileUploader';
 import HorzLine from '../../components/shared/HorzLine/HorzLine';
 import ReviewItem from '../../components/SearchPage/InterpreterInfoModal/ReviewItem/ReviewItem';
+import DeleteModal from '../../components/shared/DoubleCheckModal/DoubleCheckModal';
 
-import { updateUserPassword } from '../../services/UserService';
 import {
     fetchInterpreterPage, updateInterpreterInfo,
     uploadCertificate, deleteCertificate
 } from '../../services/InterpreterService';
+import { updateUserPassword, deleteUser } from '../../services/UserService';
 
 class InterpreterPage extends Component {
     constructor() {
@@ -76,6 +79,7 @@ class InterpreterPage extends Component {
         this.changeServices = this.changeServices.bind(this);
         this.deleteCertificate = this.deleteCertificate.bind(this);
         this.clickShowNewPassword = this.clickShowNewPassword.bind(this);
+        this.deleteAccount = this.deleteAccount.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
@@ -272,6 +276,13 @@ class InterpreterPage extends Component {
             .catch(error => {
                 alert('Failed To Delete Certificate.');
                 this.unload();
+            })
+    }
+
+    deleteAccount = () => {
+        deleteUser(this.state.email)
+            .then(data => {
+                this.props.history.go(0);
             })
     }
 
@@ -484,6 +495,12 @@ class InterpreterPage extends Component {
             <div className={classes.buttons}>
                 <Button content={'Update Password'} click={this.submitPasswordForm} />
             </div>
+
+            <HorzLine />
+
+            <div className={classes.buttons}>
+                <DeleteModal content={'Are You Sure You Want To Permanently Delete Your Account?'} account clickDelete={this.deleteAccount} />
+            </div>
         </>;
 
         const windows = [eventWindow, reviewWindow, certificationWindow, updateWindow];
@@ -530,5 +547,5 @@ class InterpreterPage extends Component {
     }
 }
 
-export default InterpreterPage;
+export default withRouter(InterpreterPage);
 

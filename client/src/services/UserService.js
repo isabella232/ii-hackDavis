@@ -84,3 +84,13 @@ export const resetPassword = async (id, password) => {
     const endpoint = `api/user/${id}/resetPassword`;
     return backend.patch(endpoint, { password: password });
 }
+
+export const deleteUser = async (email) => {
+    try {
+        await signOut()
+        const endpoint = `api/user/${email}/delete`;
+        return backend.post(endpoint);
+    } catch (e) {
+        alert("Unable to delete account.");
+    }
+}

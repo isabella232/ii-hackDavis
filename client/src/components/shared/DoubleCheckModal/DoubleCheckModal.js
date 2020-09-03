@@ -28,7 +28,9 @@ const DeleteModal = props => {
 
     return (
         <>
-            <Button content={'Delete'} invertedDelete click={openModal} />
+            {props.account ?
+                <Button content={'Delete Account'} delete click={openModal} />
+                : <Button content={'Delete'} invertedDelete click={openModal} />}
 
             <Modal className={classes.Modal}
                 open={open}
@@ -37,10 +39,10 @@ const DeleteModal = props => {
                 BackdropProps={{ timeout: 200 }}>
                 <Fade in={open}>
                     <div className={classes.Box}>
-                        <h3>{props.content}</h3>
+                        <div className={classes.question}>{props.content}</div>
                         <div className={classes.choices}>
-                            <Button content={'Yes'} delete click={answerYes} />
-                            <Button content={'Cancel'} inverted click={closeModal} />
+                            <Button content={'Yes'} invertedDelete click={answerYes} />
+                            <Button content={'Cancel'} click={closeModal} />
                         </div>
                     </div>
                 </Fade>

@@ -83,6 +83,17 @@ router.post('/api/user/logoutAll', auth, async (req, res) => {
     }
 })
 
+// delete account
+router.post('/api/user/:email/delete/', auth, async (req, res) => {
+    try {
+        await User.findOneAndRemove({ email: req.params.email })
+        res = clearCookies(res)
+        res.send()
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 // get avatar image url
 router.get('/api/user/avatar/:id', async (req, res) => {
     try {
