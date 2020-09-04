@@ -1,81 +1,78 @@
 .Button {
-    display: inline-block;
-    padding: 8px;
-    background: #03A0B5;
-    border: 2px solid #03A0B5;
-    box-sizing: border-box;
-    border-radius: 9px;
-    color: white;
-    cursor: pointer;
-    -webkit-transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+  display: inline-block;
+  padding: 6px;
+  background: #03a0b5;
+  border: 2px solid #03a0b5;
+  box-sizing: border-box;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .Button:not(:last-child) {
-    margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .Button:hover {
-    background: rgb(39, 194, 214);
-    border: 2px solid rgb(39, 194, 214);
+  background: rgb(39, 194, 214);
+  border: 2px solid rgb(39, 194, 214);
 }
 
 .inverted {
-    display: inline-block;
-    border-radius: 9px;
-    padding: 8px;
-    color: #03A0B5;
-    cursor: pointer;
-    -webkit-transition: color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
+  display: inline-block;
+  border-radius: 10px;
+  padding: 6px;
+  color: #03a0b5;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .inverted:hover {
-    border-radius: 9px;
-    background: rgb(235, 247, 249);
+  border-radius: 9px;
+  background: rgb(235, 247, 249);
 }
 
 .inverted:not(:last-child) {
-    margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .invertedDelete {
-    display: inline-block;
-    color: red;
-    padding: 8px;
-    border-radius: 9px;
-    cursor: pointer;
-    -webkit-transition: color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
+  display: inline-block;
+  color: red;
+  padding: 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .invertedDelete:hover {
-    border-radius: 9px;
-    background: rgb(255, 174, 164);
+  border-radius: 10px;
+  background: #ffd0c2;
 }
 
 .invertedDelete:not(:last-child) {
-    margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .delete {
-    display: inline-block;
-    background: rgba(255, 0, 0, 0.767);
-    box-sizing: border-box;
-    border-radius: 9px;
-    color: white;
-    padding: 8px;
-    cursor: pointer;
-    -webkit-transition: color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, border .2s ease-in-out, border-radius .2s ease-in-out;
+  display: inline-block;
+  background: #f63c41;
+  box-sizing: border-box;
+  border-radius: 10px;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .delete:hover {
-    border-radius: 9px;
-    background: rgb(255, 135, 122);
-    border-color: rgb(255, 135, 122);
+  border-radius: 10px;
+  background: #d31122;
+  border-color: #d31122;
 }
 
 .delete:not(:last-child) {
-    margin-right: .5rem;
+  margin-right: 0.5rem;
 }
