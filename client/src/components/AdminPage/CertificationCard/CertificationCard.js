@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { withSnackbar } from 'notistack';
+
 import classes from './CertificationCard.module.css';
 
 import Button from '../../shared/Button/Button';
@@ -23,8 +25,7 @@ const CertificationCard = (props) => {
             .then(() => {
                 setVerified(true)
             }).catch(error => {
-                console.log(error)
-                alert("Error: Can't validate certificate")
+                this.props.enqueueSnackbar("Certificate cannot be validated at this time.", { variant: 'error' });
             })
     }
 
@@ -33,8 +34,7 @@ const CertificationCard = (props) => {
             .then(() => {
                 setRejected(true)
             }).catch(error => {
-                console.log(error)
-                alert("Error: Can't reject certificate")
+                this.props.enqueueSnackbar("Certificate cannot be rejected at this time.", { variant: 'error' });
             })
     }
 
@@ -75,4 +75,4 @@ const CertificationCard = (props) => {
     )
 }
 
-export default CertificationCard;
+export default withSnackbar(CertificationCard);

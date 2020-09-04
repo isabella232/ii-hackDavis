@@ -1,60 +1,59 @@
 .EventCard {
-    margin: 1rem 0;
-    padding: 1rem;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 15px lightgrey;
-    border-radius: 10px;
-    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 10px;
+  -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .EventCard .past {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .EventCard:hover {
-    box-shadow: 0px 8px 25px lightgray;
-    transform: translateY(-5px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .EventCard .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .EventCard .eventTitle {
-    font-weight: 600;
-    font-size: 25px;
+  font-weight: 600;
+  font-size: 25px;
 }
 
 .EventCard .dateLocation {
-    text-align: right;
+  text-align: right;
 }
 
 .EventCard .date {
-    font-size: 15px;
-    font-weight: 500;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .EventCard .location {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .EventCard .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: .5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
 }
 
 .EventCard .note {
-    font-size: 12px;
-    font-weight: 500;
-    color: green;
+  font-size: 12px;
+  font-weight: 500;
+  color: green;
 }
 
 .EventCard .buttons {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withSnackbar } from 'notistack';
+
 import classes from './EventCard.module.css';
 
 import Button from '../../shared/Button/Button';
@@ -20,7 +22,7 @@ class EventCard extends Component {
             .then(data => {
                 this.props.loadEvents();
             })
-            .catch(e => console.log(e))
+            .catch(e => this.props.enqueueSnackbar("Event cannot be deleted at this time.", { variant: 'error' }))
     }
 
     archive = () => {
@@ -29,7 +31,7 @@ class EventCard extends Component {
                 this.props.loadEvents();
                 this.props.loadEventArchive();
             }).catch(error => {
-                console.log(error);
+                this.props.enqueueSnackbar("Event cannot be archived at this time.", { variant: 'error' })
             });
     }
 
@@ -89,5 +91,5 @@ class EventCard extends Component {
 
 }
 
-export default EventCard;
+export default withSnackbar(EventCard);
 

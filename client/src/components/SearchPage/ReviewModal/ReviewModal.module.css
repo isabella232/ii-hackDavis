@@ -1,44 +1,43 @@
 .Modal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Modal .reviewEditor {
-    padding: 1rem;
-    width: 400px;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 15px #027888;
-    border-radius: 10px;
-    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  padding: 1rem;
+  width: 400px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .Modal .reviewEditor:hover {
-    box-shadow: 0px 8px 25px rgba(3, 160, 181, 0.25);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .Modal .title {
-    font-weight: 500;
-    font-size: 30px;
-    line-height: 45px;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 45px;
 }
 
 .Modal .comment {
-    display: block;
-    height: 200px;
-    width: 100%;
-    background: #FFFFFF;
-    border: 2px solid #03A0B5;
-    box-sizing: border-box;
-    border-radius: 13px;
-    padding: 1rem;
-    font-size: 16px;
-    margin: 1rem 0;
+  display: block;
+  height: 200px;
+  width: 100%;
+  background: #ffffff;
+  border: 2px solid #03a0b5;
+  box-sizing: border-box;
+  border-radius: 13px;
+  padding: 1rem;
+  font-size: 16px;
+  margin: 1rem 0;
 }
 
 .Modal .buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin: 1rem .5rem;
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0.5rem;
 }

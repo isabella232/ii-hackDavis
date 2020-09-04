@@ -1,162 +1,165 @@
 .InterpreterPage {
-    margin: auto;
-    max-width: 1000px;
+  margin: auto;
+  max-width: 1000px;
 }
 
 .InterpreterPage .menuWrapper {
-    margin: 2rem 1rem 0 1rem;
+  margin: 2rem 1rem 0 1rem;
 }
 
 .InterpreterPage .window {
-    margin: 0rem 1rem 0 1rem;
+  margin: 0rem 1rem 0 1rem;
 }
 
 .InterpreterPage .noEvents {
-    margin: 1rem;
-    text-align: center;
+  margin: 1rem;
+  text-align: center;
 }
 
 .InterpreterPage .buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
 }
 
 .InterpreterPage .fileUpload {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .InterpreterPage .currentPassword {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 .InterpreterPage .label {
-    font-weight: 400;
-    font-size: 19px;
-    margin: -3px 20px 0 0;
+  font-weight: 400;
+  font-size: 19px;
+  margin: -3px 20px 0 0;
 }
 
 .InterpreterPage .menu {
-    padding: 1rem 1.5rem 0 1.5rem;
+  padding: 1rem 1.5rem 0 1.5rem;
 }
 
 .InterpreterPage .menuItemWrapper {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    -webkit-transition: transform 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  -webkit-transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 .InterpreterPage .menuItemWrapper:hover {
-    transform: translateX(10px);
+  transform: translateX(10px);
 }
 
 .InterpreterPage .menuItem {
-    color: black;
-    margin-bottom: .5rem;
-    font-size: 18px;
-    font-weight: 500;
-    -webkit-transition: color 0.2s ease-in-out;
-    transition: color 0.2s ease-in-out;
+  color: black;
+  margin-bottom: 0.5rem;
+  font-size: 18px;
+  font-weight: 500;
+  -webkit-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
 }
 
 .InterpreterPage .menuItem:hover {
-    color: #03a0b5;
+  color: #03a0b5;
 }
 
 .InterpreterPage .activeMenuItem {
-    color: #03a0b5;
-    margin-bottom: .5rem;
-    font-size: 18px;
-    font-weight: 500;
-    -webkit-transition: color 0.2s ease-in-out;
-    transition: color 0.2s ease-in-out;
+  color: #03a0b5;
+  margin-bottom: 0.5rem;
+  font-size: 18px;
+  font-weight: 500;
+  -webkit-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
 }
 
 .InterpreterPage .userInfo {
-    display: inline-flex;
-    align-items: center;
+  display: inline-flex;
+  align-items: center;
 }
 
 .InterpreterPage .userName {
-    margin-left: .5rem;
-    font-size: 22px;
-    font-weight: 600;
+  margin-left: 0.5rem;
+  font-size: 22px;
+  font-weight: 600;
 }
 
 .InterpreterPage .userCard {
-    margin: 1rem 0;
-    padding: 1rem;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 15px lightgrey;
-    border-radius: 10px;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.InterpreterPage .userCard:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .InterpreterPage .window {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .InterpreterPage .dot {
-    height: 8px;
-    width: 8px;
-    background-color: black;
-    border-radius: 50%;
-    margin: 0 1rem .5rem 0;
+  height: 8px;
+  width: 8px;
+  background-color: black;
+  border-radius: 50%;
+  margin: 0 1rem 0.5rem 0;
 }
 
 .InterpreterPage .activeDot {
-    height: 8px;
-    width: 8px;
-    background-color: #03a0b5;
-    border-radius: 50%;
-    margin: 0 1rem .5rem 0;
-    -webkit-transition: background-color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out;
+  height: 8px;
+  width: 8px;
+  background-color: #03a0b5;
+  border-radius: 50%;
+  margin: 0 1rem 0.5rem 0;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .InterpreterPage .checkIcon {
-    margin-left: .5rem;
+  margin-left: 0.5rem;
 }
 
 .InterpreterPage .flexArea {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .InterpreterPage .rating {
-    margin-left: .4rem;
+  margin-left: 0.4rem;
 }
 
 .InterpreterPage .langFieldIcons {
-    margin-top: .9rem;
+  margin-top: 0.9rem;
 }
 
 .InterpreterPage .langFieldIcon:hover {
-    filter: brightness(150%);
+  filter: brightness(150%);
 }
 
 .InterpreterPage .reviewWindow {
-    max-height: 600px;
-    overflow-y: scroll;
+  max-height: 600px;
+  overflow-y: scroll;
 }
 
 .InterpreterPage .reviewCard {
-    margin: 1rem 1rem;
-    padding: .5rem;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 15px lightgrey;
-    border-radius: 10px;
-    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  margin: 1rem 1rem;
+  padding: 0.5rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .InterpreterPage .reviewCard:hover {
-    box-shadow: 0px 6px 18px lightgray;
-    transform: translateY(-5px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .InterpreterPage .noItems {
-    margin: 1rem;
-    text-align: center;
+  margin: 1rem;
+  text-align: center;
 }

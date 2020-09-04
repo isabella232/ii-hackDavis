@@ -1,71 +1,69 @@
 .Modal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Modal .card {
-    padding: 1rem;
-    width: 90%;
-    max-width: 800px;
-    background: #FFFFFF;
-    border-radius: 10px;
-    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  padding: 1rem;
+  width: 90%;
+  max-width: 800px;
+  background: #ffffff;
+  border-radius: 10px;
 }
 
 .Modal .title {
-    font-weight: 500;
-    font-size: 25px;
-    line-height: 45px;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 45px;
 }
 
 .Modal .footer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .Modal .buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
 .Modal .kindArea {
-    align-items: center;
-    display: flex;
+  align-items: center;
+  display: flex;
 }
 
 .Modal .label {
-    font-weight: 400;
-    font-size: 19px;
-    margin: -3px 20px 0 0;
+  font-weight: 400;
+  font-size: 19px;
+  margin: -3px 20px 0 0;
 }
 
 .Modal .serviceLabel {
-    font-weight: 400;
-    font-size: 19px;
-    margin: 10px 1.5rem 0 0;
+  font-weight: 400;
+  font-size: 19px;
+  margin: 10px 1.5rem 0 0;
 }
 
 .Modal .serviceArea {
-    display: flex;
+  display: flex;
 }
 
 .Modal .langFieldIcons {
-    margin-top: .9rem;
+  margin-top: 0.9rem;
 }
 
 .Modal .langFieldIcon:hover {
-    filter: brightness(150%);
+  filter: brightness(150%);
 }
 
 .Modal .fileUpload {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .Modal .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

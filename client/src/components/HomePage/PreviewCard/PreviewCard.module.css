@@ -1,42 +1,42 @@
 .PreviewCard {
-    display: flex;
-    align-items: center;
-    background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.03);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    min-width: 400px;
-    margin: 0 3rem;
-    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  min-width: 400px;
+  margin: 0 3rem;
+  -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .PreviewCard:hover {
-    box-shadow: 0px 8px 10px lightgrey;
-    transform: translateY(-5px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .PreviewCard .avatar {
-    margin: 1rem 0 1rem 1rem;
+  margin: 1rem 0 1rem 1rem;
 }
 
 .PreviewCard .content {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .PreviewCard .name {
-    font-weight: bold;
-    font-size: 26px;
-    line-height: 30px;
-    margin-bottom: .5rem;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 30px;
+  margin-bottom: 0.5rem;
 }
 
 .PreviewCard .languages {
-    font-size: 18px;
-    line-height: 20px;
-    color: #027888;
+  font-size: 18px;
+  line-height: 20px;
+  color: #027888;
 }
 
-.PreviewCard .location, .email {
-    line-height: 30px;
+.PreviewCard .location,
+.email {
+  line-height: 30px;
 }

@@ -9,8 +9,6 @@
   width: 400px;
   background: #ffffff;
   border-radius: 10px;
-  -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .Modal .Box .question {

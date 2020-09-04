@@ -1,41 +1,39 @@
 .Modal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Modal .card {
-    padding: 1rem;
-    width: 400px;
-    background: #FFFFFF;
-    border-radius: 10px;
-    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  padding: 1rem;
+  width: 400px;
+  background: #ffffff;
+  border-radius: 10px;
 }
 
 .Modal .title {
-    font-weight: 500;
-    font-size: 25px;
-    line-height: 45px;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 45px;
 }
 
 .Modal .footer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .Modal .buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
 .Modal .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .Modal .instruction {
-    font-size: 14px;
+  font-size: 14px;
 }

@@ -1,51 +1,51 @@
 .Bookmark {
-    display: flex;
-    align-items: center;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    margin-bottom: 20px;
-    -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .Bookmark:hover {
-    box-shadow: 0px 8px 25px lightgrey;
-    transform: translateY(-5px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .Bookmark .avatar {
-    border-radius: 10px;
-    margin-left: .5rem;
-    padding: .5rem;
-    min-width: 120px;
-    max-width: 150px;
+  border-radius: 10px;
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+  min-width: 120px;
+  max-width: 150px;
 }
 
 .Bookmark .content {
-    padding: .8rem .8rem .8rem 0;
+  padding: 0.8rem 0.8rem 0.8rem 0;
 }
 
 .Bookmark .name {
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 25px;
-    display: flex;
-    align-items: center;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
 }
 
 .Bookmark .bookmark {
-    display: flex;
-    align-items: center;
-    margin-left: .5rem;
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
 }
 
 .Bookmark .languages {
-    font-size: 18px;
-    line-height: 20px;
-    color: #027888;
+  font-size: 18px;
+  line-height: 20px;
+  color: #027888;
 }
 
-.Bookmark .location, .email, .phone {
-    line-height: 22px;
+.Bookmark .location,
+.email,
+.phone {
+  line-height: 22px;
 }

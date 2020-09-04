@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { withSnackbar } from 'notistack';
+
+import classes from './EventModal.module.css';
+
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import classes from './EventModal.module.css';
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -73,17 +76,17 @@ class EventModal extends Component {
 
     submitForm = async () => {
         if (!this.state.title) {
-            alert(`Please fill out the event's title.`);
+            this.props.enqueueSnackbar(`Please fill out the event's title.`, { variant: 'info' });
         } else if (!this.state.summary) {
-            alert(`Please fill out the event's summary.`);
+            this.props.enqueueSnackbar(`Please fill out the event's summary.`, { variant: 'info' });
         } else if (!this.state.location) {
-            alert(`Please fill out the event's location.`);
+            this.props.enqueueSnackbar(`Please fill out the event's location.`, { variant: 'info' });
         } else if (!this.state.date) {
-            alert(`Please fill out the event's date.`);
+            this.props.enqueueSnackbar(`Please fill out the event's date.`, { variant: 'info' });
         } else if (!this.props.edit && !this.state.image) {
-            alert(`Please upload the event's image.`);
+            this.props.enqueueSnackbar(`Please upload the event's image.`, { variant: 'info' });
         } else if (this.props.target === '') {
-            alert(`Please choose a scale of publication.`);
+            this.props.enqueueSnackbar(`Please choose a scale of publication.`, { variant: 'info' });
         } else {
             const data = {
                 title: this.state.title,
@@ -107,7 +110,7 @@ class EventModal extends Component {
                 this.closeModal();
             }
             catch (e) {
-                alert("Your event cannot be created/edited at this time.");
+                this.props.enqueueSnackbar("Event cannot be create/edit at this time.", { variant: 'error' });
                 console.log(e)
             };
 
@@ -188,4 +191,4 @@ class EventModal extends Component {
     }
 }
 
-export default EventModal;
+export default withSnackbar(EventModal);
