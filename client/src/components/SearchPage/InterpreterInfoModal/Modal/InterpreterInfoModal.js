@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withSnackbar } from 'notistack';
 import { connect } from 'react-redux';
 
 import classes from './InterpreterInfoModal.module.css';
@@ -229,4 +230,4 @@ const mapStateToProps = state => ({
     userKind: state.userKind
 });
 
-export default connect(mapStateToProps)(InterpreterInfoModal);
+export default connect(mapStateToProps)(withSnackbar(InterpreterInfoModal));

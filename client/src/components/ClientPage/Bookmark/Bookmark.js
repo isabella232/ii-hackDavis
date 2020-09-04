@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { withSnackbar } from 'notistack';
+
 import classes from './Bookmark.module.css';
 
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -21,13 +23,13 @@ const Bookmark = (props) => {
     const bookmark = (e, email) => {
         bookmarkInterpreter(email)
             .then(data => { setBookmarked(true); })
-            .catch(e => this.props.enqueueSnackbar("This interpreter cannot be bookmarked at the moment.", { variant: 'error' }))
+            .catch(e => props.enqueueSnackbar("This interpreter cannot be bookmarked at the moment.", { variant: 'error' }))
     }
 
     const unbookmark = (e, email) => {
         unbookmarkInterpreter(email)
             .then(data => { setBookmarked(false); })
-            .catch(e => this.props.enqueueSnackbar("This interpreter cannot be unbookmarked at the moment.", { variant: 'error' }))
+            .catch(e => props.enqueueSnackbar("This interpreter cannot be unbookmarked at the moment.", { variant: 'error' }))
     }
 
     return <div key={`props-${props.objectID}`} className={classes.Bookmark}>
@@ -59,4 +61,4 @@ const Bookmark = (props) => {
     </div>;
 }
 
-export default Bookmark;
+export default withSnackbar(Bookmark);

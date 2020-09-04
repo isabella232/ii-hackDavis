@@ -26,7 +26,7 @@ const CertificationCard = (props) => {
             .then(() => {
                 setVerified(true)
             }).catch(error => {
-                this.props.enqueueSnackbar("Certificate cannot be validated at this time.", { variant: 'error' });
+                props.enqueueSnackbar("Certificate cannot be validated at this time.", { variant: 'error' });
             })
     }
 
@@ -35,7 +35,7 @@ const CertificationCard = (props) => {
             .then(() => {
                 setRejected(true)
             }).catch(error => {
-                this.props.enqueueSnackbar("Certificate cannot be rejected at this time.", { variant: 'error' });
+                props.enqueueSnackbar("Certificate cannot be rejected at this time.", { variant: 'error' });
             })
     }
 

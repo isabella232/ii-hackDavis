@@ -335,6 +335,8 @@ class AdminPage extends Component {
             <div className={classes.title}>Upcoming Events</div>
             {upcomingEvents.length ? upcomingEvents : <div className={classes.noItems}>There Is No Event Coming Up.</div>}
 
+            <HorzLine />
+
             <div className={classes.title}>Past Events</div>
             {pastEvents.length ? pastEvents : <div className={classes.noItems}>There Is No Past Event To Show.</div>}
 
