@@ -291,7 +291,7 @@ class InterpreterPage extends Component {
             .then(data => {
                 this.props.enqueueSnackbar("Your account has been deleted.", { variant: 'info' });
                 this.props.history.go(0);
-            })
+            }).catch(e => this.props.enqueueSnackbar("Your account cannot be deleted at this moment.", { variant: 'error' }))
     }
 
     render() {

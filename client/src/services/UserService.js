@@ -91,6 +91,6 @@ export const deleteUser = async (email) => {
         const endpoint = `api/user/${email}/delete`;
         return backend.post(endpoint);
     } catch (e) {
-        alert("Unable to delete account.");
+        throw e
     }
 }

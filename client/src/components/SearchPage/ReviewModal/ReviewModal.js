@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
 
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -39,9 +40,9 @@ class ReviewModal extends Component {
 
     postReview = () => {
         if (!this.state.rating) {
-            alert(`Please rate ${this.props.name} before posting.`);
+            this.props.enqueueSnackbar(`Please rate ${this.props.name}.`, { variant: 'info' })
         } else if (this.state.comment === '') {
-            alert(`Please fill out your comment for ${this.props.name} before posting.`);
+            this.props.enqueueSnackbar(`Please fill out your comment for ${this.props.name}`, { variant: 'info' })
         } else {
             const data = {
                 name: this.state.reviewerName,
@@ -54,7 +55,7 @@ class ReviewModal extends Component {
                     this.closeModal();
                 })
                 .catch(e => {
-                    alert("Your review cannot be posted at this time.");
+                    this.props.enqueueSnackbar("Your review cannot be posted at this time.", { variant: 'error' })
                     this.closeModal();
                     console.log(e)
                 });
@@ -94,4 +95,4 @@ const mapStateToProps = state => ({
     isLoggedIn: state.isLoggedIn
 });
 
-export default connect(mapStateToProps)(ReviewModal);
+export default connect(mapStateToProps)(withSnackbar(ReviewModal));

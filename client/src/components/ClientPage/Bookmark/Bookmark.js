@@ -21,13 +21,13 @@ const Bookmark = (props) => {
     const bookmark = (e, email) => {
         bookmarkInterpreter(email)
             .then(data => { setBookmarked(true); })
-            .catch(e => alert('Cannot Bookmark Interpreter At This Moment.'))
+            .catch(e => this.props.enqueueSnackbar("This interpreter cannot be bookmarked at the moment.", { variant: 'error' }))
     }
 
     const unbookmark = (e, email) => {
         unbookmarkInterpreter(email)
             .then(data => { setBookmarked(false); })
-            .catch(e => alert('Cannot Unbookmark Interpreter At This Moment.'))
+            .catch(e => this.props.enqueueSnackbar("This interpreter cannot be unbookmarked at the moment.", { variant: 'error' }))
     }
 
     return <div key={`props-${props.objectID}`} className={classes.Bookmark}>

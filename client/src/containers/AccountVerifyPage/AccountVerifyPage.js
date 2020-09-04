@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { withSnackbar } from 'notistack';
 
 import { verifyAccount } from '../../services/UserService';
 
@@ -11,7 +12,7 @@ class AccountVerifyPage extends React.Component {
             .then(data => {
                 this.props.history.push('/');
             }).catch(error => {
-                alert("Your Account Cannot Be Verified At The Moment.")
+                this.props.enqueueSnackbar("Your account cannot be verified at the moment.", { variant: 'error' })
                 this.props.history.push('/');
             })
     }
@@ -21,4 +22,4 @@ class AccountVerifyPage extends React.Component {
     }
 }
 
-export default withRouter(AccountVerifyPage);
+export default withRouter(withSnackbar(AccountVerifyPage));

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withSnackbar } from 'notistack';
+
 import classes from './AdminSignUpPage.module.css';
 
 import Grid from '@material-ui/core/Grid';
@@ -77,20 +79,21 @@ class AdminSignUpPage extends Component {
     }
 
     submitForm = async () => {
-        this.load();
         if (!this.state.email) {
-            alert(`Please fill out your email.`);
+            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'info' })
         } else if (!this.state.password) {
-            alert(`Please fill out your password.`);
-        } else if (!this.state.avatar) {
-            alert(`Please upload your avatar.`);
-        } else if (this.state.password !== this.state.confirmPassword) {
-            alert(`Passwords do not match. Check again.`);
+            this.props.enqueueSnackbar(`Please fill out your password.`, { variant: 'info' })
         } else if (this.state.password.length < 8) {
-            alert(`Password must be at least 8 characters.`);
+            this.props.enqueueSnackbar(`Password must be at least 8 characters.`, { variant: 'info' })
+        } else if (this.state.password !== this.state.confirmPassword) {
+            this.props.enqueueSnackbar(`Passwords do not match. Check again.`, { variant: 'info' })
+        } else if (!this.state.avatar) {
+            this.props.enqueueSnackbar(`Please upload your avatar.`, { variant: 'info' })
         } else if (!this.state.adminCode) {
-            alert(`Please fill out an admin code.`);
+            this.props.enqueueSnackbar(`Please fill out an admin code.`, { variant: 'info' })
         } else {
+            this.load();
+
             const data = {
                 kind: this.state.kind,
                 name: this.state.name,
@@ -107,7 +110,7 @@ class AdminSignUpPage extends Component {
                     this.props.history.push('/');
                 })
                 .catch(e => {
-                    alert(e.message);
+                    this.props.enqueueSnackbar(e.message, { variant: 'error' })
                     this.unload();
                 })
         }
@@ -116,94 +119,96 @@ class AdminSignUpPage extends Component {
     render() {
         return (
             <div className={classes.AdminSignUpPage}>
-                <div className={classes.header}>
-                    <div className={classes.title}>Admin Sign Up</div>
-                    {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
-                </div>
-
-                <form encType="multipart/form-data">
-                    <Grid container spacing={2} justify='center'>
-                        <Grid item xs={6}>
-                            <TextField label="Name"
-                                name="name"
-                                required
-                                value={this.state.name}
-                                margin="dense"
-                                fullWidth
-                                variant="outlined"
-                                onChange={this.changeInput} />
-                            <TextField label="Email"
-                                name="email"
-                                required
-                                value={this.state.email}
-                                margin="dense"
-                                fullWidth
-                                variant="outlined"
-                                onChange={this.changeInput} />
-                        </Grid>
-
-                        <Grid item xs={6}>
-                            <TextField label="Password"
-                                name="password"
-                                type={this.state.showPassword ? 'text' : 'password'}
-                                required
-                                margin="dense"
-                                value={this.state.password}
-                                fullWidth
-                                variant="outlined"
-                                onChange={this.changeInput}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="end">
-                                        <IconButton onClick={this.clickShowPassword}>
-                                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }}
-                            />
-                            <TextField label="Confirm Password"
-                                name="confirmPassword"
-                                type="password"
-                                required
-                                margin="dense"
-                                value={this.state.confirmPassword}
-                                fullWidth
-                                variant="outlined"
-                                onChange={this.changeInput} />
-                        </Grid>
-                    </Grid>
-
-                    <TextField label="Admin Code"
-                        name="adminCode"
-                        type={this.state.showAdminCode ? 'text' : 'password'}
-                        required
-                        margin="dense"
-                        value={this.state.adminCode}
-                        fullWidth
-                        variant="outlined"
-                        onChange={this.changeInput}
-                        InputProps={{
-                            endAdornment: <InputAdornment position="end">
-                                <IconButton onClick={this.clickShowAdminCode}>
-                                    {this.state.showAdminCode ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        }} />
-
-                    <div className={classes.fileUpload}>
-                        <div className={classes.label}>Avatar</div>
-                        <FileUploader upload={this.fileUpload} />
+                <div className={classes.card}>
+                    <div className={classes.header}>
+                        <div className={classes.title}>Admin Sign Up</div>
+                        {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
                     </div>
 
-                    <div className={classes.footer}>
-                        <div className={classes.buttons}>
-                            <Button content={'Sign Up'} click={this.submitForm} />
+                    <form encType="multipart/form-data">
+                        <Grid container spacing={2} justify='center'>
+                            <Grid item xs={6}>
+                                <TextField label="Name"
+                                    name="name"
+                                    required
+                                    value={this.state.name}
+                                    margin="dense"
+                                    fullWidth
+                                    variant="outlined"
+                                    onChange={this.changeInput} />
+                                <TextField label="Email"
+                                    name="email"
+                                    required
+                                    value={this.state.email}
+                                    margin="dense"
+                                    fullWidth
+                                    variant="outlined"
+                                    onChange={this.changeInput} />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <TextField label="Password"
+                                    name="password"
+                                    type={this.state.showPassword ? 'text' : 'password'}
+                                    required
+                                    margin="dense"
+                                    value={this.state.password}
+                                    fullWidth
+                                    variant="outlined"
+                                    onChange={this.changeInput}
+                                    InputProps={{
+                                        endAdornment: <InputAdornment position="end">
+                                            <IconButton onClick={this.clickShowPassword}>
+                                                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }}
+                                />
+                                <TextField label="Confirm Password"
+                                    name="confirmPassword"
+                                    type="password"
+                                    required
+                                    margin="dense"
+                                    value={this.state.confirmPassword}
+                                    fullWidth
+                                    variant="outlined"
+                                    onChange={this.changeInput} />
+                            </Grid>
+                        </Grid>
+
+                        <TextField label="Admin Code"
+                            name="adminCode"
+                            type={this.state.showAdminCode ? 'text' : 'password'}
+                            required
+                            margin="dense"
+                            value={this.state.adminCode}
+                            fullWidth
+                            variant="outlined"
+                            onChange={this.changeInput}
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">
+                                    <IconButton onClick={this.clickShowAdminCode}>
+                                        {this.state.showAdminCode ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }} />
+
+                        <div className={classes.fileUpload}>
+                            <div className={classes.label}>Avatar</div>
+                            <FileUploader upload={this.fileUpload} />
                         </div>
-                    </div>
-                </form>
+
+                        <div className={classes.footer}>
+                            <div className={classes.buttons}>
+                                <Button content={'Sign Up'} click={this.submitForm} />
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         )
     }
 }
 
-export default AdminSignUpPage;
+export default withSnackbar(AdminSignUpPage);
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { withSnackbar } from 'notistack';
 
 import classes from './ResetPasswordPage.module.css'
 
@@ -52,11 +53,11 @@ class ResetPasswordPage extends Component {
     submitForm = async () => {
         this.load();
         if (!this.state.password) {
-            alert(`Please fill out your password.`);
+            this.props.enqueueSnackbar(`Please fill out your password.`, { variant: 'info' })
         } else if (this.state.password !== this.state.confirmPassword) {
-            alert(`Passwords do not match. Check again.`);
+            this.props.enqueueSnackbar(`Passwords do not match. Check again.`, { variant: 'info' })
         } else if (this.state.password.length < 8) {
-            alert(`Password must be at least 8 characters.`);
+            this.props.enqueueSnackbar(`Password must be at least 8 characters.`, { variant: 'info' })
         } else {
             const id = this.props.location.pathname.split('/')[2];
             resetPassword(id, this.state.password)
@@ -66,7 +67,7 @@ class ResetPasswordPage extends Component {
                     this.unload();
                 })
                 .catch(e => {
-                    alert('You cannot reset your password at this time.');
+                    this.props.enqueueSnackbar('Your password cannot be reset at this time.', { variant: 'info' })
                     this.unload();
                 })
         }
@@ -123,4 +124,4 @@ class ResetPasswordPage extends Component {
     }
 }
 
-export default withRouter(ResetPasswordPage);
+export default withRouter(withSnackbar(ResetPasswordPage));

@@ -78,9 +78,9 @@ class InterpreterInfoModal extends Component {
     bookmark = () => {
         bookmarkInterpreter(this.props.email)
             .then(data => {
-                alert('Successfully Bookmarked Interpreter.')
+                this.props.enqueueSnackbar("Success! This interpreter has been bookmarked.", { variant: 'success' })
             }).catch(e => {
-                alert('Cannot Bookmark Interpreter At This Moment.');
+                this.props.enqueueSnackbar("This interpreter cannot be bookmarked at the moment.", { variant: 'error' })
             })
     }
 
@@ -90,9 +90,10 @@ class InterpreterInfoModal extends Component {
             .then(data => {
                 this.setState({ isRejected: false });
                 this.unload();
+                this.props.enqueueSnackbar("Success! This interpreter has been verified.", { variant: 'success' })
             })
             .catch(e => {
-                alert('Failed to verify interpreter');
+                this.props.enqueueSnackbar("This interpreter cannot be verified at the moment.", { variant: 'error' })
                 this.unload();
             });
     }
@@ -105,7 +106,7 @@ class InterpreterInfoModal extends Component {
                 this.unload();
             })
             .catch(e => {
-                alert('Failed to reject interpreter');
+                this.props.enqueueSnackbar("This interpreter cannot be rejected at the moment.", { variant: 'error' })
                 this.unload();
             });
     }
