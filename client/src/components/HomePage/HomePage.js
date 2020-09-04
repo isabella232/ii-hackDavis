@@ -3,6 +3,7 @@ import classes from './css/HomePage.module.css';
 
 import Grow from '@material-ui/core/Grow'
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import MailIcon from '@material-ui/icons/Mail';
 import InstagramIcon from '@material-ui/icons/Instagram';
 
@@ -136,25 +137,15 @@ class HomePage extends Component {
                     <Grid container spacing={4} justify='center' alignItems='start'>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>Who Are We?</div>
-                            <p>Multilingual Indigenous Interpreters (MII) is a collective of trilingual youth and youth adults from Guatemala and Oaxaca whose main purpose is to
-                            bridge the language gaps between service providers and monolingual native Latin-Americans. Interpreters from this collective reside
-                            throughout California, primarily in Oakland, CA. The interpreters are trilingual and are proficient in Spanish, English,
-                            and their native languages; Zapoteco, Mam, and Mixteco.</p>
+                            <p>Multilingual Indigenous Interpreters (MII), founded in 2019, is a collective of trilingual young adults from Guatemala and Oaxaca whose main purpose is to eliminate the language barriers between service providers and monolingual indigenous speakers from Latin America. Our collective was founded out of the necessity to support indigenous interpreters with their professional development and capacity building when non-indgenous interpreting agencies were lacking to support this need.</p>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>What Do We Do?</div>
-                            <p>Multilingual Indigenous Interpreters provides high quality interpreting services to monolingual indigenous communities with the ultimate goal to provide
-                            accurate and efficient interpreting services and breach the communication gap between service providers and indigenous communities. We offer relay,
-                            simultaneous and consecutive interpretation in multiple indigenous languages such as Mam from Guatemala, Zapotec and Mixtec from Oaxaca, Mexico. We focus
-                            on promoting direct interpretation from indigenous languages to English for better and adequate communication.</p>
+                            <p>Multilingual Indigenous Interpreters provides high quality relay, simultaneous and consecutive  interpreting services to monolingual indigenous communities with the ultimate goal to make accurate communication accessible and breach the communication gap between service providers and indigenous communities.</p>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.title}>Our Missions</div>
-                            <p>Our mission is to serve monolingual indigenous communities by providing adequate and accurate interpreting services to best fit their needs. Our vision
-                            is to eliminate language barriers between native language speakers and their service providers for the
-                            dignity, respect, and equitable representation of indigenous communities. Our objective is to help with the difficulties that monolingual native communities
-                            experience when accessing services, understanding and advocating for their civil rights in hospitals and immigration courts, as well as raise awareness
-                            about the growing indigenous communities migrating to the U.S.</p>
+                            <p>Our mission is to provide adequate and accurate interpreting services to best fit the needs of monolingual indigenous communities and bridge cultural understanding between service providers and clients.  Our vision is to eliminate language barriers for the dignity, respect, and equitable representation of indigenous communities.</p>
                         </Grid>
                     </Grid>
                 </div>
@@ -165,10 +156,14 @@ class HomePage extends Component {
                         <p>To support us on our mission just sign up as an interpreter, or service provider and offer your best services with qualified interpreters.</p>
 
                         <a href="mailto: caindigenousinterpreters@gmail.com" target=" _blank">
-                            <MailIcon className={classes.icon} color="primary" fontSize='large' />
+                            <IconButton className={classes.icon}>
+                                <MailIcon color="primary" fontSize='large' />
+                            </IconButton>
                         </a>
                         <a href="https://www.instagram.com/tuvoz_interpreters/" target=" _blank">
-                            <InstagramIcon className={classes.icon} color="primary" fontSize='large' />
+                            <IconButton className={classes.icon}>
+                                <InstagramIcon color="primary" fontSize='large' />
+                            </IconButton>
                         </a>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import NavBar from './NavBar';
 import Footer from "./Footer";
 
 import HomePage from "../components/HomePage/HomePage";
+import AboutUsPage from '../components/AboutUsPage/AboutUsPage';
 import SearchPage from "../components/SearchPage/SearchPage";
 import ContactUsPage from "../components/ContactUsPage/ContactUsPage";
 import AdminPage from "../components/AdminPage/AdminPage";
@@ -29,6 +30,7 @@ const Page = () => {
           <Route path="/interpreter" component={withAuth(InterpreterPage)} />
           <Route path="/client" component={withAuth(ClientPage)} />
           <Route path="/search" component={SearchPage} />
+          <Route path="/aboutus" exact component={AboutUsPage} />
           <Route path="/contactus" component={ContactUsPage} />
           <Route path="/user/:id/account/verify" component={AccountVerifyPage} />
           <Route path="/user/:id/password/reset" component={ResetPasswordPage} />

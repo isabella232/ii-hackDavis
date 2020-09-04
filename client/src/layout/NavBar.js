@@ -78,7 +78,7 @@ class NavBar extends Component {
                     <img src={logo} alt="MII Logo" width={'70px'} />
                 </Link>
                 <div className={classes.items}>
-                    <Link className={classes.item} to={"/about"}>About</Link>
+                    <Link className={classes.item} to={"/aboutus"}>About Us</Link>
                     {this.state.userKind === 'Admin' ? <Link className={classes.item} to={"/admin"}>Admin</Link> : null}
                     {this.state.userKind === 'Interpreter' ? <Link className={classes.item} to={"/interpreter"}>Profile</Link> : null}
                     {this.state.userKind === 'Client' ? <Link className={classes.item} to={"/client"}>Profile</Link> : null}
