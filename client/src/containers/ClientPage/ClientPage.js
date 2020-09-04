@@ -280,7 +280,7 @@ class ClientPage extends Component {
         return (
             <div className={classes.ClientPage}>
                 <Grid container spacing={0}>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={5} md={4}>
                         <div className={classes.menuWrapper}>
 
                             <div className={classes.userCard}>
@@ -296,7 +296,7 @@ class ClientPage extends Component {
                         </div>
                     </Grid>
 
-                    <Grid item xs={12} sm={8}>
+                    <Grid item xs={12} sm={7} md={8}>
                         <div className={classes.window}>
                             {windows[this.state.window]}
                         </div>

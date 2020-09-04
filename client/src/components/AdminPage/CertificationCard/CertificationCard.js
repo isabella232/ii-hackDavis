@@ -8,6 +8,7 @@ import DeleteModal from '../../shared/DoubleCheckModal/DoubleCheckModal';
 
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
+import IconButton from '@material-ui/core/IconButton/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
@@ -53,8 +54,13 @@ const CertificationCard = (props) => {
                         : null}
                 </div>
 
-                {expand ? <ExpandLessIcon color="primary" onClick={() => setExpand(false)} />
-                    : <ExpandMoreIcon color="primary" onClick={() => setExpand(true)} />}
+                {expand ?
+                    <IconButton size="small" color="primary">
+                        <ExpandLessIcon onClick={() => setExpand(false)} />
+                    </IconButton>
+                    : <IconButton size="small" color="primary">
+                        <ExpandMoreIcon onClick={() => setExpand(true)} />
+                    </IconButton>}
             </div>
 
             <div className={certificateClass}>

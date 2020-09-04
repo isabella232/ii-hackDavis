@@ -516,7 +516,7 @@ class InterpreterPage extends Component {
         return (
             <div className={classes.InterpreterPage}>
                 <Grid container spacing={0}>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={5} md={4}>
                         <div className={classes.menuWrapper}>
                             <div className={classes.userCard}>
                                 <div className={classes.userInfo}>
@@ -542,7 +542,7 @@ class InterpreterPage extends Component {
                         </div>
                     </Grid>
 
-                    <Grid item xs={12} sm={8}>
+                    <Grid item xs={12} sm={7} md={8}>
                         <div className={classes.window}>
                             {windows[this.state.window]}
                         </div>
