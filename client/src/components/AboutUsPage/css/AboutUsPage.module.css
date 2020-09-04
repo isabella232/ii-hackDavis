@@ -3,3 +3,52 @@
   padding: 1rem;
   max-width: 1000px;
 }
+
+.AboutUsPage .title {
+  font-size: 30px;
+  line-height: 30px;
+  color: #027888;
+  text-align: center;
+  -webkit-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+}
+
+.AboutUsPage .title:hover {
+  color: rgb(39, 194, 214);
+}
+
+.AboutUsPage .previewArea {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.AboutUsPage .previewArea::-webkit-scrollbar {
+  display: none;
+}
+
+.AboutUsPage .previewCard {
+  scroll-snap-align: center;
+  margin: 0 7rem;
+  padding: 1rem;
+  min-width: 400px;
+}
+
+.AboutUsPage .cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* min-height: 280px; */
+}
+
+.AboutUsPage .previewSection {
+  margin: 2rem auto;
+  max-width: 1000px;
+}
+
+.AboutUsPage .name {
+  font-size: 22px;
+  margin-top: 0.5rem;
+  color: #027888;
+}

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import classes from "./css/NavBar.module.css";
-import logo from './MII_logo.png'
+import logo from '../assets/MII_logo.png'
 
 import Button from '../components/shared/Button';
 import SignUpModal from '../components/HomePage/SignUpModal';
