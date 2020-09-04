@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withSnackbar } from 'notistack';
+
 import classes from './LoginModal.module.css';
 
 import Modal from "@material-ui/core/Modal";
@@ -91,7 +93,7 @@ class LoginModal extends Component {
                     this.unload();
                 })
                 .catch(e => {
-                    alert(e.message)
+                    this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
                 })
         }
@@ -208,5 +210,5 @@ class LoginModal extends Component {
     }
 }
 
-export default LoginModal;
+export default withSnackbar(LoginModal);
 

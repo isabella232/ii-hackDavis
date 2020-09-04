@@ -26,6 +26,8 @@ import Button from '../../shared/Button/Button';
 import FileUploader from '../../shared/FileUploader/FileUploader';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { withSnackbar } from 'notistack';
+
 import { signUpClient, signUpInterpreter } from '../../../services/UserService';
 
 class SignUpModal extends Component {
@@ -177,13 +179,17 @@ class SignUpModal extends Component {
         this.load();
         signUpClient(data)
             .then(data => {
+                this.props.enqueueSnackbar(`Success! Please check your email for account verification.`, {
+                    anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                    variant: 'success',
+                    persist: true
+                });
                 this.clearAllFields();
                 this.props.switchSignUpModal();
-                this.props.openLogin();
                 this.unload();
             })
             .catch(e => {
-                alert(e.message);
+                this.props.enqueueSnackbar(e.message, { variant: 'error' });
                 this.unload();
             })
     }
@@ -193,7 +199,7 @@ class SignUpModal extends Component {
         for (const lang in this.state.languages) {
             if (lang.language === '' || lang.fluency === '') {
                 check = false;
-                alert("Please fill out all of the language fields.");
+                this.props.enqueueSnackbar("Please fill out all of the language fields.", { variant: 'warning' });
                 break;
             }
         }
@@ -207,15 +213,15 @@ class SignUpModal extends Component {
 
         if (services.length === 0) {
             check = false;
-            alert(`Please fill out your interpreting services.`);
+            this.props.enqueueSnackbar(`Please fill out your interpreting services.`, { variant: 'warning' });
         }
 
         if (this.state.location === '') {
             check = false;
-            alert(`Please fill out your location.`);
+            this.props.enqueueSnackbar(`Please fill out your location.`, { variant: 'warning' });
         } else if (this.state.phone !== '' && !/\d{3}-\d{3}-\d{4}/.test(this.state.phone)) {
             check = false;
-            alert(`Please format your phone number correctly.`);
+            this.props.enqueueSnackbar(`Please format your phone number correctly.`, { variant: 'warning' });
         }
 
         if (check) {
@@ -227,29 +233,35 @@ class SignUpModal extends Component {
             data.summary = this.state.summary;
             signUpInterpreter(data)
                 .then(data => {
+                    this.props.enqueueSnackbar(`Success! Please check your email for account verification.`, {
+                        anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                        variant: 'success',
+                        persist: true
+                    });
                     this.clearAllFields();
                     this.props.switchSignUpModal();
-                    this.props.openLogin();
                     this.unload();
                 })
                 .catch(e => {
-                    alert(e.message);
+                    this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
                 })
         }
     }
 
     submitForm = async () => {
-        if (!this.state.email) {
-            alert(`Please fill out your email.`);
+        if (!this.state.name) {
+            this.props.enqueueSnackbar(`Please fill out your name.`, { variant: 'warning' });
+        } else if (!this.state.email) {
+            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'warning' });
         } else if (!this.state.password) {
-            alert(`Please fill out your password.`);
-        } else if (!this.state.avatar) {
-            alert(`Please upload your avatar.`);
-        } else if (this.state.password !== this.state.confirmPassword) {
-            alert(`Passwords do not match. Check again.`);
+            this.props.enqueueSnackbar(`Please fill out your password.`, { variant: 'warning' });
         } else if (this.state.password.length < 8) {
-            alert(`Password must be at least 8 characters.`);
+            this.props.enqueueSnackbar(`Password must be at least 8 characters.`, { variant: 'warning' });
+        } else if (this.state.password !== this.state.confirmPassword) {
+            this.props.enqueueSnackbar(`Passwords do not match. Check again.`, { variant: 'warning' });
+        } else if (!this.state.avatar) {
+            this.props.enqueueSnackbar(`Please upload your avatar.`, { variant: 'warning' });
         } else {
             const data = {
                 kind: this.state.kind,
@@ -457,4 +469,4 @@ class SignUpModal extends Component {
     }
 }
 
-export default SignUpModal;
+export default withSnackbar(SignUpModal);
