@@ -77,9 +77,9 @@ class LoginModal extends Component {
 
     submitForm = async () => {
         if (!this.state.email) {
-            alert(`Please fill out your email.`);
+            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'warning' });
         } else if (!this.state.password) {
-            alert(`Please fill out your password.`);
+            this.props.enqueueSnackbar(`Please fill out your password.`, { variant: 'warning' });
         } else {
             this.load();
             const data = {
@@ -101,7 +101,7 @@ class LoginModal extends Component {
 
     submitForgetPassword = async () => {
         if (!this.state.email) {
-            alert(`Please fill out your email.`);
+            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'warning' });
         } else {
             this.load();
             sendForgetPassword(this.state.email)
@@ -111,7 +111,7 @@ class LoginModal extends Component {
                     this.setState({ window: 0, open: false });
                 })
                 .catch(e => {
-                    alert('You cannot reset your password at this time.')
+                    this.props.enqueueSnackbar('You cannot reset your password at this time.', { variant: 'error' });
                     this.unload();
                 })
         }

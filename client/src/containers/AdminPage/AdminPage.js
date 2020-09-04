@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { withSnackbar } from 'notistack';
 
 import classes from './AdminPage.module.css'
 
@@ -154,15 +155,16 @@ class AdminPage extends Component {
 
     submitAdminCodeForm = () => {
         if (this.state.adminCode === '') {
-            alert("Please fill out the admin code.")
+            this.props.enqueueSnackbar("Please fill out the admin code.", { variant: 'info' });
         } else {
             this.load();
             createAdminCode(this.state.adminCode)
                 .then(data => {
                     this.setState({ adminCode: '' });
                     this.unload();
+                    this.props.enqueueSnackbar("Success! A new admin code has been created.", { variant: 'success' });
                 }).catch(error => {
-                    alert("Failed to create admin code.");
+                    this.props.enqueueSnackbar("Failed to create admin code.", { variant: 'error' });
                     this.unload();
                 })
         }
@@ -175,13 +177,13 @@ class AdminPage extends Component {
 
     submitPasswordForm = () => {
         if (!this.state.currentPassword) {
-            alert(`Please fill out your current password.`);
+            this.props.enqueueSnackbar(`Please fill out your current password.`, { variant: 'info' });
         } else if (!this.state.newPassword) {
-            alert(`Please fill out your new password.`);
+            this.props.enqueueSnackbar(`Please fill out your new password.`, { variant: 'info' });
+        } else if (this.state.newPassword.length < 8) {
+            this.props.enqueueSnackbar(`New password must be at least 8 characters.`, { variant: 'info' });
         } else if (this.state.newPassword !== this.state.confirmNewPassword) {
-            alert(`Passwords do not match. Check again.`);
-        } else if (this.state.currentPassword.length < 8) {
-            alert(`Password must be at least 8 characters.`);
+            this.props.enqueueSnackbar(`Passwords do not match. Check again.`, { variant: 'info' });
         } else {
             this.load();
             const data = {
@@ -191,8 +193,9 @@ class AdminPage extends Component {
             updateUserPassword(data)
                 .then(data => {
                     this.unload();
-                }).catch(error => {
-                    alert("Failed To Update Password.");
+                    this.props.enqueueSnackbar("Success! Your password has been updated.", { variant: 'success' });
+                }).catch(e => {
+                    this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
                 });
         }
@@ -200,7 +203,7 @@ class AdminPage extends Component {
 
     submitInfoForm = () => {
         if (!this.state.name) {
-            alert(`Please fill out your name.`);
+            this.props.enqueueSnackbar(`Please fill out your name.`, { variant: 'info' });
         } else {
             this.load();
             const data = {
@@ -211,8 +214,9 @@ class AdminPage extends Component {
                 .then(data => {
                     this.loadInfo();
                     this.unload();
+                    this.props.enqueueSnackbar("Success! Your profile has been updated.", { variant: 'success' });
                 }).catch(e => {
-                    alert(e.message);
+                    this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
                 });
         }
@@ -263,7 +267,7 @@ class AdminPage extends Component {
                 this.unload();
             })
             .catch(e => {
-                alert('Failed to reject interpreter');
+                this.props.enqueueSnackbar('Failed to reject interpreter.', { variant: 'error' });
                 this.unload();
             });
     }
@@ -276,7 +280,7 @@ class AdminPage extends Component {
                 this.unload();
             })
             .catch(e => {
-                alert('Failed to verify interpreter');
+                this.props.enqueueSnackbar('Failed to verify interpreter.', { variant: 'error' });
                 this.unload();
             });
     }
@@ -284,6 +288,7 @@ class AdminPage extends Component {
     deleteAccount = () => {
         deleteUser(this.state.email)
             .then(data => {
+                this.props.enqueueSnackbar("Your account has been deleted.", { variant: 'info' });
                 this.props.history.go(0);
             })
     }
@@ -538,5 +543,5 @@ class AdminPage extends Component {
     }
 }
 
-export default withRouter(AdminPage);
+export default withRouter(withSnackbar(AdminPage));
 

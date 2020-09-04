@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { withSnackbar } from 'notistack';
 
 import classes from './InterpreterPage.module.css'
 
@@ -150,7 +151,7 @@ class InterpreterPage extends Component {
         for (const lang in this.state.languages) {
             if (lang.language === '' || lang.fluency === '') {
                 check = false;
-                alert("Please fill out all of the language fields.")
+                this.props.enqueueSnackbar("Please fill out all of the language fields.", { variant: 'info' });
                 break;
             }
         }
@@ -175,8 +176,9 @@ class InterpreterPage extends Component {
                 .then(data => {
                     this.loadData();
                     this.unload();
+                    this.props.enqueueSnackbar("Success! Your profile has been updated.", { variant: 'success' });
                 }).catch(e => {
-                    alert(e.message);
+                    this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
                 });
         }
@@ -184,13 +186,13 @@ class InterpreterPage extends Component {
 
     submitPasswordForm = () => {
         if (!this.state.currentPassword) {
-            alert(`Please fill out your current password.`);
+            this.props.enqueueSnackbar(`Please fill out your current password.`, { variant: 'info' });
         } else if (!this.state.newPassword) {
-            alert(`Please fill out your new password.`);
+            this.props.enqueueSnackbar(`Please fill out your new password.`, { variant: 'info' });
+        } else if (this.state.newPassword.length < 8) {
+            this.props.enqueueSnackbar(`New password must be at least 8 characters.`, { variant: 'info' });
         } else if (this.state.newPassword !== this.state.confirmNewPassword) {
-            alert(`Passwords do not match. Check again.`);
-        } else if (this.state.currentPassword.length < 8) {
-            alert(`Password must be at least 8 characters.`);
+            this.props.enqueueSnackbar(`Passwords do not match. Check again.`, { variant: 'info' });
         } else {
             this.load();
             const data = {
@@ -200,16 +202,19 @@ class InterpreterPage extends Component {
             updateUserPassword(data)
                 .then(data => {
                     this.unload();
-                }).catch(error => {
-                    alert("Failed To Update Password.");
+                    this.props.enqueueSnackbar("Success! Your password has been updated.", { variant: 'success' });
+                }).catch(e => {
+                    this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
                 });
         }
     }
 
     submitCertificateForm = () => {
-        if (!this.state.certificate) {
-            alert("Please upload your certificate.");
+        if (!this.state.title) {
+            this.props.enqueueSnackbar("Please fill out the certificate's title.", { variant: 'info' });
+        } else if (!this.state.certificate) {
+            this.props.enqueueSnackbar("Please upload your certificate.", { variant: 'info' });
         } else {
             this.load();
             const data = {
@@ -221,8 +226,9 @@ class InterpreterPage extends Component {
                     this.setState({ title: '' });
                     this.loadData();
                     this.unload();
+                    this.props.enqueueSnackbar("Success! Your certificate has been updated.", { variant: 'success' });
                 }).catch(error => {
-                    alert("Failed To Upload Certificate.");
+                    this.props.enqueueSnackbar("Failed To Upload Certificate.", { variant: 'error' });
                     this.unload();
                 });
         }
@@ -272,9 +278,10 @@ class InterpreterPage extends Component {
             .then(data => {
                 this.loadData();
                 this.unload();
+                this.props.enqueueSnackbar('Your certificate has been deleted.', { variant: 'info' });
             })
             .catch(error => {
-                alert('Failed To Delete Certificate.');
+                this.props.enqueueSnackbar('Failed To Delete Certificate.', { variant: 'error' });
                 this.unload();
             })
     }
@@ -282,6 +289,7 @@ class InterpreterPage extends Component {
     deleteAccount = () => {
         deleteUser(this.state.email)
             .then(data => {
+                this.props.enqueueSnackbar("Your account has been deleted.", { variant: 'info' });
                 this.props.history.go(0);
             })
     }
@@ -547,5 +555,5 @@ class InterpreterPage extends Component {
     }
 }
 
-export default withRouter(InterpreterPage);
+export default withRouter(withSnackbar(InterpreterPage));
 

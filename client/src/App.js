@@ -42,7 +42,9 @@ export default function IntegrationNotiStack() {
         notistackRef.current.closeSnackbar(key);
     }
 
-    return <SnackbarProvider maxSnack={5} autoHideDuration={3000}
+    return <SnackbarProvider maxSnack={1} autoHideDuration={4000}
+        transitionDuration={150}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         ref={notistackRef}
         action={(key) => (
             <IconButton onClick={onClickDismiss(key)} size="small" >

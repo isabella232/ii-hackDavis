@@ -180,7 +180,6 @@ class SignUpModal extends Component {
         signUpClient(data)
             .then(data => {
                 this.props.enqueueSnackbar(`Success! Please check your email for account verification.`, {
-                    anchorOrigin: { vertical: 'top', horizontal: 'center' },
                     variant: 'success',
                     persist: true
                 });
@@ -199,7 +198,7 @@ class SignUpModal extends Component {
         for (const lang in this.state.languages) {
             if (lang.language === '' || lang.fluency === '') {
                 check = false;
-                this.props.enqueueSnackbar("Please fill out all of the language fields.", { variant: 'warning' });
+                this.props.enqueueSnackbar("Please fill out all of the language fields.", { variant: 'info' });
                 break;
             }
         }
@@ -213,15 +212,15 @@ class SignUpModal extends Component {
 
         if (services.length === 0) {
             check = false;
-            this.props.enqueueSnackbar(`Please fill out your interpreting services.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please mark your interpreting services.`, { variant: 'info' });
         }
 
         if (this.state.location === '') {
             check = false;
-            this.props.enqueueSnackbar(`Please fill out your location.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please fill out your location.`, { variant: 'info' });
         } else if (this.state.phone !== '' && !/\d{3}-\d{3}-\d{4}/.test(this.state.phone)) {
             check = false;
-            this.props.enqueueSnackbar(`Please format your phone number correctly.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Phone number must be in the ###-###-#### format.`, { variant: 'info' });
         }
 
         if (check) {
@@ -233,11 +232,8 @@ class SignUpModal extends Component {
             data.summary = this.state.summary;
             signUpInterpreter(data)
                 .then(data => {
-                    this.props.enqueueSnackbar(`Success! Please check your email for account verification.`, {
-                        anchorOrigin: { vertical: 'top', horizontal: 'center' },
-                        variant: 'success',
-                        persist: true
-                    });
+                    this.props.enqueueSnackbar(`Success! Please check your email for account verification.`,
+                        { variant: 'success', persist: true });
                     this.clearAllFields();
                     this.props.switchSignUpModal();
                     this.unload();
@@ -251,17 +247,17 @@ class SignUpModal extends Component {
 
     submitForm = async () => {
         if (!this.state.name) {
-            this.props.enqueueSnackbar(`Please fill out your name.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please fill out your name.`, { variant: 'info' });
         } else if (!this.state.email) {
-            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'info' });
         } else if (!this.state.password) {
-            this.props.enqueueSnackbar(`Please fill out your password.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please fill out your password.`, { variant: 'info' });
         } else if (this.state.password.length < 8) {
-            this.props.enqueueSnackbar(`Password must be at least 8 characters.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Password must be at least 8 characters.`, { variant: 'info' });
         } else if (this.state.password !== this.state.confirmPassword) {
-            this.props.enqueueSnackbar(`Passwords do not match. Check again.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Passwords do not match. Check again.`, { variant: 'info' });
         } else if (!this.state.avatar) {
-            this.props.enqueueSnackbar(`Please upload your avatar.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please upload your avatar.`, { variant: 'info' });
         } else {
             const data = {
                 kind: this.state.kind,

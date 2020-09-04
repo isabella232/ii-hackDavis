@@ -117,7 +117,7 @@ router.post('/api/user/avatar/:id', auth, imgUploader.single('avatar'), async (r
     await user.save()
     res.send()
 }, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
+    res.status(400).send({ message: error.message })
 })
 
 // update user's password
@@ -130,7 +130,7 @@ router.patch('/api/user/updatePassword', auth, async (req, res) => {
             await user.save()
             res.send()
         } else {
-            res.status(400).send(new Error("Current password doesn't match."))
+            res.status(400).send({ message: "Current password does not match." })
         }
     } catch (e) {
         res.status(400).send(e)
