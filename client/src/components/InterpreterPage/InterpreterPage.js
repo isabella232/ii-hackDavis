@@ -6,8 +6,6 @@ import classes from './InterpreterPage.module.css'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import Rating from '@material-ui/lab/Rating';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -22,15 +20,15 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import Avatar from '../shared/Avatar';
 import Button from '../shared/Button';
-import CertificationCard from '../AdminPage/CertificationCard';
+import CertificationCard from '../shared/CertificationCard';
 import EventCard from '../shared/EventCard';
 import LoadCircle from '../shared/LoadCircle';
 import FileUploader from '../shared/FileUploader';
 import HorzLine from '../shared/HorzLine';
 import ReviewItem from '../SearchPage/ReviewItem';
 import DeleteModal from '../shared/DoubleCheckModal';
+import UserTag from '../shared/UserTag';
 
 import {
     fetchInterpreterPage, updateInterpreterInfo,
@@ -66,6 +64,7 @@ class InterpreterPage extends Component {
             rating: 0,
             reviews: [],
             isVerified: false,
+            isRejected: false,
             summary: '',
             events: [],
             window: 0,
@@ -107,6 +106,7 @@ class InterpreterPage extends Component {
                     services: services,
                     reviews: data.reviews,
                     isVerified: data.isVerified,
+                    isRejected: data.isRejected,
                     summary: data.summary,
                     events: data.events
                 })
@@ -339,10 +339,7 @@ class InterpreterPage extends Component {
             <TextField label="Title" name="title" required value={this.state.title}
                 margin="dense" fullWidth variant="outlined"
                 onChange={this.changeInput} />
-            <div className={classes.fileUpload}>
-                <div className={classes.label}>Certificate</div>
-                <FileUploader upload={this.certificateUpload} />
-            </div>
+            <FileUploader label="Certificate" upload={this.certificateUpload} />
             <div className={classes.buttons}>
                 <Button content={'Upload Certificate'} click={this.submitCertificateForm} />
             </div>
@@ -352,7 +349,7 @@ class InterpreterPage extends Component {
 
         const reviewWindow = <div className={classes.reviewWindow}>
             {this.state.reviews.length ? this.state.reviews.map((review, i) => {
-                return (<div className={classes.reviewCard} key={`review-item-i`}>
+                return (<div className={classes.reviewCard} key={`interpreter-page-review-item-${i}`}>
                     <ReviewItem reviewerName={review.reviewerName} comment={review.comment}
                         date={review.date} rating={review.rating} />
                 </div>)
@@ -363,7 +360,7 @@ class InterpreterPage extends Component {
         const removeIcon = <HighlightOffIcon className={classes.langFieldIcon} color="error" onClick={this.popLangField} />;
         const fluencyChoices = [];
         for (let i = 1; i <= 5; i++) {
-            fluencyChoices.push(<MenuItem id={`menu-item-${i}`} value={i}>{i}</MenuItem>)
+            fluencyChoices.push(<MenuItem key={`interpreter-page-menu-item-${i}`} value={i}>{i}</MenuItem>)
         }
         const langFields = this.state.languages.map((lang, i) => {
             return (
@@ -427,10 +424,7 @@ class InterpreterPage extends Component {
 
                 </Grid>
             </Grid>
-            <div className={classes.avatarUpload}>
-                <div className={classes.label}>Avatar</div>
-                <FileUploader upload={this.avatarUpload} />
-            </div>
+            <FileUploader label="Avatar" upload={this.avatarUpload} />
             {langFields}
             <div className={classes.serviceLabel}>Services:</div>
             <FormGroup row>
@@ -522,23 +516,9 @@ class InterpreterPage extends Component {
                 <Grid container spacing={0}>
                     <Grid item xs={12} sm={5} md={4}>
                         <div className={classes.menuWrapper}>
-                            <div className={classes.userCard}>
-                                <div className={classes.userInfo}>
-                                    <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
-                                    <div>
-                                        <div className={classes.flexArea}>
-                                            <div className={classes.userName}>{this.state.currentName}</div>
-                                            {this.state.isVerified ?
-                                                <CheckCircleIcon className={classes.checkIcon}
-                                                    fontSize="small" color="primary" />
-                                                : null}
-                                        </div>
-                                        <Rating className={classes.rating}
-                                            size="small" value={this.state.rating}
-                                            precision={0.5} readOnly />
-                                    </div>
-                                </div>
-                            </div>
+                            <UserTag interpreter isVerified={this.state.isVerified} isRejected={this.state.isRejected}
+                                name={this.state.currentName} rating={this.state.rating} />
+
                             <div className={classes.menu}>
                                 {menu}
                             </div>

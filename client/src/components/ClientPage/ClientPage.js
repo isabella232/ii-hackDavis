@@ -12,13 +12,13 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import Avatar from '../shared/Avatar';
 import Bookmark from './Bookmark';
 import EventCard from '../shared/EventCard';
 import HorzLine from '../shared/HorzLine';
 import LoadCircle from '../shared/LoadCircle';
 import FileUploader from '../shared/FileUploader';
 import DeleteModal from '../shared/DoubleCheckModal';
+import UserTag from '../shared/UserTag';
 
 import { fetchClientPage, updateClientInfo } from '../../services/ClientService';
 import { updateUserPassword, deleteUser } from '../../services/UserService';
@@ -214,10 +214,9 @@ class ClientPage extends Component {
 
                 </Grid>
             </Grid>
-            <div className={classes.fileUpload}>
-                <div className={classes.label}>Avatar</div>
-                <FileUploader upload={this.fileUpload} />
-            </div>
+
+            <FileUploader label="Avatar" upload={this.fileUpload} />
+
             <div className={classes.buttons}>
                 <Button content={'Update Info'} click={this.submitInfoForm} />
             </div>
@@ -282,13 +281,7 @@ class ClientPage extends Component {
                 <Grid container spacing={0}>
                     <Grid item xs={12} sm={5} md={4}>
                         <div className={classes.menuWrapper}>
-
-                            <div className={classes.userCard}>
-                                <div className={classes.userInfo}>
-                                    <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
-                                    <div className={classes.userName}>{this.state.currentName}</div>
-                                </div>
-                            </div>
+                            <UserTag client name={this.state.currentName} avatar={this.state.avatar} />
                             <div className={classes.menu}>
                                 {menu}
                             </div>

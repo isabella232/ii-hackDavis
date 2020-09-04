@@ -3,8 +3,8 @@ import { withSnackbar } from 'notistack';
 
 import classes from './css/CertificationCard.module.css';
 
-import Button from '../shared/Button';
-import DeleteModal from '../shared/DoubleCheckModal';
+import Button from './Button';
+import DeleteModal from './DoubleCheckModal';
 
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';

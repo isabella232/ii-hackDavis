@@ -193,10 +193,7 @@ class AdminSignUpPage extends Component {
                                 </InputAdornment>
                             }} />
 
-                        <div className={classes.fileUpload}>
-                            <div className={classes.label}>Avatar</div>
-                            <FileUploader upload={this.fileUpload} />
-                        </div>
+                        <FileUploader label="Avatar" upload={this.fileUpload} />
 
                         <div className={classes.footer}>
                             <div className={classes.buttons}>

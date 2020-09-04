@@ -5,25 +5,21 @@ import { withSnackbar } from 'notistack';
 import classes from './css/AdminPage.module.css'
 
 import Grid from '@material-ui/core/Grid';
-
-import Avatar from '../shared/Avatar';
-import CertificationCard from './CertificationCard';
-import EventCard from '../shared/EventCard';
-import Button from '../shared/Button';
-import EventModal from './EventModal';
 import TextField from '@material-ui/core/TextField';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CancelIcon from '@material-ui/icons/Cancel';
 
+import EventCard from '../shared/EventCard';
+import Button from '../shared/Button';
+import EventModal from './EventModal';
 import HorzLine from '../shared/HorzLine';
 import LoadCircle from '../shared/LoadCircle';
-import FileUploader from '../shared/FileUploader';
 import DeleteModal from '../shared/DoubleCheckModal';
+import FileUploader from '../shared/FileUploader';
+import UserTag from '../shared/UserTag';
+import InterpreterReviewCard from './InterpreterReviewCard';
 
 import {
     fetchInfo, createAdminCode, updateAdminInfo, fetchEventArchive, fetchEvents,
@@ -172,6 +168,7 @@ class AdminPage extends Component {
     copyToClipboard = () => {
         const url = process.env.REACT_APP_BACKEND_URL + "/admin/register";
         navigator.clipboard.writeText(url);
+        this.props.enqueueSnackbar("Success! Admin register URL is copied to your clipboard.", { variant: 'success' });
     };
 
     submitPasswordForm = () => {
@@ -365,44 +362,14 @@ class AdminPage extends Component {
 
         const certificateWindow = (this.state.interpreters.length) ?
             this.state.interpreters.map((interpreter, i) => (
-                <div className={classes.interpreterCard} key={`cerficiateCard-${interpreter.name}-${i}`}>
-                    <div className={classes.interpreterInfo}>
-                        <div className={classes.flexArea}>
-                            <Avatar name={interpreter.name} avatar={interpreter.avatar} size={7} />
-                            <div>
-                                <div className={classes.infoItem}>
-                                    <strong>{interpreter.name}</strong>
-                                    {interpreter.isVerified ? <CheckCircleIcon className={classes.verifyIcon}
-                                        fontSize="small" color="primary" /> : null}
-                                    {interpreter.isRejected ? <CancelIcon className={classes.verifyIcon}
-                                        fontSize="small" color="error" /> : null}
-                                </div>
-                                <div className={classes.infoItem}>
-                                    {interpreter.location}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            {!interpreter.isRejected ?
-                                <Button content="Reject" id={interpreter.id} invertedDelete
-                                    click={this.clickRejectInterpreter} />
-                                : null}
-                            {!interpreter.isVerified ?
-                                <Button content="Verify" id={interpreter.id}
-                                    click={this.clickVerifyInterpreter} />
-                                : null}
-                        </div>
-                    </div>
-                    {interpreter.unvalidatedCertificates.map(certificate => (
-                        <CertificationCard key={`${certificate.id}`}
-                            id={certificate.id}
-                            avatar={interpreter.avatar}
-                            name={interpreter.name}
-                            title={certificate.title}
-                            location={interpreter.location}
-                            img={certificate.image} />
-                    ))}
+                <div key={`cerficiateCard-${interpreter.name}-${i}`}>
+                    <InterpreterReviewCard name={interpreter.name} avatar={interpreter.avatar}
+                        isVerified={interpreter.isVerified} isRejected={interpreter.isRejected}
+                        location={interpreter.location} id={interpreter.id}
+                        unvalidatedCertificates={interpreter.unvalidatedCertificates}
+                        clickReject={this.clickRejectInterpreter}
+                        clickVerify={this.clickVerifyInterpreter}
+                    />
                 </div>
             )) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;
 
@@ -431,10 +398,9 @@ class AdminPage extends Component {
 
                 </Grid>
             </Grid>
-            <div className={classes.fileUpload}>
-                <div className={classes.label}>Avatar</div>
-                <FileUploader upload={this.fileUpload} />
-            </div>
+
+            <FileUploader label="Avatar" upload={this.fileUpload} />
+
             <div className={classes.buttons}>
                 <Button content={'Update Info'} click={this.submitInfoForm} />
             </div>
@@ -516,16 +482,7 @@ class AdminPage extends Component {
                 <Grid container spacing={0}>
                     <Grid item xs={12} sm={5} md={4}>
                         <div className={classes.menuWrapper}>
-                            <div className={classes.userCard}>
-                                <div className={classes.userInfo}>
-                                    <Avatar name={this.state.name} avatar={this.state.avatar} size={7} />
-                                    <div className={classes.flexArea}>
-                                        <div className={classes.userName}>{this.state.currentName}</div>
-                                        <AccountCircleIcon className={classes.adminIcon}
-                                            fontSize="small" color="primary" />
-                                    </div>
-                                </div>
-                            </div>
+                            <UserTag admin name={this.state.currentName} avatar={this.state.avatar} />
                             <div className={classes.menu}>
                                 {menu}
                             </div>

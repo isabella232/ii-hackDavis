@@ -22,10 +22,6 @@
   margin-top: 2rem;
 }
 
-.ClientPage .fileUpload {
-  margin: 10px 0;
-}
-
 .ClientPage .currentPassword {
   margin: 0 10px;
 }
@@ -79,30 +75,6 @@
 
 .ClientPage .menuItemWrapper:hover {
   transform: translateX(10px);
-}
-
-.ClientPage .userInfo {
-  display: flex;
-  align-items: center;
-}
-
-.ClientPage .userName {
-  margin-left: 0.5rem;
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.ClientPage .userCard {
-  margin: 1rem 0;
-  padding: 1rem;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.ClientPage .userCard:hover {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .ClientPage .window {

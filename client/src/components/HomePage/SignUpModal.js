@@ -344,7 +344,7 @@ class SignUpModal extends Component {
 
         const menuItems = [];
         for (let i = 1; i <= 5; i++) {
-            menuItems.push(<MenuItem id={`menu-item-${i}`} value={i} key={`menu-item-${i}`}>{i}</MenuItem>)
+            menuItems.push(<MenuItem id={`sign-up-menu-item-${i}`} value={i} key={`menu-item-${i}`}>{i}</MenuItem>)
         }
         const addIcon = <AddIcon className={classes.langFieldIcon} color="primary" onClick={this.pushLangField} />;
         const removeIcon = <HighlightOffIcon className={classes.langFieldIcon} color="error" onClick={this.popLangField} />;

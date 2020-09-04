@@ -1,0 +1,23 @@
+.UserTag {
+  display: flex;
+  align-items: center;
+}
+
+.UserTag .name {
+  margin-left: 0.5rem;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.UserTag .flexArea {
+  display: flex;
+  align-items: center;
+}
+
+.UserTag .icon {
+  margin-left: 0.5rem;
+}
+
+.UserTag .rating {
+  margin-left: 0.4rem;
+}

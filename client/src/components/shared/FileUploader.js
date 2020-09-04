@@ -26,9 +26,12 @@ class FileUploader extends Component {
 
     render() {
         return (
-            <FilePond ref={ref => (this.pond = ref)}
-                allowMultiple={false}
-                onupdatefiles={fileItems => this.fileUpload(fileItems)} />
+            <>
+                <div>{this.props.label}</div>
+                <FilePond ref={ref => (this.pond = ref)}
+                    allowMultiple={false}
+                    onupdatefiles={fileItems => this.fileUpload(fileItems)} />
+            </>
         )
     }
 }

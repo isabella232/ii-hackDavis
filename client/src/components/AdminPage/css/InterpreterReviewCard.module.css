@@ -1,0 +1,20 @@
+.InterpreterReviewCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.InterpreterReviewCard .icon {
+  margin-left: 0.5rem;
+}
+
+.InterpreterReviewCard .infoItem {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.InterpreterReviewCard .flexArea {
+  display: flex;
+  align-items: center;
+}

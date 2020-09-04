@@ -177,7 +177,7 @@ class EventModal extends Component {
                                 variant="outlined"
                                 onChange={this.changeInput} />
 
-                            <FileUploader upload={this.fileUpload} />
+                            <FileUploader label="Cover Image" upload={this.fileUpload} />
 
                             <div className={classes.buttons}>
                                 <Button content={'Cancel'} inverted click={this.closeModal} />
