@@ -27,9 +27,9 @@ router.post('/api/interpreter/create', imgUploader.single('avatar'), async (req,
             languages: JSON.parse(req.body.languages)
         }
         const interpreter = new Interpreter(Object.assign({}, info, extraInfo))
-        await sendWelcomeEmail(interpreter.email, interpreter.name, interpreter._id.toString())
         await interpreter.generateCoordinates(req.body.location)
         await interpreter.save()
+        await sendWelcomeEmail(interpreter.email, interpreter.name, interpreter._id.toString())
         res.status(201).send()
     } catch (e) {
         console.log(e)
