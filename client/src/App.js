@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-import Page from "./layout/Page/Page";
+import Page from "./layout/Page";
 
 function App() {
     const theme = createMuiTheme({
