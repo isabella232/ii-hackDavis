@@ -14,17 +14,17 @@ const UserTag = (props) => {
     let icon = null;
 
     if (props.admin) {
-        icon = <AccountCircleIcon className={classes.icon} fontSize="small" color="primary" />;
+        icon = <AccountCircleIcon className={classes.icon} fontSize="small" />;
     } else if (props.interpreter) {
         if (props.isVerified) {
-            icon = <CheckCircleIcon className={classes.icon} fontSize="small" color="primary" />;
+            icon = <CheckCircleIcon className={classes.icon} fontSize="small" />;
         } else if (props.isRejected) {
             icon = <CancelIcon className={classes.verifyIcon} fontSize="small" color="error" />;
         }
     }
 
     return (
-        <Paper>
+        <Paper inverted>
             <div className={classes.UserTag}>
                 <Avatar name={props.name} avatar={props.avatar} size={7} />
 

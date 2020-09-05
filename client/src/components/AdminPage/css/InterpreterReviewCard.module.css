@@ -19,7 +19,13 @@
   align-items: center;
 }
 
-.InterpreterReviewCard .deleteButton {
+.InterpreterReviewCard .bottom {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.InterpreterReviewCard .deleteButton {
+  margin-left: 0.5rem;
 }

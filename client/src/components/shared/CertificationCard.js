@@ -3,14 +3,14 @@ import { withSnackbar } from 'notistack';
 
 import classes from './css/CertificationCard.module.css';
 
-import Button from './Button';
-import DeleteModal from './DoubleCheckModal';
-
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+
+import Button from './Button';
+import DeleteModal from './DoubleCheckModal';
 
 import { validateCertificate, rejectCertificate } from '../../services/AdminService';
 

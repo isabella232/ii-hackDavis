@@ -99,6 +99,7 @@ class AdminPage extends Component {
         this.load();
         fetchToReviews()
             .then(data => {
+                console.log(data)
                 this.setState({
                     interpreters: data
                 });
@@ -130,9 +131,20 @@ class AdminPage extends Component {
 
     componentDidMount() {
         this.loadCurrentWindow();
-        this.loadEvents();
-        this.loadToReviews();
-        this.loadInfo();
+
+        if (this.state.window === 0) {
+            this.loadEvents();
+            this.loadToReviews();
+            this.loadInfo();
+        } else if (this.state.window === 1) {
+            this.loadToReviews();
+            this.loadEvents();
+            this.loadInfo();
+        } else if (this.state.window === 2) {
+            this.loadInfo();
+            this.loadToReviews();
+            this.loadEvents();
+        }
     }
 
     switchWindow = (e, i) => {
@@ -373,8 +385,10 @@ class AdminPage extends Component {
             this.state.interpreters.map((interpreter, i) => (
                 <div key={`cerficiateCard-${interpreter.name}-${i}`}>
                     <InterpreterReviewCard name={interpreter.name} avatar={interpreter.avatar}
+                        id={interpreter.id} services={interpreter.services} phone={interpreter.phone}
+                        summary={interpreter.summary} languages={interpreter.languages}
                         isVerified={interpreter.isVerified} isRejected={interpreter.isRejected}
-                        location={interpreter.location} id={interpreter.id} email={interpreter.email}
+                        location={interpreter.location} email={interpreter.email}
                         unvalidatedCertificates={interpreter.unvalidatedCertificates}
                         clickReject={this.clickRejectInterpreter}
                         clickVerify={this.clickVerifyInterpreter}

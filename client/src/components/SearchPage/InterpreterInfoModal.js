@@ -130,7 +130,28 @@ class InterpreterInfoModal extends Component {
             <div key={`info-cert-item-${i}`}>
                 <CertificationItem title={cert.title} image={cert.image}
                     isValidated={cert.isValidated} id={cert.id} />
-            </div>))
+            </div>));
+
+        let icon = null;
+        let button = null;
+
+        if (this.props.fromAdminPage) {
+            if (this.props.isValidated) {
+                icon = <CheckCircleIcon className={classes.verifyIcon} fontSize="small" color="primary" />;
+                button = <Button content={'Reject'} id={this.state.id} invertedDelete click={this.clickRejectInterpreter} />;
+            } else if (this.props.isRejected) {
+                icon = <CancelIcon className={classes.verifyIcon} fontSize="small" color="error" />;
+                button = <Button content="Verify" id={this.state.id} click={this.clickVerifyInterpreter} />;
+            }
+        } else {
+            if (!this.state.isRejected) {
+                icon = <CheckCircleIcon className={classes.verifyIcon} fontSize="small" color="primary" />;
+                button = <Button content={'Reject'} id={this.state.id} invertedDelete click={this.clickRejectInterpreter} />;
+            } else if (this.state.isRejected) {
+                icon = <CancelIcon className={classes.verifyIcon} fontSize="small" color="error" />;
+                button = <Button content="Verify" id={this.state.id} click={this.clickVerifyInterpreter} />;
+            }
+        }
 
         return (
             <div>
@@ -155,10 +176,7 @@ class InterpreterInfoModal extends Component {
                                 <Grid item xs={7} sm={7}>
                                     <div className={classes.name}>
                                         {this.props.name}
-                                        {!this.state.isRejected ? <CheckCircleIcon className={classes.verifyIcon}
-                                            fontSize="small" color="primary" /> : null}
-                                        {this.state.isRejected ? <CancelIcon className={classes.verifyIcon}
-                                            fontSize="small" color="error" /> : null}
+                                        {icon}
                                     </div>
                                     <div className={classes.infoItem}>
                                         <Rating className={classes.rating}
@@ -213,15 +231,8 @@ class InterpreterInfoModal extends Component {
 
                             <div className={classes.buttons}>
                                 {this.props.userKind === 'Client' ?
-                                    <Button content={'Bookmark'} click={this.bookmark} />
-                                    : null}
-                                {this.props.userKind === 'Admin' ? <>
-
-                                    {!this.state.isRejected ?
-                                        <Button content={'Reject'} id={this.state.id} invertedDelete click={this.clickRejectInterpreter} />
-                                        : <Button content="Verify" id={this.state.id} click={this.clickVerifyInterpreter} />}
-                                </>
-                                    : null}
+                                    <Button content={'Bookmark'} click={this.bookmark} /> : null}
+                                {this.props.userKind === 'Admin' ? button : null}
                                 <ReviewModal id={this.state.id} name={this.state.name} reloadDetails={this.reloadDetails} />
                             </div>
 

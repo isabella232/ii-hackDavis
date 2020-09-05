@@ -1,4 +1,5 @@
-.Paper {
+.Paper,
+.invertedPaper {
   margin: 1rem 0;
   padding: 1rem;
   background: #ffffff;
@@ -7,6 +8,11 @@
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.Paper:hover {
+.invertedPaper {
+  background: #03a0b5;
+}
+
+.Paper:hover,
+.invertedPaper:hover {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }

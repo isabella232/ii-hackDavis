@@ -10,6 +10,7 @@ import Button from '../shared/Button';
 import Paper from '../shared/Paper';
 import CertificationCard from '../shared/CertificationCard';
 import DeleteModal from '../shared/DoubleCheckModal';
+import InfoModal from '../SearchPage/InterpreterInfoModal';
 
 const InterpreterReviewCard = (props) => {
     const deleteInterpreter = () => {
@@ -36,16 +37,14 @@ const InterpreterReviewCard = (props) => {
                         </div>
                     </div>
 
-                    <div>
-                        {!props.isRejected ?
-                            <Button content="Reject" id={props.id} invertedDelete
-                                click={props.clickReject} />
-                            : null}
-                        {!props.isVerified ?
-                            <Button content="Verify" id={props.id}
-                                click={props.clickVerify} />
-                            : null}
-                    </div>
+                    {!props.isRejected ?
+                        <Button content="Reject" id={props.id} invertedDelete
+                            click={props.clickReject} />
+                        : null}
+                    {!props.isVerified ?
+                        <Button content="Verify" id={props.id}
+                            click={props.clickVerify} />
+                        : null}
                 </div>
 
                 {props.unvalidatedCertificates.map(certificate => (
@@ -57,8 +56,25 @@ const InterpreterReviewCard = (props) => {
                         location={props.location}
                         img={certificate.image} />
                 ))}
-                <div className={classes.deleteButton}>
-                    <DeleteModal content={'Are You Sure You Want To Permanently Delete This Interpreter\'s Account?'} account clickDelete={deleteInterpreter} />
+
+                <div className={classes.bottom}>
+                    <InfoModal key={`more-info-${props.id}`} id={props.id}
+                        name={props.name}
+                        avatar={props.avatar}
+                        services={props.services}
+                        email={props.email}
+                        location={props.location}
+                        phone={props.phone}
+                        summary={props.summary}
+                        languages={props.languages}
+                        fromAdminPage
+                        isRejected={props.isRejected}
+                        isVerified={props.isVerified} />
+
+                    <div className={classes.deleteButton}>
+                        <DeleteModal content={'Are You Sure You Want To Permanently Delete This Interpreter\'s Account?'}
+                            account clickDelete={deleteInterpreter} />
+                    </div>
                 </div>
             </div>
         </Paper>

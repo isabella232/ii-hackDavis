@@ -9,7 +9,11 @@ export const signIn = async (data) => {
 
         return response.data;
     } catch (e) {
-        return Promise.reject(e.response.data)
+        if (e.response) {
+            return Promise.reject(e.response.data)
+        } else {
+            return Promise.reject(e);
+        }
     }
 }
 
@@ -25,7 +29,11 @@ export const signOut = async () => {
 
         return response.data;
     } catch (e) {
-        return Promise.reject(e.response.data)
+        if (e.response) {
+            return Promise.reject(e.response.data)
+        } else {
+            return Promise.reject(e);
+        }
     }
 }
 

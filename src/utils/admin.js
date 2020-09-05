@@ -20,7 +20,11 @@ const getToValidate = (interpreters) => {
             location: interpreter.location.str,
             unvalidatedCertificates: unvalidatedCertificates,
             isVerified: interpreter.isVerified,
-            isRejected: interpreter.isRejected
+            isRejected: interpreter.isRejected,
+            services: interpreter.services,
+            phone: interpreter.phone,
+            languages: interpreter.languages,
+            summary: interpreter.summary
         }
     })
 

@@ -100,7 +100,7 @@
 }
 
 .moreInfo {
-  margin-top: 1rem;
+  font-size: 14px;
   color: #027888;
   font-weight: 500;
   transition: color 0.2s ease-in-out;

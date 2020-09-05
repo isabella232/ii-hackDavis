@@ -1,6 +1,8 @@
 .UserTag {
   display: flex;
   align-items: center;
+  color: white;
+  background: #03a0b5;
 }
 
 .UserTag .name {
