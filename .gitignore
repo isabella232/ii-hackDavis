@@ -13,6 +13,7 @@ node_modules
 /client/build
 
 # misc
+/db
 .DS_Store
 .idea
 .env

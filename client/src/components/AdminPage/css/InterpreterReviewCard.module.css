@@ -1,4 +1,4 @@
-.InterpreterReviewCard {
+.InterpreterReviewCard .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -17,4 +17,9 @@
 .InterpreterReviewCard .flexArea {
   display: flex;
   align-items: center;
+}
+
+.InterpreterReviewCard .deleteButton {
+  display: flex;
+  justify-content: flex-end;
 }

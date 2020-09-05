@@ -94,3 +94,4 @@ export const deleteUser = async (email) => {
         throw e
     }
 }
+

@@ -14,14 +14,13 @@ function App() {
         palette: {
             primary: {
                 main: "#03A0B5",
-                dark: "#027888",
             },
             secondary: {
                 main: "#cc0a57",
             }
         },
         status: {
-            danger: "orange"
+            danger: "#f63c41"
         }
     });
 

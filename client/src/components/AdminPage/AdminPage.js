@@ -23,7 +23,7 @@ import InterpreterReviewCard from './InterpreterReviewCard';
 
 import {
     fetchInfo, createAdminCode, updateAdminInfo, fetchEventArchive, fetchEvents,
-    rejectInterpreter, verifyInterpreter, fetchToReviews
+    rejectInterpreter, verifyInterpreter, fetchToReviews, deleteInterpreter
 } from '../../services/AdminService';
 import { updateUserPassword, deleteUser } from '../../services/UserService';
 
@@ -66,6 +66,7 @@ class AdminPage extends Component {
         this.clickVerifyInterpreter = this.clickVerifyInterpreter.bind(this);
         this.clickShowNewPassword = this.clickShowNewPassword.bind(this);
         this.deleteAccount = this.deleteAccount.bind(this);
+        this.deleteInterpreterAccount = this.deleteInterpreterAccount.bind(this);
     }
 
     load = () => { this.setState({ loading: true }); }
@@ -289,6 +290,14 @@ class AdminPage extends Component {
             }).catch(e => this.props.enqueueSnackbar("Your account cannot be deleted at this moment.", { variant: 'error' }))
     }
 
+    deleteInterpreterAccount = (email) => {
+        deleteInterpreter(email)
+            .then(data => {
+                this.props.enqueueSnackbar("Interpreter's account has been deleted.", { variant: 'info' });
+                this.loadToReviews();
+            }).catch(e => this.props.enqueueSnackbar("Interpreter's account cannot be deleted at this moment.", { variant: 'error' }))
+    }
+
     render() {
         const menuItems = ['Events', 'Review Interpreters', 'Account Update', 'Admin Code'];
         const menu = menuItems.map((item, i) => {
@@ -365,10 +374,11 @@ class AdminPage extends Component {
                 <div key={`cerficiateCard-${interpreter.name}-${i}`}>
                     <InterpreterReviewCard name={interpreter.name} avatar={interpreter.avatar}
                         isVerified={interpreter.isVerified} isRejected={interpreter.isRejected}
-                        location={interpreter.location} id={interpreter.id}
+                        location={interpreter.location} id={interpreter.id} email={interpreter.email}
                         unvalidatedCertificates={interpreter.unvalidatedCertificates}
                         clickReject={this.clickRejectInterpreter}
                         clickVerify={this.clickVerifyInterpreter}
+                        clickDelete={this.deleteInterpreterAccount}
                     />
                 </div>
             )) : <div className={classes.noItems}>There Is No Interpreters To Reviews.</div>;

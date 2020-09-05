@@ -5,7 +5,7 @@ import classes from './css/AboutUsPage.module.css';
 import Avatar from '../shared/Avatar';
 import Paper from '../shared/Paper';
 
-import avatar from '../../assets/test_avatar.jpeg';
+import avatar from '../../assets/test.jpg';
 
 class AboutUsPage extends Component {
     constructor() {
@@ -27,10 +27,6 @@ class AboutUsPage extends Component {
                         <Avatar name={'Moomin Azkaban'} avatar={avatar} size={15} />
                         <div className={classes.name}>Moomin Azkaban</div>
                     CEO
-                    <p>
-                            Rocio Hernandez Cruz is an indigenous woman from Oaxaca who migrated to the U.S at the age of 12. She has recently graduated from the University of California Santa Cruz with a BA in Latin American and Latino Studies and a minor in education, becoming a part of the class of 2020. Rocio is looking forward to continuing graduate school in the near future. In the Santa Cruz community, Rocio became a part of the non-profit organization Senderos. An organization that focuses on offering services to young students that revolve around indigenous Oaxacan culture. As a part of this community she attended several events to volunteer and participated as a dancer in their Centeotle Danza y Baile dance team.
-
-                    </p>
                     </div>
                 </Paper>
             </div>
@@ -47,10 +43,6 @@ class AboutUsPage extends Component {
                         {items}
                     </div>
                 </div>
-                <Paper>
-                    hl
-                </Paper>
-
             </div>
         )
     }

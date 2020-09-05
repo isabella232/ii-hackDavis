@@ -9,48 +9,58 @@ import Avatar from '../shared/Avatar';
 import Button from '../shared/Button';
 import Paper from '../shared/Paper';
 import CertificationCard from '../shared/CertificationCard';
+import DeleteModal from '../shared/DoubleCheckModal';
 
 const InterpreterReviewCard = (props) => {
+    const deleteInterpreter = () => {
+        props.clickDelete(props.email);
+    }
 
     return (
         <Paper>
             <div className={classes.InterpreterReviewCard}>
-                <div className={classes.flexArea}>
-                    <Avatar name={props.name} avatar={props.avatar} size={7} />
+                <div className={classes.header}>
+                    <div className={classes.flexArea}>
+                        <Avatar name={props.name} avatar={props.avatar} size={7} />
+                        <div>
+                            <div className={classes.infoItem}>
+                                <strong>{props.name}</strong>
+                                {props.isVerified ? <CheckCircleIcon className={classes.icon}
+                                    fontSize="small" color="primary" /> : null}
+                                {props.isRejected ? <CancelIcon className={classes.icon}
+                                    fontSize="small" color="error" /> : null}
+                            </div>
+                            <div className={classes.infoItem}>
+                                {props.location}
+                            </div>
+                        </div>
+                    </div>
+
                     <div>
-                        <div className={classes.infoItem}>
-                            <strong>{props.name}</strong>
-                            {props.isVerified ? <CheckCircleIcon className={classes.icon}
-                                fontSize="small" color="primary" /> : null}
-                            {props.isRejected ? <CancelIcon className={classes.icon}
-                                fontSize="small" color="error" /> : null}
-                        </div>
-                        <div className={classes.infoItem}>
-                            {props.location}
-                        </div>
+                        {!props.isRejected ?
+                            <Button content="Reject" id={props.id} invertedDelete
+                                click={props.clickReject} />
+                            : null}
+                        {!props.isVerified ?
+                            <Button content="Verify" id={props.id}
+                                click={props.clickVerify} />
+                            : null}
                     </div>
                 </div>
 
-                <div>
-                    {!props.isRejected ?
-                        <Button content="Reject" id={props.id} invertedDelete
-                            click={props.clickReject} />
-                        : null}
-                    {!props.isVerified ?
-                        <Button content="Verify" id={props.id}
-                            click={props.clickVerify} />
-                        : null}
+                {props.unvalidatedCertificates.map(certificate => (
+                    <CertificationCard key={`${certificate.id}`}
+                        id={certificate.id}
+                        avatar={props.avatar}
+                        name={props.name}
+                        title={certificate.title}
+                        location={props.location}
+                        img={certificate.image} />
+                ))}
+                <div className={classes.deleteButton}>
+                    <DeleteModal content={'Are You Sure You Want To Permanently Delete This Interpreter\'s Account?'} account clickDelete={deleteInterpreter} />
                 </div>
             </div>
-            {props.unvalidatedCertificates.map(certificate => (
-                <CertificationCard key={`${certificate.id}`}
-                    id={certificate.id}
-                    avatar={props.avatar}
-                    name={props.name}
-                    title={certificate.title}
-                    location={props.location}
-                    img={certificate.image} />
-            ))}
         </Paper>
     )
 }

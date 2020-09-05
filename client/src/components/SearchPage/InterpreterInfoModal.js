@@ -105,6 +105,7 @@ class InterpreterInfoModal extends Component {
             .then(data => {
                 this.setState({ isRejected: true });
                 this.unload();
+                this.props.enqueueSnackbar("This interpreter has been rejected.", { variant: 'info' })
             })
             .catch(e => {
                 this.props.enqueueSnackbar("This interpreter cannot be rejected at the moment.", { variant: 'error' })
@@ -127,7 +128,7 @@ class InterpreterInfoModal extends Component {
             : <div className={classes.noReviews}>{this.props.name} Has No Reviews Yet.</div>;
         const certifications = this.state.certifications.map((cert, i) => (
             <div key={`info-cert-item-${i}`}>
-                <CertificationItem title={cert.title} image={cert.image} isValidated={cert.isValidated} />
+                <CertificationItem title={cert.title} image={cert.image} isValidated={cert.isValidated} id={cert.id} />
             </div>))
 
         return (

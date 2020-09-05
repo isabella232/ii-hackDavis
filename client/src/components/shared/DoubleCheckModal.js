@@ -1,8 +1,11 @@
 import React from 'react';
+import { withSnackbar } from 'notistack';
+
+import classes from './css/DoubleCheckModal.module.css';
+
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import classes from './css/DoubleCheckModal.module.css';
 
 import Button from './Button';
 
@@ -10,6 +13,7 @@ const DeleteModal = props => {
     const [open, setOpen] = React.useState(false);
 
     const openModal = () => {
+        props.enqueueSnackbar("This action cannot be undone.", { variant: 'warning' });
         setOpen(true);
     };
 
@@ -51,4 +55,4 @@ const DeleteModal = props => {
     )
 }
 
-export default DeleteModal;
+export default withSnackbar(DeleteModal);

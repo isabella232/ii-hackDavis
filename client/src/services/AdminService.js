@@ -87,3 +87,12 @@ export const updateAdminInfo = async (data) => {
     formData.append('avatar', data.avatar)
     return backend.patch(endpoint, formData);
 }
+
+export const deleteInterpreter = async (email) => {
+    try {
+        const endpoint = `api/interpreter/${email}/delete`;
+        return backend.post(endpoint);
+    } catch (e) {
+        throw e
+    }
+}

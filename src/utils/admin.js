@@ -15,6 +15,7 @@ const getToValidate = (interpreters) => {
         return {
             id: interpreter.id,
             name: interpreter.name,
+            email: interpreter.email,
             avatar: interpreter.avatar.url,
             location: interpreter.location.str,
             unvalidatedCertificates: unvalidatedCertificates,

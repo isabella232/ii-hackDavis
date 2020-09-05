@@ -53,6 +53,7 @@ router.get('/api/interpreters/:id/details', auth, async (req, res) => {
         interpreter.certifications.forEach(certificate => {
             if (!certificate.isRejected) {
                 const cert = {
+                    id: certificate._id.toString(),
                     title: certificate.title,
                     image: certificate.file.url,
                     isValidated: certificate.isValidated
