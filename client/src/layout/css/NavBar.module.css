@@ -39,6 +39,13 @@
   color: #03a0b5;
 }
 
-.NavBar .item:active {
+.NavBar .activeItem {
+  margin-right: 1em;
+  font-size: 18px;
+  font-weight: 500;
+  align-self: center;
+  text-decoration: none;
   color: #03a0b5;
+  -webkit-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
 }

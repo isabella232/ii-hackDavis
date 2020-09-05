@@ -159,7 +159,7 @@ class ClientPage extends Component {
     render() {
         const menuItems = ['Upcoming Events', 'Bookmarks', 'Account Update'];
         const menu = menuItems.map((item, i) =>
-            <div className={classes.menuItemWrapper} key={`menu-item-${i}`}>
+            <div className={classes.menuItemWrapper} key={`client-page-menu-item-${i}`}>
                 <div className={(this.state.window === i) ? classes.activeDot : classes.dot} />
                 <div value={i}
                     className={(this.state.window === i) ? classes.activeMenuItem : classes.menuItem}
@@ -168,25 +168,28 @@ class ClientPage extends Component {
                 </div>
             </div>);
 
-        const events = this.state.events.map(event => {
-            return <EventCard id={event.id}
-                key={`event-${event.id}`}
-                title={event.title}
-                date={event.date}
-                location={event.location}
-                summary={event.summary}
-                image={event.image}
-                reloadData={this.loadData} />
+        const events = this.state.events.map((event, i) => {
+            return <div key={`event-${i}`}>
+                <EventCard id={event.id}
+                    title={event.title}
+                    date={event.date}
+                    location={event.location}
+                    summary={event.summary}
+                    image={event.image}
+                    reloadData={this.loadData} />
+            </div>
         })
 
         const eventWindow = events.length ? events
             : <div className={classes.noItems}>There Is No Event Coming Up.</div>;
 
         const bookmarkWindow = <>
-            {this.state.bookmarks.map(bookmark =>
-                <Bookmark name={bookmark.name} email={bookmark.email}
-                    languages={bookmark.languages} location={bookmark.location}
-                    phone={bookmark.phone} rating={bookmark.rating} />)}
+            {this.state.bookmarks.map((bookmark, i) =>
+                <div key={`bookmark-${i}`}>
+                    <Bookmark name={bookmark.name} email={bookmark.email}
+                        languages={bookmark.languages} location={bookmark.location}
+                        phone={bookmark.phone} rating={bookmark.rating} />
+                </div>)}
         </>
 
         const updateWindow = <>

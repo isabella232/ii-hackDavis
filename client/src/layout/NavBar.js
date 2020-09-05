@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import classes from "./css/NavBar.module.css";
 import logo from '../assets/MII_logo.png'
@@ -11,7 +10,6 @@ import SignUpModal from '../components/HomePage/SignUpModal';
 import LoginModal from '../components/HomePage/LoginModal';
 
 import { signOut } from '../services/UserService';
-
 
 class NavBar extends Component {
     constructor(props) {
@@ -72,17 +70,24 @@ class NavBar extends Component {
     }
 
     render() {
+        const classNameAboutUs = this.props.location.pathname === '/aboutus' ? classes.activeItem : classes.item;
+        const classNameAdmin = this.props.location.pathname === '/admin' ? classes.activeItem : classes.item;
+        const classNameInterpreter = this.props.location.pathname === '/interpreter' ? classes.activeItem : classes.item;
+        const classNameClient = this.props.location.pathname === '/client' ? classes.activeItem : classes.item;
+        const classNameSearch = this.props.location.pathname === '/search' ? classes.activeItem : classes.item;
+
+
         return (
             <div className={classes.NavBar}>
                 <Link className={classes.logo} to={"/"}>
                     <img src={logo} alt="MII Logo" width={'70px'} />
                 </Link>
                 <div className={classes.items}>
-                    <Link className={classes.item} to={"/aboutus"}>About Us</Link>
-                    {this.state.userKind === 'Admin' ? <Link className={classes.item} to={"/admin"}>Admin</Link> : null}
-                    {this.state.userKind === 'Interpreter' ? <Link className={classes.item} to={"/interpreter"}>Profile</Link> : null}
-                    {this.state.userKind === 'Client' ? <Link className={classes.item} to={"/client"}>Profile</Link> : null}
-                    <Link className={classes.item} to={"/search"}>Search</Link>
+                    <Link className={classNameAboutUs} to={"/aboutus"}>About Us</Link>
+                    {this.state.userKind === 'Admin' ? <Link className={classNameAdmin} to={"/admin"}>Admin</Link> : null}
+                    {this.state.userKind === 'Interpreter' ? <Link className={classNameInterpreter} to={"/interpreter"}>Profile</Link> : null}
+                    {this.state.userKind === 'Client' ? <Link className={classNameClient} to={"/client"}>Profile</Link> : null}
+                    <Link className={classNameSearch} to={"/search"}>Search</Link>
 
                     <div className={classes.button}>
                         {!this.state.isLoggedIn ? <Button content='Login' click={this.switchLoginModal} />
