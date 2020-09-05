@@ -128,7 +128,8 @@ class InterpreterInfoModal extends Component {
             : <div className={classes.noReviews}>{this.props.name} Has No Reviews Yet.</div>;
         const certifications = this.state.certifications.map((cert, i) => (
             <div key={`info-cert-item-${i}`}>
-                <CertificationItem title={cert.title} image={cert.image} isValidated={cert.isValidated} id={cert.id} />
+                <CertificationItem title={cert.title} image={cert.image}
+                    isValidated={cert.isValidated} id={cert.id} />
             </div>))
 
         return (

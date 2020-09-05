@@ -18,11 +18,11 @@ const CertificateItem = props => {
 
     if (props.userKind === "Admin") {
         if (!isRejected) {
-            icon = <IconButton size="small" onClick={e => clickValidate(props.id)}>
+            icon = <IconButton size="small" onClick={e => clickReject(props.id)}>
                 <CheckCircleIcon color="primary" />
             </IconButton>;
         } else {
-            icon = <IconButton size="small" onClick={e => clickReject(props.id)}>
+            icon = <IconButton size="small" onClick={e => clickValidate(props.id)}>
                 <CancelIcon color="error" />
             </IconButton>;
         }
@@ -39,7 +39,7 @@ const CertificateItem = props => {
 
     const clickReject = (id) => {
         rejectCertificate(id)
-            .then(data => props.enqueueSnackbar("Success! This certificate has been rejected.", { variant: 'info' }))
+            .then(data => props.enqueueSnackbar("This certificate has been rejected.", { variant: 'info' }))
             .catch(e => props.enqueueSnackbar("This certificate canont be rejected at this moment.", { variant: 'error' }));
         setIsRejected(!isRejected);
     }
