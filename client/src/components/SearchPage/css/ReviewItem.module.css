@@ -1,25 +1,26 @@
 .ReviewItem {
-    margin-left: .8rem;
-    margin-bottom: 1rem;
-    margin-top: .3rem;
-    color: #5A4F5A;
+  margin-left: 0.8rem;
+  margin-bottom: 1rem;
+  margin-top: 0.3rem;
+  color: #5a4f5a;
 }
 
 .ReviewItem .header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 15px;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  align-items: center;
 }
 
 .ReviewItem .comment {
-    margin-left: .5rem;
-    margin-bottom: -.2rem;
-    font-size: 15px;
+  margin-left: 0.5rem;
+  margin-top: -0.2rem;
+  margin-bottom: -0.2rem;
+  font-size: 14px;
 }
 
 .ReviewItem .userName {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 17px;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 15px;
 }

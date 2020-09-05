@@ -26,17 +26,19 @@
 
 .Hit .name {
   font-weight: bold;
-  font-size: 25px;
-  line-height: 30px;
+  font-size: 24px;
+  line-height: 25px;
 }
 
 .Hit .languages {
-  font-size: 20px;
-  line-height: 27px;
+  font-size: 18px;
+  line-height: 20px;
+  margin-bottom: 0.5rem;
   color: #027888;
 }
 
 .Hit .location,
 .email {
+  font-size: 15px;
   line-height: 22px;
 }

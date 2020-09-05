@@ -27,6 +27,7 @@ import LoadCircle from '../shared/LoadCircle';
 import FileUploader from '../shared/FileUploader';
 import HorzLine from '../shared/HorzLine';
 import ReviewItem from '../SearchPage/ReviewItem';
+import Paper from '../shared/Paper';
 import DeleteModal from '../shared/DoubleCheckModal';
 import UserTag from '../shared/UserTag';
 
@@ -349,9 +350,11 @@ class InterpreterPage extends Component {
 
         const reviewWindow = <div className={classes.reviewWindow}>
             {this.state.reviews.length ? this.state.reviews.map((review, i) => {
-                return (<div className={classes.reviewCard} key={`interpreter-page-review-item-${i}`}>
-                    <ReviewItem reviewerName={review.reviewerName} comment={review.comment}
-                        date={review.date} rating={review.rating} />
+                return (<div className={classes.reviewItem} key={`interpreter-page-review-item-${i}`}>
+                    <Paper>
+                        <ReviewItem reviewerName={review.reviewerName} comment={review.comment}
+                            date={review.date} rating={review.rating} />
+                    </Paper>
                 </div>)
             }) : <div className={classes.noItems}>There Is No Reviews Yet.</div>}
         </div >;

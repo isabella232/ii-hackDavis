@@ -1,14 +1,14 @@
 .CertificateItem {
-    margin: 1rem 0;
+  margin: 0.5rem 0.5rem;
 }
 
 .CertificateItem .header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .CertificateItem .title {
-    color: #5A4F5A;
-    font-size: 20px;
-    font-weight: 500;
+  color: #5a4f5a;
+  font-size: 20px;
+  font-weight: 500;
 }

@@ -1,42 +1,34 @@
 .PreviewCard {
+  margin: 0 3rem;
+}
+
+.PreviewCard .inner {
   display: flex;
   align-items: center;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  border-radius: 10px;
   min-width: 400px;
-  margin: 0 3rem;
-  -webkit-transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.PreviewCard:hover {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  /* min-height: 200px; */
+  margin: -0.5rem;
 }
 
 .PreviewCard .avatar {
-  margin: 1rem 0 1rem 1rem;
-}
-
-.PreviewCard .content {
-  padding: 1rem;
+  margin: 1rem 1.5rem 1rem 1rem;
 }
 
 .PreviewCard .name {
   font-weight: bold;
-  font-size: 26px;
-  line-height: 30px;
-  margin-bottom: 0.5rem;
+  font-size: 24px;
+  line-height: 25px;
 }
 
 .PreviewCard .languages {
   font-size: 18px;
   line-height: 20px;
   color: #027888;
+  margin-bottom: 0.5rem;
 }
 
 .PreviewCard .location,
 .email {
-  line-height: 30px;
+  line-height: 20px;
 }
