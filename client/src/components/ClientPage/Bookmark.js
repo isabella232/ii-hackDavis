@@ -27,13 +27,19 @@ const Bookmark = (props) => {
 
     const bookmark = (e, email) => {
         bookmarkInterpreter(email)
-            .then(data => { setBookmarked(true); })
+            .then(data => {
+                setBookmarked(true);
+                props.enqueueSnackbar("Success! You have bookmarked this interpreter.", { variant: 'success' });
+            })
             .catch(e => props.enqueueSnackbar("This interpreter cannot be bookmarked at the moment.", { variant: 'error' }))
     }
 
     const unbookmark = (e, email) => {
         unbookmarkInterpreter(email)
-            .then(data => { setBookmarked(false); })
+            .then(data => {
+                setBookmarked(false);
+                props.enqueueSnackbar("You have unbookmarked this interpreter.", { variant: 'info' });
+            })
             .catch(e => props.enqueueSnackbar("This interpreter cannot be unbookmarked at the moment.", { variant: 'error' }))
     }
 

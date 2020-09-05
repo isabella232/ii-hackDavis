@@ -7,6 +7,6 @@ const SlantedSection = (props) => <div className={classes.SlantedSection}>
     </div>
     <div className={classes.shadowLight}></div>
     <div className={classes.shadowDark}></div>
-</div >
+</div>
 
 export default SlantedSection;

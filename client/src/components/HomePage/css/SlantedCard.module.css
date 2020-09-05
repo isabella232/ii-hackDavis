@@ -2,13 +2,11 @@
   position: relative;
   width: 400px;
   height: 300px;
-  margin: 3rem;
+  margin: 3.2rem 0 3.2rem 2rem;
 }
 
 .SlantedCard .shape {
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   background: #4787c9;
   width: 400px;
   height: 300px;
