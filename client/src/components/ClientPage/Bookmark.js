@@ -5,6 +5,7 @@ import classes from './css/Bookmark.module.css';
 
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import IconButton from '@material-ui/core/IconButton/IconButton';
 import Rating from '@material-ui/lab/Rating';
 
 import Avatar from '../shared/Avatar';
@@ -16,8 +17,12 @@ const Bookmark = (props) => {
         (index !== props.languages.length - 1) ? <span key={`bookmark-lang-${index}`}>{lang.language}, </span> : <span key={`bookmark-lang-${index}`}>{lang.language}</span>
     )
     const bookmarkIcon = bookmarked ?
-        <BookmarkIcon color="primary" onClick={e => unbookmark(e, props.email)} />
-        : <BookmarkBorderIcon color="primary" onClick={e => bookmark(e, props.email)} />;
+        <IconButton onClick={e => unbookmark(e, props.email)}>
+            <BookmarkIcon color="primary" />
+        </IconButton>
+        : <IconButton onClick={e => bookmark(e, props.email)} >
+            <BookmarkBorderIcon color="primary" />
+        </IconButton>;
 
 
     const bookmark = (e, email) => {
