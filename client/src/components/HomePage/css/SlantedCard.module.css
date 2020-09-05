@@ -1,0 +1,48 @@
+.SlantedCard {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  margin: 3rem;
+}
+
+.SlantedCard .shape {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #4787c9;
+  width: 400px;
+  height: 300px;
+  border-radius: 30px;
+  transform: skewX(-3deg) skewY(-3deg); /*Shorthand: skew(-5deg, -5deg);*/
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.SlantedCard .shape:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.SlantedCard .customerPicture {
+  height: 100%;
+}
+
+.SlantedCard .customerPicture img {
+  height: 100%;
+  transform: skewX(3deg) skewY(3deg) scale(1.15); /*Shorthand: skew(5deg, 5deg) scale(1.15);*/
+}
+
+.SlantedCard .shapeShadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #f0f7ff;
+  width: 400px;
+  height: 300px;
+  border-radius: 30px;
+  transform: skewX(-2deg) skewY(-2deg) rotate(-20deg); /*Shorthand: skew(-5deg, -5deg) rotate(-20deg);*/
+  z-index: -10;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* reference: https://codesandbox.io/s/slanted-card-forked-wekn9?file=/index.html:311-1021 */

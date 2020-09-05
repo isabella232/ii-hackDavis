@@ -8,6 +8,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import InstagramIcon from '@material-ui/icons/Instagram';
 
 import Avatar from '../shared/Avatar';
+import SlantedCard from './SlantedCard';
 import PreviewCard from './PreviewCard';
 
 import { fetchHome } from '../../services/HomeService';
@@ -71,8 +72,7 @@ class HomePage extends Component {
                             <p>Need an indigenous interpreter? Just look for the language you need on our map and we will take care of the rest.</p>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <img src='https://cdn.dribbble.com/users/799185/screenshots/7085057/media/85e47d49c4557e920ff245c8ebbea08b.png' alt='illustration2'
-                                className={classes.image} />
+                            <SlantedCard alt={'illustration'} src={"https://static.dribbble.com/users/355826/screenshots/6187414/image.png"} />
                         </Grid>
                     </Grid>
                 </div>
@@ -135,15 +135,15 @@ class HomePage extends Component {
 
                 <div className={classes.infoSection}>
                     <Grid container spacing={4} justify='center' alignItems='start'>
-                        <Grid item xs={12} sm={4}>
-                            <div className={classes.title}>Who Are We?</div>
-                            <p>Multilingual Indigenous Interpreters (MII), founded in 2019, is a collective of trilingual young adults from Guatemala and Oaxaca whose main purpose is to eliminate the language barriers between service providers and monolingual indigenous speakers from Latin America. Our collective was founded out of the necessity to support indigenous interpreters with their professional development and capacity building when non-indgenous interpreting agencies were lacking to support this need.</p>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={3}>
                             <div className={classes.title}>What Do We Do?</div>
                             <p>Multilingual Indigenous Interpreters provides high quality relay, simultaneous and consecutive  interpreting services to monolingual indigenous communities with the ultimate goal to make accurate communication accessible and breach the communication gap between service providers and indigenous communities.</p>
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={5}>
+                            <div className={classes.title}>Who Are We?</div>
+                            <p>Multilingual Indigenous Interpreters (MII), founded in 2019, is a collective of trilingual young adults from Guatemala and Oaxaca whose main purpose is to eliminate the language barriers between service providers and monolingual indigenous speakers from Latin America. Our collective was founded out of the necessity to support indigenous interpreters with their professional development and capacity building when non-indgenous interpreting agencies were lacking to support this need.</p>
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
                             <div className={classes.title}>Our Missions</div>
                             <p>Our mission is to provide adequate and accurate interpreting services to best fit the needs of monolingual indigenous communities and bridge cultural understanding between service providers and clients.  Our vision is to eliminate language barriers for the dignity, respect, and equitable representation of indigenous communities.</p>
                         </Grid>

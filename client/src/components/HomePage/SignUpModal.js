@@ -334,10 +334,7 @@ class SignUpModal extends Component {
                 </Grid>
             </Grid>
 
-            <div className={classes.fileUpload}>
-                <div className={classes.label}>Avatar</div>
-                <FileUploader upload={this.fileUpload} />
-            </div>
+            <FileUploader label={"Avatar"} upload={this.fileUpload} />
         </>;
         const singleBack = <Button content={'Back'} inverted click={this.switchToLogin} />;
         const singleNext = <Button content={'Sign Up'} click={this.submitForm} />;

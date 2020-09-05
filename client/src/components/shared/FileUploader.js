@@ -27,7 +27,7 @@ class FileUploader extends Component {
     render() {
         return (
             <>
-                <div>{this.props.label}</div>
+                <div>{this.props.label} <span style={{ fontSize: 14, color: 'gray' }}>{`(< 5 MB)`}</span></div>
                 <FilePond ref={ref => (this.pond = ref)}
                     allowMultiple={false}
                     onupdatefiles={fileItems => this.fileUpload(fileItems)} />

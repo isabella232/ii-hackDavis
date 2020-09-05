@@ -1,0 +1,46 @@
+.SlantedSection {
+  position: relative;
+  background: rgb(235, 247, 249);
+  color: white;
+  width: 100%;
+  height: 300px;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.SlantedSection:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.SlantedSection .shadowLight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* background: #027888; */
+  background: #03a0b5;
+  width: 100%;
+  height: 300px;
+  z-index: -10;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 70%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.SlantedSection .shadowDark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #027888;
+  width: 100%;
+  height: 300px;
+  z-index: -100;
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 0 88%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.SlantedSection .shadowLight:hover,
+.shadowDark:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}

@@ -10,6 +10,7 @@
 .HomePage .infoSection {
   margin: 2rem auto;
   max-width: 1200px;
+  text-align: center;
 }
 
 .HomePage .previewSection {
@@ -22,6 +23,12 @@
   padding: 5% 10%;
   background: #03a0b5;
   color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.HomePage .invertedSection:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .HomePage .previewHeader {
@@ -32,8 +39,7 @@
   font-size: 30px;
   line-height: 30px;
   color: #027888;
-  -webkit-transition: color 0.2s ease-in-out;
-  transition: color 0.2s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .HomePage .title:hover {
@@ -90,6 +96,12 @@
   margin: 0 -6%;
   padding: 2rem 10%;
   background: rgb(235, 247, 249);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.HomePage .joinSection:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.23);
 }
 
 .HomePage .icon {
