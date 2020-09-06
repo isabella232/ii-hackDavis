@@ -67,11 +67,11 @@ class HomePage extends Component {
             <div className={classes.HomePage}>
                 <div className={classes.section}>
                     <Grid container spacing={2} justify='center' alignItems='center'>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={5}>
                             <div className={classes.title}>Never Easier To Find An Interpreter</div>
                             <p>Need an indigenous interpreter? Just look for the language you need on our map and we will take care of the rest.</p>
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={7}>
                             <SlantedCard alt={'illustration'} src={"https://static.dribbble.com/users/355826/screenshots/6187414/image.png"} />
                         </Grid>
                     </Grid>
