@@ -33,6 +33,7 @@
 
 .NavBar .button {
   margin-right: 1rem;
+  align-self: center;
 }
 
 .NavBar .item:hover {
