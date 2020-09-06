@@ -8,7 +8,8 @@
 }
 
 .NavBar .logo {
-  margin: 0 1rem;
+  margin-top: 0.3rem;
+  margin-left: 0.8rem;
   font-size: 20px;
   font-weight: 500;
   align-self: center;
@@ -21,9 +22,8 @@
 }
 
 .NavBar .item {
-  margin-right: 1em;
+  margin-right: 1rem;
   font-size: 18px;
-  font-weight: 500;
   align-self: center;
   text-decoration: none;
   color: black;
@@ -32,7 +32,7 @@
 }
 
 .NavBar .button {
-  margin-right: 1em;
+  margin-right: 1rem;
 }
 
 .NavBar .item:hover {
@@ -40,9 +40,8 @@
 }
 
 .NavBar .activeItem {
-  margin-right: 1em;
+  margin-right: 1rem;
   font-size: 18px;
-  font-weight: 500;
   align-self: center;
   text-decoration: none;
   color: #03a0b5;
