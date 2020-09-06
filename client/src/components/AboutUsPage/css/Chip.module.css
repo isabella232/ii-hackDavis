@@ -1,0 +1,57 @@
+.RoundPaper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.RoundPaper .outer,
+.inner,
+.wrapper {
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+}
+
+.RoundPaper .outer {
+  margin-bottom: 0.5rem;
+  padding: 0.8rem;
+  background: rgb(119, 188, 197);
+  height: 132px;
+  width: 132px;
+}
+
+.RoundPaper .outer:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.16), 0 5px 15px rgba(0, 0, 0, 0.23);
+}
+
+.RoundPaper .inner {
+  padding: 0.6rem;
+  background: rgb(202, 237, 243);
+  height: 112px;
+  width: 112px;
+}
+
+.RoundPaper .inner:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.23);
+}
+
+.RoundPaper .wrapper {
+  height: 110px;
+  width: 110px;
+}
+
+.RoundPaper .wrapper:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.RoundPaper .name {
+  font-size: 22px;
+  line-height: 20px;
+}
+
+.RoundPaper .position {
+  font-size: 15px;
+  margin-bottom: 1rem;
+}

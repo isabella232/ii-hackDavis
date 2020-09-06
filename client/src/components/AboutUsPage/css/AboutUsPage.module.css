@@ -1,7 +1,13 @@
 .AboutUsPage {
+  padding-top: 2rem;
+  position: relative;
+}
+
+.AboutUsPage .avatarSection {
   margin: auto;
+  max-width: 800px;
   padding-top: 1rem;
-  /* max-width: 1000px; */
+  margin-top: 1.5rem;
 }
 
 .AboutUsPage .title {
@@ -9,10 +15,38 @@
   line-height: 30px;
   color: #027888;
   text-align: center;
+  margin-bottom: 1.5rem;
   -webkit-transition: color 0.2s ease-in-out;
   transition: color 0.2s ease-in-out;
 }
 
 .AboutUsPage .title:hover {
   color: rgb(39, 194, 214);
+}
+
+.AboutUsPage .bioSection {
+  margin: 1rem;
+}
+
+.AboutUsPage .bio {
+  margin: auto;
+  max-width: 800px;
+}
+
+.alert-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.alert-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.alert-exit {
+  opacity: 1;
+}
+.alert-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
 }

@@ -131,20 +131,9 @@ class AdminPage extends Component {
 
     componentDidMount() {
         this.loadCurrentWindow();
-
-        if (this.state.window === 0) {
-            this.loadEvents();
-            this.loadToReviews();
-            this.loadInfo();
-        } else if (this.state.window === 1) {
-            this.loadToReviews();
-            this.loadEvents();
-            this.loadInfo();
-        } else if (this.state.window === 2) {
-            this.loadInfo();
-            this.loadToReviews();
-            this.loadEvents();
-        }
+        this.loadEvents();
+        this.loadToReviews();
+        this.loadInfo();
     }
 
     switchWindow = (e, i) => {

@@ -2,7 +2,13 @@ import React from 'react';
 import classes from './css/Paper.module.css';
 
 const Paper = (props) => {
-    const classNamePaper = props.inverted ? classes.invertedPaper : classes.Paper;
+    let classNamePaper = classes.Paper;
+
+    if (props.inverted) {
+        classNamePaper = classes.invertedPaper;
+    } else if (props.bio) {
+        classNamePaper = classes.lightPaper;
+    }
 
     return <div className={classNamePaper}>{props.children}</div>;
 }
