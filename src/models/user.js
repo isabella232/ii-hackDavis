@@ -55,9 +55,10 @@ const userSchema = new mongoose.Schema({
 
 // checks that the user exists in database
 userSchema.statics.findByCredentials = async (email, password) => {
+    email = email.toLowerCase()
     const user = await User.findOne({ email })
     if (!user) throw new Error('No user found at ' + email)
-    if (!user.isOfficial) throw new Error('Account Not Verified. Please check your email. Please check your email.')
+    if (!user.isOfficial) throw new Error('This account is not verified. Please check your email.')
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) throw new Error('Incorrect password.')
