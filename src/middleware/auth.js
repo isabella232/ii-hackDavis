@@ -15,6 +15,8 @@ const auth = async (req, res, next) => {
             await user.clearAuthToken(refreshToken)
             await user.save()
             req.user = user
+        } else {
+            return res.status(401).send({ error: 'Failed To Authenticate User.' })
         }
 
         next()
