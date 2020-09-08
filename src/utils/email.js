@@ -13,7 +13,7 @@ const sendWelcomeEmail = async (email, name, id) => {
             from: process.env.HOST_EMAIL,
             subject: 'Welcome to Indigenous Interpreters!',
             // text: `Dear ${name},\n\n Welcome to Indigenous Interpreters! Please go to the attached link to verify your account.\n\n${process.env.PROD_FRONTEND_URL}/user/${id}/account/verify\n\nAgain, thank you for joining us.${signature}`
-            text: `Dear ${name},\n\n Welcome to Indigenous Interpreters! Please go to the attached link to verify your account.\n\n${process.env.FRONTEND_URL}/user/${id}/account/verify\n\nAgain, thank you for joining us.${signature}`
+            text: `Dear ${name},\n\nWelcome to Indigenous Interpreters! Please go to the attached link to verify your account.\n\n${process.env.FRONTEND_URL}/user/${id}/account/verify\n\nAgain, thank you for joining us.${signature}`
         }
         await sgMail.send(msg)
     } catch (error) {
@@ -27,7 +27,7 @@ const sendCertVerifyEmail = async (email, name, certTitle) => {
             to: email,
             from: process.env.HOST_EMAIL,
             subject: 'Your Certificate Has Been Verified!',
-            text: `Dear ${name},\n\n Your uploaded certificate ${certTitle} has been verified.${signature}`
+            text: `Dear ${name},\n\nYour uploaded certificate ${certTitle} has been verified.${signature}`
         }
         await sgMail.send(msg)
     } catch (error) {
@@ -42,7 +42,7 @@ const sendResetPasswordEmail = async (email, name, id) => {
             from: process.env.HOST_EMAIL,
             subject: 'Reset Your Account\'s Password.',
             // text: `Dear ${name},\n\n Please go to the attached link below to reset your password.\n\n${process.env.PROD_FRONTEND_URL}/user/${id}/password/reset${signature}`
-            text: `Dear ${name},\n\n Please go to the attached link below to reset your password.\n\n${process.env.FRONTEND_URL}/user/${id}/password/reset${signature}`
+            text: `Dear ${name},\n\nPlease go to the attached link below to reset your password.\n\n${process.env.FRONTEND_URL}/user/${id}/password/reset${signature}`
         }
         await sgMail.send(msg)
     } catch (error) {
@@ -56,7 +56,7 @@ const sendCertRejectEmail = async (email, name, certTitle) => {
             to: email,
             from: process.env.HOST_EMAIL,
             subject: 'Your Certificate Has Been Rejected.',
-            text: `Dear ${name},\n\n Your uploaded certificate ${certTitle} has been rejected. Please try again or contact us for more details.${signature}`
+            text: `Dear ${name},\n\nYour uploaded certificate ${certTitle} has been rejected. Please try again or contact us for more details.${signature}`
         }
         await sgMail.send(msg)
     } catch (error) {
@@ -70,7 +70,7 @@ const sendInterpreterVerifyEmail = async (email, name) => {
             to: email,
             from: process.env.HOST_EMAIL,
             subject: 'Your Account Has Been Verified!',
-            text: `Dear ${name},\n\n Your account has been verified. You now appear on the search for everyone to see.${signature}`
+            text: `Dear ${name},\n\nYour account has been verified. You now appear on the search for everyone to see.${signature}`
         }
         await sgMail.send(msg)
     } catch (error) {

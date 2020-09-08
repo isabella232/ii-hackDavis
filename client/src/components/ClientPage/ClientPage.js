@@ -110,6 +110,7 @@ class ClientPage extends Component {
                 .then(data => {
                     this.loadData();
                     this.unload();
+                    this.props.enqueueSnackbar("Success! Your profile has been updated.", { variant: 'success' });
                 }).catch(e => {
                     this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
@@ -134,8 +135,9 @@ class ClientPage extends Component {
             };
             updateUserPassword(data)
                 .then(data => {
-                    this.unload();
                     this.props.enqueueSnackbar("Success! Your password has been updated.", { variant: 'success' });
+                    this.setState({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
+                    this.unload();
                 }).catch(e => {
                     this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
@@ -183,14 +185,15 @@ class ClientPage extends Component {
         const eventWindow = events.length ? events
             : <div className={classes.noItems}>There Is No Event Coming Up.</div>;
 
-        const bookmarkWindow = <>
-            {this.state.bookmarks.map((bookmark, i) =>
-                <div key={`bookmark-${i}`}>
-                    <Bookmark name={bookmark.name} email={bookmark.email}
-                        languages={bookmark.languages} location={bookmark.location}
-                        phone={bookmark.phone} rating={bookmark.rating} />
-                </div>)}
-        </>
+        const bookmarkWindow = this.state.bookmarks.length ?
+            <>
+                {this.state.bookmarks.map((bookmark, i) =>
+                    <div key={`bookmark-${i}`}>
+                        <Bookmark name={bookmark.name} email={bookmark.email}
+                            languages={bookmark.languages} location={bookmark.location}
+                            phone={bookmark.phone} rating={bookmark.rating} />
+                    </div>)}
+            </> : <div className={classes.noItems}>You Have No Bookmarks.</div>;
 
         const updateWindow = <>
             <Grid container spacing={2} justify='center'>

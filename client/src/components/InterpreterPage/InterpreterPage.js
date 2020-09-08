@@ -202,8 +202,9 @@ class InterpreterPage extends Component {
             };
             updateUserPassword(data)
                 .then(data => {
-                    this.unload();
+                    this.setState({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
                     this.props.enqueueSnackbar("Success! Your password has been updated.", { variant: 'success' });
+                    this.unload();
                 }).catch(e => {
                     this.props.enqueueSnackbar(e.message, { variant: 'error' });
                     this.unload();
