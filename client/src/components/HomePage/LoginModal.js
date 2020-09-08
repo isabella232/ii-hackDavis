@@ -137,7 +137,7 @@ class LoginModal extends Component {
             <TextField label="Email"
                 name="email"
                 required
-                value={this.props.title}
+                value={this.state.email}
                 margin="dense"
                 fullWidth
                 variant="outlined"
@@ -181,7 +181,7 @@ class LoginModal extends Component {
             <TextField label="Email"
                 name="email"
                 required
-                value={this.props.title}
+                value={this.state.email}
                 margin="dense"
                 fullWidth
                 variant="outlined"
