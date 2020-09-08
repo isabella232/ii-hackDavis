@@ -18,7 +18,7 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 var corsOptions = {
-    origin: 'http://localhost:8000', // change to actual url later
+    origin: 'https://www.indigenousinterpreters.org',
     credentials: true,
 }
 
