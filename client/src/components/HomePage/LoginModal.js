@@ -106,6 +106,7 @@ class LoginModal extends Component {
             this.load();
             sendForgetPassword(this.state.email)
                 .then(data => {
+                    this.props.enqueueSnackbar(`Success! Your password has been reset.`, { variant: 'success' });
                     this.clearAllFields();
                     this.unload();
                     this.setState({ window: 0, open: false });

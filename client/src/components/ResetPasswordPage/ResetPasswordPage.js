@@ -13,6 +13,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Button from '../shared/Button';
+import Paper from '../shared/Paper';
 
 import { resetPassword } from '../../services/UserService';
 
@@ -75,12 +76,12 @@ class ResetPasswordPage extends Component {
 
     render() {
         return <div className={classes.ResetPasswordPage}>
-            <div className={classes.header}>
-                <div className={classes.title}>Reset Your Password</div>
-                {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
-            </div>
+            <Paper>
+                <div className={classes.header}>
+                    <div className={classes.title}>Reset Your Password</div>
+                    {this.state.loading ? <CircularProgress color="primary" size={25} /> : null}
+                </div>
 
-            <form encType="multipart/form-data">
                 <Grid container spacing={2} justify='center'>
                     <Grid item xs={6}>
                         <TextField label="Password"
@@ -119,7 +120,7 @@ class ResetPasswordPage extends Component {
                         <Button content={'Reset'} click={this.submitForm} />
                     </div>
                 </div>
-            </form>
+            </Paper>
         </div>
     }
 }

@@ -13,7 +13,7 @@ import InterpreterPage from '../components/InterpreterPage/InterpreterPage';
 import ClientPage from '../components/ClientPage/ClientPage';
 import AccountVerifyPage from '../components/AccountVerifyPage/AccountVerifyPage';
 import ResetPasswordPage from '../components/ResetPasswordPage/ResetPasswordPage';
-import PageNotFound from '../components/PageNotFound/PageNotFound';
+import NotFoundPage from '../components/NotFoundPage/NotFoundPage';
 
 import { withAuth } from '../components/HOC/withAuth';
 
@@ -33,7 +33,7 @@ const Page = () => {
           <Route path="/aboutus" exact component={AboutUsPage} />
           <Route path="/user/:id/account/verify" exact component={AccountVerifyPage} />
           <Route path="/user/:id/password/reset" exact component={ResetPasswordPage} />
-          <Route component={PageNotFound} />
+          <Route component={NotFoundPage} />
         </Switch>
       </main>
 
