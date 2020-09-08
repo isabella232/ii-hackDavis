@@ -48,7 +48,7 @@ class HomePage extends Component {
         newState.phrases[next].show = true;
         newState.nextPhrase = next;
         this.setState({ newState });
-        setTimeout(this.changePhrase, 30000);
+        setTimeout(this.changePhrase, 10000);
     }
 
     render() {
