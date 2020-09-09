@@ -22,10 +22,8 @@ export const signOut = async () => {
     try {
         const response = await auth.post(endpoint);
 
-        if (response.status === 200) {
-            localStorage.removeItem('userKind');
-            localStorage.removeItem('window');
-        }
+        localStorage.removeItem('userKind');
+        localStorage.removeItem('window');
 
         return response.data;
     } catch (e) {
@@ -98,10 +96,8 @@ export const deleteUser = async (email) => {
         const endpoint = `api/user/${email}/delete`;
         const response = await backend.post(endpoint);
 
-        if (response.status === 200) {
-            localStorage.removeItem('userKind');
-            localStorage.removeItem('window');
-        }
+        localStorage.removeItem('userKind');
+        localStorage.removeItem('window');
 
         return response.data;
 

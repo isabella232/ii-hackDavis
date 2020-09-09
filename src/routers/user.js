@@ -35,7 +35,7 @@ router.post('/api/user/logout', auth, async (req, res) => {
         const refreshToken = req.cookies.refreshToken
         await req.user.clearAuthToken(refreshToken)
         res = clearCookies(res)
-        res.send()
+        res.status(200).send()
     } catch (e) {
         console.log(e)
         res.status(500).send()
@@ -88,7 +88,7 @@ router.post('/api/user/:email/delete/', auth, async (req, res) => {
     try {
         await User.findOneAndRemove({ email: req.params.email })
         res = clearCookies(res)
-        res.send()
+        res.status(200).send()
     } catch (e) {
         console.log(e)
         res.status(500).send({ message: e.message })
