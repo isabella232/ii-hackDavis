@@ -16,13 +16,13 @@ const auth = async (req, res, next) => {
             await user.save()
             req.user = user
         } else {
-            return res.status(401).send({ error: 'Failed To Authenticate User.' })
+            throw new Error({ message: 'Failed To Authenticate User.' })
         }
 
         next()
     } catch (e) {
         console.log(e)
-        return res.status(401).send({ error: 'Failed To Authenticate User.' })
+        throw new Error({ message: 'Failed To Authenticate User.' })
     }
 }
 

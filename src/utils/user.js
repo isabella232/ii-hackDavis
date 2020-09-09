@@ -13,6 +13,7 @@ const validateToken = async (token) => {
         await jwt.verify(token, process.env.JWT_SECRET_KEY)
         return true
     } catch (e) {
+        console.log(e)
         return false
     }
 }

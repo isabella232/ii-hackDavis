@@ -95,9 +95,16 @@ export const resetPassword = async (id, password) => {
 
 export const deleteUser = async (email) => {
     try {
-        await signOut()
         const endpoint = `api/user/${email}/delete`;
-        return backend.post(endpoint);
+        const response = await backend.post(endpoint);
+
+        if (response.status === 200) {
+            localStorage.removeItem('userKind');
+            localStorage.removeItem('window');
+        }
+
+        return response.data;
+
     } catch (e) {
         throw e
     }

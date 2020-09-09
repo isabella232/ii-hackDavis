@@ -90,7 +90,8 @@ router.post('/api/user/:email/delete/', auth, async (req, res) => {
         res = clearCookies(res)
         res.send()
     } catch (e) {
-        res.status(500).send()
+        console.log(e)
+        res.status(500).send({ message: e.message })
     }
 })
 
