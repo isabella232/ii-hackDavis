@@ -18,9 +18,6 @@ const sendWelcomeEmail = async (email, name, id) => {
                 name: name,
                 link: `${process.env.FRONTEND_URL}/user/${id}/account/verify`
             }
-
-            // subject: 'Welcome to Indigenous Interpreters!',
-            // text: `Dear ${name},\n\nWelcome to Indigenous Interpreters! Please go to the attached link to verify your account.\n\n${process.env.FRONTEND_URL}/user/${id}/account/verify\n\nAgain, thank you for joining us.${signature}`
         }
         await sgMail.send(msg)
     } catch (error) {

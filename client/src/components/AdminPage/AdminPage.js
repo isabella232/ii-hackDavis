@@ -288,7 +288,9 @@ class AdminPage extends Component {
         deleteUser(this.state.email)
             .then(data => {
                 this.props.enqueueSnackbar("Your account has been deleted.", { variant: 'info' });
-                this.props.history.go(0);
+                setTimeout(() => {
+                    this.props.history.go(0);
+                }, 3000);
             }).catch(e => this.props.enqueueSnackbar("Your account cannot be deleted at this moment.", { variant: 'error' }))
     }
 

@@ -77,9 +77,9 @@ class LoginModal extends Component {
 
     submitForm = async () => {
         if (!this.state.email) {
-            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'info' });
         } else if (!this.state.password) {
-            this.props.enqueueSnackbar(`Please fill out your password.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please fill out your password.`, { variant: 'info' });
         } else {
             this.load();
             const data = {
@@ -101,7 +101,7 @@ class LoginModal extends Component {
 
     submitForgetPassword = async () => {
         if (!this.state.email) {
-            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'warning' });
+            this.props.enqueueSnackbar(`Please fill out your email.`, { variant: 'info' });
         } else {
             this.load();
             sendForgetPassword(this.state.email)

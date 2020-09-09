@@ -106,9 +106,15 @@ class AdminSignUpPage extends Component {
 
             signUpAdmin(data)
                 .then(data => {
+                    this.props.enqueueSnackbar(`Success! Please check your email for account verification.`, {
+                        variant: 'success',
+                        persist: true
+                    });
                     this.clearAllFields();
                     this.unload();
-                    this.props.history.push('/');
+                    setTimeout(() => {
+                        this.props.history.push('/');
+                    }, 10000);
                 })
                 .catch(e => {
                     this.props.enqueueSnackbar(e.message, { variant: 'error' })

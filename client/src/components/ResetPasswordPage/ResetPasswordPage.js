@@ -64,11 +64,14 @@ class ResetPasswordPage extends Component {
             resetPassword(id, this.state.password)
                 .then(data => {
                     this.clearAllFields();
-                    this.props.history.push('/');
                     this.unload();
+                    this.props.enqueueSnackbar('Success! Your password has been reset.', { variant: 'success' })
+                    setTimeout(() => {
+                        this.props.history.push('/');
+                    }, 3000);
                 })
                 .catch(e => {
-                    this.props.enqueueSnackbar('Your password cannot be reset at this time.', { variant: 'info' })
+                    this.props.enqueueSnackbar('Your password cannot be reset at this time.', { variant: 'error' })
                     this.unload();
                 })
         }
