@@ -2,7 +2,9 @@ const sgMail = require('@sendgrid/mail')
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// replace from email with an offical email
+templates = {
+    welcome: "d-02c66199ac6a4306b66e5635b239886b"
+}
 
 const signature = "\n\nFaithfully yours,\n\nThe Indigenous Interpreters Team."
 
@@ -11,9 +13,14 @@ const sendWelcomeEmail = async (email, name, id) => {
         const msg = {
             to: email,
             from: process.env.HOST_EMAIL,
-            subject: 'Welcome to Indigenous Interpreters!',
-            // text: `Dear ${name},\n\n Welcome to Indigenous Interpreters! Please go to the attached link to verify your account.\n\n${process.env.PROD_FRONTEND_URL}/user/${id}/account/verify\n\nAgain, thank you for joining us.${signature}`
-            text: `Dear ${name},\n\nWelcome to Indigenous Interpreters! Please go to the attached link to verify your account.\n\n${process.env.FRONTEND_URL}/user/${id}/account/verify\n\nAgain, thank you for joining us.${signature}`
+            templateID: templates.welcome,
+            dynamic_template_data: {
+                name: name,
+                link: `${process.env.FRONTEND_URL}/user/${id}/account/verify`
+            }
+
+            // subject: 'Welcome to Indigenous Interpreters!',
+            // text: `Dear ${name},\n\nWelcome to Indigenous Interpreters! Please go to the attached link to verify your account.\n\n${process.env.FRONTEND_URL}/user/${id}/account/verify\n\nAgain, thank you for joining us.${signature}`
         }
         await sgMail.send(msg)
     } catch (error) {
@@ -41,7 +48,6 @@ const sendResetPasswordEmail = async (email, name, id) => {
             to: email,
             from: process.env.HOST_EMAIL,
             subject: 'Reset Your Account\'s Password.',
-            // text: `Dear ${name},\n\n Please go to the attached link below to reset your password.\n\n${process.env.PROD_FRONTEND_URL}/user/${id}/password/reset${signature}`
             text: `Dear ${name},\n\nPlease go to the attached link below to reset your password.\n\n${process.env.FRONTEND_URL}/user/${id}/password/reset${signature}`
         }
         await sgMail.send(msg)
