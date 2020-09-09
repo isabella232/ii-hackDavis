@@ -13,7 +13,7 @@ const sendWelcomeEmail = async (email, name, id) => {
         const msg = {
             to: email,
             from: process.env.HOST_EMAIL,
-            templateID: templates.welcome,
+            templateId: templates.welcome,
             dynamic_template_data: {
                 name: name,
                 link: `${process.env.FRONTEND_URL}/user/${id}/account/verify`
