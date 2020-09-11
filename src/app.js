@@ -18,9 +18,9 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 var corsOptions = {
-    origin: 'https://www.indigenousinterpreters.org',
-    // origin: 'http://localhost:8000',
-    credentials: true,
+	origin: process.env.PROD_FRONTEND_URL,
+	// origin: process.env.DEV_FRONTEND_URL,
+	credentials: true,
 }
 
 app.use(cors(corsOptions))
@@ -45,9 +45,9 @@ app.use(express.static(publicDirectoryPath))
 app.use(express.static(path.join(__dirname, '../client/build')));
 // If no API routes are hit, send the React app
 app.use(function (req, res) {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+	res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 app.listen(PORT, () => {
-    console.log('Server is up on PORT', PORT)
+	console.log('Server is up on PORT', PORT)
 })

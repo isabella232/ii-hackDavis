@@ -1,105 +1,159 @@
-const sgMail = require('@sendgrid/mail')
+const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 templates = {
-    welcome: "d-02c66199ac6a4306b66e5635b239886b"
-}
+	clientToVerify: "d-02c66199ac6a4306b66e5635b239886b",
+	interpreterToVerify: "d-1099fc9175e645609f21c29f1038fd07",
+	adminToVerify: "d-bceb77d0028b4a57a9e31f98afd66970",
+	certVerified: "d-d2dabde3019a4d15aa3fbc960c1195ba",
+	certRejected: "d-c4ee65e548a44836a39d48a64e77005a",
+	resetPassword: "d-579f23e50d4e4be1b3dea4afed195f82",
+	interpreterVerified: "d-8d1882abd3cc4a6fa2d7eb0c5747c55f",
+	interpreterRejected: "d-6349dc440dc54b6381ef5ad3032e4644",
+};
 
-const signature = "\n\nFaithfully yours,\n\nThe Indigenous Interpreters Team."
+const sendClientToVerifyEmail = async (email, name, id) => {
+	try {
+		const msg = {
+			to: email,
+			from: process.env.HOST_EMAIL,
+			templateId: templates.clientToVerify,
+			dynamic_template_data: {
+				name: name,
+				link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
+			},
+		};
+		await sgMail.send(msg);
+	} catch (error) {
+		throw error;
+	}
+};
 
-const sendWelcomeEmail = async (email, name, id) => {
-    try {
-        const msg = {
-            to: email,
-            from: process.env.HOST_EMAIL,
-            templateId: templates.welcome,
-            dynamic_template_data: {
-                name: name,
-                link: `${process.env.FRONTEND_URL}/user/${id}/account/verify`
-            }
-        }
-        await sgMail.send(msg)
-    } catch (error) {
-        throw error
-    }
-}
+const sendInterpreterToVerifyEmail = async (email, name, id) => {
+	try {
+		const msg = {
+			to: email,
+			from: process.env.HOST_EMAIL,
+			templateId: templates.interpreterToVerify,
+			dynamic_template_data: {
+				name: name,
+				link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
+			},
+		};
+		await sgMail.send(msg);
+	} catch (error) {
+		throw error;
+	}
+};
 
-const sendCertVerifyEmail = async (email, name, certTitle) => {
-    try {
-        const msg = {
-            to: email,
-            from: process.env.HOST_EMAIL,
-            subject: 'Your Certificate Has Been Verified!',
-            text: `Dear ${name},\n\nYour uploaded certificate ${certTitle} has been verified.${signature}`
-        }
-        await sgMail.send(msg)
-    } catch (error) {
-        throw error
-    }
-}
+const sendAdminToVerifyEmail = async (email, name, id) => {
+	try {
+		const msg = {
+			to: email,
+			from: process.env.HOST_EMAIL,
+			templateId: templates.adminToVerify,
+			dynamic_template_data: {
+				name: name,
+				link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
+			},
+		};
+		await sgMail.send(msg);
+	} catch (error) {
+		throw error;
+	}
+};
+
+const sendInterpreterVerifiedEmail = async (email, name) => {
+	try {
+		const msg = {
+			to: email,
+			from: process.env.HOST_EMAIL,
+			templateId: templates.interpreterVerified,
+			dynamic_template_data: {
+				name: name,
+			},
+		};
+		await sgMail.send(msg);
+	} catch (error) {
+		throw error;
+	}
+};
+
+const sendInterpreterRejectedEmail = async (email, name) => {
+	try {
+		const msg = {
+			to: email,
+			from: process.env.HOST_EMAIL,
+			templateId: templates.interpreterRejected,
+			dynamic_template_data: {
+				name: name,
+			},
+		};
+		await sgMail.send(msg);
+	} catch (error) {
+		throw error;
+	}
+};
+
+const sendCertVerifiedEmail = async (email, name, certTitle) => {
+	try {
+		const msg = {
+			to: email,
+			from: process.env.HOST_EMAIL,
+			templateId: templates.certVerified,
+			dynamic_template_data: {
+				name: name,
+				certTitle: certTitle,
+			},
+		};
+		await sgMail.send(msg);
+	} catch (error) {
+		throw error;
+	}
+};
+
+const sendCertRejectedEmail = async (email, name, certTitle) => {
+	try {
+		const msg = {
+			to: email,
+			from: process.env.HOST_EMAIL,
+			templateId: templates.certRejected,
+			dynamic_template_data: {
+				name: name,
+				certTitle: certTitle,
+			},
+		};
+		await sgMail.send(msg);
+	} catch (error) {
+		throw error;
+	}
+};
 
 const sendResetPasswordEmail = async (email, name, id) => {
-    try {
-        const msg = {
-            to: email,
-            from: process.env.HOST_EMAIL,
-            subject: 'Reset Your Account\'s Password.',
-            text: `Dear ${name},\n\nPlease go to the attached link below to reset your password.\n\n${process.env.FRONTEND_URL}/user/${id}/password/reset${signature}`
-        }
-        await sgMail.send(msg)
-    } catch (error) {
-        throw error
-    }
-}
-
-const sendCertRejectEmail = async (email, name, certTitle) => {
-    try {
-        const msg = {
-            to: email,
-            from: process.env.HOST_EMAIL,
-            subject: 'Your Certificate Has Been Rejected.',
-            text: `Dear ${name},\n\nYour uploaded certificate ${certTitle} has been rejected. Please try again or contact us for more details.${signature}`
-        }
-        await sgMail.send(msg)
-    } catch (error) {
-        throw error
-    }
-}
-
-const sendInterpreterVerifyEmail = async (email, name) => {
-    try {
-        const msg = {
-            to: email,
-            from: process.env.HOST_EMAIL,
-            subject: 'Your Account Has Been Verified!',
-            text: `Dear ${name},\n\nYour account has been verified. You now appear on the search for everyone to see.${signature}`
-        }
-        await sgMail.send(msg)
-    } catch (error) {
-        throw error
-    }
-}
-
-const sendInterpreterRejectEmail = async (email, name) => {
-    try {
-        const msg = {
-            to: email,
-            from: process.env.HOST_EMAIL,
-            subject: 'Your Account Has Been Rejected.',
-            text: `Dear ${name},\n\nYour account has been rejected. You will not appear on the search for everyone to see at the moment. Please try again or contact us for more details.${signature}`
-        }
-        await sgMail.send(msg)
-    } catch (error) {
-        throw error
-    }
-}
+	try {
+		const msg = {
+			to: email,
+			from: process.env.HOST_EMAIL,
+			templateId: templates.resetPassword,
+			dynamic_template_data: {
+				name: name,
+				link: `${process.env.DEV_FRONTEND_URL}/user/${id}/password/reset`,
+			},
+		};
+		await sgMail.send(msg);
+	} catch (error) {
+		throw error;
+	}
+};
 
 module.exports = {
-    sendWelcomeEmail,
-    sendCertVerifyEmail,
-    sendCertRejectEmail,
-    sendInterpreterVerifyEmail,
-    sendInterpreterRejectEmail,
-    sendResetPasswordEmail
-}
+	sendClientToVerifyEmail,
+	sendAdminToVerifyEmail,
+	sendInterpreterToVerifyEmail,
+	sendCertVerifiedEmail,
+	sendCertRejectedEmail,
+	sendInterpreterVerifiedEmail,
+	sendInterpreterRejectedEmail,
+	sendResetPasswordEmail,
+};
