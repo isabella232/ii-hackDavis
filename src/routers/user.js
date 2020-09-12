@@ -6,7 +6,7 @@ const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
 const { setCookies, clearCookies } = require('../utils/user')
 const { imgUploader, getAvatarURL } = require('../utils/image')
-const { sendResetPasswordEmail } = require('../utils/email')
+const { sendResetPasswordPromptEmail } = require('../utils/email')
 
 const router = new express.Router()
 
@@ -153,7 +153,7 @@ router.patch('/api/user/updatePassword', auth, async (req, res) => {
 router.post('/api/user/:email/forgetPassword', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.params.email })
-        await sendResetPasswordEmail(user.email, user.name, user._id.toString())
+        await sendResetPasswordPromptEmail(user.email, user.name, user._id.toString())
         res.send()
     } catch (e) {
         console.log(e)

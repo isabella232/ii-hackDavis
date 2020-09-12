@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   color: white;
+  margin-top: 0.3rem;
 }
 
 .RoundPaper .outer,
@@ -15,7 +16,7 @@
 }
 
 .RoundPaper .outer {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   padding: 0.8rem;
   background: rgb(119, 188, 197);
   height: 132px;
@@ -47,11 +48,11 @@
 }
 
 .RoundPaper .name {
-  font-size: 22px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 25px;
+  transition: text-shadow 0.3s;
 }
 
-.RoundPaper .position {
-  font-size: 15px;
-  margin-bottom: 1rem;
+.RoundPaper .name:hover {
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.16), 0 6px 18px rgba(0, 0, 0, 0.23);
 }
