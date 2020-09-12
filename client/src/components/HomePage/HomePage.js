@@ -7,23 +7,30 @@ import IconButton from '@material-ui/core/IconButton';
 import MailIcon from '@material-ui/icons/Mail';
 import InstagramIcon from '@material-ui/icons/Instagram';
 
-import Avatar from '../shared/Avatar';
 import SlantedCard from './SlantedCard';
 import PreviewCard from './PreviewCard';
 
 import { fetchHome } from '../../services/HomeService';
 
+import group from '../../assets/group.jpg';
+
 class HomePage extends Component {
     constructor() {
         super();
         this.state = {
-            quote: {},
             interpreters: [],
+            quotes: [{ show: false, next: 1 },
+            { show: false, next: 2 },
+            { show: false, next: 3 },
+            { show: false, next: 4 },
+            { show: false, next: 5 },
+            { show: false, next: 0 }],
+            nextQuote: Math.floor(Math.random() * 6),
             phrases: [{ show: false, next: 1 },
             { show: false, next: 2 },
             { show: false, next: 3 },
             { show: false, next: 0 }],
-            nextPhrase: Math.floor(Math.random() * 4)
+            nextPhrase: Math.floor(Math.random() * 4),
         }
     }
 
@@ -31,7 +38,6 @@ class HomePage extends Component {
         fetchHome()
             .then(data => {
                 this.setState({
-                    quote: data.quote,
                     interpreters: data.interpreters
                 })
             })
@@ -44,11 +50,15 @@ class HomePage extends Component {
     changePhrase = () => {
         const newState = this.state;
         newState.phrases[this.state.nextPhrase].show = false;
+        newState.quotes[this.state.nextQuote].show = false;
         const next = this.state.phrases[this.state.nextPhrase].next;
+        const nextQ = this.state.quotes[this.state.nextQuote].next;
         newState.phrases[next].show = true;
+        newState.quotes[nextQ].show = true;
         newState.nextPhrase = next;
+        newState.nextQuote = nextQ;
         this.setState({ newState });
-        setTimeout(this.changePhrase, 10000);
+        setTimeout(this.changePhrase, 5000);
     }
 
     render() {
@@ -72,29 +82,50 @@ class HomePage extends Component {
                             <p>Need an indigenous interpreter? Just look for the language you need on our map and we will take care of the rest.</p>
                         </Grid>
                         <Grid item xs={12} sm={7}>
-                            <SlantedCard alt={'illustration'} src={"https://static.dribbble.com/users/355826/screenshots/6187414/image.png"} />
+                            <SlantedCard alt={'illustration'} src={group} />
                         </Grid>
                     </Grid>
                 </div>
 
-                {this.state.quote ?
-                    <div className={classes.invertedSection}>
-                        <div className={classes.quote}>
-                            "{this.state.quote.quote}"
-                        </div>
-                        <div className={classes.author}>
-                            <Avatar name={this.state.quote.authorName} avatar={this.state.quote.avatar} size={7} />
 
-                            <div>
-                                <div className={classes.infoItem}>
-                                    <strong>{this.state.quote.authorName}</strong>
-                                </div>
-                                <div className={classes.infoItem}>
-                                    {this.state.quote.location}
-                                </div>
+                <div className={classes.invertedSection}>
+                    {this.state.quotes[0].show ?
+                        <Grow in={this.state.quotes[0].show}>
+                            <div className={classes.centeredQuote}>
+                                Bringing the skills for you to better communicate in the comfort of your native language
                             </div>
-                        </div>
-                    </div> : null}
+                        </Grow> : null}
+                    {this.state.quotes[1].show ?
+                        <Grow in={this.state.quotes[1].show}>
+                            <div className={classes.centeredQuote}>
+                                As members of monolingual indifenous communities, we understand your struggles
+                            </div>
+                        </Grow> : null}
+                    {this.state.quotes[2].show ?
+                        <Grow in={this.state.quotes[2].show}>
+                            <div className={classes.centeredQuote}>
+                                Doctors are your life savers, lawyers are your advocates, we translators and interpreters are your voice
+                            </div>
+                        </Grow> : null}
+                    {this.state.quotes[3].show ?
+                        <Grow in={this.state.quotes[3].show}>
+                            <div className={classes.centeredQuote}>
+                                An indigenous interpreter is a bridge that connects with their community to meet their needs
+                            </div>
+                        </Grow> : null}
+                    {this.state.quotes[4].show ?
+                        <Grow in={this.state.quotes[4].show}>
+                            <div className={classes.centeredQuote}>
+                                A strong woman is soft and powerful
+                            </div>
+                        </Grow> : null}
+                    {this.state.quotes[5].show ?
+                        <Grow in={this.state.quotes[5].show}>
+                            <div className={classes.centeredQuote}>
+                                Our voice, is your voice. We provide equitable interpretation to make sure you all get heard!
+                            </div>
+                        </Grow> : null}
+                </div>
 
                 <div className={classes.previewSection}>
                     <div className={classes.previewHeader}>
@@ -102,7 +133,7 @@ class HomePage extends Component {
                         <div>You can look up interpreters by name, languages, location...</div>
                     </div>
                     <div className={classes.previewArea}>
-                        {previews}
+                        {previews ? previews : null}
                     </div>
                 </div>
 
