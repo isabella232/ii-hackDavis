@@ -7,6 +7,7 @@ import damaso from '../../assets/damaso.jpg';
 import leonor from '../../assets/leonor.jpg';
 import linda from '../../assets/linda.png';
 import luis from '../../assets/luis.jpg';
+import martin from '../../assets/martin.jpg';
 import rocio from '../../assets/rocio.jpg';
 
 import Grid from '@material-ui/core/Grid/Grid';
@@ -35,8 +36,6 @@ class AboutUsPage extends Component {
         this.state = {
             curBio: 0,
             show: true,
-            bios: ["Alejandra Matias Ramos was born in Todos Santos, Guatemala to indigenous Mam parents. In 2004, her family migrated to the United States due to the increase in violence and poverty in their motherland and eventually set their roots in Oakland, CA.  Alejandra is currently pursuing a Public Health Bachelor's degree from UC Merced.  Since a young age, Alejandra has played the role of an informal interpreter between her community and service providers.  Now, as a trained indigenous interpreter, she seeks to be the bridge between service providers and indigneous monolingual speakers, with a focus on providing services for medical health providers and their clients.", ''],
-            bioNames: ['', '']
         }
 
         this.changeBio = this.changeBio.bind(this);
@@ -126,7 +125,7 @@ class AboutUsPage extends Component {
 
                                     <Grid item xs={4} sm={4}>
                                         <Chip name={"Martin Pablo"} index={5} click={this.changeBio}
-                                            avatar={"https://static.dribbble.com/users/744745/screenshots/5916538/new_profile_pic.jpg"} />
+                                            avatar={martin} />
                                     </Grid>
 
                                     <Grid item xs={4} sm={4}>

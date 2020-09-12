@@ -1,6 +1,6 @@
 const express = require('express')
 const Interpreter = require('../models/interpreter')
-const { fetchQuote } = require('../utils/homeData')
+const { fetchQuote } = require('../utils/homeData.js')
 
 const router = new express.Router()
 
