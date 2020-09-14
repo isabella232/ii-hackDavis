@@ -12,13 +12,10 @@ const checkAuthentication = async () => {
     const endpoint = `api/user/authenticate`;
     try {
         const response = await auth.post(endpoint);
-        if (!response.data.isLoggedIn) {
-            localStorage.removeItem('userKind');
-            appStore.dispatch({ type: 'LOGOUT' });
-        } else {
-            localStorage.setItem('userKind', response.data.userKind);
-        }
+        localStorage.setItem('userKind', response.data.userKind);
     } catch (e) {
+        localStorage.removeItem('userKind');
+        appStore.dispatch({ type: 'LOGOUT' });
     }
 }
 checkAuthentication();
