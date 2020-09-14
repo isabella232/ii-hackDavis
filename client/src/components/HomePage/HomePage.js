@@ -50,7 +50,6 @@ class HomePage extends Component {
 
     changePhrase = () => {
         const newState = this.state;
-        console.log(newState)
         newState.phrases[this.state.nextPhrase].show = false;
         const next = this.state.phrases[this.state.nextPhrase].next;
         newState.phrases[next].show = true;

@@ -19,7 +19,6 @@ const checkAuthentication = async () => {
             localStorage.setItem('userKind', response.data.userKind);
         }
     } catch (e) {
-        console.log(e);
     }
 }
 checkAuthentication();
