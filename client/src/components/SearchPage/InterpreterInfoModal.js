@@ -72,6 +72,10 @@ class InterpreterInfoModal extends Component {
         }
     }
 
+    expandDetailsWhenLoggedOut = () => {
+        this.openModal();
+    }
+
     reloadDetails = () => {
         this.fetchDetails();
     }
@@ -155,9 +159,7 @@ class InterpreterInfoModal extends Component {
 
         return (
             <div>
-                {this.props.isLoggedIn ?
-                    <div className={classes.moreInfo} onClick={this.expandDetails}>more info</div>
-                    : null}
+                <div className={classes.moreInfo} onClick={this.props.isLoggedIn ? this.expandDetails : this.expandDetailsWhenLoggedOut}>more info</div>
 
                 <Modal className={classes.Modal}
                     open={this.state.open}
@@ -166,77 +168,84 @@ class InterpreterInfoModal extends Component {
                     BackdropProps={{ timeout: 200 }}>
                     <Fade in={this.state.open}>
                         <div className={classes.infoCard}>
-                            <Grid container spacing={2} justify='center'>
-                                <Grid item xs={5} sm={5}>
-                                    <div className={classes.avatar}>
-                                        <img src={this.props.avatar} width='100%' alt={`avatar-${this.props.id}`} />
-                                    </div>
-                                </Grid>
-
-                                <Grid item xs={7} sm={7}>
-                                    <div className={classes.name}>
-                                        {this.props.name}
-                                        {icon}
-                                    </div>
-                                    <div className={classes.infoItem}>
-                                        <Rating className={classes.rating}
-                                            value={this.state.rating} readOnly />
-                                    </div>
-                                    <div className={classes.infoSection}>
-                                        <div className={classes.infoItem}>
-                                            <div className={classes.infoTitle}>Email</div>
-                                            {this.props.email}
-                                        </div>
-                                        <div className={classes.infoItem}>
-                                            <div className={classes.infoTitle}>Phone Number</div>
-                                            {this.props.phone}
-                                        </div>
-                                        <div className={classes.infoItem}>
-                                            <div className={classes.infoTitle}>Location</div>
-                                            {this.props.location}
-                                        </div>
-                                        <div className={classes.mtlInfoItem}>
-                                            <div className={classes.infoTitle}>Services</div>
-                                            <div className={classes.mtlContent}>{services}</div>
-                                        </div>
-                                        <div className={classes.mtlInfoItem}>
-                                            <div className={classes.infoTitle}>Language (Fluency)
-                                            <span className={classes.scale}> *scale of 1-5</span>
+                            {this.props.isLoggedIn ?
+                                (<div>
+                                    <Grid container spacing={2} justify='center'>
+                                        <Grid item xs={5} sm={5}>
+                                            <div className={classes.avatar}>
+                                                <img src={this.props.avatar} width='100%' alt={`avatar-${this.props.id}`} />
                                             </div>
-                                            <div className={classes.mtlContent}>{languages}</div>
-                                        </div>
-                                        <div className={classes.mtlInfoItem}>
-                                            <div className={classes.infoTitle}>Summary</div>
-                                            <div className={classes.mtlContent}>{this.props.summary}</div>
-                                        </div>
-                                    </div>
-                                </Grid>
-                            </Grid>
+                                        </Grid>
 
-                            <div className={classes.horzLine} />
+                                        <Grid item xs={7} sm={7}>
+                                            <div className={classes.name}>
+                                                {this.props.name}
+                                                {icon}
+                                            </div>
+                                            <div className={classes.infoItem}>
+                                                <Rating className={classes.rating}
+                                                    value={this.state.rating} readOnly />
+                                            </div>
+                                            <div className={classes.infoSection}>
+                                                <div className={classes.infoItem}>
+                                                    <div className={classes.infoTitle}>Email</div>
+                                                    {this.props.email}
+                                                </div>
+                                                <div className={classes.infoItem}>
+                                                    <div className={classes.infoTitle}>Phone Number</div>
+                                                    {this.props.phone}
+                                                </div>
+                                                <div className={classes.infoItem}>
+                                                    <div className={classes.infoTitle}>Location</div>
+                                                    {this.props.location}
+                                                </div>
+                                                <div className={classes.mtlInfoItem}>
+                                                    <div className={classes.infoTitle}>Services</div>
+                                                    <div className={classes.mtlContent}>{services}</div>
+                                                </div>
+                                                <div className={classes.mtlInfoItem}>
+                                                    <div className={classes.infoTitle}>Language (Fluency)
+                                            <span className={classes.scale}> *scale of 1-5</span>
+                                                    </div>
+                                                    <div className={classes.mtlContent}>{languages}</div>
+                                                </div>
+                                                <div className={classes.mtlInfoItem}>
+                                                    <div className={classes.infoTitle}>Summary</div>
+                                                    <div className={classes.mtlContent}>{this.props.summary}</div>
+                                                </div>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
 
-                            <Grid container spacing={2} justify='center'>
-                                <Grid item xs={6}>
-                                    <div className={classes.title}>Certifications:
+                                    <div className={classes.horzLine} />
+
+                                    <Grid container spacing={2} justify='center'>
+                                        <Grid item xs={6}>
+                                            <div className={classes.title}>Certifications:
                                         <div className={classes.halfArea}>{certifications}</div>
+                                            </div>
+                                        </Grid>
+
+                                        <Grid item xs={6}>
+                                            <div className={classes.title}>
+                                                Reviews:
+                                                <div className={classes.halfArea}>{reviews}</div>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+
+                                    <div className={classes.buttons}>
+                                        {this.props.userKind === 'Client' ?
+                                            <Button content={'Bookmark'} click={this.bookmark} /> : null}
+                                        {this.props.userKind === 'Admin' ? button : null}
+                                        <ReviewModal id={this.state.id} name={this.state.name} reloadDetails={this.reloadDetails} />
                                     </div>
-                                </Grid>
 
-                                <Grid item xs={6}>
-                                    <div className={classes.title}>Reviews:
-                                        <div className={classes.halfArea}>{reviews}</div>
-                                    </div>
-                                </Grid>
-                            </Grid>
-
-                            <div className={classes.buttons}>
-                                {this.props.userKind === 'Client' ?
-                                    <Button content={'Bookmark'} click={this.bookmark} /> : null}
-                                {this.props.userKind === 'Admin' ? button : null}
-                                <ReviewModal id={this.state.id} name={this.state.name} reloadDetails={this.reloadDetails} />
-                            </div>
-
-                            <LoadCircle open={this.state.loading} />
+                                    <LoadCircle open={this.state.loading} />
+                                </div>) :
+                                (<div className={classes.prompt}>
+                                    Please sign up or log in to see more about interpreters' ratings!
+                                </div>)}
                         </div>
                     </Fade>
                 </Modal>
