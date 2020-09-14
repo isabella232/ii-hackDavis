@@ -23,7 +23,8 @@ const sendClientToVerifyEmail = async (email, name, id) => {
 			templateId: templates.clientToVerify,
 			dynamic_template_data: {
 				name: name,
-				link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
+				link: `${process.env.PROD_FRONTEND_URL}/user/${id}/account/verify`,
+				// link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
 			},
 		};
 		await sgMail.send(msg);
@@ -40,7 +41,8 @@ const sendInterpreterToVerifyEmail = async (email, name, id) => {
 			templateId: templates.interpreterToVerify,
 			dynamic_template_data: {
 				name: name,
-				link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
+				link: `${process.env.PROD_FRONTEND_URL}/user/${id}/account/verify`,
+				// link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
 			},
 		};
 		await sgMail.send(msg);
@@ -57,7 +59,8 @@ const sendAdminToVerifyEmail = async (email, name, id) => {
 			templateId: templates.adminToVerify,
 			dynamic_template_data: {
 				name: name,
-				link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
+				link: `${process.env.PROD_FRONTEND_URL}/user/${id}/account/verify`,
+				// link: `${process.env.DEV_FRONTEND_URL}/user/${id}/account/verify`,
 			},
 		};
 		await sgMail.send(msg);
@@ -140,7 +143,8 @@ const sendResetPasswordPromptEmail = async (email, name, id) => {
 			templateId: templates.resetPassword,
 			dynamic_template_data: {
 				name: name,
-				link: `${process.env.DEV_FRONTEND_URL}/user/${id}/password/reset`,
+				link: `${process.env.PROD_FRONTEND_URL}/user/${id}/password/reset`,
+				// link: `${process.env.DEV_FRONTEND_URL}/user/${id}/password/reset`,
 			},
 		};
 		await sgMail.send(msg);

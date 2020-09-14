@@ -6,7 +6,7 @@ const auth = require('../middleware/auth')
 const bodyParser = require('body-parser')
 const { setCookies, clearCookies } = require('../utils/user')
 const { imgUploader, getAvatarURL } = require('../utils/image')
-const { sendResetPasswordPromptEmail } = require('../utils/email')
+const { sendResetPasswordPromptEmail, sendResetPasswordConfirmEmail, sendUserVerifiedEmail } = require('../utils/email')
 
 const router = new express.Router()
 
@@ -47,6 +47,7 @@ router.post('/api/user/:id/verifyAccount', async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate({ _id: req.params.id }, { isOfficial: true })
         await user.save()
+        await sendUserVerifiedEmail(user.email, user.name)
         res.send()
     } catch (e) {
         console.log(e)
@@ -167,6 +168,7 @@ router.patch('/api/user/:id/resetPassword', async (req, res) => {
         const user = await User.findById({ _id: req.params.id })
         user.password = req.body.password
         await user.save()
+        await sendResetPasswordConfirmEmail(user.email, user.name)
         res.send()
     } catch (e) {
         console.log(e)
