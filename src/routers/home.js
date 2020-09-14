@@ -1,12 +1,10 @@
 const express = require('express')
 const Interpreter = require('../models/interpreter')
-const { fetchQuote } = require('../utils/homeData')
 
 const router = new express.Router()
 
 router.get('/api/home', async (req, res) => {
     try {
-        const quote = fetchQuote()
         const interpreters = await Interpreter.aggregate([
             {
                 $match: {
@@ -33,7 +31,6 @@ router.get('/api/home', async (req, res) => {
 
         res.send({
             interpreters: parsedInterpreters,
-            quote: quote
         })
     } catch (error) {
         console.log(error)

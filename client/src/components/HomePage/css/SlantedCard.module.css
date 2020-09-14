@@ -10,11 +10,11 @@
 .SlantedCard .shape {
   overflow: hidden;
   background: #4787c9;
-  max-width: 420px;
+  max-width: 350px;
   width: 100%;
   height: 300px;
   border-radius: 30px;
-  transform: skewX(-3deg) skewY(-3deg); /*Shorthand: skew(-5deg, -5deg);*/
+  transform: skewX(-3deg) skewY(-3deg); /*Shorthand: skew(-5deg, -5deg); */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -29,7 +29,7 @@
 
 .SlantedCard .customerPicture img {
   height: 100%;
-  transform: skewX(3deg) skewY(3deg) scale(1.15); /*Shorthand: skew(5deg, 5deg) scale(1.15);*/
+  transform: skewX(3deg) skewY(3deg) scale(1.22) translateX(20px) translateY(17px); /*Shorthand: skew(5deg, 5deg) scale(1.15);*/
 }
 
 .SlantedCard .shapeShadow {

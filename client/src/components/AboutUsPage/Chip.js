@@ -15,7 +15,6 @@ const RoundPaper = (props) => {
             </div>
         </div>
         <div className={classes.name}>{props.name}</div>
-        <div className={classes.position}>CEO</div>
     </div>;
 }
 
