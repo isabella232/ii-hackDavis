@@ -8,19 +8,19 @@
 }
 
 .HomePage .infoSection {
-  margin: 2rem auto;
+  margin: 1.5rem auto;
   max-width: 1200px;
   text-align: center;
 }
 
 .HomePage .previewSection {
-  margin: 2rem auto;
+  margin: 1.5rem auto;
   max-width: 1000px;
 }
 
 .HomePage .invertedSection {
   margin: 0 -6%;
-  padding: 5% 10%;
+  padding: 5% 5%;
   background: #03a0b5;
   color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -36,7 +36,7 @@
 }
 
 .HomePage .title {
-  font-size: 30px;
+  font-size: 28px;
   line-height: 30px;
   color: #027888;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -54,13 +54,11 @@
 }
 
 .HomePage .quote {
-  font-size: 32px;
-  line-height: 35px;
+  font-size: 30px;
 }
 
 .HomePage .centeredQuote {
   font-size: 25px;
-  line-height: 35px;
   text-align: center;
 }
 

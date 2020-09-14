@@ -83,17 +83,16 @@ class HomePage extends Component {
         return (
             <div className={classes.HomePage}>
                 <div className={classes.section}>
-                    <Grid container spacing={2} justify='center' alignItems='center'>
-                        <Grid item xs={12} sm={5}>
+                    <Grid container spacing={0} justify='center' alignItems='center'>
+                        <Grid item xs={12} sm={5} md={6}>
                             <div className={classes.title}>Never Easier To Find An Interpreter</div>
                             <p>Need an indigenous interpreter? Just look for the language you need on our map and we will take care of the rest.</p>
                         </Grid>
-                        <Grid item xs={12} sm={7}>
+                        <Grid item xs={12} sm={7} md={6}>
                             <SlantedCard alt={'illustration'} src={group} />
                         </Grid>
                     </Grid>
                 </div>
-
 
                 <div className={classes.invertedSection}>
                     {this.state.quotes[0].show ?
@@ -129,7 +128,7 @@ class HomePage extends Component {
                     {this.state.quotes[5].show ?
                         <Grow in={this.state.quotes[5].show}>
                             <div className={classes.centeredQuote}>
-                                "Our voice, is your voice. We provide equitable interpretation to make sure you all get heard!"
+                                "Our voice is your voice. We provide equitable interpretation to make sure you all get heard!"
                             </div>
                         </Grow> : null}
                 </div>
