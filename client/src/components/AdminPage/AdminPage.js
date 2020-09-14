@@ -99,7 +99,6 @@ class AdminPage extends Component {
         this.load();
         fetchToReviews()
             .then(data => {
-                console.log(data)
                 this.setState({
                     interpreters: data
                 });

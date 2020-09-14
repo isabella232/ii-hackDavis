@@ -58,7 +58,6 @@ class EventModal extends Component {
 
     changeTarget = (e) => {
         e.preventDefault();
-        console.log(e.target.value);
         this.setState({ target: e.target.value });
     }
 

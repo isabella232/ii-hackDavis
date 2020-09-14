@@ -99,7 +99,6 @@ router.post('/api/user/:email/delete/', auth, async (req, res) => {
 // delete interpreter's account
 router.post('/api/interpreter/:email/delete/', auth, async (req, res) => {
     try {
-        console.log(req.params.email)
         await User.findOneAndRemove({ email: req.params.email })
         res.send()
     } catch (e) {
