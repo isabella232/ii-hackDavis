@@ -45,20 +45,28 @@ class HomePage extends Component {
                 console.log(error);
             })
         this.changePhrase();
+        this.changeQuote();
     }
 
     changePhrase = () => {
         const newState = this.state;
+        console.log(newState)
         newState.phrases[this.state.nextPhrase].show = false;
-        newState.quotes[this.state.nextQuote].show = false;
         const next = this.state.phrases[this.state.nextPhrase].next;
-        const nextQ = this.state.quotes[this.state.nextQuote].next;
         newState.phrases[next].show = true;
-        newState.quotes[nextQ].show = true;
         newState.nextPhrase = next;
-        newState.nextQuote = nextQ;
         this.setState({ newState });
-        setTimeout(this.changePhrase, 5000);
+        setTimeout(this.changePhrase, 10000);
+    }
+
+    changeQuote = () => {
+        const newState = this.state;
+        newState.quotes[this.state.nextQuote].show = false;
+        const next = this.state.quotes[this.state.nextQuote].next;
+        newState.quotes[next].show = true;
+        newState.nextQuote = next;
+        this.setState({ newState });
+        setTimeout(this.changeQuote, 15000);
     }
 
     render() {
@@ -92,37 +100,37 @@ class HomePage extends Component {
                     {this.state.quotes[0].show ?
                         <Grow in={this.state.quotes[0].show}>
                             <div className={classes.centeredQuote}>
-                                Bringing the skills for you to better communicate in the comfort of your native language
+                                "Bringing the skills for you to better communicate in the comfort of your native language."
                             </div>
                         </Grow> : null}
                     {this.state.quotes[1].show ?
                         <Grow in={this.state.quotes[1].show}>
                             <div className={classes.centeredQuote}>
-                                As members of monolingual indifenous communities, we understand your struggles
+                                "As members of monolingual indifenous communities, we understand your struggles."
                             </div>
                         </Grow> : null}
                     {this.state.quotes[2].show ?
                         <Grow in={this.state.quotes[2].show}>
                             <div className={classes.centeredQuote}>
-                                Doctors are your life savers, lawyers are your advocates, we translators and interpreters are your voice
+                                "Doctors are your life savers, lawyers are your advocates, we translators and interpreters are your voice."
                             </div>
                         </Grow> : null}
                     {this.state.quotes[3].show ?
                         <Grow in={this.state.quotes[3].show}>
                             <div className={classes.centeredQuote}>
-                                An indigenous interpreter is a bridge that connects with their community to meet their needs
+                                "An indigenous interpreter is a bridge that connects with their community to meet their needs."
                             </div>
                         </Grow> : null}
                     {this.state.quotes[4].show ?
                         <Grow in={this.state.quotes[4].show}>
                             <div className={classes.centeredQuote}>
-                                A strong woman is soft and powerful
+                                "A strong woman is soft and powerful."
                             </div>
                         </Grow> : null}
                     {this.state.quotes[5].show ?
                         <Grow in={this.state.quotes[5].show}>
                             <div className={classes.centeredQuote}>
-                                Our voice, is your voice. We provide equitable interpretation to make sure you all get heard!
+                                "Our voice, is your voice. We provide equitable interpretation to make sure you all get heard!"
                             </div>
                         </Grow> : null}
                 </div>
