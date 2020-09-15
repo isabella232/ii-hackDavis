@@ -174,7 +174,7 @@ class HomePage extends Component {
                     <Grid container spacing={4} justify='center'>
                         <Grid item sm={12} md={3}>
                             <div className={classes.title}>What Do We Do?</div>
-                            <p className={classes.paragraph}>Multilingual Indigenous Interpreters provides high quality relay, simultaneous and consecutive  interpreting services to monolingual indigenous communities with the ultimate goal to make accurate communication accessible and breach the communication gap between service providers and indigenous communities.</p>
+                            <p className={classes.paragraph}>Multilingual Indigenous Interpreters provide high quality relay, simultaneous and consecutive interpreting services to monolingual indigenous communities with the ultimate goal to make accurate communication accessible and breach the communication gap between service providers and indigenous communities.</p>
                         </Grid>
                         <Grid item sm={12} md={5}>
                             <div className={classes.title}>Who Are We?</div>
@@ -182,7 +182,7 @@ class HomePage extends Component {
                         </Grid>
                         <Grid item sm={12} md={3}>
                             <div className={classes.title}>Our Missions</div>
-                            <p className={classes.paragraph}>Our mission is to provide adequate and accurate interpreting services to best fit the needs of monolingual indigenous communities and bridge cultural understanding between service providers and clients.  Our vision is to eliminate language barriers for the dignity, respect, and equitable representation of indigenous communities.</p>
+                            <p className={classes.paragraph}>Our mission is to provide adequate and accurate interpreting services to best fit the needs of monolingual indigenous communities and bridge cultural understanding between service providers and clients. Our vision is to eliminate language barriers for the dignity, respect, and equitable representation of indigenous communities.</p>
                         </Grid>
                     </Grid>
                 </div>
