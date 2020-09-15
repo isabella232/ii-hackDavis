@@ -171,18 +171,18 @@ class HomePage extends Component {
                 </div>
 
                 <div className={classes.infoSection}>
-                    <Grid container spacing={4} justify='center' alignItems='flex-start'>
-                        <Grid item xs={12} sm={3}>
+                    <Grid container spacing={2} justify='center'>
+                        <Grid item sm={12} md={3}>
                             <div className={classes.title}>What Do We Do?</div>
-                            <p>Multilingual Indigenous Interpreters provides high quality relay, simultaneous and consecutive  interpreting services to monolingual indigenous communities with the ultimate goal to make accurate communication accessible and breach the communication gap between service providers and indigenous communities.</p>
+                            <p className={classes.paragraph}>Multilingual Indigenous Interpreters provides high quality relay, simultaneous and consecutive  interpreting services to monolingual indigenous communities with the ultimate goal to make accurate communication accessible and breach the communication gap between service providers and indigenous communities.</p>
                         </Grid>
-                        <Grid item xs={12} sm={5}>
+                        <Grid item sm={12} md={5}>
                             <div className={classes.title}>Who Are We?</div>
-                            <p>Multilingual Indigenous Interpreters (MII), founded in 2019, is a collective of trilingual young adults from Guatemala and Oaxaca whose main purpose is to eliminate the language barriers between service providers and monolingual indigenous speakers from Latin America. Our collective was founded out of the necessity to support indigenous interpreters with their professional development and capacity building when non-indgenous interpreting agencies were lacking to support this need.</p>
+                            <p className={classes.paragraph}>Multilingual Indigenous Interpreters (MII), founded in 2019, is a collective of trilingual young adults from Guatemala and Oaxaca whose main purpose is to eliminate the language barriers between service providers and monolingual indigenous speakers from Latin America. Our collective was founded out of the necessity to support indigenous interpreters with their professional development and capacity building when non-indgenous interpreting agencies were lacking to support this need.</p>
                         </Grid>
-                        <Grid item xs={12} sm={3}>
+                        <Grid item sm={12} md={3}>
                             <div className={classes.title}>Our Missions</div>
-                            <p>Our mission is to provide adequate and accurate interpreting services to best fit the needs of monolingual indigenous communities and bridge cultural understanding between service providers and clients.  Our vision is to eliminate language barriers for the dignity, respect, and equitable representation of indigenous communities.</p>
+                            <p className={classes.paragraph}>Our mission is to provide adequate and accurate interpreting services to best fit the needs of monolingual indigenous communities and bridge cultural understanding between service providers and clients.  Our vision is to eliminate language barriers for the dignity, respect, and equitable representation of indigenous communities.</p>
                         </Grid>
                     </Grid>
                 </div>

@@ -39,6 +39,7 @@
   line-height: 30px;
   color: #027888;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-align: center;
 }
 
 .HomePage .title:hover {
@@ -96,4 +97,8 @@
 
 .HomePage .icon {
   margin: 1rem 0.5rem 0;
+}
+
+.HomePage .paragraph {
+  text-align: justify;
 }
