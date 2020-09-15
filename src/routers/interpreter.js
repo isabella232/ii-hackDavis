@@ -271,7 +271,7 @@ router.patch(
 
       await interpreter.generateCoordinates(req.body.location); // update location
       await interpreter.save();
-      saveInterpreter(interpreter);
+      if (interpreter.isVerified) await saveInterpreter(interpreter);
       res.send();
     } catch (e) {
       res.status(400).send(e);
