@@ -35,6 +35,7 @@ const interpreterSchema = new mongoose.Schema({
         language: {
             type: String,
             required: true,
+            trim: true
         },
         fluency: {
             type: Number,
@@ -70,6 +71,7 @@ const interpreterSchema = new mongoose.Schema({
     }],
     services: [{
         type: String,
+        trim: true,
     }],
     rating: {
         type: Number,
