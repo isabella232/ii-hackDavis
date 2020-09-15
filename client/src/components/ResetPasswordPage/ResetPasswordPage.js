@@ -68,7 +68,7 @@ class ResetPasswordPage extends Component {
                     this.props.enqueueSnackbar('Success! Your password has been reset.', { variant: 'success' })
                     setTimeout(() => {
                         this.props.history.push('/');
-                    }, 3000);
+                    }, 1500);
                 })
                 .catch(e => {
                     this.props.enqueueSnackbar('Your password cannot be reset at this time.', { variant: 'error' })

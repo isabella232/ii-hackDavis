@@ -13,12 +13,12 @@ class AccountVerifyPage extends React.Component {
                 this.props.enqueueSnackbar("Success! Your account has been verified.", { variant: 'success' });
                 setTimeout(() => {
                     this.props.history.push('/');
-                }, 3000);
+                }, 1500);
             }).catch(error => {
                 this.props.enqueueSnackbar("Your account cannot be verified at the moment.", { variant: 'error' });
                 setTimeout(() => {
                     this.props.history.push('/');
-                }, 3000);
+                }, 1500);
             })
     }
 
