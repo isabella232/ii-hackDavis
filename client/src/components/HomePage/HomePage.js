@@ -171,7 +171,7 @@ class HomePage extends Component {
                 </div>
 
                 <div className={classes.infoSection}>
-                    <Grid container spacing={2} justify='center'>
+                    <Grid container spacing={4} justify='center'>
                         <Grid item sm={12} md={3}>
                             <div className={classes.title}>What Do We Do?</div>
                             <p className={classes.paragraph}>Multilingual Indigenous Interpreters provides high quality relay, simultaneous and consecutive  interpreting services to monolingual indigenous communities with the ultimate goal to make accurate communication accessible and breach the communication gap between service providers and indigenous communities.</p>
