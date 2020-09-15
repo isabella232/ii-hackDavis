@@ -21,7 +21,6 @@ const auth = async (req, res, next) => {
 
         next()
     } catch (e) {
-        console.log(e)
         throw new Error({ message: 'Failed To Authenticate User.' })
     }
 }

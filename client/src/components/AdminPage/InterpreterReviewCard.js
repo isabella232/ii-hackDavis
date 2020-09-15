@@ -4,6 +4,7 @@ import classes from './css/InterpreterReviewCard.module.css';
 
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
+import PlaceIcon from '@material-ui/icons/Place';
 
 import Avatar from '../shared/Avatar';
 import Button from '../shared/Button';
@@ -31,20 +32,22 @@ const InterpreterReviewCard = (props) => {
                                 {props.isRejected ? <CancelIcon className={classes.icon}
                                     fontSize="small" color="error" /> : null}
                             </div>
-                            <div className={classes.infoItem}>
-                                {props.location}
+                            <div className={classes.location}>
+                                <PlaceIcon fontSize="small" color="primary" /> {props.location}
                             </div>
                         </div>
                     </div>
 
-                    {!props.isRejected ?
-                        <Button content="Reject" id={props.id} invertedDelete
-                            click={props.clickReject} />
-                        : null}
-                    {!props.isVerified ?
-                        <Button content="Verify" id={props.id}
-                            click={props.clickVerify} />
-                        : null}
+                    <div>
+                        {!props.isRejected ?
+                            <Button content="Reject" id={props.id} invertedDelete
+                                click={props.clickReject} />
+                            : null}
+                        {!props.isVerified ?
+                            <Button content="Verify" id={props.id}
+                                click={props.clickVerify} />
+                            : null}
+                    </div>
                 </div>
 
                 {props.unvalidatedCertificates.map(certificate => (
