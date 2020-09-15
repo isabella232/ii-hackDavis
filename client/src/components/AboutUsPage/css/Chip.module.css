@@ -7,15 +7,19 @@
 }
 
 .RoundPaper .outer,
+.outerActive,
 .inner,
-.wrapper {
+.innerActive,
+.wrapper,
+.wrapperActive {
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
 }
 
-.RoundPaper .outer {
+.RoundPaper .outer,
+.outerActive {
   margin-bottom: 0.2rem;
   padding: 0.8rem;
   background: rgb(119, 188, 197);
@@ -23,37 +27,43 @@
   width: 132px;
 }
 
-.RoundPaper .outer:hover {
+.RoundPaper .outer:hover,
+.outerActive {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.16), 0 5px 15px rgba(0, 0, 0, 0.23);
 }
 
-.RoundPaper .inner {
+.RoundPaper .inner,
+.innerActive {
   padding: 0.6rem;
   background: rgb(202, 237, 243);
   height: 112px;
   width: 112px;
 }
 
-.RoundPaper .inner:hover {
+.RoundPaper .inner:hover,
+.innerActive {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.23);
 }
 
-.RoundPaper .wrapper {
+.RoundPaper .wrapper,
+.wrapperActive {
   height: 110px;
   width: 110px;
 }
 
-.RoundPaper .wrapper:hover {
+.RoundPaper .wrapper:hover,
+.wrapperActive {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transform: scale(1.5, 1.5);
 }
 
-.RoundPaper .name {
+.RoundPaper .name,
+.nameActive {
   font-size: 14px;
   line-height: 25px;
-  transition: text-shadow 0.3s;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.RoundPaper .name:hover {
-  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.16), 0 6px 18px rgba(0, 0, 0, 0.23);
+.RoundPaper .name:hover,
+.nameActive {
+  color: rgb(202, 237, 243);
 }

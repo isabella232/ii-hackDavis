@@ -103,7 +103,7 @@ class AboutUsPage extends Component {
         const gridItems = bios.map((bio, i) =>
             <Grid item xs={4} sm={4}>
                 <Chip name={bio.name} index={i} click={this.changeBio}
-                    avatar={bio.avatar} />
+                    avatar={bio.avatar} active={this.state.curBio == i} />
             </Grid>
         );
 

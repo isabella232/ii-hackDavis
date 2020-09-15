@@ -205,7 +205,7 @@ class InterpreterInfoModal extends Component {
                                                 </div>
                                                 <div className={classes.mtlInfoItem}>
                                                     <div className={classes.infoTitle}>Language (Fluency)
-                                            <span className={classes.scale}> *scale of 1-5</span>
+                                                    <span className={classes.scale}> *scale of 1-5</span>
                                                     </div>
                                                     <div className={classes.mtlContent}>{languages}</div>
                                                 </div>
@@ -244,7 +244,7 @@ class InterpreterInfoModal extends Component {
                                     <LoadCircle open={this.state.loading} />
                                 </div>) :
                                 (<div className={classes.prompt}>
-                                    Please sign up or log in to see more about interpreters' ratings!
+                                    Please sign up or log in to see more information about this interpreter!
                                 </div>)}
                         </div>
                     </Fade>
