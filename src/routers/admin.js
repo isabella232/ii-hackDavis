@@ -5,16 +5,11 @@ const Admin = require("../models/admin");
 const AdminCode = require("../models/adminCode");
 const Interpreter = require("../models/interpreter");
 const auth = require("../middleware/auth");
-const {
-	sendCertVerifyEmail,
-	sendCertRejectEmail,
-	sendInterpreterVerifyEmail,
-	sendInterpreterRejectEmail,
-} = require("../utils/email");
 const { saveInterpreter, removeInterpreter } = require("../utils/algolia");
 const { getToValidate } = require("../utils/admin");
-const { imgUploader, getAvatarURL } = require("../utils/image");
-const { sendAdminToVerifyEmail } = require("../utils/email");
+const { imgUploader } = require("../utils/image");
+const { sendAdminToVerifyEmail, sendCertVerifiedEmail, sendCertRejectedEmail,
+	sendInterpreterVerifiedEmail, sendInterpreterRejectedEmail } = require("../utils/email");
 const { fillSignupInfo } = require("../utils/user");
 
 const router = new express.Router();
@@ -118,7 +113,7 @@ router.patch("/api/admin/certificates/:id/validate", auth, async (req, res) => {
 
 		await interpreter.save();
 
-		await sendCertVerifyEmail(
+		await sendCertVerifiedEmail(
 			interpreter.email,
 			interpreter.name,
 			interpreter.certifications[index].title
@@ -147,7 +142,7 @@ router.patch("/api/admin/certificates/:id/reject", auth, async (req, res) => {
 		interpreter.certifications[index].isValidated = false;
 		await interpreter.save();
 
-		await sendCertRejectEmail(
+		await sendCertRejectedEmail(
 			interpreter.email,
 			interpreter.name,
 			interpreter.certifications[index].title
@@ -169,7 +164,7 @@ router.patch("/api/admin/interpreters/:id/verify", auth, async (req, res) => {
 			{ isVerified: true, isRejected: false }
 		);
 		saveInterpreter(interpreter);
-		await sendInterpreterVerifyEmail(interpreter.email, interpreter.name);
+		await sendInterpreterVerifiedEmail(interpreter.email, interpreter.name);
 		res.send();
 	} catch (error) {
 		console.log(error);
@@ -187,7 +182,7 @@ router.patch("/api/admin/interpreters/:id/reject", auth, async (req, res) => {
 			{ isVerified: false, isRejected: true }
 		);
 		removeInterpreter(interpreter._id);
-		await sendInterpreterRejectEmail(interpreter.email, interpreter.name);
+		await sendInterpreterRejectedEmail(interpreter.email, interpreter.name);
 		res.send();
 	} catch (error) {
 		console.log(error);
