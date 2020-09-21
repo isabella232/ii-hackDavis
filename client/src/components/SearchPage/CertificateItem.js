@@ -14,14 +14,15 @@ import { validateCertificate, rejectCertificate } from '../../services/AdminServ
 
 const CertificateItem = props => {
     const [isRejected, setIsRejected] = useState(false);
+    const [isValidated, setIsValidated] = useState(props.isValidated);
     let icon = null;
 
     if (props.userKind === "Admin") {
-        if (!isRejected) {
+        if (isValidated) {
             icon = <IconButton size="small" onClick={e => clickReject(props.id)}>
                 <CheckCircleIcon color="primary" />
             </IconButton>;
-        } else {
+        } else if (isRejected) {
             icon = <IconButton size="small" onClick={e => clickValidate(props.id)}>
                 <CancelIcon color="error" />
             </IconButton>;
@@ -34,14 +35,14 @@ const CertificateItem = props => {
         validateCertificate(id)
             .then(data => props.enqueueSnackbar("Success! This certificate has been validated.", { variant: 'success' }))
             .catch(e => props.enqueueSnackbar("This certificate cannot be validated at this moment.", { variant: 'error' }));
-        setIsRejected(!isRejected);
+        setIsValidated(true);
     }
 
     const clickReject = (id) => {
         rejectCertificate(id)
             .then(data => props.enqueueSnackbar("This certificate has been rejected.", { variant: 'info' }))
             .catch(e => props.enqueueSnackbar("This certificate canont be rejected at this moment.", { variant: 'error' }));
-        setIsRejected(!isRejected);
+        setIsRejected(true);
     }
 
     return (

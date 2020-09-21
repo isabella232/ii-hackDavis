@@ -261,6 +261,7 @@ class AdminPage extends Component {
         this.load();
         rejectInterpreter(id)
             .then(data => {
+                this.props.enqueueSnackbar("This certificate has been rejected and will be taken off the search shortly.", { variant: 'info' });
                 this.loadToReviews();
                 this.unload();
             })
@@ -274,6 +275,7 @@ class AdminPage extends Component {
         this.load();
         verifyInterpreter(id)
             .then(data => {
+                this.props.enqueueSnackbar("This certificate has been verified and will appear on the search shortly.", { variant: 'success' });
                 this.loadToReviews();
                 this.unload();
             })
