@@ -18,7 +18,7 @@ const getAvatarURL = (id) => {
 }
 
 const getCertificateURL = (id) => {
-    return `${process.env.PROD_BACKEND_URL}/api/interpreter/certificates/${id}/image`
+    return `${process.env.PROD_BACKEND_URL}/api/interpreter/certificates/${id}`
     // return `${process.env.DEV_BACKEND_URL}/api/interpreter/certificates/${id}`
 }
 
